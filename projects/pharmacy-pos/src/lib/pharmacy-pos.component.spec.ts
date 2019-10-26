@@ -12,6 +12,7 @@ describe('PharmacyPosComponent', () => {
     })
     .compileComponents();
   }));
+  
 
   beforeEach(() => {
     fixture = TestBed.createComponent(PharmacyPosComponent);

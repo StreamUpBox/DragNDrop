@@ -42,6 +42,7 @@ import { CustomerTypeComponent } from '../importables/customerType/customertype.
 import { PosInfiniteScrollDirective } from './pos/pos-infinite-scroll.directive';
 import { ListItemHeaderComponent } from './pos/list-item-header/list-item-header.component';
 import { ApiPosService } from './api/api.service';
+import { NgxModelModule } from 'ngx-model';
 
 
 @NgModule({

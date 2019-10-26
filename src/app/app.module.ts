@@ -1,9 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { PharmacyPosModule } from 'pharmacy-pos';
+// import { PharmacyPosModule } from 'pharmacy-pos';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { PharmacyPosModule } from 'pharmacy-pos';
 
 @NgModule({
   declarations: [
@@ -13,7 +12,7 @@ import { PharmacyPosModule } from 'pharmacy-pos';
     BrowserModule,
     AppRoutingModule,
     // PosModule.forRoot()
-    PharmacyPosModule
+    // PharmacyPosModule
   ],
   providers: [],
   bootstrap: [AppComponent]

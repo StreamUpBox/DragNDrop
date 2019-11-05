@@ -24,6 +24,12 @@
       ],
       "pharmacy-pos/*": [
         "dist/pharmacy-pos/*"
+      ],
+      "flipper-pos": [
+        "dist/flipper-pos"
+      ],
+      "flipper-pos/*": [
+        "dist/flipper-pos/*"
       ]
     }
   },

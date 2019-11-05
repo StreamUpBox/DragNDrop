@@ -3,30 +3,31 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "DragNDrop": {
+    "flipper-plugins": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
       "root": "",
       "sourceRoot": "src",
-      "projectType": "application",
       "prefix": "app",
-      "schematics": {},
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/DragNDrop",
+            "outputPath": "dist/flipper-plugins",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.app.json",
+            "tsConfig": "tsconfig.app.json",
+            "aot": false,
             "assets": [
               "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
-              {
-                "input": "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
-              },
-              "src/assets/fonts/material-icons.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -47,25 +48,37 @@
               "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
-              "buildOptimizer": true
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
             }
           }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "DragNDrop:build"
+            "browserTarget": "flipper-plugins:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "DragNDrop:build:production"
+              "browserTarget": "flipper-plugins:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "DragNDrop:build"
+            "browserTarget": "flipper-plugins:build"
           }
         },
         "test": {
@@ -73,47 +86,74 @@
           "options": {
             "main": "src/test.ts",
             "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.spec.json",
-            "karmaConfig": "src/karma.conf.js",
-            "styles": [
-              "src/styles.css"
-            ],
-            "scripts": [],
+            "tsConfig": "tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js",
             "assets": [
               "src/favicon.ico",
               "src/assets"
-            ]
+            ],
+            "styles": [
+              "src/styles.scss"
+            ],
+            "scripts": []
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
+              "tsconfig.app.json",
+              "tsconfig.spec.json",
+              "e2e/tsconfig.json"
             ],
             "exclude": [
               "**/node_modules/**"
             ]
           }
-        }
-      }
-    },
-    "DragNDrop-e2e": {
-      "root": "e2e/",
-      "projectType": "application",
-      "architect": {
+        },
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "DragNDrop:serve"
+            "devServerTarget": "flipper-plugins:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "flipper-plugins:serve:production"
+            }
+          }
+        }
+      }
+    },
+    "pharmacy-pos": {
+      "projectType": "library",
+      "root": "projects/pharmacy-pos",
+      "sourceRoot": "projects/pharmacy-pos/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/pharmacy-pos/tsconfig.lib.json",
+            "project": "projects/pharmacy-pos/ng-package.json"
+          },
+          "scripts":[ "projects/pharmacy-pos/node_modules/alasql/dist/alasql.min.js"]
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/pharmacy-pos/src/test.ts",
+            "tsConfig": "projects/pharmacy-pos/tsconfig.spec.json",
+            "karmaConfig": "projects/pharmacy-pos/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": "e2e/tsconfig.e2e.json",
+            "tsConfig": [
+              "projects/pharmacy-pos/tsconfig.lib.json",
+              "projects/pharmacy-pos/tsconfig.spec.json"
+            ],
             "exclude": [
               "**/node_modules/**"
             ]
@@ -160,127 +200,7 @@
           }
         }
       }
-    },
-    "ContextMenu": {
-      "root": "projects/context-menu",
-      "sourceRoot": "projects/context-menu/src",
-      "projectType": "library",
-      "prefix": "N",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
-          "options": {
-            "tsConfig": "projects/context-menu/tsconfig.lib.json",
-            "project": "projects/context-menu/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "project": "projects/context-menu/ng-package.prod.json"
-            }
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/context-menu/src/test.ts",
-            "tsConfig": "projects/context-menu/tsconfig.spec.json",
-            "karmaConfig": "projects/context-menu/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/context-menu/tsconfig.lib.json",
-              "projects/context-menu/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
-    "NChips": {
-      "root": "projects/nchips",
-      "sourceRoot": "projects/nchips/src",
-      "projectType": "library",
-      "prefix": "A",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
-          "options": {
-            "tsConfig": "projects/nchips/tsconfig.lib.json",
-            "project": "projects/nchips/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "project": "projects/nchips/ng-package.prod.json"
-            }
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/nchips/src/test.ts",
-            "tsConfig": "projects/nchips/tsconfig.spec.json",
-            "karmaConfig": "projects/nchips/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/nchips/tsconfig.lib.json",
-              "projects/nchips/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
-    "NUpload": {
-      "root": "projects/nupload",
-      "sourceRoot": "projects/nupload/src",
-      "projectType": "library",
-      "prefix": "N",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
-          "options": {
-            "tsConfig": "projects/nupload/tsconfig.lib.json",
-            "project": "projects/nupload/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "project": "projects/nupload/ng-package.prod.json"
-            }
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/nupload/src/test.ts",
-            "tsConfig": "projects/nupload/tsconfig.spec.json",
-            "karmaConfig": "projects/nupload/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/nupload/tsconfig.lib.json",
-              "projects/nupload/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
     }
   },
-  "defaultProject": "DragNDrop"
+  "defaultProject": "flipper-plugins"
 }

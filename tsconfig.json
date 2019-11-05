@@ -5,42 +5,30 @@
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
+    "downlevelIteration": true,
     "experimentalDecorators": true,
-    "target": "es5",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2015",
     "typeRoots": [
       "node_modules/@types"
     ],
     "lib": [
-      "es2017",
+      "es2018",
       "dom"
     ],
     "paths": {
-      "NDrop": [
-        "dist/ndrop"
+      "pharmacy-pos": [
+        "dist/pharmacy-pos"
       ],
-      "NDrop/*": [
-        "dist/ndrop/*"
-      ],
-      "ContextMenu": [
-        "dist/context-menu"
-      ],
-      "ContextMenu/*": [
-        "dist/context-menu/*"
-      ],
-      "NChips": [
-        "dist/nchips"
-      ],
-      "NChips/*": [
-        "dist/nchips/*"
-      ],
-      "NUpload": [
-        "dist/nupload"
-      ],
-      "NUpload/*": [
-        "dist/nupload/*"
+      "pharmacy-pos/*": [
+        "dist/pharmacy-pos/*"
       ]
     }
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
   }
 }

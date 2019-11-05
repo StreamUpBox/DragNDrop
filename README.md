@@ -1,59 +1,27 @@
-[see it in action ](https://drive.google.com/file/d/1ZSIZOevWuzOFyJ0ngSuAr5lJ-oGtaulC/view)
+# FlipperPlugins
 
-# DragNDrop
-- Provide cool drag and drop with animation on list of item(1) for example files and item(2) for example folders
-- inspired by google drive drag and drop
-- it is built in with example so that you can get clue of how you might use it on your project.
-# Installation
-- clone a repository
-- npm install
-- ng build --prod NDrop
-- ng serve (to see the sample app)
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.9.
 
-# add to your project
-- npm -i --save ndrop
-```import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+## Development server
 
-.....
-import { HttpClientModule } from '@angular/common/http';
-import {NDropModule} from 'ndrop';
-@NgModule({
-    declarations: [
-        AppComponent,
-        ChildComponent,
-        LoadersDirective
-    ],
-    imports: [
-        BrowserModule,
-        NDropModule,
-        FormsModule
-    ],
-    // {provide: BrowserXhr, useClass:CustExtBrowserXhr}
-    
-    providers: [],
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-    bootstrap: [AppComponent]
-})
-export class AppModule {
-}
-```
-#on your html
-```
-<N-NDrop
-  [files]="dragFiles"
-  [folders]="dragFolders"
-  [activeFolder]="activeFolder"
-  [environment]="'api'"
-  [postUrl]="'your api url'"
-  [bearerToken]="'Bearer  your bearer token'"
-  (drop)="onDrop($event)"
-  (goToFolder)="goToFolder($event)"
-  (goBack)="goBack($event)"
-  (didClick)="didCLick($event)"
->
-</N-NDrop> 
-```
-#notice
--keep in mind that you may need to see how you can change built in api to your own
--default build in api use yegobox fileSystem api for data but the repo contain also mock data so you can start contributing without any api datas.
+## Code scaffolding
+
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+
+## Build
+
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+
+## Running unit tests
+
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+
+## Running end-to-end tests
+
+Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+
+## Further help
+
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).

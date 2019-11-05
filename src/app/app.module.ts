@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 // import {AppComponent} from './app.component';
@@ -29,6 +30,26 @@ import { DemoComponent } from './demo/demo.component';
     providers: [],
 
     bootstrap: [DemoComponent]
+=======
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { PharmacyPosModule } from 'pharmacy-pos';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { PharmacyPosModule } from 'pharmacy-pos';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    // PosModule.forRoot()
+    PharmacyPosModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+>>>>>>> b0c936dea4d40d142891f8d78ac09d7982c9271b
 })
-export class AppModule {
-}
+export class AppModule { }

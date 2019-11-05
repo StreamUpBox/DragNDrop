@@ -1,0 +1,14 @@
+@import "../app_sass/scss/variables";
+@import "../app_sass/variables";
+@import "../app_sass/scss/admin-pill-nav.scss";
+@import "../app_sass/scss/setting-checkbox.scss";
+@import "../app_sass/scss/flex-table-panel.scss";
+@import "../app_sass/scss/input.scss";
+@import '~@angular/material/theming';
+.detail-row{
+  height: 0%!important;
+}
+.mat-table {
+  overflow: auto;
+  max-height: 450px;
+}

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { DragAndDropDataService } from './drag-and-drop-data.service';
 import { NFile } from './NFile';
@@ -10,12 +11,16 @@ export class Employee {
     constructor(public name: string, public age: number) { }
 }
 
+=======
+import { Component } from '@angular/core';
+>>>>>>> b0c936dea4d40d142891f8d78ac09d7982c9271b
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
+<<<<<<< HEAD
 export class AppComponent implements OnInit {
     public dragFolders: any[];
     public dragFiles: any[];
@@ -150,4 +155,8 @@ export class AppComponent implements OnInit {
     public fileOverAnother(e: any): void {
         this.hasAnotherDropZoneOver = e;
     }
+=======
+export class AppComponent {
+  title = 'fli';
+>>>>>>> b0c936dea4d40d142891f8d78ac09d7982c9271b
 }

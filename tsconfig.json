@@ -30,6 +30,12 @@
       ],
       "yegobox-login/*": [
         "dist/yegobox-login/*"
+      ],
+      "ng-offline-db": [
+        "dist/ng-offline-db"
+      ],
+      "ng-offline-db/*": [
+        "dist/ng-offline-db/*"
       ]
     }
   },

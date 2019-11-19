@@ -4,6 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 // import { PharmacyPosModule } from 'pharmacy-pos';
 import { YegoboxLoginModule } from 'yegobox-login';
+import { NgOfflineDbModule } from 'ng-offline-db';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { YegoboxLoginModule } from 'yegobox-login';
     AppRoutingModule,
     // PosModule.forRoot()
     // PharmacyPosModule,
+    NgOfflineDbModule,
     YegoboxLoginModule,
   ],
   providers: [],

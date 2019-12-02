@@ -1,0 +1,30 @@
+{
+  "name": "@enexus/flipper-menu",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^8.2.9",
+    "@angular/core": "^8.2.9"
+  },
+  "main": "bundles/flipper-menu.umd.js",
+  "module": "fesm5/flipper-menu.js",
+  "es2015": "fesm2015/flipper-menu.js",
+  "esm5": "esm5/flipper-menu.js",
+  "esm2015": "esm2015/flipper-menu.js",
+  "fesm5": "fesm5/flipper-menu.js",
+  "fesm2015": "fesm2015/flipper-menu.js",
+  "typings": "flipper-menu.d.ts",
+  "metadata": "flipper-menu.metadata.json",
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
+  },
+  "description": "This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.9.",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Richard Mura",
+  "license": "ISC"
+}

@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { YegoboxLoginModule } from 'yegobox-login';
 import { NgOfflineDbModule } from 'ng-offline-db';
 
+
 @NgModule({
   declarations: [
     AppComponent

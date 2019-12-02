@@ -25,7 +25,6 @@
       "pharmacy-pos/*": [
         "dist/pharmacy-pos/*"
       ],
-<<<<<<< HEAD
       "yegobox-login": [
         "dist/yegobox-login"
       ],
@@ -43,13 +42,6 @@
       ],
       "flipper-menu/*": [
         "dist/flipper-menu/*"
-=======
-      "flipper-pos": [
-        "dist/flipper-pos"
-      ],
-      "flipper-pos/*": [
-        "dist/flipper-pos/*"
->>>>>>> 323cea529c48bc83a5c98348b93f138e3ef70c4e
       ]
     }
   },

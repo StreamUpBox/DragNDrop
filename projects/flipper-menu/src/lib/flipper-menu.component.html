@@ -1,0 +1,69 @@
+<div class="sidebar">
+  
+  <div class="fp-main-sidebar">
+      <div class="untoggled-button"  *ngIf="isToggled" (click)="toggled()"></div>
+    <div class="fp-logo-oval">
+      <div class="fp-logo-text">F</div>
+    </div>
+
+    <div class="active">
+      <div class="rectangle"></div>
+    </div>
+
+    <div class="fp-business-icon">
+
+    </div>
+    <div class="fp-business-icon">
+
+    </div>
+
+  </div>
+
+  <div class="fp-secondary-sidebar" *ngIf="!isToggled">
+    <div class="toggled-button" (click)="toggled()"></div>
+    <div class="fp-secondary-sidebar-text">Kimironko Branch</div>
+    <div class="fp-secondary-sidebar-chevron-down">
+      <!-- <div class="fp-secondary-sidebar-chevron-down-shape"></div> -->
+
+    </div>
+    <p class="fp-online-user"></p>
+    <p class="user-name">
+      Ganza respice
+    </p>
+    <div class="divider"></div>
+    <div class="fp-menu">
+      <div class="fp-inactive-menu">
+        <span class="fp-inactive-menu-icon">i</span>
+        <span class="fp-inactive-menu-text">Analytics</span>
+      </div>
+
+      <div class="fp-inactive-menu">
+        <span class="fp-inactive-menu-icon">i</span>
+        <span class="fp-inactive-menu-text">Inventory</span>
+      </div>
+
+      <div class="fp-inactive-menu">
+        <span class="fp-inactive-menu-icon">i</span>
+        <span class="fp-inactive-menu-text">Inventory Count</span>
+      </div>
+      <div class="fp-inactive-menu">
+        <span class="fp-inactive-menu-icon">i</span>
+        <span class="fp-inactive-menu-text">Orders</span>
+      </div>
+
+      <div class="fp-active-menu">
+        <span class="fp-inactive-menu-icon">i</span>
+        <span class="fp-inactive-menu-text">Orders</span>
+      </div>
+    </div>
+
+    <div class="setting">
+      <div class="fp-active-menu">
+        <span class="fp-inactive-menu-icon">i</span>
+        <span class="fp-inactive-menu-text">Settings</span>
+      </div>
+    </div>
+
+  </div>
+
+</div>

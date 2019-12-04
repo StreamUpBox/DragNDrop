@@ -137,7 +137,9 @@
             "tsConfig": "projects/pharmacy-pos/tsconfig.lib.json",
             "project": "projects/pharmacy-pos/ng-package.json"
           },
-          "scripts":[ "projects/pharmacy-pos/node_modules/alasql/dist/alasql.min.js"]
+          "scripts": [
+            "projects/pharmacy-pos/node_modules/alasql/dist/alasql.min.js"
+          ]
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
@@ -201,17 +203,17 @@
         }
       }
     },
-    "flipper-pos": {
+    "yegobox-login": {
       "projectType": "library",
-      "root": "projects/flipper-pos",
-      "sourceRoot": "projects/flipper-pos/src",
+      "root": "projects/yegobox-login",
+      "sourceRoot": "projects/yegobox-login/src",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "projects/flipper-pos/tsconfig.lib.json",
-            "project": "projects/flipper-pos/ng-package.json"
+            "tsConfig": "projects/yegobox-login/tsconfig.lib.json",
+            "project": "projects/yegobox-login/ng-package.json"
           }
         },
         "test": {

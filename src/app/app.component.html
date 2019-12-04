@@ -1,1 +1,1 @@
-<flipper-menu></flipper-menu>
+<flipper-menu [menuEntries]="entries"  (menuToggled)='displayMenuToggled($event)' (switchedBusiness)="displaySwitchedBusiness($event)" (switchedBranch)="displaySwitchedBranch($event)"></flipper-menu>

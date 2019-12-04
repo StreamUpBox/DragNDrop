@@ -1,8 +1,9 @@
-import { SortColumn } from './pos-category-state-model';
+// TODO: FIXME:
+// import { SortColumn } from './pos-category-state-model';
 import { SortDirection } from '@angular/material';
 import { PosSearchStockState } from './pos-search-stock-state-model';
 
-export const SET_POS_STOCK_ORDERBY=localStorage.getItem('PosStockSortColumn') as SortColumn;
+// export const SET_POS_STOCK_ORDERBY=localStorage.getItem('PosStockSortColumn') as SortColumn;
 export const SET_POS_STOCK_ORDERDIR=localStorage.getItem('PosStockSortDirection') as SortDirection;
 export const POS_SEARCH_STOCK_STATE_MODEL_DEFAULTS: PosSearchStockState = {
   data: [],
@@ -29,7 +30,7 @@ export const POS_SEARCH_STOCK_STATE_MODEL_DEFAULTS: PosSearchStockState = {
 
  },
  queryParams:{
-  order_by:SET_POS_STOCK_ORDERBY?SET_POS_STOCK_ORDERBY:'updated_at',
+  // order_by:SET_POS_STOCK_ORDERBY?SET_POS_STOCK_ORDERBY:'updated_at',
   order_dir: SET_POS_STOCK_ORDERDIR?SET_POS_STOCK_ORDERDIR:'desc',
   categoryId:  '0',
   query: null,

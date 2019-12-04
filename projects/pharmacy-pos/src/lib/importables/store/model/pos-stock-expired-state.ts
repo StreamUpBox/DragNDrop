@@ -1,9 +1,10 @@
-import { SortColumn } from './pos-category-state-model';
+//TODO: FIXME: fixme
+// import { SortColumn } from './pos-category-state-model';
 import { SortDirection } from '@angular/material';
 import { PosStockExpiredState } from './pos-stock-expired-state-model';
 
 
-export const SET_POS_STOCK_ORDERBY=localStorage.getItem('PosStockExpiredSortColumn') as SortColumn;
+// export const SET_POS_STOCK_ORDERBY=localStorage.getItem('PosStockExpiredSortColumn') as SortColumn;
 export const SET_POS_STOCK_ORDERDIR=localStorage.getItem('PosStockExpiredSortDirection') as SortDirection;
 export const POS_STOCK_EXPIRED_STATE_MODEL_DEFAULTS: PosStockExpiredState = {
     data: [],
@@ -30,7 +31,7 @@ export const POS_STOCK_EXPIRED_STATE_MODEL_DEFAULTS: PosStockExpiredState = {
 
  },
  queryParams:{
-  order_by:SET_POS_STOCK_ORDERBY?SET_POS_STOCK_ORDERBY:'updated_at',
+  // order_by:SET_POS_STOCK_ORDERBY?SET_POS_STOCK_ORDERBY:'updated_at',
   order_dir: SET_POS_STOCK_ORDERDIR?SET_POS_STOCK_ORDERDIR:'desc',
   from:  new Date(),
   to:new Date(),

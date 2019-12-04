@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { PharmacyPosComponent } from './pharmacy-pos.component';
-import { PosModule } from './pos/pos.module';
+// import { PosModule } from './pos/pos.module';
 @NgModule({
   declarations: [PharmacyPosComponent],
   imports: [
     // BrowserModule,
-    PosModule
+    // PosModule
   ],
   exports: [PharmacyPosComponent]
 })

@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-// import { PharmacyPosModule } from 'pharmacy-pos';
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { FlipperMenuModule } from 'flipper-menu';
+
 
 @NgModule({
   declarations: [
@@ -10,11 +10,10 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    // PosModule.forRoot()
-    // PharmacyPosModule
+    FlipperMenuModule 
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+

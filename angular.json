@@ -137,7 +137,9 @@
             "tsConfig": "projects/pharmacy-pos/tsconfig.lib.json",
             "project": "projects/pharmacy-pos/ng-package.json"
           },
-          "scripts":[ "projects/pharmacy-pos/node_modules/alasql/dist/alasql.min.js"]
+          "scripts": [
+            "projects/pharmacy-pos/node_modules/alasql/dist/alasql.min.js"
+          ]
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
@@ -193,6 +195,111 @@
             "tsConfig": [
               "projects/ndrop/tsconfig.lib.json",
               "projects/ndrop/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "yegobox-login": {
+      "projectType": "library",
+      "root": "projects/yegobox-login",
+      "sourceRoot": "projects/yegobox-login/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/yegobox-login/tsconfig.lib.json",
+            "project": "projects/yegobox-login/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/yegobox-login/src/test.ts",
+            "tsConfig": "projects/yegobox-login/tsconfig.spec.json",
+            "karmaConfig": "projects/yegobox-login/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/yegobox-login/tsconfig.lib.json",
+              "projects/yegobox-login/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "ngOfflineDb": {
+      "projectType": "library",
+      "root": "projects/ng-offline-db",
+      "sourceRoot": "projects/ng-offline-db/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ng-offline-db/tsconfig.lib.json",
+            "project": "projects/ng-offline-db/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ng-offline-db/src/test.ts",
+            "tsConfig": "projects/ng-offline-db/tsconfig.spec.json",
+            "karmaConfig": "projects/ng-offline-db/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ng-offline-db/tsconfig.lib.json",
+              "projects/ng-offline-db/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "flipperMenu": {
+      "projectType": "library",
+      "root": "projects/flipper-menu",
+      "sourceRoot": "projects/flipper-menu/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/flipper-menu/tsconfig.lib.json",
+            "project": "projects/flipper-menu/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/flipper-menu/src/test.ts",
+            "tsConfig": "projects/flipper-menu/tsconfig.spec.json",
+            "karmaConfig": "projects/flipper-menu/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/flipper-menu/tsconfig.lib.json",
+              "projects/flipper-menu/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

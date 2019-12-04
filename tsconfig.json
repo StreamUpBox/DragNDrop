@@ -24,6 +24,24 @@
       ],
       "pharmacy-pos/*": [
         "dist/pharmacy-pos/*"
+      ],
+      "yegobox-login": [
+        "dist/yegobox-login"
+      ],
+      "yegobox-login/*": [
+        "dist/yegobox-login/*"
+      ],
+      "ng-offline-db": [
+        "dist/ng-offline-db"
+      ],
+      "ng-offline-db/*": [
+        "dist/ng-offline-db/*"
+      ],
+      "flipper-menu": [
+        "dist/flipper-menu"
+      ],
+      "flipper-menu/*": [
+        "dist/flipper-menu/*"
       ]
     }
   },

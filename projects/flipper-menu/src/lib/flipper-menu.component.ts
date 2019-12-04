@@ -73,6 +73,10 @@ export class FlipperMenuComponent implements OnInit {
      business.active=true;
 
      this.defaultBusiness=business;
+     this.businesses = this.businesses.filter((value,index,arr)=>{
+      return value > business
+     });
+     this.businesses.push(current);
      this.switchedBusiness.emit(this.defaultBusiness);
     }
 

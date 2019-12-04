@@ -8,7 +8,7 @@ describe('FlipperMenuComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FlipperMenuComponent ]
+      declarations: [FlipperMenuComponent]
     })
     .compileComponents();
   }));

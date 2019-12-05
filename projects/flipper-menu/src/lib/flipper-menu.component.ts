@@ -28,7 +28,7 @@ export class FlipperMenuComponent implements OnInit {
   @Output() menuToggled:any = new EventEmitter<boolean>();
   @Output() switchedBusiness:any = new EventEmitter<Business>();
   @Output() switchedBranch:any = new EventEmitter<Branch>();
-  
+  @Output() routerClicked:any = new EventEmitter<any>();
 
   @Input() menuEntries:MenuEntries;
 
@@ -40,21 +40,26 @@ export class FlipperMenuComponent implements OnInit {
   businesses:Business[]=[];
   menus:Menu[]=[];
   defaultBusiness:Business=null;
+  settingMenu:Menu=null;
   constructor() { }
 
   ngOnInit() {
-  //console.log(this.menuEntries);
-  if(this.menuEntries){
-
-    this.defaultBranch=this.menuEntries.branches.find(b=>b.active==true);
-    this.defaultBusiness=this.menuEntries.businesses.find(b=>b.active==true);
-
-    this.loggedUser=this.menuEntries.user?this.menuEntries.user:null;
-    this.branches = this.menuEntries.branches.length > 0?this.menuEntries.branches:[];
-    this.businesses = this.menuEntries.businesses.length > 0?this.menuEntries.businesses.filter(b=>b.active==false):[];
-    this.menus = this.menuEntries.menu.length > 0?this.menuEntries.menu:[];
-  }
+     this.init();
   
+  }
+  init(){
+    if(this.menuEntries){
+
+      this.defaultBranch=this.menuEntries.branches.find(b=>b.active==true);
+      this.defaultBusiness=this.menuEntries.businesses.find(b=>b.active==true);
+      this.settingMenu=this.menuEntries.menu.find(m=>m.route=='settings');
+  
+      this.loggedUser=this.menuEntries.user?this.menuEntries.user:null;
+      this.branches = this.menuEntries.branches.length > 0?this.menuEntries.branches:[];
+      this.businesses = this.menuEntries.businesses.length > 0?this.menuEntries.businesses.filter(b=>b.active==false):[];
+      this.menus = this.menuEntries.menu.length > 0?this.menuEntries.menu.filter(m=>m.route!='settings'):[];
+      this.canViewBranches=false;
+    }
   }
 
   toggle():boolean{
@@ -72,24 +77,59 @@ export class FlipperMenuComponent implements OnInit {
      current.active=false;
      business.active=true;
 
-     this.defaultBusiness=business;
-     this.businesses = this.businesses.filter((value,index,arr)=>{
-      return value > business
-     });
-     this.businesses.push(current);
-     this.switchedBusiness.emit(this.defaultBusiness);
-    }
+     this.defaultBusiness=null;
 
+     var businesses:Business[]=this.businesses;
+    
+     businesses=businesses.filter(b=>b.id!==business.id);
+      if(!businesses.find(b=>b.id==current.id)){
+        businesses.push(current);
+      }
+      
+     this.businesses=businesses;
+     this.defaultBusiness=business;
+     this.switchedBusiness.emit(this.defaultBusiness);
+     this.canViewBranches=false;
+    }
+ 
     switchBranch(branch:Branch){
      
       const current=this.defaultBranch;
+     current.active=false;
+     branch.active=true;
 
-      current.active=false;
-      branch.active=true;
+     this.defaultBranch=null;
 
-      this.defaultBranch=branch;
-     
+     var branches:Branch[]=this.branches;
+    
+     branches=branches.filter(b=>b.id!==branch.id);
+      if(!branches.find(b=>b.id==current.id)){
+        branches.push(current);
+      }
+      
+     this.branches=branches;
+     this.defaultBranch=branch;
      this.switchedBranch.emit(this.defaultBranch);
      this.canViewBranches=false;
+
+     }
+     router(menu:Menu){
+       if(this.settingMenu.active==true){
+        this.settingMenu.active=false;
+       }else{
+        this.menus.find(m=>m.active==true).active=false;
+       }
+     
+      menu.active=true;
+      const menus=this.menus;
+      if(!menus.find(m=>m.id==this.settingMenu.id)){
+        menus.push(this.settingMenu);
+      }
+      this.init();
+      
+      this.routerClicked.emit({menus:menus,router:menu.route});
+     }
+     hideBranchDropDown(){
+       this.canViewBranches=false;
      }
 }

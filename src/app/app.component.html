@@ -1,1 +1,1 @@
-<flipper-menu [menuEntries]="entries"  (menuToggled)='displayMenuToggled($event)' (switchedBusiness)="displaySwitchedBusiness($event)" (switchedBranch)="displaySwitchedBranch($event)"></flipper-menu>
+<flipper-menu [menuEntries]="entries" (routerClicked)="getRouterClicked($event)" (menuToggled)='displayMenuToggled($event)' (switchedBusiness)="displaySwitchedBusiness($event)" (switchedBranch)="displaySwitchedBranch($event)"></flipper-menu>

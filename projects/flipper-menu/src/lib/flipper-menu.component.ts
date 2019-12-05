@@ -51,8 +51,8 @@ export class FlipperMenuComponent implements OnInit {
 
       this.defaultBranch = this.menuEntries.branches.find(b => b.active == true);
       this.defaultBusiness = this.menuEntries.businesses.find(b => b.active == true);
+      //TODO: why do we need settingMenu && why is active =false?
       this.settingMenu = this.menuEntries.menu.find(m => m.route == 'settings');
-
       this.loggedUser = this.menuEntries.user ? this.menuEntries.user : null;
       this.branches = this.menuEntries.branches.length > 0 ? this.menuEntries.branches : [];
       this.businesses = this.menuEntries.businesses.length > 0 ? this.menuEntries.businesses.filter(b => b.active == false) : [];
@@ -85,7 +85,7 @@ export class FlipperMenuComponent implements OnInit {
     this.defaultBusiness = null;
 
     var businesses: Business[] = this.businesses;
-
+    //TODO: this code bellow are not propper tested.
     businesses = businesses.filter(b => b.id !== business.id);
     if (!businesses.find(b => b.id == current.id)) {
       businesses.push(current);
@@ -106,7 +106,7 @@ export class FlipperMenuComponent implements OnInit {
     this.defaultBranch = null;
 
     var branches: Branch[] = this.branches;
-
+    //TODO: this code bellow are not propper tested.
     branches = branches.filter(b => b.id !== branch.id);
     if (!branches.find(b => b.id == current.id)) {
       branches.push(current);

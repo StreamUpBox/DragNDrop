@@ -62,7 +62,9 @@ export class FlipperMenuComponent implements OnInit {
   }
 
   toggle(): boolean {
+
     this.isOpen = !this.isOpen;
+
     this.menuToggled.emit(this.isOpen);
     return this.isOpen;
   }
@@ -71,7 +73,11 @@ export class FlipperMenuComponent implements OnInit {
     return this.canViewBranches;
   }
 
-  switchBusiness(business: Business) {
+  switchBusiness(business?: Business) {
+    if (!this.defaultBusiness || business == null) {
+      //TODO: test this line of code.
+      throw new Error("No current default business set.");
+    }
     const current = this.defaultBusiness;
     current.active = false;
     business.active = true;

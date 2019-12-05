@@ -1,0 +1,62 @@
+.fp-btn-rectangle{
+   position: relative;
+    border-radius: 2px;
+    color: #FFFFFF;
+    width: 143px;
+    height: 42px;
+    text-align: center;
+    -webkit-transition-duration: 0.4s; 
+    transition-duration: 0.4s;
+    text-decoration: none;
+    overflow: hidden;
+    cursor: pointer;   
+}
+.fp-btn-rectangle:after{
+    content: "";
+    background: rgba(63, 50, 50, 0.863);
+    display: block;
+    position: absolute;
+    padding-top: 300%;
+    padding-left: 350%;
+    margin-left: -20px!important;
+    margin-top: -120%;
+    opacity: 0;
+    transition: all 0.8s
+}
+.fp-btn-rectangle:active:after {
+    padding: 0;
+    margin: 0;
+    opacity: 1;
+    transition: 0s
+  }
+.fp-primary{
+   background-color: #007bff!important;
+  color: #fff;
+  }
+.fp-success{
+    background-color: #28a745!important;
+    color: #fff;
+}
+.fp-danger{
+    background-color: #dc3545!important;
+    color: #fff;
+}
+.fp-warning{
+    background-color:#ffc107!important;
+    color: #fff; 
+}
+.fp-info{
+    border: solid 1px #0093ee;
+    background-color: #c5d9e8;
+    color: #0093ee;
+}
+.fp-white{
+    border: solid 1px #0093ee;
+    background-color: #FFFFFF;
+    color: #0093ee;
+}
+/* .fp-white img{
+
+} */
+
+

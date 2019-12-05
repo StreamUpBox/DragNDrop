@@ -9,6 +9,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  textBtnConfig = {
+    text: 'Test',
+    src: 'check.svg',
+    buttonStyle: {
+      fp_btn_type: 'info',
+      shape: 'circle',
+      width: '',
+      height: '',
+
+    }
+  };
   entries: MenuEntries;
 
   constructor(private router: Router) {

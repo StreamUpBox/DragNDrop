@@ -9,7 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   declarations: [FlipperMenuComponent],
   imports: [
     CommonModule,
-    BrowserAnimationsModule 
+    BrowserAnimationsModule
   ],
   exports: [FlipperMenuComponent]
 })

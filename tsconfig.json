@@ -19,12 +19,6 @@
       "dom"
     ],
     "paths": {
-      "pharmacy-pos": [
-        "dist/pharmacy-pos"
-      ],
-      "pharmacy-pos/*": [
-        "dist/pharmacy-pos/*"
-      ],
       "yegobox-login": [
         "dist/yegobox-login"
       ],

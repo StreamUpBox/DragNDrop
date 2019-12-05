@@ -8,18 +8,18 @@ describe('FlipperMenuComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FlipperMenuComponent ]
+      declarations: [FlipperMenuComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
-    
+
     fixture = TestBed.createComponent(FlipperMenuComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-  it('should create', () => {
+  it('should create flipper menu component.', () => {
     expect(component).toBeTruthy();
   });
 });

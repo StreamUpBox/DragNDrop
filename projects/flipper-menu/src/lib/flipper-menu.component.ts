@@ -28,6 +28,7 @@ export class FlipperMenuComponent implements OnInit {
   @Output() switchedBusiness: any = new EventEmitter<Business>();
   @Output() switchedBranch: any = new EventEmitter<Branch>();
   @Output() routerClicked: any = new EventEmitter<any>();
+  @Output() logoutUser: any = new EventEmitter<User>();
 
   @Input() menuEntries: MenuEntries;
 
@@ -136,5 +137,21 @@ export class FlipperMenuComponent implements OnInit {
   }
   hideBranchDropDown() {
     this.canViewBranches = false;
+  }
+
+  textEllipsis(str, maxLength, { side = "end", ellipsis = "..." } = {}) {
+    if (str.length > maxLength) {
+      switch (side) {
+        case "start":
+          return ellipsis + str.slice(-(maxLength - ellipsis.length));
+        case "end":
+        default:
+          return str.slice(0, maxLength - ellipsis.length) + ellipsis;
+      }
+    }
+    return str;
+  }
+  logout(){
+      return this.logoutUser.emit(this.loggedUser);
   }
 }

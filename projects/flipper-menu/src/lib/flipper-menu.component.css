@@ -68,11 +68,8 @@
 .fp-logo-oval {
   position: relative;
   top:21px;
-  left: 21px;
-  width: 22px;
-  height: 25px;
-  background-color: #955be9; 
-  /* background-color: var(--purple-1); */
+  width: 70px;
+  height: 70px;
 }
 .fp-logo-text {
   width: 9px;
@@ -80,9 +77,9 @@
   background-color: #ffffff;
 }
 
-.active {
+.active-business {
   position: relative;
-  top:68px;
+  top:40px;
   left: 12.3px;
   width: 40px;
   height: 40px;
@@ -103,7 +100,7 @@
 
 .fp-business-icon {
   position: relative;
-  top:70px;
+  top:48px;
   left: 17px;
   margin-top: 12px;
   width: 32px;
@@ -159,8 +156,11 @@
 
 .dropdown-branch{
   position: relative;
+  top: 1.6px;
   float: right;
   cursor: pointer;
+  width: 16.8px;
+  height: 15.5px;
 }
 .fp-secondary-sidebar-chevron-down {
   position: relative;
@@ -225,14 +225,13 @@
 }
 .fp-inactive-menu-icon{
   position: relative;
-  top: 13px;
+  top: 17px;
   margin-left: 11.6px;
   margin-right: 15.6px;
   margin-bottom: 16.3px;
   margin-top: 17.6px;
-  width: 13.8px;
-  height: 12.5px;
-  background-color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.8);
+
 }
 
 .fp-inactive-menu-text{
@@ -309,7 +308,7 @@
   z-index: 10;
   float: right;
   width: 235px;
-  height: 235px;
+  height: 234px;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.26);
   background-color: #130f1f;
   border-radius: 4px;
@@ -386,13 +385,14 @@
 
 .add-branch{
   position: relative;
-  top: 20px;
+  top: 28px;
   left: 22px;
-  width: 106px;
+  width: 130px;
   height: 25px;
   border-radius: 3px;
   background-color: rgba(255, 255, 255, 0.07);
   cursor: pointer;
+  padding-bottom: 9.3px;
 }
 .add-branch-text{
   width: 67px;
@@ -448,5 +448,47 @@
   font-weight: bold;
   position: relative;
   top: 4.5px;
+  left: 7.6px;
+}
+
+.icon{
+  width: 16.8px;
+  height: 15.5px;
+  color: rgba(255, 255, 255, 0.8);
+}
+.icon-toggle{
+  position: relative;
+  top: 6px;
   left: 5px;
+  width: 18.8px;
+  height: 17.5px;
+  color: rgba(255, 255, 255, 0.8);
+}
+.icon-arrow{
+  width: 6px;
+  height: 6px;
+  position: relative;
+  top: 6px;
+  left: 5px;
+  width: 10px;
+  height: 20px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.logout{
+  position: fixed;
+  bottom: 1px;
+}
+.icon-logout{
+  width: 16.5px;
+    height: 14.8px;
+    margin-left: 22px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+.logo{
+  width: 45.5px;
+  height: 45.8px;
+  position: relative;
+    left: 11px;  
 }

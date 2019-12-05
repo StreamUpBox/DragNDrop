@@ -16,9 +16,11 @@ export class AppComponent {
   }
   displayMenuToggled(event) {
 
+    //console.log(event);
+  }
+  canLogoutUser(event) {
     console.log(event);
   }
-
   //switchedBusiness
 
   displaySwitchedBusiness(event) {

@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { FlipperMenuModule } from 'flipper-menu';
-import { TestingComponentComponent } from './testing-component/testing-component.component';
+import { AppRoutingModule } from './app-routing.module';
 
 
 @NgModule({
@@ -12,7 +12,8 @@ import { TestingComponentComponent } from './testing-component/testing-component
   ],
   imports: [
     BrowserModule,
-    FlipperMenuModule 
+    FlipperMenuModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

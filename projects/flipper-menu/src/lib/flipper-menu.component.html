@@ -20,7 +20,7 @@
   <div class="fp-secondary-sidebar" [@toggleBox]="isOpen ? 'open' : 'closed'" *ngIf="!isOpen">
     <div class="toggled-button" (click)="toggle()"></div>
     <div class="fp-secondary-sidebar-text" *ngIf="defaultBranch">{{defaultBranch.name}} <span class="dropdown-branch" (click)="toggleBranches()">v</span></div>
-    <div class="list-branches" *ngIf="canViewBranches" [@toggleBox]="canViewBranches ? 'open' : 'closed'">
+    <div class="list-branches" (click)="hideBranchDropDown()" *ngIf="canViewBranches" [@toggleBox]="canViewBranches ? 'open' : 'closed'">
       <div class="list-branch-title"><span class="branch-title-text">Branches</span></div>
       <div class="branch-container">
         <div *ngFor="let branch of branches; let i = index;">
@@ -31,7 +31,7 @@
         </div>
 
       </div>
-      <div class="add-branch"><span class="add-branch-text">
+      <div class="add-branch"><span class="add-branch-text" (click)="hideBranchDropDown()">
           <span class="add-branch-icon">i</span>
           <span class="add-branch-text">Create new branch</span>
         
@@ -49,17 +49,17 @@
     <div class="divider"></div>
     <div class="fp-menu"  *ngFor="let menu of menus; let i = index;">
     
-      <div [ngClass]="menu.active?'fp-active-menu':'fp-inactive-menu'">
+      <div [ngClass]="menu.active?'fp-active-menu':'fp-inactive-menu'" (click)="router(menu)">
         <span class="fp-inactive-menu-icon">i</span>
         <span class="fp-inactive-menu-text">{{menu.name}}</span>
       </div>
 
     </div>
 
-    <div class="setting">
-      <div class="fp-active-menu">
+    <div class="setting" *ngIf="settingMenu">
+      <div [ngClass]="settingMenu.active?'fp-active-menu':'fp-inactive-menu'" (click)="router(settingMenu)">
         <span class="fp-inactive-menu-icon">i</span>
-        <span class="fp-inactive-menu-text">Settings</span>
+        <span class="fp-inactive-menu-text">{{settingMenu.name}}</span>
       </div>
     </div>
 

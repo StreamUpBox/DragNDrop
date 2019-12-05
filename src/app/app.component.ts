@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MenuEntries } from 'flipper-menu/lib/menu-entries';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -10,7 +11,7 @@ import { MenuEntries } from 'flipper-menu/lib/menu-entries';
 export class AppComponent {
  entries:MenuEntries;
 
-    constructor() {
+    constructor(private router:Router) {
       this.allEntries();
     }
     displayMenuToggled(event){
@@ -24,7 +25,11 @@ export class AppComponent {
     //console.log(event);
   }
   displaySwitchedBranch(event){
+    //console.log(event);
+  }
+  getRouterClicked(event){
     console.log(event);
+    return this.router.navigate([event.router]);
   }
     allEntries():MenuEntries{
       this.entries={
@@ -42,6 +47,16 @@ export class AppComponent {
           {
             id:2,
             name:'My Shop',
+            active:false,
+          },
+          {
+            id:3,
+            name:'Dom',
+            active:false,
+          },
+          {
+            id:4,
+            name:'Gy',
             active:false,
           }
         ],
@@ -94,6 +109,13 @@ export class AppComponent {
             name:'Orders',
             icon:'i',
             route:'order',
+            active:false,
+          },
+          {
+            id:5,
+            name:'Settings',
+            icon:'i',
+            route:'settings',
             active:false,
           }
         ]

@@ -1,9 +1,9 @@
 @font-face {
   font-family: Heebo;
   src: local(Heebo-Regular),
-    url(/path/to/Heebo-Regular.woff2) format("woff2"),
-    url(/path/to/Heebo-Regular.woff) format("woff"),
-    url(/path/to/Heebo-Regular.ttf) format("truetype");
+    url(./assets/font/Heebo-Regular.woff2) format("woff2"),
+    url(./assets/font/Heebo-Regular.woff) format("woff"),
+    url(./assets/font/Heebo-Regular.ttf) format("truetype");
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;
@@ -11,9 +11,9 @@
 @font-face {
   font-family: Heebo;
   src: local(Heebo-Medium),
-    url(/path/to/Heebo-Medium.woff2) format("woff2"),
-    url(/path/to/Heebo-Medium.woff) format("woff"),
-    url(/path/to/Heebo-Medium.ttf) format("truetype");
+    url(./assets/font/Heebo-Medium.woff2) format("woff2"),
+    url(./assets/font/Heebo-Medium.woff) format("woff"),
+    url(./assets/font/Heebo-Medium.ttf) format("truetype");
   font-weight: 500;
   font-style: normal;
   font-stretch: normal;
@@ -21,9 +21,9 @@
 @font-face {
   font-family: Heebo;
   src: local(Heebo-Bold),
-    url(/path/to/Heebo-Bold.woff2) format("woff2"),
-    url(/path/to/Heebo-Bold.woff) format("woff"),
-    url(/path/to/Heebo-Bold.ttf) format("truetype");
+    url(./assets/font/Heebo-Bold.woff2) format("woff2"),
+    url(./assets/font/Heebo-Bold.woff) format("woff"),
+    url(./assets/font/Heebo-Bold.ttf) format("truetype");
   font-weight: bold;
   font-style: normal;
   font-stretch: normal;
@@ -31,9 +31,9 @@
 @font-face {
   font-family: Roboto;
   src: local(Roboto-Regular),
-    url(/path/to/Roboto-Regular.woff2) format("woff2"),
-    url(/path/to/Roboto-Regular.woff) format("woff"),
-    url(/path/to/Roboto-Regular.ttf) format("truetype");
+    url(./assets/font/Roboto-Regular.woff2) format("woff2"),
+    url(./assets/font/Roboto-Regular.woff) format("woff"),
+    url(./assets/font/Roboto-Regular.ttf) format("truetype");
   font-weight: normal;
   font-style: normal;
   font-stretch: normal;
@@ -189,7 +189,7 @@
   position: relative;
   top: -20px;
   left: 30px;
-  width: 69px;
+  width: 200px;
   height: 20px;
   font-family: Roboto;
   font-size: 12px;
@@ -206,18 +206,19 @@
   /* background-color: #955be9;  */
   cursor: pointer;
   font-family: Roboto;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
 }
 .fp-active-menu{
   width: 210px;
   height: 46px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.46;
+  font-family: Heebo;
   letter-spacing: normal;
   box-shadow: inset 5px 0 0 0 #955be9;
   background-color: rgba(255, 255, 255, 0.05);
@@ -239,7 +240,7 @@
   top: 13px;
   width: 54px;
   height: 20px;
- 
+  font-family: Heebo;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.54;
@@ -249,6 +250,8 @@
 .setting{
   position: fixed;
   bottom: 0px;
+  box-shadow: inset 5px 0 0 0 #130f1f;
+  background-color: rgba(255, 255, 255, 0.05);
  
 }
 
@@ -288,7 +291,7 @@
 }
 .untoggled-button{
   position: absolute;
- margin-top: 50.3px;
+  margin-top: 74.3px;
     left: 52px;
     z-index: 10;
   float: right;

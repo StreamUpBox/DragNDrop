@@ -1,8 +1,1 @@
-<!-- <flipper-button buttonColor="flipper-red"
-                displayText="Save">
-
-
-</flipper-button> -->
-
-<flipper-button [buttonConfig]="textBtnConfig" 
-></flipper-button>
+<flipper-menu [menuEntries]="entries" (logoutUser)="canLogoutUser($event)" (routerClicked)="getRouterClicked($event)" (menuToggled)='displayMenuToggled($event)' (switchedBusiness)="displaySwitchedBusiness($event)" (switchedBranch)="displaySwitchedBranch($event)"></flipper-menu>

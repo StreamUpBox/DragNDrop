@@ -31,11 +31,17 @@
       "yegobox-login/*": [
         "dist/yegobox-login/*"
       ],
-      "flipper-button": [
-        "dist/flipper-button"
+      "ng-offline-db": [
+        "dist/ng-offline-db"
       ],
-      "flipper-button/*": [
-        "dist/flipper-button/*"
+      "ng-offline-db/*": [
+        "dist/ng-offline-db/*"
+      ],
+      "flipper-menu": [
+        "dist/flipper-menu"
+      ],
+      "flipper-menu/*": [
+        "dist/flipper-menu/*"
       ]
     }
   },

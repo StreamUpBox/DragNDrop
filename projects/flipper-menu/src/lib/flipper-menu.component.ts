@@ -12,7 +12,6 @@ import { Menu } from './menu';
   styleUrls: ['./flipper-menu.component.css'],
   animations: [
     trigger('toggleBox', [
-      // ...
       
       transition('open => closed', [
        animate('1500ms')

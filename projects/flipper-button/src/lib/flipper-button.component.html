@@ -1,31 +1,17 @@
-<!-- <ng-container [*ngTemplateOutlet]="buttonConfig['text'] ? text : image">
-</ng-container> -->
-{{buttonConfig['text']}}
-<!-- Text Button -->
 <div *ngIf="buttonConfig['text']!='' && buttonConfig['src']==''">
-  <button type="button"
-          [ngStyle]="styleConfig[buttonConfig.buttonStyle.fp_btn_type]">
+  <button type="button" [ngStyle]="styleConfig[buttonConfig.buttonStyle.fp_btn_type]">
     {{buttonConfig.text | uppercase}}
   </button>
 </div>
 
 
-<div  *ngIf="buttonConfig['src']!='' && buttonConfig['text']==''">
-    <button type="button"
-    [ngStyle]="styleConfig[buttonConfig.buttonStyle.fp_btn_type]">
-    <img alt="image button"
-    [src]="'./assets/icons/'+buttonConfig.src"
-   >
-</button>
+<div *ngIf="buttonConfig['src']!='' && buttonConfig['text']==''">
+  <button type="button" [ngStyle]="styleConfig[buttonConfig.buttonStyle.fp_btn_type]">
+    <img alt="image button" [src]="'./assets/icons/'+buttonConfig.src">
+  </button>
 </div>
 <div *ngIf="buttonConfig['text']!='' && buttonConfig['src']!=''">
-    <button type="button"
-    [ngStyle]="styleConfig[buttonConfig.buttonStyle.fp_btn_type]">
-     <img alt="image button"
-    [src]="'./assets/icons/'+buttonConfig.src"
-   > {{buttonConfig.text | uppercase}}
-</button>
-  
+  <button type="button" [ngStyle]="styleConfig[buttonConfig.buttonStyle.fp_btn_type]">
+    <img alt="image button" [src]="'./assets/icons/'+buttonConfig.src"> {{buttonConfig.text | uppercase}}
+  </button>
 </div>
-
-

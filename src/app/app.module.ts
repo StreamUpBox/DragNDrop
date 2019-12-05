@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { FlipperMenuModule } from 'flipper-menu';
 import { AppRoutingModule } from './app-routing.module';
+import { TestingComponentComponent } from './testing-component/testing-component.component';
 
 
 @NgModule({

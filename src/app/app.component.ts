@@ -16,9 +16,11 @@ export class AppComponent {
     }
     displayMenuToggled(event){
       
+      //console.log(event);
+    }
+    canLogoutUser(event){
       console.log(event);
     }
-
   //switchedBusiness
 
   displaySwitchedBusiness(event){
@@ -35,7 +37,7 @@ export class AppComponent {
       this.entries={
         user:{
           id:1,
-          name:'Ganza respice',
+          name:'Ganza jean respice Momams',
           email:'respinho2014@gmail.com'
         },
         businesses:[
@@ -63,7 +65,7 @@ export class AppComponent {
         branches:[
           {
             id:1,
-            name:'Kimironko branch',
+            name:'Kimironko rwanda nziza branch',
             active:true,
           },
           {
@@ -85,36 +87,36 @@ export class AppComponent {
         menu:[
           {
             id:1,
-            name:'Analytics',
-            icon:'i',
+            name:'Analytics dashboard for good',
+            icon:'analytics.svg',
             route:'analytics',
             active:true,
           },
           {
             id:2,
             name:'Inventory',
-            icon:'i',
+            icon:'inventory.svg',
             route:'inventory',
             active:false,
           },
           {
             id:3,
             name:'Inventory Count',
-            icon:'i',
+            icon:'inventory-count.svg',
             route:'inventory-count',
             active:false,
           },
           {
             id:4,
             name:'Orders',
-            icon:'i',
+            icon:'order.svg',
             route:'order',
             active:false,
           },
           {
             id:5,
             name:'Settings',
-            icon:'i',
+            icon:'settings.svg',
             route:'settings',
             active:false,
           }

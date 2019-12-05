@@ -1,23 +1,25 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FlipperMenuComponent } from './flipper-menu.component';
+import { TestingComponentComponent } from './testing-component.component';
 
-describe('FlipperMenuComponent', () => {
-  let component: FlipperMenuComponent;
-  let fixture: ComponentFixture<FlipperMenuComponent>;
+describe('TestingComponentComponent', () => {
+  let component: TestingComponentComponent;
+  let fixture: ComponentFixture<TestingComponentComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FlipperMenuComponent ]
+      declarations: [ TestingComponentComponent ]
     })
     .compileComponents();
   }));
 
+  
   beforeEach(() => {
-    fixture = TestBed.createComponent(FlipperMenuComponent);
+    fixture = TestBed.createComponent(TestingComponentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });

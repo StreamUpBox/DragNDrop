@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { trigger, transition, animate, state, style } from '@angular/animations';
+import { trigger, transition, animate } from '@angular/animations';
 import { MenuEntries } from './menu-entries';
 import { Branch } from './branch';
 import { User } from './user';

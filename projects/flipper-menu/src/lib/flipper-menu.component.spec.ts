@@ -14,6 +14,7 @@ describe('FlipperMenuComponent', () => {
   }));
 
   beforeEach(() => {
+    
     fixture = TestBed.createComponent(FlipperMenuComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

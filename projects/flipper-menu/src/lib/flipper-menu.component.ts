@@ -119,6 +119,7 @@ export class FlipperMenuComponent implements OnInit {
     this.canViewBranches = false;
 
   }
+
   router(menu: Menu) {
     if (this.settingMenu.active == true) {
       this.settingMenu.active = false;
@@ -151,7 +152,9 @@ export class FlipperMenuComponent implements OnInit {
     }
     return str;
   }
-  logout(){
-      return this.logoutUser.emit(this.loggedUser);
+  logout() {
+    //FIXME: this code is not working
+    this.logoutUser.emit(this.loggedUser);
+    return;
   }
 }

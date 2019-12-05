@@ -21,12 +21,12 @@ export class AppComponent {
     }
   };
   entries: MenuEntries;
-
+  //TODO: add an interface to implement from FlipperMenu so a developer to implement know which
+  //method to call as outPut!
   constructor(private router: Router) {
     this.allEntries();
   }
   displayMenuToggled(event) {
-
     //console.log(event);
   }
   canLogoutUser(event) {

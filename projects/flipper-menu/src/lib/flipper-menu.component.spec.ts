@@ -27,6 +27,12 @@ let business =
     }
   ];
 
+let mocUser = {
+  id: 1,
+  name: 'Ganza respice',
+  email: 'respinho2014@gmail.com'
+};
+
 let MocMenuEntries = {
   user: {
     id: 1,
@@ -177,5 +183,21 @@ describe('FlipperMenuComponent', () => {
   it('should hide branch DropDown', () => {
     component.hideBranchDropDown();
     expect(component.canViewBranches).toBe(false);
-  })
+  });
+  it('should cut words to small lenght', () => {
+    let end = component.textEllipsis("helloworld", 2, { side: "end" });
+    expect(end).toBe('helloworl...');
+
+    let start = component.textEllipsis("helloworld", 2, { side: "start" });
+    expect(start).toBe('...elloworld');
+  });
+  it('should emit log out event', () => {
+    //FIXME: this code is not working
+    component.logout();
+    spyOn(component.logoutUser, 'emit');
+    const el = fixture.nativeElement;
+    const logout = el.querySelector('.icon-logout');
+    logout.dispatchEvent(new Event('click'));
+    expect(component.logoutUser.emit).toHaveBeenCalledWith(mocUser);
+  });
 });

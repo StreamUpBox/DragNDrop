@@ -1,0 +1,381 @@
+
+@font-face {
+  font-family: Heebo;
+  src: local(Heebo-Regular),
+    url(./assets/font/Heebo-Regular.woff2) format("woff2"),
+    url(./assets/font/Heebo-Regular.woff) format("woff"),
+    url(./assets/font/Heebo-Regular.ttf) format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+}
+@font-face {
+  font-family: Heebo;
+  src: local(Heebo-Medium),
+    url(./assets/font/Heebo-Medium.woff2) format("woff2"),
+    url(./assets/font/Heebo-Medium.woff) format("woff"),
+    url(./assets/font/Heebo-Medium.ttf) format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+}
+@font-face {
+  font-family: Heebo;
+  src: local(Heebo-Bold),
+    url(./assets/font/Heebo-Bold.woff2) format("woff2"),
+    url(./assets/font/Heebo-Bold.woff) format("woff"),
+    url(./assets/font/Heebo-Bold.ttf) format("truetype");
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+}
+@font-face {
+  font-family: Roboto;
+  src: local(Roboto-Regular),
+    url(./assets/font/Roboto-Regular.woff2) format("woff2"),
+    url(./assets/font/Roboto-Regular.woff) format("woff"),
+    url(./assets/font/Roboto-Regular.ttf) format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+
+/* Float four columns side by side */
+.column-3 {
+  float: left;
+  width: 377px;
+  margin-left:31px;
+  margin-bottom:10px;
+  /* padding: 0 10px 10px 0px; */
+}
+.column-4 {
+  float: left;
+  width: 33.1%;
+  padding: 0 10px 10px 0px;
+}
+.column-2 {
+  float: left;
+  width: 50%;
+  padding:  0 15px 10px 0px;
+}
+.column-1 {
+  float: left;
+  width: 50%;
+  padding: 0 10px 10px 0px;
+}
+
+/* Remove extra left and right margins, due to padding */
+.row {margin: 3px}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+
+/* Responsive columns */
+@media screen and (max-width: 600px) {
+  .column-1,.column-2,.column-3,.column-4 {
+    width: 100%;
+    display: block;
+    margin-bottom: 8px;
+  }
+}
+
+/* Style the counter cards */
+.card {
+  width: auto;
+  height: 152px;
+  padding: 2px;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px 0 rgba(63, 63, 68, 0.15), 0 0 0 1px rgba(63, 63, 68, 0.05);
+  background-color: #ffffff;
+}
+
+.card-green {
+  box-shadow: 0 1px 3px 0 #ffffff, 0 0 0 1px #ffffff!important;;
+  background-color: #47b881!important;
+  
+}
+.text-white{
+  color: #ffff!important;
+}
+.card > .card-left{
+float: left;
+margin: 2px;
+}
+.card > .card-left > .portlet-title{
+  position: relative;
+  top: 20px;
+  left:24px;
+  width: 237px;
+  height: 16px;
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.33;
+  letter-spacing: 1px;
+  color: #66788a;
+}
+
+.card > .card-left > .amount {
+  display: block;
+  position: relative;
+  top: 29px;
+  left:24px;
+  width: 163px;
+  height: 28px;
+  font-family: Roboto;
+  font-size: 24px;
+  font-weight: 600;
+  font-stretch: normal;
+  line-height: 1.17;
+  letter-spacing: -0.06px;
+  color: #212529;
+}
+
+.card > .card-right{
+  float: right;
+  margin: 2px;
+  }
+
+  .card > .card-right > .oval-circle-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  position: relative;
+  top: 20px;
+  right:24px;
+  background-color: #ec4c47;
+}
+.bg-green{
+  background-color: #47b881!important;
+}
+.card > .card-right > .oval-circle-icon-blue {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  position: relative;
+  top: 20px;
+  right:24px;
+  background-color: #1070ca;
+}
+.card > .card-right > .oval-circle-icon-blue  > .icon{
+  width: 30.6px;
+  height: 30.7px;
+  position: relative;
+  top: 17px;
+  left: 17px;
+}
+
+.card > .card-right > .oval-circle-icon > .icon{
+  width: 30.6px;
+  height: 30.7px;
+  position: relative;
+  top: 17px;
+  left: 17px;
+}
+.card > .card-bottom{
+  display: inline-block;
+  position: relative;
+  top: 25px;
+  left:24px;
+  width: 100%;
+}
+.card > .card-bottom > .dropdown-icon{
+    width: 10px;
+    height: 5px;
+    background-color: #ec4c47;
+}
+
+.card > .card-bottom > .percentage{
+  width: 23px;
+  position: relative;
+  left:5px;
+  height: 16px;
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: -0.04px;
+  color: #bf0e08;
+}
+.card > .card-bottom >  .since-last-month {
+  position: relative;
+  left:8px;
+  width: 91px;
+  height: 16px;
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: -0.04px;
+  color: #66788a;
+}
+
+.card-items{
+  width: 377px;
+  height: 518px;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px 0 rgba(63, 63, 68, 0.15), 0 0 0 1px rgba(63, 63, 68, 0.05);
+  background-color: #ffffff;
+}
+.card-items > .card-header{
+  width: 100%;
+  height: 40px;
+  padding:2px;
+  margin:2px;
+}
+
+.card-items > .card-header > .card-title{
+  position: relative;
+  top:24px;
+  left:24px;
+  width: 118px;
+  height: 20px;
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.25;
+  letter-spacing: -0.05px;
+  color: #3a3b3f;
+}
+
+.card-items > .card-header > .card-subtitle{
+  position: relative;
+  top:24px;
+  right:24px;
+  float: right;
+  width: 62px;
+  height: 16px;
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  color: #9ea0a5;
+}
+
+.card-items > .card-body{
+  width: 100%;
+  height: 100%;
+  position: relative;
+  left:24px;
+  right:24px;
+  top:26px;
+ 
+}
+.card-items > .card-footer{
+  width: 100%;
+  height: 30px;
+  position: relative;
+    bottom: 73px;
+    border-top: 1px solid #e4e7eb;
+}
+.card-items > .card-footer > .view-all {
+  position: relative;
+    top: 6px;
+    left: 240px;
+
+  width: 119px;
+  height: 20px;
+  font-family: Roboto;
+  font-size: 13px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.43;
+  letter-spacing: -0.05px;
+  text-align: right;
+  color: #1070ca;
+}
+.card-items > .card-body > .card-item{
+  position: relative;
+    top: -10px;
+  width: 329px;
+  height: 88px;
+}
+.card-items > .card-body > .divider{
+  display: inline-block;
+  width: 329px;
+  height: 1px;
+  background-color: #e4e7eb;
+  position: relative;
+    top: -13px;
+}
+.card-items > .card-body > .card-item > .image{
+  width: 64px;
+  height: 64px;
+  border-radius: 5px;
+  border: solid 1px #edf0f2;
+  background-color: #ffffff;
+  position: relative;
+  left:8px;
+  right:8px;
+  top:12px;
+}
+.card-items > .card-body > .card-item > .image > .archive-icon{
+  width: 48px;
+  height: 40px;
+  position: relative;
+  left:8px;
+  right:8px;
+  top:12px;
+  bottom:12px;
+}
+.card-items > .card-body > .card-item > .item{
+  position: relative;
+  left:100px;
+  bottom: 38px;
+ 
+}
+.card-items > .card-body > .card-item > .item > .item-name{
+  width: 100px;
+  height: 20px;
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.25;
+  letter-spacing: -0.06px;
+  color: #3a3b3f;
+}
+.card-items > .card-body > .card-item > .item > .item-date{
+  position: relative;
+  display: block;
+  width: 90px;
+  height: 16px;
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  color: #9ea0a5;
+}
+
+.card-items > .card-body > .card-item > .item > .more{
+  position: relative;
+  bottom: 29px;
+    left: 194px;
+}
+

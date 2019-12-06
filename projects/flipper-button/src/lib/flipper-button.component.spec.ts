@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FlipperButtonComponent } from './flipper-button.component';
+import { BasicRectangleButton } from './button.component';
 
 describe('FlipperButtonComponent', () => {
   let component: FlipperButtonComponent;
@@ -8,9 +9,9 @@ describe('FlipperButtonComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FlipperButtonComponent ]
+      declarations: [FlipperButtonComponent, BasicRectangleButton, BasicRectangleButton]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -21,5 +22,14 @@ describe('FlipperButtonComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+  it('should should fallback to square shape when no input is given', () => {
+    // component.defaultButton();
+    // if (component.shape == null || undefined) {
+    //   expect(component.defaultButton()).toBe('rectangle');
+    // }
+    // if (component.shape = 'circle') {
+    //   expect(component.defaultButton()).toBe('circle');
+    // }
   });
 });

@@ -6,7 +6,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { TestingComponentComponent } from './testing-component/testing-component.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import { FlipperButtonModule } from 'flipper-button';
 
 

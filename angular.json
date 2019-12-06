@@ -169,8 +169,8 @@
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "projects/ng-offline-db/tsconfig.lib.json",
-            "project": "projects/ng-offline-db/ng-package.json"
+            "tsConfig": "projects/flipper-button/tsconfig.lib.json",
+            "project": "projects/flipper-button/ng-package.json"
           }
         },
         "test": {

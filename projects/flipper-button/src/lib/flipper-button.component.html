@@ -1,8 +1,8 @@
 <div [ngSwitch]="shape">
   <div *ngSwitchCase="'circle'">
-    <ng-template ad-host></ng-template>
+    <button #change>{{text}}</button>
   </div>
   <div *ngSwitchDefault>
-    <ng-template ad-host></ng-template>
+    <button #change>{{text}}</button>
   </div>
 </div>

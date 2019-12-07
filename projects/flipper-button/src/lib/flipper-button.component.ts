@@ -1,41 +1,40 @@
-import { Component, ComponentFactoryResolver, ViewChild, Directive, ViewContainerRef, OnInit, Input, AfterViewInit } from '@angular/core';
+import { Component, ComponentFactoryResolver, ViewChild,  Input, AfterViewInit, ComponentRef, OnDestroy, OnInit, ElementRef } from '@angular/core';
 
-import { BasicCircleButton, BasicRectangleButton } from './button.component';
+import { BasicRectangleButton } from './button.component';
+import { DynamicButtonDirective } from './dynamic-button.directive';
 
 
-@Directive({
-  selector: '[dynamic-host]',
-})
-export class DynamicComponentDirective {
-  constructor(public viewContainerRef: ViewContainerRef) { }
-}
 
 @Component({
   selector: 'flipper-button',
   templateUrl: './flipper-button.component.html',
   styleUrls: ['./flipper-button.component.css']
 })
-export class FlipperButtonComponent implements AfterViewInit {
+export class FlipperButtonComponent implements OnInit,AfterViewInit  {
+ 
+ 
+  @Input() color: string='default';
+  @Input() text: string='button';
+  @Input() size: string="10";
+  @Input() shape: any='circle';
+  @Input() icon: any='';
 
-
-  @Input() buttonColor: string;
-  @Input() buttonConfig: any[];
-  @Input() displayText: string;
-  @Input() shape: any;
+  @ViewChild('change',{static:false}) change:ElementRef;
+  public componentRef: ComponentRef<any>;
+  
   button: string;
 
-  @ViewChild(DynamicComponentDirective, { static: true }) dynamicHost: DynamicComponentDirective;
+  @ViewChild(DynamicButtonDirective, { static: false }) dynamicButton: DynamicButtonDirective;
 
-  constructor(private componentFactoryResolver: ComponentFactoryResolver) { }
+  constructor() { }
+ 
 
-
-  ngAfterViewInit() {
-    this.defaultButton();
+  ngOnInit() {
+    
   }
-  defaultButton() {
-    let componentFactory = this.componentFactoryResolver.resolveComponentFactory(BasicRectangleButton);
-    // this.dynamicHost.viewContainerRef.clear();
-    // this.dynamicHost.viewContainerRef.createComponent(componentFactory);
+  ngAfterViewInit(): void {
+    console.log(this.change.nativeElement);
   }
+ 
 
 }

@@ -39,11 +39,11 @@
     font-stretch: normal;
   } */
   
-.rectangle {
+.flipper-common-button-css {
     width: 133px;
     height: 42px;
     border-radius: 2px;
     border: solid 1px rgba(0, 0, 0, 0.05);
-    background-color: #4ece3d;
+    /* background-color: #4ece3d; */
     color: #ffffff;
 }

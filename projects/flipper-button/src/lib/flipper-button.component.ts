@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, ViewChild,  Input, AfterViewInit, ComponentRef, OnDestroy, OnInit, ElementRef } from '@angular/core';
+import { Component, ComponentFactoryResolver, ViewChild,  Input, AfterViewInit, ComponentRef, OnDestroy, OnInit, ElementRef, Renderer2 } from '@angular/core';
 
 import { BasicRectangleButton } from './button.component';
 import { DynamicButtonDirective } from './dynamic-button.directive';
@@ -20,20 +20,23 @@ export class FlipperButtonComponent implements OnInit,AfterViewInit  {
   @Input() icon: any='';
 
   @ViewChild('change',{static:false}) change:ElementRef;
+  
+  
   public componentRef: ComponentRef<any>;
   
   button: string;
 
   @ViewChild(DynamicButtonDirective, { static: false }) dynamicButton: DynamicButtonDirective;
 
-  constructor() { }
+  constructor(private render:Renderer2) { }
  
 
   ngOnInit() {
     
   }
   ngAfterViewInit(): void {
-    console.log(this.change.nativeElement);
+    let el=this.change.nativeElement;
+    this.render.setStyle(el,'background','#4ece3d');
   }
  
 

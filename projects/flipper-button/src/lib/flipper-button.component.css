@@ -47,3 +47,11 @@
     /* background-color: #4ece3d; */
     color: #ffffff;
 }
+.flipper-common-circle-button{
+  width: 52px;
+  height: 52px;
+  border-radius: 100px;
+  border-color: transparent;
+  color: #ffffff;
+}
+

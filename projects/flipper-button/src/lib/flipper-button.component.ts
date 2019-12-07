@@ -35,8 +35,8 @@ export class FlipperButtonComponent implements  AfterViewInit {
       let green = this.element.nativeElement;
       this.render.setStyle(green, 'background', '#4ece3d');
     } else if (this.color == 'dark') {
-      let dart = this.element.nativeElement;
-      this.render.setStyle(dart, 'background', '#4ece3d');
+      let dark = this.element.nativeElement;
+      this.render.setStyle(dark, 'background', '#4ece3d');
     } else {
       let d = this.element.nativeElement;
       this.render.setStyle(d, 'background', '#4ece3d');

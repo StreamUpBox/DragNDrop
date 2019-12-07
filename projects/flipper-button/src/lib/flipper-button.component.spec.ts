@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FlipperButtonComponent } from './flipper-button.component';
-import { BasicRectangleButton } from './button.component';
 
 describe('FlipperButtonComponent', () => {
   let component: FlipperButtonComponent;
@@ -9,7 +8,7 @@ describe('FlipperButtonComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [FlipperButtonComponent, BasicRectangleButton, BasicRectangleButton]
+      declarations: [FlipperButtonComponent]
     })
       .compileComponents();
   }));

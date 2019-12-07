@@ -1,4 +1,4 @@
-import { Component, ViewChild, Input, AfterViewInit, ComponentRef, OnDestroy, OnInit, ElementRef, Renderer2 } from '@angular/core';
+import { Component, ViewChild, Input, AfterViewInit, ComponentRef, ElementRef, Renderer2, Output, EventEmitter } from '@angular/core';
 
 
 
@@ -16,6 +16,7 @@ export class FlipperButtonComponent implements  AfterViewInit {
   @Input() height: string;
   @Input() shape: any = 'circle';
   @Input() icon: any;
+  @Output() didClickButton: any = new EventEmitter<boolean>();
 
   @ViewChild('element', { static: false }) element: ElementRef;
 
@@ -41,4 +42,8 @@ export class FlipperButtonComponent implements  AfterViewInit {
       this.render.setStyle(d, 'background', '#4ece3d');
     }
   }
+  handleButtonClick() {
+    this.didClickButton.emit(true);
+  }
 }
+

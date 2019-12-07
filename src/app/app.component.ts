@@ -127,5 +127,8 @@ export class AppComponent {
     return this.entries;
 
   }
+  handleClic(){
+    console.log("a button got a click!!!");
+  }
 
 }

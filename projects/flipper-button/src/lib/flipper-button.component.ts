@@ -8,7 +8,7 @@ import { Component, ViewChild, Input, AfterViewInit, ComponentRef, OnDestroy, On
   templateUrl: './flipper-button.component.html',
   styleUrls: ['./flipper-button.component.css']
 })
-export class FlipperButtonComponent implements OnInit, AfterViewInit {
+export class FlipperButtonComponent implements  AfterViewInit {
 
   @Input() color: string;
   @Input() text: string = 'button';
@@ -26,10 +26,6 @@ export class FlipperButtonComponent implements OnInit, AfterViewInit {
 
   constructor(private render: Renderer2) { }
 
-
-  ngOnInit() {
-
-  }
   ngAfterViewInit(): void {
     if (this.color == 'blue') {
       let blue = this.element.nativeElement;

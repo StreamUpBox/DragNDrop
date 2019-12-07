@@ -1,8 +1,8 @@
 <div [ngSwitch]="shape">
   <div *ngSwitchCase="'circle'">
-    <button class="flipper-common-button-css" #change>{{text}}</button>
+    <button [ngStyle]="{'width':width,'height':height}" class="flipper-common-button-css" #element>{{text}}</button>
   </div>
   <div *ngSwitchDefault>
-    <button class="flipper-common-button-css" #change>{{text}}</button>
+    <button [ngStyle]="{'width':width,'height':height}" class="flipper-common-button-css" #element>{{text}}</button>
   </div>
 </div>

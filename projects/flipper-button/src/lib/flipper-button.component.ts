@@ -1,7 +1,5 @@
-import { Component, ComponentFactoryResolver, ViewChild,  Input, AfterViewInit, ComponentRef, OnDestroy, OnInit, ElementRef, Renderer2 } from '@angular/core';
+import { Component, ViewChild, Input, AfterViewInit, ComponentRef, OnDestroy, OnInit, ElementRef, Renderer2 } from '@angular/core';
 
-import { BasicRectangleButton } from './button.component';
-import { DynamicButtonDirective } from './dynamic-button.directive';
 
 
 
@@ -10,34 +8,41 @@ import { DynamicButtonDirective } from './dynamic-button.directive';
   templateUrl: './flipper-button.component.html',
   styleUrls: ['./flipper-button.component.css']
 })
-export class FlipperButtonComponent implements OnInit,AfterViewInit  {
- 
- 
-  @Input() color: string='default';
-  @Input() text: string='button';
-  @Input() size: string="10";
-  @Input() shape: any='circle';
-  @Input() icon: any='';
+export class FlipperButtonComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('change',{static:false}) change:ElementRef;
-  
-  
+  @Input() color: string;
+  @Input() text: string = 'button';
+  @Input() width: string;
+  @Input() height: string;
+  @Input() shape: any = 'circle';
+  @Input() icon: any = '';
+
+  @ViewChild('element', { static: false }) element: ElementRef;
+
+
   public componentRef: ComponentRef<any>;
-  
+
   button: string;
 
-  @ViewChild(DynamicButtonDirective, { static: false }) dynamicButton: DynamicButtonDirective;
+  constructor(private render: Renderer2) { }
 
-  constructor(private render:Renderer2) { }
- 
 
   ngOnInit() {
-    
+
   }
   ngAfterViewInit(): void {
-    let el=this.change.nativeElement;
-    this.render.setStyle(el,'background','#4ece3d');
+    if (this.color == 'blue') {
+      let blue = this.element.nativeElement;
+      this.render.setStyle(blue, 'background', '#0093ee');
+    } else if (this.color == 'green') {
+      let green = this.element.nativeElement;
+      this.render.setStyle(green, 'background', '#4ece3d');
+    } else if (this.color == 'dark') {
+      let dart = this.element.nativeElement;
+      this.render.setStyle(dart, 'background', '#4ece3d');
+    } else {
+      let d = this.element.nativeElement;
+      this.render.setStyle(d, 'background', '#4ece3d');
+    }
   }
- 
-
 }

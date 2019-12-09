@@ -9,17 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  textBtnConfig = {
-    text: 'Test',
-    src: 'check.svg',
-    buttonStyle: {
-      fp_btn_type: 'info',
-      shape: 'circle',
-      width: '',
-      height: '',
 
-    }
-  };
   entries: MenuEntries;
   //TODO: add an interface to implement from FlipperMenu so a developer to implement know which
   //method to call as outPut!
@@ -136,6 +126,9 @@ export class AppComponent {
 
     return this.entries;
 
+  }
+  handleClic(){
+    console.log("a button got a click!!!");
   }
 
 }

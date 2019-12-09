@@ -169,8 +169,8 @@
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "projects/ng-offline-db/tsconfig.lib.json",
-            "project": "projects/ng-offline-db/ng-package.json"
+            "tsConfig": "projects/flipper-button/tsconfig.lib.json",
+            "project": "projects/flipper-button/ng-package.json"
           }
         },
         "test": {
@@ -187,6 +187,41 @@
             "tsConfig": [
               "projects/flipper-button/tsconfig.lib.json",
               "projects/flipper-button/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "flipperMenu": {
+      "projectType": "library",
+      "root": "projects/flipper-menu",
+      "sourceRoot": "projects/flipper-menu/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/flipper-menu/tsconfig.lib.json",
+            "project": "projects/flipper-menu/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/flipper-menu/src/test.ts",
+            "tsConfig": "projects/flipper-menu/tsconfig.spec.json",
+            "karmaConfig": "projects/flipper-menu/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/flipper-menu/tsconfig.lib.json",
+              "projects/flipper-menu/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

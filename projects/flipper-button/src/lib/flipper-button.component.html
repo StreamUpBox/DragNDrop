@@ -1,17 +1,12 @@
-<div *ngIf="buttonConfig['text']!='' && buttonConfig['src']==''">
-  <button type="button" [ngStyle]="styleConfig[buttonConfig.buttonStyle.fp_btn_type]">
-    {{buttonConfig.text | uppercase}}
-  </button>
-</div>
-
-
-<div *ngIf="buttonConfig['src']!='' && buttonConfig['text']==''">
-  <button type="button" [ngStyle]="styleConfig[buttonConfig.buttonStyle.fp_btn_type]">
-    <img alt="image button" [src]="'./assets/icons/'+buttonConfig.src">
-  </button>
-</div>
-<div *ngIf="buttonConfig['text']!='' && buttonConfig['src']!=''">
-  <button type="button" [ngStyle]="styleConfig[buttonConfig.buttonStyle.fp_btn_type]">
-    <img alt="image button" [src]="'./assets/icons/'+buttonConfig.src"> {{buttonConfig.text | uppercase}}
-  </button>
+<div [ngSwitch]="shape">
+  <div *ngSwitchCase="'circle'">
+    <button (click)="handleButtonClick()" [ngStyle]="{'width':width,'height':height}" class="flipper-common-circle-button" #element>
+      <span *ngIf="!icon">{{icon}}</span>
+      <img *ngIf="icon" [src]="'./assets/icons/'+icon+'.svg'" class="icon">
+    </button>
+    
+  </div>
+  <div *ngSwitchDefault>
+    <button (click)="handleButtonClick()" [ngStyle]="{'width':width,'height':height}" class="flipper-common-button-css" #element>{{text}}</button>
+  </div>
 </div>

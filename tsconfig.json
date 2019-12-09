@@ -42,6 +42,12 @@
       ],
       "flipper-dashboard/*": [
         "dist/flipper-dashboard/*"
+      ],
+      "flipper-button": [
+        "dist/flipper-button"
+      ],
+      "flipper-button/*": [
+        "dist/flipper-button/*"
       ]
     }
   },

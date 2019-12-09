@@ -6,9 +6,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { TestingComponentComponent } from './testing-component/testing-component.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-// import { FlipperButtonModule } from 'flipper-button';
 import { FlipperDashboardModule } from 'flipper-dashboard';
+import { FlipperButtonModule } from 'flipper-button';
+
 
 
 @NgModule({
@@ -19,7 +19,7 @@ import { FlipperDashboardModule } from 'flipper-dashboard';
   imports: [
     BrowserModule,
 
-    // FlipperButtonModule,
+    FlipperButtonModule,
     FlipperMenuModule,
     FlipperDashboardModule,
     BrowserAnimationsModule,

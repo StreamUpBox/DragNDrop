@@ -1,8 +1,12 @@
 <div [ngSwitch]="shape">
   <div *ngSwitchCase="'circle'">
-    <ng-template ad-host></ng-template>
+    <button (click)="handleButtonClick()" [ngStyle]="{'width':width,'height':height}" class="flipper-common-circle-button" #element>
+      <span *ngIf="!icon">{{icon}}</span>
+      <img *ngIf="icon" [src]="'./assets/icons/'+icon+'.svg'" class="icon">
+    </button>
+    
   </div>
   <div *ngSwitchDefault>
-    <ng-template ad-host></ng-template>
+    <button (click)="handleButtonClick()" [ngStyle]="{'width':width,'height':height}" class="flipper-common-button-css" #element>{{text}}</button>
   </div>
 </div>

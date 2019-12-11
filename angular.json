@@ -214,7 +214,8 @@
             "main": "projects/flipper-menu/src/test.ts",
             "tsConfig": "projects/flipper-menu/tsconfig.spec.json",
             "karmaConfig": "projects/flipper-menu/karma.conf.js"
-          }
+          },
+          "styles": []
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",

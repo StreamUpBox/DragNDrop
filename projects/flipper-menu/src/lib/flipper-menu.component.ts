@@ -28,7 +28,7 @@ export class FlipperMenuComponent implements OnInit {
   @Output() switchedBusiness: any = new EventEmitter<Business>();
   @Output() switchedBranch: any = new EventEmitter<Branch>();
   @Output() routerClicked: any = new EventEmitter<any>();
-  @Output() logoutUser: any = new EventEmitter<boolean>();
+  @Output() logoutUser: any = new EventEmitter<User>();
 
   @Input() menuEntries: MenuEntries;
 
@@ -153,6 +153,6 @@ export class FlipperMenuComponent implements OnInit {
     return str;
   }
   logout() {
-    this.logoutUser.emit(true);
+    this.logoutUser.emit(this.loggedUser);  
   }
 }

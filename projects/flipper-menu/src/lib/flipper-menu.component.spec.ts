@@ -197,9 +197,11 @@ describe('FlipperMenuComponent', () => {
     component.toggle();
     spyOn(component.menuToggled, 'emit');
     const el = fixture.nativeElement;
+
     const toggleButton = el.querySelector('.toggled-button');
     toggleButton.dispatchEvent(new Event('click'));
     expect(component.menuToggled.emit).toHaveBeenCalledWith(false);
     expect(component.isOpen).toBe(false);
   });
+
 });

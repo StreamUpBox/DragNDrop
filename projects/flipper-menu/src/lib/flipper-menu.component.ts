@@ -28,7 +28,7 @@ export class FlipperMenuComponent implements OnInit {
   @Output() switchedBusiness: any = new EventEmitter<Business>();
   @Output() switchedBranch: any = new EventEmitter<Branch>();
   @Output() routerClicked: any = new EventEmitter<any>();
-  @Output() logoutUser: any = new EventEmitter<User>();
+  @Output() logoutUser: any = new EventEmitter<boolean>();
 
   @Input() menuEntries: MenuEntries;
 
@@ -153,8 +153,6 @@ export class FlipperMenuComponent implements OnInit {
     return str;
   }
   logout() {
-    //FIXME: this code is not working
-    this.logoutUser.emit(this.loggedUser); //FIXME: the button should emit a user here please fix the unit testing.
-    return;
+    this.logoutUser.emit(true);
   }
 }

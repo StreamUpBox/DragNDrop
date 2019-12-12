@@ -7,7 +7,7 @@ import { TestingComponentComponent } from './testing-component/testing-component
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlipperDashboardModule } from 'flipper-dashboard';
-import { FlipperButtonModule } from 'flipper-button';
+// import { FlipperButtonModule } from 'flipper-button';
 
 
 
@@ -19,8 +19,8 @@ import { FlipperButtonModule } from 'flipper-button';
   imports: [
     BrowserModule,
 
-    FlipperButtonModule,
-    FlipperMenuModule,
+    // FlipperButtonModule,
+    // FlipperMenuModule,
     FlipperDashboardModule,
     BrowserAnimationsModule,
     AppRoutingModule

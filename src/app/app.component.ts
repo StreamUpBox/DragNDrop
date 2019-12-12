@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MenuEntries } from 'flipper-menu/lib/menu-entries';
 import { Router } from '@angular/router';
+import { DashBoardEntries } from 'projects/flipper-dashboard/src/lib/dashboard-entries';
 
 
 @Component({
@@ -11,10 +12,13 @@ import { Router } from '@angular/router';
 export class AppComponent {
 
   entries: MenuEntries;
+  dashabordEntries:DashBoardEntries;
   //TODO: add an interface to implement from FlipperMenu so a developer to implement know which
   //method to call as outPut!
+  
   constructor(private router: Router) {
     this.allEntries();
+    this.dashboardEntrie();
   }
   displayMenuToggled(event) {
     //console.log(event);
@@ -30,9 +34,94 @@ export class AppComponent {
   displaySwitchedBranch(event) {
     //console.log(event);
   }
+
   getRouterClicked(event) {
     return this.router.navigate([event.router]);
   }
+ dashboardEntrie():DashBoardEntries{
+
+  this.dashabordEntries= {
+            total_store:{
+              value:'1,024,000',
+              percentage:12,
+              since:'last month'
+          },
+          gross_profit:{
+            value:'1,024,000',
+            percentage:12,
+            since:'last month'
+        },
+        net_profit:{
+          value:'1,024,000',
+          percentage:12,
+          since:'last month'
+      },
+      sold_items:[
+        {
+          id: 1,
+          name:'Mineral Water',
+          updated_at:'Updated 5m ago',
+          items:100,
+          total:5000
+        },
+        {
+          id: 2,
+          name:'Salt',
+          updated_at:'Updated 5m ago',
+          items:100,
+          total:5000
+        },
+        {
+          id: 3,
+          name:'Vinegar',
+          updated_at:'Updated 5m ago',
+          items:100,
+          total:5000
+        },
+        {
+          id: 4,
+          name:'Blueband',
+          updated_at:'Updated 5m ago',
+          items:100,
+          total:5000
+        }
+      ],
+      selling_branches:[
+        {
+          id: 1,
+          name:'Kimirongo',
+          updated_at:'Updated 5m ago',
+          items:100,
+          total:5000
+        },
+        {
+          id: 2,
+          name:'Kicukiro',
+          updated_at:'Updated 5m ago',
+          items:100,
+          total:5000
+        },
+        {
+          id: 3,
+          name:'Nyagatare',
+          updated_at:'Updated 5m ago',
+          items:100,
+          total:5000
+        },
+        {
+          id: 4,
+          name:'Gicumbi',
+          updated_at:'Updated 5m ago',
+          items:100,
+          total:5000
+        },
+        
+      ]
+
+}
+return this.dashabordEntries;
+}
+
   allEntries(): MenuEntries {
     this.entries = {
       user: {
@@ -88,35 +177,35 @@ export class AppComponent {
         {
           id: 1,
           name: 'Analytics',
-          icon: 'i',
+          icon: 'analytics.svg',
           route: 'analytics',
           active: true,
         },
         {
           id: 2,
           name: 'Inventory',
-          icon: 'i',
+          icon: 'inventory.svg',
           route: 'inventory',
           active: false,
         },
         {
           id: 3,
           name: 'Inventory Count',
-          icon: 'i',
+          icon: 'inventory-count.svg',
           route: 'inventory-count',
           active: false,
         },
         {
           id: 4,
           name: 'Orders',
-          icon: 'i',
+          icon: 'order.svg',
           route: 'order',
           active: false,
         },
         {
           id: 5,
           name: 'Settings',
-          icon: 'i',
+          icon: 'settings.svg',
           route: 'settings',
           active: false,
         }

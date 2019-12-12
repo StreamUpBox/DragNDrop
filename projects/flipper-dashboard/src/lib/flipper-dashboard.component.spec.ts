@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FlipperDashboardComponent } from './flipper-dashboard.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashBoardEntries } from './dashboard-entries';
+import { By } from '@angular/platform-browser';
 
 let mocEntries:DashBoardEntries={
 total_store:{
@@ -87,7 +88,7 @@ total:5000
 describe('FlipperDashboardComponent', () => {
 let component: FlipperDashboardComponent;
 let fixture: ComponentFixture<FlipperDashboardComponent>;
-
+let entries:DashBoardEntries=null;
   beforeEach(async(() => {
   TestBed.configureTestingModule({
   imports: [BrowserAnimationsModule],
@@ -106,20 +107,63 @@ let fixture: ComponentFixture<FlipperDashboardComponent>;
 
  
 
-// it('should check if TOTAL STORE VALUE has data',()=>{
-//   const el = fixture.nativeElement;
-//   expect(el
-//     .querySelector('#total-store') !== null)
-//     .toBe(true);
-// });
+ it('should check if TOTAL STORE VALUE is not undefined', () => {
+     expect(component.dashboardEntries['total_store']).toBe(mocEntries['total_store']);
+});
 
-it('should lists 4 sold items',()=>{
-  const el = fixture.nativeElement;
-  let items = el.querySelector('#sold-items');
-  expect(items.length).toBe(4);
+
+  it('should check if TOTAL STORE VALUE has got data', () => {
+    fixture.detectChanges();
+    const el = fixture.debugElement.query(By.css('#total-store')).nativeElement;
+    const content = el.textContent;
+    expect(content).toContain('Since', '');
   });
 
-  it('should create', () => {
-  expect(component).toBeTruthy();
+
+  
+it('should check if GROSS PROFIT is not undefined', () => {
+  expect(component.dashboardEntries['gross_profit']).toBe(mocEntries['gross_profit']);
+});
+
+  it('should check if TOTAL GROSS PROFIT has got data', () => {
+    fixture.detectChanges();
+    const el = fixture.debugElement.query(By.css('#gross-profit')).nativeElement;
+    const content = el.textContent;
+    expect(content).toContain('Since', '');
   });
+
+  it('should check if NET PROFIT is not undefined', () => {
+    expect(component.dashboardEntries['net_profit']).toBe(mocEntries['net_profit']);
+  });
+  
+    it('should check if TOTAL NET PROFIT has got data', () => {
+      fixture.detectChanges();
+      const el = fixture.debugElement.query(By.css('#net-profit')).nativeElement;
+      const content = el.textContent;
+      expect(content).toContain('Since', '');
+    });
+
+    //sold-items
+    it('should check if SOLD ITEMS is not undefined', () => {
+      expect(component.dashboardEntries['sold_items']).toBe(mocEntries['sold_items']);
+    });
+    
+      it('should check if SOLD ITEMS has got data', () => {
+        fixture.detectChanges();
+        const el = fixture.debugElement.query(By.css('#sold-items')).nativeElement;
+        const content = el.textContent;
+        expect(content).toContain('Most Sold Items', '');
+      });
+//
+      it('should check if SELLING BRANCHES is not empty', () => {
+        expect(component.dashboardEntries['sold_items']).toBe(mocEntries['sold_items']);
+      });
+      
+        it('should check if SELLING BRANCHES has got data', () => {
+          fixture.detectChanges();
+          const el = fixture.debugElement.query(By.css('#selling-branches')).nativeElement;
+          const content = el.textContent;
+          expect(content).toContain('Most Selling Branches', '');
+        });
+  
   });

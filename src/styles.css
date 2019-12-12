@@ -1,0 +1,45 @@
+/* You can add global styles to this file, and also import other style files */
+@font-face {
+    font-family: Heebo;
+    src: local(Heebo-Regular),
+      url(/font/Heebo-Regular.woff2) format("woff2"),
+      url(/font/Heebo-Regular.woff) format("woff"),
+      url(/font/Heebo-Regular.ttf) format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+  } 
+   @font-face {
+    font-family: Heebo;
+    src: local(Heebo-Medium),
+      url(/font/Heebo-Medium.woff2) format("woff2"),
+      url(/font/Heebo-Medium.woff) format("woff"),
+      url(/font/Heebo-Medium.ttf) format("truetype");
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+  }
+  @font-face {
+    font-family: Heebo;
+    src: local(Heebo-Bold),
+      url(/font/Heebo-Bold.woff2) format("woff2"),
+      url(/font/Heebo-Bold.woff) format("woff"),
+      url(/font/Heebo-Bold.ttf) format("truetype");
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+  }
+  @font-face {
+    font-family: Roboto;
+    src: local(Roboto-Regular),
+      url(/font/Roboto-Regular.woff2) format("woff2"),
+      url(/font/Roboto-Regular.woff) format("woff"),
+      url(/font/Roboto-Regular.ttf) format("truetype");
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }

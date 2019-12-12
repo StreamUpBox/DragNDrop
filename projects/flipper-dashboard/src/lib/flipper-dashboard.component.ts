@@ -10,11 +10,10 @@ styleUrls: ['./flipper-dashboard.component.css'],
 export class FlipperDashboardComponent implements OnInit {
 @Input() dashboardEntries: DashBoardEntries;
   constructor() {
-
   }
 
   ngOnInit() {
-  //console.log(this.dashboardEntries.gross_profit);
+  this.dashboardEntries //?
   }
   
 

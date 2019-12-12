@@ -28,9 +28,12 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "stylePreprocessorOptions": {
+              "includePaths": ["styles"]
+            }
           },
           "configurations": {
             "production": {
@@ -93,7 +96,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.css"
             ],
             "scripts": []
           }
@@ -125,6 +128,7 @@
         }
       }
     },
+    
     "yegobox-login": {
       "projectType": "library",
       "root": "projects/yegobox-login",

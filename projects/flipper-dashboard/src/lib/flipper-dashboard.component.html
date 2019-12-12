@@ -1,5 +1,6 @@
+
 <div class="row">
-  <div class="column-3">
+  <div class="column-3" *ngIf="dashboardEntries">
     <div class="card" id="total-store" *ngIf="dashboardEntries.total_store">
 
       <div class="card-left">
@@ -29,7 +30,7 @@
 
 
   <div class="column-3">
-    <div class="card" *ngIf="dashboardEntries.gross_profit">
+    <div class="card" id="gross-profit" *ngIf="dashboardEntries.gross_profit">
 
       <div class="card-left">
         <span class="portlet-title">
@@ -57,7 +58,7 @@
   </div>
 
   <div class="column-3">
-    <div class="card card-green" *ngIf="dashboardEntries.net_profit">
+    <div class="card card-green" id="net-profit" *ngIf="dashboardEntries.net_profit">
 
       <div class="card-left">
         <span class="portlet-title text-white">
@@ -88,7 +89,7 @@
 
 <div class="row">
   <div class="column-3">
-    <div class="card-items"  *ngIf="dashboardEntries.sold_items && dashboardEntries.sold_items.length > 0">
+    <div class="card-items" id="sold-items"  *ngIf="dashboardEntries.sold_items && dashboardEntries.sold_items.length > 0">
       <div class="card-header">
         <span class="card-title">Most Sold Items </span>
         <span class="card-subtitle">{{dashboardEntries.sold_items.length}} in total </span>
@@ -117,10 +118,10 @@
   </div>
 
   <div class="column-3">
-    <div class="card-items" *ngIf="dashboardEntries.selling_branches && dashboardEntries.selling_branches.length > 0">
+    <div class="card-items" id="selling-branches" *ngIf="dashboardEntries.selling_branches && dashboardEntries.selling_branches.length > 0">
       <div class="card-header">
         <span class="card-title">Most Selling Branches </span>
-        <span class="card-subtitle">5 in total </span>
+        <span class="card-subtitle">{{dashboardEntries.selling_branches.length}} in total </span>
       </div>
 
       <div class="card-body">

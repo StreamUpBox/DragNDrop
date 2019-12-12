@@ -148,16 +148,7 @@ describe('FlipperMenuComponent', () => {
 
     component.ngOnInit();
   });
-  it('should start with menu open', () => {
-    //TODO: I am only testing if the toggle can be closed, let's test if it can be oppened
-    component.toggle();
-    spyOn(component.menuToggled, 'emit');
-    const el = fixture.nativeElement;
-    const toggleButton = el.querySelector('.toggled-button');
-    toggleButton.dispatchEvent(new Event('click'));
-    expect(component.menuToggled.emit).toHaveBeenCalledWith(false);
-    expect(component.isOpen).toBe(false);
-  });
+
   it('should toggle branches', () => {
     component.toggleBranches();
     expect(component.canViewBranches).toBe(true);
@@ -192,12 +183,25 @@ describe('FlipperMenuComponent', () => {
     expect(start).toBe('...elloworld');
   });
   it('should emit log out event', () => {
-    //FIXME: this code is not working
     component.logout();
     spyOn(component.logoutUser, 'emit');
     const el = fixture.nativeElement;
-    const logout = el.querySelector('.icon-logout');
+    const logout = el.querySelector('.icon-logout-logout');
     logout.dispatchEvent(new Event('click'));
-    //expect(component.logoutUser.emit).toHaveBeenCalledWith(mocUser);
+
+    expect(component.logoutUser.emit).toHaveBeenCalledWith(mocUser);
+
   });
+  it('should start with menu open', () => {
+
+    component.toggle();
+    spyOn(component.menuToggled, 'emit');
+    const el = fixture.nativeElement;
+
+    const toggleButton = el.querySelector('.toggled-button');
+    toggleButton.dispatchEvent(new Event('click'));
+    expect(component.menuToggled.emit).toHaveBeenCalledWith(false);
+    expect(component.isOpen).toBe(false);
+  });
+
 });

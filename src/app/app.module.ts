@@ -1,32 +1,44 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
-import { FlipperMenuModule } from 'flipper-menu';
 import { AppRoutingModule } from './app-routing.module';
 import { TestingComponentComponent } from './testing-component/testing-component.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlipperDashboardModule } from 'flipper-dashboard';
-// import { FlipperButtonModule } from 'flipper-button';
-
+import { DialogComponent } from './dialog/dialog.component';
+import { VendorsModule } from '@enexus/flipper-vendors';
+import { DialogModule } from '@enexus/flipper-dialog';
+import { ColorModule } from 'projects/flipper-color/src/public_api';
+import { FontModule } from 'projects/flipper-font/src/public_api';
+import { OverlayContainer } from '@angular/cdk/overlay';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    TestingComponentComponent
+    TestingComponentComponent,
+    DialogComponent
   ],
   imports: [
     BrowserModule,
-
+    DialogModule,
+    VendorsModule,
+    ColorModule,
+    FontModule,
     // FlipperButtonModule,
     // FlipperMenuModule,
     FlipperDashboardModule,
     BrowserAnimationsModule,
     AppRoutingModule
   ],
+  entryComponents:[DialogComponent],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+    constructor(overlayContainer: OverlayContainer) {
+    //  overlayContainer.getContainerElement().classList.add('unicorn-dark-theme');
+    }
+}
 

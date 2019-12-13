@@ -2,6 +2,10 @@ import { Component } from '@angular/core';
 import { MenuEntries } from 'flipper-menu/lib/menu-entries';
 import { Router } from '@angular/router';
 import { DashBoardEntries } from 'projects/flipper-dashboard/src/lib/dashboard-entries';
+import { DialogSize } from 'projects/flipper-dialog/src/lib/dialog-size';
+import { DialogComponent } from './dialog/dialog.component';
+import { DialogService } from '@enexus/flipper-dialog';
+import { OverlayContainer } from '@angular/cdk/overlay';
 
 
 @Component({
@@ -93,7 +97,8 @@ total:5000
 ]
 
 };
-constructor(private router: Router) {
+constructor(private router: Router,private dialogs: DialogService,overlayContainer: OverlayContainer) {
+  overlayContainer.getContainerElement().classList.add('unicorn-dark-theme');
 this.allEntries();
 
 }
@@ -215,4 +220,18 @@ handleClic(){
 console.log("a button got a click!!!");
 }
 
+
+public compare() {
+    this.dialogs.open(DialogComponent, DialogSize.SIZE_MD, {
+    left:'80px',
+      results: [],
+    }).subscribe(res=>console.log(res));
+    // this.dialogs.wait({
+    //     title:'Loafing..',
+    //     progress: 40,
+    //   });
+    // this.dialogs.confirm('My app','Ging booming').subscribe(res=>console.log(res));
+
+  // this.dialogs.delete('My app',[]).subscribe(res=>console.log(res));
+  }
 }

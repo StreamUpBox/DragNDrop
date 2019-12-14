@@ -2,10 +2,10 @@
 
   <div class="fp-main-sidebar">
     <div class="untoggled-button" *ngIf="isOpen" (click)="toggle()">
-        <img [src]="'./assets/icons/chevron-right.svg'" class="icon-toggle">
+      <img [src]="'./assets/icons/chevron-right.svg'" class="icon-toggle">
     </div>
     <div class="fp-logo-oval">
-        <img [src]="'./assets/icons/logo.svg'" class="logo">
+      <img [src]="'./assets/icons/logo.svg'" class="logo">
     </div>
 
     <div class="active-business" *ngIf="defaultBusiness">
@@ -20,15 +20,17 @@
     <div class="logout" *ngIf="loggedUser">
       <p>
         <img [src]="'./assets/icons/bell.svg'" class="icon-logout">
-        </p>
-       <img [src]="'./assets/icons/log-out.svg'" class="icon-logout" (click)="logout()">
-      </div>
+      </p>
+      <img [src]="'./assets/icons/log-out.svg'" class="icon-logout-logout" (click)="logout()">
+    </div>
   </div>
 
   <div class="fp-secondary-sidebar" [@toggleBox]="isOpen ? 'open' : 'closed'" *ngIf="!isOpen">
-    <div class="toggled-button" (click)="toggle()"><img [src]="'./assets/icons/chevron-left.svg'" class="icon-toggle"></div>
-    <div class="fp-secondary-sidebar-text" *ngIf="defaultBranch">{{textEllipsis(defaultBranch.name,18)}} <span class="dropdown-branch"
-        (click)="toggleBranches()"><img [src]="'./assets/icons/chevron-down.svg'" class="icon"></span></div>
+    <div class="toggled-button" (click)="toggle()"><img [src]="'./assets/icons/chevron-left.svg'" class="icon-toggle">
+    </div>
+    <div class="fp-secondary-sidebar-text" *ngIf="defaultBranch">{{textEllipsis(defaultBranch.name,18)}} <span
+        class="dropdown-branch" (click)="toggleBranches()"><img [src]="'./assets/icons/chevron-down.svg'"
+          class="icon"></span></div>
     <div class="list-branches" (click)="hideBranchDropDown()" *ngIf="canViewBranches"
       [@toggleBox]="canViewBranches ? 'open' : 'closed'">
       <div class="list-branch-title"><span class="branch-title-text">Branches</span></div>
@@ -61,7 +63,7 @@
 
       <div [ngClass]="menu.active?'fp-active-menu':'fp-inactive-menu'" (click)="router(menu)">
         <span class="fp-inactive-menu-icon"><img [src]="'./assets/icons/'+menu.icon" class="icon"></span>
-        <span class="fp-inactive-menu-text" i18n >{{textEllipsis(menu.name,26)}}</span>
+        <span class="fp-inactive-menu-text" i18n>{{textEllipsis(menu.name,26)}}</span>
       </div>
 
     </div>

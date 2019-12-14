@@ -153,8 +153,6 @@ export class FlipperMenuComponent implements OnInit {
     return str;
   }
   logout() {
-    //FIXME: this code is not working
-    this.logoutUser.emit(this.loggedUser); //FIXME: the button should emit a user here please fix the unit testing.
-    return;
+    this.logoutUser.emit(this.loggedUser);  
   }
 }

@@ -1,0 +1,38 @@
+{
+  "name": "@enexus/flipper-color",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^7.1.0",
+    "@angular/core": "^7.1.0"
+  },
+  "main": "bundles/flipper-color.umd.js",
+  "module": "fesm5/flipper-color.js",
+  "es2015": "fesm2015/flipper-color.js",
+  "esm5": "esm5/flipper-color.js",
+  "esm2015": "esm2015/flipper-color.js",
+  "fesm5": "fesm5/flipper-color.js",
+  "fesm2015": "fesm2015/flipper-color.js",
+  "typings": "flipper-color.d.ts",
+  "metadata": "flipper-color.metadata.json",
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
+  },
+  "description": "Including different color like primary,error,success,danger",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Primary",
+    "Danger",
+    "Success",
+    "Info",
+    "and",
+    "Default"
+  ],
+  "author": "Ganza respice",
+  "license": "ISC"
+}

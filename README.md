@@ -20,6 +20,10 @@ Flipper Color
 ````
 
 ##flipper-buttons
+install
+````
+npm install --save enexus@flipper-button
+````
 ````
 <flipper-button
     color="blue|green|dark"

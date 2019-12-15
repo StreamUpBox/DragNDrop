@@ -1,7 +1,7 @@
 ##
-Flipper plugins
+flipper plugins
 ##
-Flipper Dashboard
+flipper Dashboard
 
 ````
 <flipper-dashboard [dashboardEntries]="dashboardentries"></flipper-dashboard>
@@ -10,7 +10,7 @@ Flipper Dashboard
 - Example of dashboardentries array of data
 
 ##
-Flipper Menu
+flipper Menu
 ````
 ````
 
@@ -18,3 +18,16 @@ Flipper Menu
 Flipper Color
 ````
 ````
+
+##flipper-buttons
+````
+<flipper-button
+    color="blue|green|dark"
+    shape="circle|default"
+    icon="nameOfIcon"
+    height="20px"
+    width="20px"
+></flipper-button
+````
+the name of icon should be defied inside your application asset files.
+the library does not ship with the icon itself.

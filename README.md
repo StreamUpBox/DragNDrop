@@ -19,7 +19,7 @@ Flipper Color
 ````
 ````
 
-##flipper-buttons
+## flipper-buttons
 install
 ````
 npm install --save enexus@flipper-button
@@ -31,7 +31,7 @@ npm install --save enexus@flipper-button
     icon="nameOfIcon"
     height="20px"
     width="20px"
-></flipper-button
+></flipper-button>
 ````
 the name of icon should be defied inside your application asset files.
 the library does not ship with the icon itself.

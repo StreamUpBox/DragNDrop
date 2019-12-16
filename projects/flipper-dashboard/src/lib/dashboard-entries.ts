@@ -1,43 +1,43 @@
 export class DashBoardEntries {
-    id?: number;
-    total_store?:Total;
-    gross_profit?:Total;
-    net_profit?:Total;
-    sold_items?:Items[];
-    selling_branches?:Items[];
-    constructor(params: Object = {}) {
-        for (let name in params) {
-          this[name] = params[name];
-        }
-      }
+  id?: number;
+  totalStore?: Total;
+  grossProfit?: Total;
+  netProfit?: Total;
+  soldItems?: Items[];
+  sellingBranches?: Items[];
+  constructor(params: object = {}) {
+    for (const name in params) {
+      this[name] = params[name];
     }
-    
+  }
+}
+
 
 export class Total {
   id?: number;
-  value?:any;
-  percentage?:number;
-  since?:string;
+  value?: any;
+  percentage?: number;
+  since?: string;
 
-  constructor(params: Object = {}) {
-      for (let name in params) {
-        this[name] = params[name];
-      }
+  constructor(params: object = {}) {
+    for (const name in params) {
+      this[name] = params[name];
     }
   }
-  
+}
 
-  export class Items {
-    id?: number;
-    name?:string;
-    updated_at?:any;
-    items?:number;
-    total?:number;
-  
-    constructor(params: Object = {}) {
-        for (let name in params) {
-          this[name] = params[name];
-        }
-      }
+
+export class Items {
+  id?: number;
+  name?: string;
+  updatedAt?: any;
+  items?: number;
+  total?: number;
+
+  constructor(params: object = {}) {
+    for (const name in params) {
+      this[name] = params[name];
     }
-    
+  }
+}
+

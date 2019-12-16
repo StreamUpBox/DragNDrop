@@ -10,9 +10,9 @@ import { FlipperInputsComponent } from './flipper-inputs/flipper-inputs.componen
     CommonModule,
     BrowserModule
   ],
-  
+
   declarations: [FlipperButtonComponent, FlipperInputsComponent],
   entryComponents: [],
-  exports: [FlipperButtonComponent,FlipperInputsComponent]
+  exports: [FlipperButtonComponent, FlipperInputsComponent]
 })
 export class FlipperButtonModule { }

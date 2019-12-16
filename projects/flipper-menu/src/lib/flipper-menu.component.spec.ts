@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FlipperMenuComponent } from './flipper-menu.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Business } from 'flipper-menu/lib/business';
-let business =
+const business =
   [
     {
       id: 1,
@@ -27,13 +27,13 @@ let business =
     }
   ];
 
-let mocUser = {
+const mocUser = {
   id: 1,
   name: 'Ganza respice',
   email: 'respinho2014@gmail.com'
 };
 
-let MocMenuEntries = {
+const MocMenuEntries = {
   user: {
     id: 1,
     name: 'Ganza respice',
@@ -121,7 +121,7 @@ let MocMenuEntries = {
     }
   ]
 
-}
+};
 describe('FlipperMenuComponent', () => {
   let component: FlipperMenuComponent;
   let fixture: ComponentFixture<FlipperMenuComponent>;
@@ -168,7 +168,7 @@ describe('FlipperMenuComponent', () => {
     component.router(MocMenuEntries.menu[0]);
   });
   it('should set setting to false when menuSetting is active', () => {
-    //TODO: more on tuning this testing
+    // TODO: more on tuning this testing
     component.router(MocMenuEntries.menu[0]);
   });
   it('should hide branch DropDown', () => {
@@ -176,10 +176,10 @@ describe('FlipperMenuComponent', () => {
     expect(component.canViewBranches).toBe(false);
   });
   it('should cut words to small lenght', () => {
-    let end = component.textEllipsis("helloworld", 2, { side: "end" });
+    const end = component.textEllipsis('helloworld', 2, { side: 'end' });
     expect(end).toBe('helloworl...');
 
-    let start = component.textEllipsis("helloworld", 2, { side: "start" });
+    const start = component.textEllipsis('helloworld', 2, { side: 'start' });
     expect(start).toBe('...elloworld');
   });
   it('should emit log out event', () => {

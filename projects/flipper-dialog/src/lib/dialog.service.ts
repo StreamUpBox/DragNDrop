@@ -1,13 +1,13 @@
-import {Injectable, TemplateRef} from '@angular/core';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {ComponentType} from '@angular/cdk/portal';
-import {Observable} from 'rxjs';
-import {filter} from 'rxjs/operators';
-import { DialogSize } from './dialog-size';
+import { Injectable, TemplateRef } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ComponentType } from '@angular/cdk/portal';
+import { Observable } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { WaitDialogProgress } from './wait-dialog/wait-dialog-progress';
 import { WaitDialogComponent } from './wait-dialog/wait-dialog.component';
+import { DialogSize } from './dialog-size';
 
 @Injectable()
 export class DialogService {
@@ -16,8 +16,8 @@ export class DialogService {
   }
 
   public open<T, D = any, R = any>(componentOrTemplateRef: ComponentType<T> | TemplateRef<T>,
-                                   size: DialogSize = DialogSize.SIZE_SM,
-                                   data?: D): Observable<R> {
+    size: DialogSize = DialogSize.SIZE_SM,
+    data?: D): Observable<R> {
     const dialogRef = this.dialog.open(componentOrTemplateRef, {
       panelClass: size,
       data

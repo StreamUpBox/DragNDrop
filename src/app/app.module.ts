@@ -7,11 +7,11 @@ import { TestingComponentComponent } from './testing-component/testing-component
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlipperDashboardModule } from 'flipper-dashboard';
 import { DialogComponent } from './dialog/dialog.component';
-import { VendorsModule } from '@enexus/flipper-vendors';
-import { DialogModule } from '@enexus/flipper-dialog';
 import { ColorModule } from 'projects/flipper-color/src/public_api';
 import { FontModule } from 'projects/flipper-font/src/public_api';
 import { OverlayContainer } from '@angular/cdk/overlay';
+import { DialogModule } from '@enexus/flipper-dialog';
+import { VendorsModule } from '@enexus/flipper-vendors';
 
 
 @NgModule({
@@ -37,8 +37,8 @@ import { OverlayContainer } from '@angular/cdk/overlay';
   bootstrap: [AppComponent]
 })
 export class AppModule {
-    constructor(overlayContainer: OverlayContainer) {
+  constructor(overlayContainer: OverlayContainer) {
     //  overlayContainer.getContainerElement().classList.add('unicorn-dark-theme');
-    }
+  }
 }
 

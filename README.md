@@ -1,27 +1,37 @@
-# FlipperPlugins
+##
+flipper plugins
+##
+flipper Dashboard
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.9.
+````
+<flipper-dashboard [dashboardEntries]="dashboardentries"></flipper-dashboard>
+````
+- dashboardentries is required intries for dashboard
+- Example of dashboardentries array of data
 
-## Development server
+##
+flipper Menu
+````
+````
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+##
+Flipper Color
+````
+````
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## flipper-buttons
+install
+````
+npm install --save enexus@flipper-button
+````
+````
+<flipper-button
+    color="blue|green|dark"
+    shape="circle|default"
+    icon="nameOfIcon"
+    height="20px"
+    width="20px"
+></flipper-button>
+````
+the name of icon should be defied inside your application asset files.
+the library does not ship with the icon itself.

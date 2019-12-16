@@ -1,13 +1,14 @@
+
 <div class="row">
-  <div class="column-3">
-    <div class="card">
+  <div class="column-3" *ngIf="dashboardEntries">
+    <div class="card" id="total-store" *ngIf="dashboardEntries.total_store">
 
       <div class="card-left">
         <span class="portlet-title">
           TOTAL STORE VALUE
         </span>
         <span class="amount">
-          RWF 1,024,000
+          RWF {{dashboardEntries.total_store.value}}
         </span>
       </div>
 
@@ -18,9 +19,9 @@
       </div>
 
       <p class="card-bottom">
-        <span class="percentage">12%</span>
+        <span class="percentage">{{ dashboardEntries.total_store.percentage }}%</span>
         <span class="since-last-month">
-          Since last month
+          Since {{ dashboardEntries.total_store.since }}
         </span>
       </p>
 
@@ -29,14 +30,14 @@
 
 
   <div class="column-3">
-    <div class="card">
+    <div class="card" id="gross-profit" *ngIf="dashboardEntries.gross_profit">
 
       <div class="card-left">
         <span class="portlet-title">
           GROSS PROFIT
         </span>
         <span class="amount">
-          RWF 5,080,000
+          RWF {{dashboardEntries.gross_profit.value}}
         </span>
       </div>
 
@@ -47,9 +48,9 @@
       </div>
 
       <p class="card-bottom">
-        <span class="percentage">12%</span>
+        <span class="percentage">{{dashboardEntries.gross_profit.percentage}}%</span>
         <span class="since-last-month">
-          Since last month
+          Since {{dashboardEntries.gross_profit.since}}
         </span>
       </p>
 
@@ -57,14 +58,14 @@
   </div>
 
   <div class="column-3">
-    <div class="card card-green">
+    <div class="card card-green" id="net-profit" *ngIf="dashboardEntries.net_profit">
 
       <div class="card-left">
         <span class="portlet-title text-white">
-          GROSS PROFIT
+          NET PROFIT
         </span>
         <span class="amount text-white">
-          RWF 5,080,000
+          RWF {{dashboardEntries.net_profit.value}}
         </span>
       </div>
 
@@ -75,9 +76,9 @@
       </div>
 
       <p class="card-bottom">
-        <span class="percentage text-white">12%</span>
+        <span class="percentage text-white">{{dashboardEntries.net_profit.percentage}}%</span>
         <span class="since-last-month text-white">
-          Since last month
+          Since {{dashboardEntries.net_profit.since}}
         </span>
       </p>
 
@@ -88,59 +89,56 @@
 
 <div class="row">
   <div class="column-3">
-    <div class="card-items">
+    <div class="card-items" id="sold-items"  *ngIf="dashboardEntries.sold_items && dashboardEntries.sold_items.length > 0">
       <div class="card-header">
         <span class="card-title">Most Sold Items </span>
-        <span class="card-subtitle">5 in total </span>
+        <span class="card-subtitle">{{dashboardEntries.sold_items.length}} in total </span>
+      </div>
+
+      <div class="card-body" >
+        <div class="card-item" id="sold-items" *ngFor="let item of dashboardEntries.sold_items; let i = index;">
+          <div class="image">
+            <img [src]="'./assets/icons/archive-'+(i+1)+'.svg'" class="archive-icon">
+          </div>
+          <div class="item">
+            <span class="item-name">{{item.name}} </span>
+            <span class="item-date">{{item.updated_at}} </span>
+            <span class="more"><img [src]="'./assets/icons/more-vertical.svg'" class="more-vertical"></span>
+          </div>
+          <div class="divider"></div>
+        </div>
+        
+
+      </div>
+
+      <div class="card-footer">
+        <div class="view-all">View all</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="column-3">
+    <div class="card-items" id="selling-branches" *ngIf="dashboardEntries.selling_branches && dashboardEntries.selling_branches.length > 0">
+      <div class="card-header">
+        <span class="card-title">Most Selling Branches </span>
+        <span class="card-subtitle">{{dashboardEntries.selling_branches.length}} in total </span>
       </div>
 
       <div class="card-body">
-        <div class="card-item">
-          <div class="image">
-            <img [src]="'./assets/icons/archive-1.svg'" class="archive-icon">
+          <div class="card-item" *ngFor="let item of dashboardEntries.selling_branches; let i = index;">
+            <div class="image">
+              <img [src]="'./assets/icons/home-'+(i+1)+'.svg'" class="archive-icon">
+            </div>
+            <div class="item">
+              <span class="item-name">{{item.name}} </span>
+              <span class="item-date">{{item.updated_at}} </span>
+              <span class="more"><img [src]="'./assets/icons/more-vertical.svg'" class="more-vertical"></span>
+            </div>
+            <div class="divider"></div>
           </div>
-          <div class="item">
-            <span class="item-name">Mineral Water </span>
-            <span class="item-date">Updated 5m ago </span>
-            <span class="more"><img [src]="'./assets/icons/more-vertical.svg'" class="more-vertical"></span>
-          </div>
-
+          
+  
         </div>
-        <div class="divider"></div>
-        <div class="card-item">
-          <div class="image">
-            <img [src]="'./assets/icons/archive-2.svg'" class="archive-icon">
-          </div>
-          <div class="item">
-            <span class="item-name">Salt </span>
-            <span class="item-date">Updated 5m ago </span>
-            <span class="more"><img [src]="'./assets/icons/more-vertical.svg'" class="more-vertical"></span>
-          </div>
-        </div>
-        <div class="divider"></div>
-        <div class="card-item">
-          <div class="image">
-            <img [src]="'./assets/icons/archive-3.svg'" class="archive-icon">
-          </div>
-          <div class="item">
-            <span class="item-name">Vinegar </span>
-            <span class="item-date">Updated 5m ago </span>
-            <span class="more"><img [src]="'./assets/icons/more-vertical.svg'" class="more-vertical"></span>
-          </div>
-        </div>
-        <div class="divider"></div>
-        <div class="card-item">
-          <div class="image">
-            <img [src]="'./assets/icons/archive-4.svg'" class="archive-icon">
-          </div>
-          <div class="item">
-            <span class="item-name">Blueband </span>
-            <span class="item-date">Updated 5m ago </span>
-            <span class="more"><img [src]="'./assets/icons/more-vertical.svg'" class="more-vertical"></span>
-          </div>
-        </div>
-
-      </div>
 
       <div class="card-footer">
         <div class="view-all">View all</div>

@@ -1,12 +1,16 @@
 <div [ngSwitch]="shape">
   <div *ngSwitchCase="'circle'">
     <button (click)="handleButtonClick()" [ngStyle]="{'width':width,'height':height}" class="flipper-common-circle-button" #element>
-      <span *ngIf="!icon">{{icon}}</span>
+      <span *ngIf="!icon">{{text}}</span>
       <img *ngIf="icon" [src]="'./assets/icons/'+icon+'.svg'" class="icon">
     </button>
     
   </div>
   <div *ngSwitchDefault>
-    <button (click)="handleButtonClick()" [ngStyle]="{'width':width,'height':height}" class="flipper-common-button-css" #element>{{text}}</button>
+
+    <button (click)="handleButtonClick()" [ngStyle]="{'width':width,'height':height}" class="flipper-common-button-css" #element>
+        <span *ngIf="!icon">{{text}}</span>
+        <img *ngIf="icon" [src]="'./assets/icons/'+icon+'.svg'" class="icon">
+      </button>
   </div>
 </div>

@@ -1,16 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
+import { DashBoardEntries } from './dashboard-entries';
+import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'flipper-dashboard',
-  templateUrl: './flipper-dashboard.component.html',
-  styleUrls: ['./flipper-dashboard.component.css'],
+selector: 'flipper-dashboard',
+templateUrl: './flipper-dashboard.component.html',
+styleUrls: ['./flipper-dashboard.component.css'],
 })
 export class FlipperDashboardComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
+@Input() dashboardEntries: DashBoardEntries;
+  constructor() {
   }
 
+  ngOnInit() {
+  this.dashboardEntries //?
+  }
   
-}
+
+  }

@@ -14,7 +14,7 @@ export class FlipperButtonComponent implements  AfterViewInit {
   @Input() text: string = 'button';
   @Input() width: string;
   @Input() height: string;
-  @Input() shape: any = 'circle';
+  @Input() shape: any;
   @Input() icon: any;
   @Output() didClickButton: any = new EventEmitter<boolean>();
 

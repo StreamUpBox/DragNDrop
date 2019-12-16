@@ -271,13 +271,13 @@ margin: 2px;
   width: 329px;
   height: 88px;
 }
-.card-items > .card-body > .divider{
+.card-items > .card-body > .card-item > .divider{
   display: inline-block;
   width: 329px;
   height: 1px;
   background-color: #e4e7eb;
   position: relative;
-    top: -13px;
+    top:-52px;
 }
 .card-items > .card-body > .card-item > .image{
   width: 64px;

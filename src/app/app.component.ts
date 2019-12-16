@@ -102,7 +102,7 @@ constructor(private router: Router,private dialogs: DialogService,overlayContain
 this.allEntries();
 
 }
-displayMenuToggled(event) {
+isMenuToggled(event) {
 //console.log(event);
 }
 canLogoutUser(event) {
@@ -221,17 +221,34 @@ console.log("a button got a click!!!");
 }
 
 
-public compare() {
+public anyDialog(data:[]) {
     this.dialogs.open(DialogComponent, DialogSize.SIZE_MD, {
-    left:'80px',
-      results: [],
+      results: data,
     }).subscribe(res=>console.log(res));
-    // this.dialogs.wait({
-    //     title:'Loafing..',
-    //     progress: 40,
-    //   });
-    // this.dialogs.confirm('My app','Ging booming').subscribe(res=>console.log(res));
 
-  // this.dialogs.delete('My app',[]).subscribe(res=>console.log(res));
   }
+
+
+  // DialogSize {
+  //   SIZE_SM = 'dialog-sm',
+  //   SIZE_MD = 'dialog-md',
+  //   SIZE_LG = 'dialog-lg',
+  //   SIZE_FULL = 'dialog-full'
+  // }
+ 
+ 
+public deleteDialogMessage(itemToDelete:[]) {
+
+    this.dialogs.delete('Product',itemToDelete).subscribe(res=>console.log(res));
+}
+
+public confirmDialogMessage() {
+
+  this.dialogs.confirm('Product','Do you want to delete this product').subscribe(res=>console.log(res));
+
+}
+public waitDialog(){
+  this.dialogs.wait({title:'',progress:12});
+}
+
 }

@@ -1,11 +1,11 @@
 export class DashBoardEntries {
   id?: number;
-  total_store?: Total;
-  gross_profit?: Total;
-  net_profit?: Total;
-  sold_items?: Items[];
-  selling_branches?: Items[];
-  constructor(params: Object = {}) {
+  totalStore?: Total;
+  grossProfit?: Total;
+  netProfit?: Total;
+  soldItems?: Items[];
+  sellingBranches?: Items[];
+  constructor(params: object = {}) {
     for (const name in params) {
       this[name] = params[name];
     }
@@ -30,11 +30,11 @@ export class Total {
 export class Items {
   id?: number;
   name?: string;
-  updated_at?: any;
+  updatedAt?: any;
   items?: number;
   total?: number;
 
-  constructor(params: Object = {}) {
+  constructor(params: object = {}) {
     for (const name in params) {
       this[name] = params[name];
     }

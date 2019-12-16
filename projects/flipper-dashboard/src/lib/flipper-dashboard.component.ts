@@ -7,12 +7,6 @@ import { Subject } from 'rxjs';
   templateUrl: './flipper-dashboard.component.html',
   styleUrls: ['./flipper-dashboard.component.css'],
 })
-export class FlipperDashboardComponent implements OnInit {
+export class FlipperDashboardComponent {
   @Input() dashboardEntries: DashBoardEntries;
-  constructor() {
-  }
-
-  ngOnInit() {
-    //this.dashboardEntries; // ?
-  }
 }

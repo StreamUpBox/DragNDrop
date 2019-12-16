@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { WaitDialogProgress } from './wait-dialog-progress';
 
@@ -9,17 +9,17 @@ import { WaitDialogProgress } from './wait-dialog-progress';
 })
 export class WaitDialogComponent {
 
-  private _progress: WaitDialogProgress;
+  private ps: WaitDialogProgress;
 
   constructor(@Inject(MAT_DIALOG_DATA) progress: WaitDialogProgress) {
     this.progress = progress;
   }
 
   set progress(progress: WaitDialogProgress) {
-    this._progress = progress;
+    this.ps = progress;
   }
 
   get progress(): WaitDialogProgress {
-    return this._progress;
+    return this.ps;
   }
 }

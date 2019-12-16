@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { MenuEntries } from 'flipper-menu/lib/menu-entries';
 import { Router } from '@angular/router';
 import { DashBoardEntries } from 'projects/flipper-dashboard/src/lib/dashboard-entries';
@@ -6,7 +6,11 @@ import { DialogSize } from 'projects/flipper-dialog/src/lib/dialog-size';
 import { DialogComponent } from './dialog/dialog.component';
 
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { DialogService } from '@enexus/flipper-dialog';
+import { FlipperEventBusService } from 'projects/flipper-event/src/public_api';
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
+import { OrderEvent } from './order-event';
+import { DialogService } from 'projects/flipper-dialog/src/public_api';
 
 
 @Component({
@@ -14,7 +18,7 @@ import { DialogService } from '@enexus/flipper-dialog';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnDestroy {
 
   entries: MenuEntries;
   // TODO: add an interface to implement from FlipperMenu so a developer to implement know which
@@ -98,10 +102,24 @@ export class AppComponent {
     ]
 
   };
-  constructor(private router: Router, private dialogs: DialogService, overlayContainer: OverlayContainer) {
+  private selectedSubscription: Subscription;
+  constructor(private eventBus: FlipperEventBusService, private router: Router, private dialogs: DialogService, overlayContainer: OverlayContainer) {
     overlayContainer.getContainerElement().classList.add('unicorn-dark-theme');
     this.allEntries();
 
+   
+
+    this.selectedSubscription = this.eventBus.of<OrderEvent>(OrderEvent.CHANNEL)
+    .pipe(filter(event =>event.order.id===100))
+    .subscribe(event =>console.log(event));
+   
+
+}
+public newOrder(){
+  this.eventBus.publish(new OrderEvent({id:100,orderno:'#O100',reference:'#0100-kigali'}));
+}
+public updateOrder(){
+  this.eventBus.publish(new OrderEvent({id:100,orderno:'#O120',reference:'#0100-Rwanda'}));
 }
 isMenuToggled(event) {
 //console.log(event);
@@ -124,7 +142,9 @@ console.log(event);
     return this.router.navigate([event.router]);
   }
 
-
+  ngOnDestroy() {
+    this.selectedSubscription.unsubscribe();
+  }
   allEntries(): MenuEntries {
     this.entries = {
       user: {

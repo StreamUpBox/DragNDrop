@@ -3,12 +3,8 @@ import { Component, OnInit } from '@angular/core';
 // const sql = alasql;
 @Component({
   selector: 'flipper-basic-pos',
-  template: `
-    <p>
-      flipper-pos works!
-    </p>
-  `,
-  styles: []
+  templateUrl: './flipper-basic-pos.component.html',
+  styleUrls: ['./flipper-basic-pos.component.scss'],
 })
 export class FlipperBasicPosComponent implements OnInit {
 

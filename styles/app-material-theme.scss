@@ -141,10 +141,11 @@ $dark-theme: (
 @include angular-material-theme($theme);
 
 
-// $_background: map-get($theme, background);
-// $_foreground: map-get($theme, foreground);
-// $app-background-color: mat-color($_background, background);
-// $app-foreground-color: mat-color($_foreground, text);
+$_background: map-get($theme, background);
+$_foreground: map-get($theme, foreground);
+$app-background-color: mat-color($_background, background);
+$app-foreground-color: mat-color($_foreground, text);
+$app-foreground-secondary-color: mat-color($_foreground, secondary-text);
 
 .unicorn-dark-theme {
 
@@ -154,14 +155,14 @@ $_background: map-get($dark-theme, background);
 $_foreground: map-get($dark-theme, foreground);
 $app-background-color: mat-color($_background, background);
 $app-foreground-color: mat-color($_foreground, text);
-
+$app-foreground-secondary-color: mat-color($_foreground, secondary-text);
 }
 
 
-$_background: map-get($dark-theme, background);
-$_foreground: map-get($dark-theme, foreground);
-$app-background-color: mat-color($_background, background);
-$app-foreground-color: mat-color($_foreground, text);
-$app-foreground-secondary-color: mat-color($_foreground, secondary-text);
+// $_background: map-get($dark-theme, background);
+// $_foreground: map-get($dark-theme, foreground);
+// $app-background-color: mat-color($_background, background);
+// $app-foreground-color: mat-color($_foreground, text);
+// $app-foreground-secondary-color: mat-color($_foreground, secondary-text);
 
 

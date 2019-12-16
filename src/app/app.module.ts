@@ -10,8 +10,10 @@ import { DialogComponent } from './dialog/dialog.component';
 import { ColorModule } from 'projects/flipper-color/src/public_api';
 import { FontModule } from 'projects/flipper-font/src/public_api';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { DialogModule } from '@enexus/flipper-dialog';
 import { VendorsModule } from '@enexus/flipper-vendors';
+import { FlipperPosModule } from 'projects/flipper-pos/src/public-api';
+import { FlipperEventModule } from 'projects/flipper-event/src/public_api';
+import { DialogModule } from 'projects/flipper-dialog/src/public_api';
 
 
 @NgModule({
@@ -28,7 +30,9 @@ import { VendorsModule } from '@enexus/flipper-vendors';
     FontModule,
     // FlipperButtonModule,
     // FlipperMenuModule,
-    FlipperDashboardModule,
+ //   FlipperDashboardModule,
+ FlipperEventModule,
+    FlipperPosModule,
     BrowserAnimationsModule,
     AppRoutingModule
   ],

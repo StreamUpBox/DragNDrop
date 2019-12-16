@@ -1,9 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
-<<<<<<< HEAD
 @font-face {
     font-family: Heebo;
     src: local(Heebo-Regular),
-      url(./assets/font/Heebo-Regular.woff2) format("woff2"),
       url(./assets/font/Heebo-Regular.woff) format("woff"),
       url(./assets/font/Heebo-Regular.ttf) format("truetype");
     font-weight: normal;
@@ -13,7 +11,6 @@
   @font-face {
     font-family: Heebo;
     src: local(Heebo-Medium),
-      url(./assets/font/Heebo-Medium.woff2) format("woff2"),
       url(./assets/font/Heebo-Medium.woff) format("woff"),
       url(./assets/font/Heebo-Medium.ttf) format("truetype");
     font-weight: 500;
@@ -23,7 +20,6 @@
   @font-face {
     font-family: Heebo;
     src: local(Heebo-Bold),
-      url(./assets/font/Heebo-Bold.woff2) format("woff2"),
       url(./assets/font/Heebo-Bold.woff) format("woff"),
       url(./assets/font/Heebo-Bold.ttf) format("truetype");
     font-weight: bold;
@@ -40,7 +36,13 @@
     font-style: normal;
     font-stretch: normal;
   }
-=======
 @import 'app-all';
 
->>>>>>> 59137bd75d3a9e571036e8f756d286d34e6eb821
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: 'Roboto', 'Heebo', sans-serif!important;
+}
+

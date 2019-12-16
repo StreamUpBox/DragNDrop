@@ -16,105 +16,105 @@ styleUrls: ['./app.component.css']
 export class AppComponent {
 
 entries: MenuEntries;
-//TODO: add an interface to implement from FlipperMenu so a developer to implement know which
-//method to call as outPut!
-dashboardentries:DashBoardEntries= {
-total_store:{
-value:'1,024,000',
-percentage:12,
-since:'last month'
+// TODO: add an interface to implement from FlipperMenu so a developer to implement know which
+// method to call as outPut!
+dashboardentries: DashBoardEntries = {
+total_store: {
+value: '1,024,000',
+percentage: 12,
+since: 'last month'
 },
-gross_profit:{
-value:'1,024,000',
-percentage:12,
-since:'last month'
+gross_profit: {
+value: '1,024,000',
+percentage: 12,
+since: 'last month'
 },
-net_profit:{
-value:'1,024,000',
-percentage:12,
-since:'last month'
+net_profit: {
+value: '1,024,000',
+percentage: 12,
+since: 'last month'
 },
-sold_items:[
+sold_items: [
 {
 id: 1,
-name:'Mineral Water',
-updated_at:'Updated 5m ago',
-items:100,
-total:5000
+name: 'Mineral Water',
+updated_at: 'Updated 5m ago',
+items: 100,
+total: 5000
 },
 {
 id: 2,
-name:'Salt',
-updated_at:'Updated 5m ago',
-items:100,
-total:5000
+name: 'Salt',
+updated_at: 'Updated 5m ago',
+items: 100,
+total: 5000
 },
 {
 id: 3,
-name:'Vinegar',
-updated_at:'Updated 5m ago',
-items:100,
-total:5000
+name: 'Vinegar',
+updated_at: 'Updated 5m ago',
+items: 100,
+total: 5000
 },
 {
 id: 4,
-name:'Blueband',
-updated_at:'Updated 5m ago',
-items:100,
-total:5000
+name: 'Blueband',
+updated_at: 'Updated 5m ago',
+items: 100,
+total: 5000
 }
 ],
-selling_branches:[
+selling_branches: [
 {
 id: 1,
-name:'Kimirongo',
-updated_at:'Updated 5m ago',
-items:100,
-total:5000
+name: 'Kimirongo',
+updated_at: 'Updated 5m ago',
+items: 100,
+total: 5000
 },
 {
 id: 2,
-name:'Kicukiro',
-updated_at:'Updated 5m ago',
-items:100,
-total:5000
+name: 'Kicukiro',
+updated_at: 'Updated 5m ago',
+items: 100,
+total: 5000
 },
 {
 id: 3,
-name:'Nyagatare',
-updated_at:'Updated 5m ago',
-items:100,
-total:5000
+name: 'Nyagatare',
+updated_at: 'Updated 5m ago',
+items: 100,
+total: 5000
 },
 {
 id: 4,
-name:'Gicumbi',
-updated_at:'Updated 5m ago',
-items:100,
-total:5000
+name: 'Gicumbi',
+updated_at: 'Updated 5m ago',
+items: 100,
+total: 5000
 },
 
 ]
 
 };
-constructor(private router: Router,private dialogs: DialogService,overlayContainer: OverlayContainer) {
+constructor(private router: Router, private dialogs: DialogService, overlayContainer: OverlayContainer) {
   overlayContainer.getContainerElement().classList.add('unicorn-dark-theme');
-this.allEntries();
+  this.allEntries();
 
 }
 displayMenuToggled(event) {
-//console.log(event);
+// console.log(event);
 }
 canLogoutUser(event) {
 console.log(event);
 }
-//switchedBusiness
+// switchedBusiness
 
 displaySwitchedBusiness(event) {
-//console.log(event);
+// console.log(event);
 }
 displaySwitchedBranch(event) {
-//console.log(event);
+// console.log(event);
 }
 
 getRouterClicked(event) {
@@ -211,21 +211,21 @@ active: false,
 }
 ]
 
-}
+};
 
 return this.entries;
 
 }
-handleClic(){
-console.log("a button got a click!!!");
+handleClic() {
+console.log('a button got a click!!!');
 }
 
 
 public compare() {
     this.dialogs.open(DialogComponent, DialogSize.SIZE_MD, {
-    left:'80px',
+    left: '80px',
       results: [],
-    }).subscribe(res=>console.log(res));
+    }).subscribe(res => console.log(res));
     // this.dialogs.wait({
     //     title:'Loafing..',
     //     progress: 40,

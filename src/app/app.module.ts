@@ -32,11 +32,11 @@ import { OverlayContainer } from '@angular/cdk/overlay';
     BrowserAnimationsModule,
     AppRoutingModule
   ],
-  entryComponents:[DialogComponent],
+  entryComponents: [DialogComponent],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { 
+export class AppModule {
     constructor(overlayContainer: OverlayContainer) {
     //  overlayContainer.getContainerElement().classList.add('unicorn-dark-theme');
     }

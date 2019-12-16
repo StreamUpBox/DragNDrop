@@ -1,4 +1,4 @@
-import { FontWeightClassPipe } from "./font-weight-class.pipe";
+import { FontWeightClassPipe } from './font-weight-class.pipe';
 
 
 describe('FontWeightClassPipe', () => {

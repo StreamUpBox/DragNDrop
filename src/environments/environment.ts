@@ -1,7 +1,7 @@
 export const environment = {
   production: false,
-  environment: "dev",
-  url: "https://cloud.flipper.rw/"
+  environment: 'dev',
+  url: 'https://cloud.flipper.rw/'
 };
 
 

@@ -8,10 +8,10 @@
     "build-vendors": "ng build flipperVendors --watch",
     "build-color": "ng build flipperColor --watch",
     "build-dialog": "ng build flipperDialog --watch",
-    "build-font":"ng build flipperFont --watch",
+    "build-font": "ng build flipperFont --watch",
     "build": "ng build  --watch",
     "test": "ng test",
-    "lint": "ng lint",
+    "lint": "ng lint --fix=true",
     "e2e": "ng e2e"
   },
   "private": true,

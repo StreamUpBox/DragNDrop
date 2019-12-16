@@ -14,6 +14,14 @@
     "lint": "ng lint --fix=true",
     "e2e": "ng e2e"
   },
+  "config": {
+    "ghooks": {
+      "pre-commit": "npm run lint",
+      "pre-push": "npm run test",
+      "post-merge": "npm install",
+      "post-rewrite": "npm install"
+    }
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "~8.2.9",
@@ -28,6 +36,7 @@
     "@angular/platform-browser": "~8.2.9",
     "@angular/platform-browser-dynamic": "~8.2.9",
     "@angular/router": "^8.2.11",
+    "@enexus/flipper-dialog": "0.0.1",
     "@enexus/flipper-vendors": "0.0.1",
     "@ngrx/effects": "^8.4.0",
     "@ngrx/store": "^8.4.0",

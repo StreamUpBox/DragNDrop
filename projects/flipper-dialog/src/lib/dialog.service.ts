@@ -16,8 +16,8 @@ export class DialogService {
   }
 
   public open<T, D = any, R = any>(componentOrTemplateRef: ComponentType<T> | TemplateRef<T>,
-    size: DialogSize = DialogSize.SIZE_SM,
-    data?: D): Observable<R> {
+                                   size: DialogSize = DialogSize.SIZE_SM,
+                                   data?: D): Observable<R> {
     const dialogRef = this.dialog.open(componentOrTemplateRef, {
       panelClass: size,
       data

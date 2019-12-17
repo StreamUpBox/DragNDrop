@@ -1,0 +1,46 @@
+.message{
+  text-align: center;
+  height: 100vh;;
+  .message-icon {
+    display: block;
+    text-align: center;
+    .icon{
+      width: 104px;
+      height: 104px;
+      object-fit: contain;
+    }
+  }
+  .message-title{
+    position: relative;
+       top:22px;
+      text-align: center;
+      display: block;
+      width: auto;
+      height: auto;
+      font-family: Roboto;
+      font-size: 50px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: -1.17px;
+      color: #1b2125;
+    
+  }
+  .message-desc{
+    position: relative;
+    top: 32px;
+    text-align: center;
+    display: inline-block;
+    width: 380px;
+    height: auto;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: -0.37px;
+    color: #1b2125;
+  }
+}

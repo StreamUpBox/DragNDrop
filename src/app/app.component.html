@@ -9,7 +9,7 @@
 (routerClicked)="getRouterClicked($event)" 
  ></flipper-menu> -->
 
- <flipper-basic-pos></flipper-basic-pos>
+ <flipper-basic-pos [gottenProduct]="gottenProduct" (searchEmitValue)="searchPosProduct($event)"></flipper-basic-pos>
  <!-- <button (click)="newOrder()">new order</button>
 
  <button (click)="updateOrder()">update order</button> -->

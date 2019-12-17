@@ -186,6 +186,13 @@
     float: left;
     width: 70%;
     padding: 0 10px 10px 0px;
+    height: 100vh;
+
+    flipper-message{
+      position: relative;
+      top: 10vh;
+      height: 100vh;
+    }
 
     .search-card {
       position: relative;

@@ -104,9 +104,9 @@ export class AppComponent implements OnDestroy {
   };
   private selectedSubscription: Subscription;
   constructor(private eventBus: FlipperEventBusService,
-    private router: Router,
-    private dialogs: DialogService,
-    overlayContainer: OverlayContainer) {
+              private router: Router,
+              private dialogs: DialogService,
+              overlayContainer: OverlayContainer) {
     overlayContainer.getContainerElement().classList.add('unicorn-dark-theme');
     this.allEntries();
 

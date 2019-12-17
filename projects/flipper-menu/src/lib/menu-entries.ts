@@ -4,15 +4,15 @@ import { Branch } from './branch';
 import { Menu } from './menu';
 
 export class MenuEntries {
-    id?: number;
-    businesses:Business[];
-    user:User;
-    branches:Branch[];
-    menu:Menu[];
-    constructor(params: Object = {}) {
-        for (let name in params) {
-          this[name] = params[name];
-        }
-      }
+  id?: number;
+  businesses: Business[];
+  user: User;
+  branches: Branch[];
+  menu: Menu[];
+  constructor(params: object = {}) {
+    for (const name in params) {
+      this[name] = params[name];
     }
-    
+  }
+}
+

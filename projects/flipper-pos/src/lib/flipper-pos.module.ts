@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
-import { FlipperPosComponent } from './flipper-pos.component';
+import { FlipperBasicPosComponent } from './basic/flipper-basic-pos.component';
 
 
 
 @NgModule({
-  declarations: [FlipperPosComponent],
+  declarations: [FlipperBasicPosComponent],
   imports: [
   ],
-  exports: [FlipperPosComponent]
+  exports: [FlipperBasicPosComponent]
 })
 export class FlipperPosModule { }

@@ -1,5 +1,6 @@
 import { ColorToBackgroundClassPipe } from './color-to-background-class.pipe';
 
+
 describe('ColorToBackgroundClassPipe', () => {
   it('create an instance', () => {
     const pipe = new ColorToBackgroundClassPipe();
@@ -7,3 +8,4 @@ describe('ColorToBackgroundClassPipe', () => {
     expect(pipe.transform('primary')).toBe('background-primary');
   });
 });
+

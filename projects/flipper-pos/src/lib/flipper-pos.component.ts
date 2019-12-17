@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 // import * as alasql from 'alasql';
 // const sql = alasql;
 @Component({
-  selector: 'lib-flipper-pos',
+  selector: 'flipper-flipper-pos',
   template: `
     <p>
       flipper-pos works!

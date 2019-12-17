@@ -1,4 +1,4 @@
-import { FontSizeClassPipe } from "./font-size-class.pipe";
+import { FontSizeClassPipe } from './font-size-class.pipe';
 
 
 describe('FontSizeClassPipe', () => {

@@ -7,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class FlipperInputsComponent implements OnInit {
 
-  @Input() type:string = 'normal';
+  @Input() type = 'normal';
 
   constructor() { }
 

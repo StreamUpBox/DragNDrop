@@ -5,25 +5,12 @@
     "@angular/common": "^7.1.0",
     "@angular/core": "^7.1.0"
   },
-  "main": "bundles/dialog.umd.js",
-  "module": "fesm5/dialog.js",
-  "es2015": "fesm2015/dialog.js",
-  "esm5": "esm5/dialog.js",
-  "esm2015": "esm2015/dialog.js",
-  "fesm5": "fesm5/dialog.js",
-  "fesm2015": "fesm2015/dialog.js",
-  "typings": "dialog.d.ts",
-  "metadata": "dialog.metadata.json",
-  "sideEffects": false,
   "dependencies": {
     "tslib": "^1.9.0"
   },
   "description": "@enexus/flipper-dialog - User Should call  delete, confirm Method  and also user can create they own component dialog.",
   "directories": {
     "lib": "lib"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "CONFIRM",

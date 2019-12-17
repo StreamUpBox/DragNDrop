@@ -32,8 +32,8 @@ export class FlipperMenuComponent implements OnInit {
 
   @Input() menuEntries: MenuEntries;
 
-  isOpen: boolean = false;
-  canViewBranches: boolean = false;
+  isOpen = false;
+  canViewBranches = false;
   defaultBranch: Branch = null;
   loggedUser: User = null;
   branches: Branch[] = [];
@@ -50,14 +50,14 @@ export class FlipperMenuComponent implements OnInit {
   init() {
     if (this.menuEntries) {
 
-      this.defaultBranch = this.menuEntries.branches.find(b => b.active == true);
-      this.defaultBusiness = this.menuEntries.businesses.find(b => b.active == true);
-      //TODO: why do we need settingMenu && why is active =false?
-      this.settingMenu = this.menuEntries.menu.find(m => m.route == 'settings');
+      this.defaultBranch = this.menuEntries.branches.find(b => b.active === true);
+      this.defaultBusiness = this.menuEntries.businesses.find(b => b.active === true);
+      // TODO: why do we need settingMenu && why is active =false?
+      this.settingMenu = this.menuEntries.menu.find(m => m.route === 'settings');
       this.loggedUser = this.menuEntries.user ? this.menuEntries.user : null;
       this.branches = this.menuEntries.branches.length > 0 ? this.menuEntries.branches : [];
-      this.businesses = this.menuEntries.businesses.length > 0 ? this.menuEntries.businesses.filter(b => b.active == false) : [];
-      this.menus = this.menuEntries.menu.length > 0 ? this.menuEntries.menu.filter(m => m.route != 'settings') : [];
+      this.businesses = this.menuEntries.businesses.length > 0 ? this.menuEntries.businesses.filter(b => b.active === false) : [];
+      this.menus = this.menuEntries.menu.length > 0 ? this.menuEntries.menu.filter(m => m.route !== 'settings') : [];
       this.canViewBranches = false;
     }
   }
@@ -76,8 +76,8 @@ export class FlipperMenuComponent implements OnInit {
 
   switchBusiness(business?: Business) {
     if (!this.defaultBusiness || business == null) {
-      //TODO: test this line of code.
-      throw new Error("No current default business set.");
+      // TODO: test this line of code.
+      throw new Error('No current default business set.');
     }
     const current = this.defaultBusiness;
     current.active = false;
@@ -85,10 +85,10 @@ export class FlipperMenuComponent implements OnInit {
 
     this.defaultBusiness = null;
 
-    var businesses: Business[] = this.businesses;
-    //TODO: this code bellow are not propper tested.
+    let businesses: Business[] = this.businesses;
+    // TODO: this code bellow are not propper tested.
     businesses = businesses.filter(b => b.id !== business.id);
-    if (!businesses.find(b => b.id == current.id)) {
+    if (!businesses.find(b => b.id === current.id)) {
       businesses.push(current);
     }
 
@@ -106,10 +106,10 @@ export class FlipperMenuComponent implements OnInit {
 
     this.defaultBranch = null;
 
-    var branches: Branch[] = this.branches;
-    //TODO: this code bellow are not propper tested.
+    let branches: Branch[] = this.branches;
+    // TODO: this code bellow are not propper tested.
     branches = branches.filter(b => b.id !== branch.id);
-    if (!branches.find(b => b.id == current.id)) {
+    if (!branches.find(b => b.id === current.id)) {
       branches.push(current);
     }
 
@@ -121,31 +121,31 @@ export class FlipperMenuComponent implements OnInit {
   }
 
   router(menu: Menu) {
-    if (this.settingMenu.active == true) {
+    if (this.settingMenu.active === true) {
       this.settingMenu.active = false;
     } else {
-      this.menus.find(m => m.active == true).active = false;
+      this.menus.find(m => m.active === true).active = false;
     }
 
     menu.active = true;
     const menus = this.menus;
-    if (!menus.find(m => m.id == this.settingMenu.id)) {
+    if (!menus.find(m => m.id === this.settingMenu.id)) {
       menus.push(this.settingMenu);
     }
     this.init();
 
-    this.routerClicked.emit({ menus: menus, router: menu.route });
+    this.routerClicked.emit({ menus, router: menu.route });
   }
   hideBranchDropDown() {
     this.canViewBranches = false;
   }
 
-  textEllipsis(str, maxLength, { side = "end", ellipsis = "..." } = {}) {
+  textEllipsis(str, maxLength, { side = 'end', ellipsis = '...' } = {}) {
     if (str.length > maxLength) {
       switch (side) {
-        case "start":
+        case 'start':
           return ellipsis + str.slice(-(maxLength - ellipsis.length));
-        case "end":
+        case 'end':
         default:
           return str.slice(0, maxLength - ellipsis.length) + ellipsis;
       }
@@ -153,6 +153,6 @@ export class FlipperMenuComponent implements OnInit {
     return str;
   }
   logout() {
-    this.logoutUser.emit(this.loggedUser);  
+    this.logoutUser.emit(this.loggedUser);
   }
 }

@@ -10,7 +10,7 @@ import { Color } from 'projects/flipper-color/src/lib/color';
 export class DialogComponent implements OnInit {
   public contentColor: Color = 'primary';
   constructor(public dialogRef: MatDialogRef<DialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+              @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
     console.log(this.data);

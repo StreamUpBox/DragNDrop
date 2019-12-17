@@ -78,6 +78,12 @@
       ],
       "flipper-button/*": [
         "dist/flipper-button/*"
+      ],
+       "@enexus/flipper-components": [
+        "dist/flipper-components"
+      ],
+      "@enexus/flipper-components/*": [
+        "dist/flipper-components/*"
       ]
     }
   },

@@ -10,7 +10,6 @@ import { FlipperEventBusService } from 'projects/flipper-event/src/public_api';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { OrderEvent } from './order-event';
-import { DialogService } from 'projects/flipper-dialog/src/public_api';
 
 
 @Component({
@@ -19,7 +18,28 @@ import { DialogService } from 'projects/flipper-dialog/src/public_api';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnDestroy {
+  constructor(private eventBus: FlipperEventBusService,
+              private router: Router,
+              overlayContainer: OverlayContainer) {
+    overlayContainer.getContainerElement().classList.add('unicorn-dark-theme');
+    this.allEntries();
 
+
+
+    this.selectedSubscription = this.eventBus.of<OrderEvent>(OrderEvent.CHANNEL)
+      .pipe(filter(event => event.order.id === 100))
+      .subscribe(event => console.log(event));
+
+
+  }
+get gottenProduct(): any[] {
+    return this.canGottenProduct;
+}
+
+set gottenProduct(value: any[]) {
+    this.canGottenProduct = value;
+}
+  posEntries: any = [];
   entries: MenuEntries;
   // TODO: add an interface to implement from FlipperMenu so a developer to implement know which
   // method to call as outPut!
@@ -103,21 +123,8 @@ export class AppComponent implements OnDestroy {
 
   };
   private selectedSubscription: Subscription;
-  constructor(private eventBus: FlipperEventBusService,
-              private router: Router,
-              private dialogs: DialogService,
-              overlayContainer: OverlayContainer) {
-    overlayContainer.getContainerElement().classList.add('unicorn-dark-theme');
-    this.allEntries();
 
-
-
-    this.selectedSubscription = this.eventBus.of<OrderEvent>(OrderEvent.CHANNEL)
-      .pipe(filter(event => event.order.id === 100))
-      .subscribe(event => console.log(event));
-
-
-  }
+  canGottenProduct: any[];
   public newOrder() {
     this.eventBus.publish(new OrderEvent({ id: 100, orderno: '#O100', reference: '#0100-kigali' }));
   }
@@ -248,9 +255,9 @@ export class AppComponent implements OnDestroy {
 
 
   public anyDialog(data: []) {
-    this.dialogs.open(DialogComponent, DialogSize.SIZE_MD, {
-      results: data,
-    }).subscribe(res => console.log(res));
+    // this.dialogs.open(DialogComponent, DialogSize.SIZE_MD, {
+    //   results: data,
+    // }).subscribe(res => console.log(res));
 
   }
 
@@ -265,16 +272,23 @@ export class AppComponent implements OnDestroy {
 
   public deleteDialogMessage(itemToDelete: []) {
 
-    this.dialogs.delete('Product', itemToDelete).subscribe(res => console.log(res));
+    // this.dialogs.delete('Product', itemToDelete).subscribe(res => console.log(res));
   }
 
   public confirmDialogMessage() {
 
-    this.dialogs.confirm('Product', 'Do you want to delete this product').subscribe(res => console.log(res));
+    // this.dialogs.confirm('Product', 'Do you want to delete this product').subscribe(res => console.log(res));
 
   }
   public waitDialog() {
-    this.dialogs.wait({ title: '', progress: 12 });
+    // this.dialogs.wait({ title: '', progress: 12 });
+  }
+
+  public searchPosProduct(event) {
+    if (event) {
+      this.gottenProduct = [{name: event}];
+    }
+
   }
 
 }

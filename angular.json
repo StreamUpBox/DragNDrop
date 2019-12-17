@@ -34,7 +34,8 @@
             "scripts": [],
             "stylePreprocessorOptions": {
               "includePaths": [
-                "styles"
+                ".",
+                "./styles"
               ]
             }
           },
@@ -484,6 +485,41 @@
             "tsConfig": [
               "projects/flipper-pos/tsconfig.lib.json",
               "projects/flipper-pos/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "flipperComponents": {
+      "root": "projects/flipper-components",
+      "sourceRoot": "projects/flipper-components/src",
+      "projectType": "library",
+      "prefix": "flipper",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/flipper-components/tsconfig.lib.json",
+            "project": "projects/flipper-components/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/flipper-components/src/test.ts",
+            "tsConfig": "projects/flipper-components/tsconfig.spec.json",
+            "karmaConfig": "projects/flipper-components/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/flipper-components/tsconfig.lib.json",
+              "projects/flipper-components/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

@@ -7,11 +7,14 @@ import { TestingComponentComponent } from './testing-component/testing-component
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlipperDashboardModule } from 'flipper-dashboard';
 import { DialogComponent } from './dialog/dialog.component';
-import { ColorModule } from 'projects/flipper-color/src/public_api';
-import { FontModule } from 'projects/flipper-font/src/public_api';
+import { ColorModule } from '@enexus/flipper-color';
+import { FontModule } from '@enexus/flipper-font';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { DialogModule } from '@enexus/flipper-dialog';
 import { VendorsModule } from '@enexus/flipper-vendors';
+import { FlipperMenuModule } from 'flipper-menu';
+import { FlipperPosModule } from '@enexus/flipper-pos';
+import { FlipperEventModule } from '@enexus/flipper-event';
+import { DialogModule } from '@enexus/flipper-dialog';
 
 
 @NgModule({
@@ -27,8 +30,10 @@ import { VendorsModule } from '@enexus/flipper-vendors';
     ColorModule,
     FontModule,
     // FlipperButtonModule,
-    // FlipperMenuModule,
+    FlipperMenuModule,
     FlipperDashboardModule,
+    FlipperEventModule,
+    FlipperPosModule,
     BrowserAnimationsModule,
     AppRoutingModule
   ],

@@ -1,8 +1,14 @@
 {
-  "name": "flipper-pos",
+  "name": "@enexus/flipper-pos",
   "version": "0.0.1",
   "peerDependencies": {
     "@angular/common": "^8.2.9",
     "@angular/core": "^8.2.9"
-  }
+  },
+  "keywords": [
+    "Material",
+    "flexLayout"
+  ],
+  "author": "Ganza respice",
+  "license": "ISC"
 }

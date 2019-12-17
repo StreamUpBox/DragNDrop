@@ -37,6 +37,36 @@
       "flipper-menu/*": [
         "dist/flipper-menu/*"
       ],
+      "@enexus/flipper-pos": [
+        "dist/flipper-pos"
+      ],
+      "@enexus/flipper-pos/*": [
+        "dist/flipper-pos/*"
+      ],
+      "@enexus/flipper-event": [
+        "dist/flipper-event"
+      ],
+      "@enexus/flipper-event/*": [
+        "dist/flipper-event/*"
+      ],
+      "@enexus/flipper-dialog": [
+        "dist/flipper-dialog"
+      ],
+      "@enexus/flipper-dialog/*": [
+        "dist/flipper-dialog/*"
+      ],
+      "@enexus/flipper-color": [
+        "dist/flipper-color"
+      ],
+      "@enexus/flipper-color/*": [
+        "dist/flipper-color/*"
+      ],
+      "@enexus/flipper-font": [
+        "dist/flipper-font"
+      ],
+      "@enexus/flipper-font/*": [
+        "dist/flipper-font/*"
+      ],
       "flipper-dashboard": [
         "dist/flipper-dashboard"
       ],

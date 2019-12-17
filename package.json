@@ -9,6 +9,8 @@
     "build-color": "ng build flipperColor --watch",
     "build-dialog": "ng build flipperDialog --watch",
     "build-font": "ng build flipperFont --watch",
+    "build-pos": "ng build flipperPos --watch",
+    "build-event": "ng build flipperEvent --watch",
     "build": "ng build  --watch",
     "test": "ng test",
     "lint": "ng lint --fix=true",
@@ -17,7 +19,6 @@
   "config": {
     "ghooks": {
       "pre-commit": "npm run lint",
-      "pre-push": "npm run test",
       "post-merge": "npm install",
       "post-rewrite": "npm install"
     }
@@ -47,10 +48,12 @@
     "bootstrap": "^4.3.1",
     "deepmerge": "^4.0.0",
     "dot-object": "^1.9.0",
+    "event-source-polyfill": "^1.0.11",
     "hammerjs": "^2.0.8",
     "ngx-model": "^6.0.2",
     "raven-js": "^3.27.2",
     "rxjs": "~6.4.0",
+    "showdown": "^1.9.1",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"
   },

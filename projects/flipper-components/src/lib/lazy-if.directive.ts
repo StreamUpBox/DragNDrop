@@ -4,7 +4,6 @@ import {Directive, Input, TemplateRef, ViewContainerRef} from '@angular/core';
   selector: '[flipperLibLazyIf]'
 })
 export class LazyIfDirective {
-
   private loaded = false;
 
   constructor(

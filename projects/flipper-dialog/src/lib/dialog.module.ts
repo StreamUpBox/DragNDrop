@@ -1,3 +1,5 @@
+import { FontModule } from '@enexus/flipper-font';
+
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
@@ -9,6 +11,7 @@ import { VendorsModule } from '@enexus/flipper-vendors';
 @NgModule({
   imports: [
     CommonModule,
+    FontModule, // TODO:rename the module to FlipperFontModule
     VendorsModule
   ],
   declarations: [

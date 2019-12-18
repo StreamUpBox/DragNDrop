@@ -17,35 +17,36 @@ export class FlipperBasicPosComponent implements AfterViewInit {
 
   public searchProduct: string;
 
-  canGottenProduct: any[];
-get gottenProduct(): any[] {
-    return this.canGottenProduct;
-}
+  
 
-@Input('gottenProduct')
-set gottenProduct(value: any[]) {
+  canGottenProduct: any[];
+  
+  @Input() set gottenProduct(value: any[]) {
     this.canGottenProduct = value;
     this.updatedValue();
-}
+  }
+  get gottenProduct(): any[] {
+    return this.canGottenProduct;
+  }
 
-  @ViewChild('mySearchInput', {static: false}) public searchInputElement: ElementRef;
+  @ViewChild('mySearchInput', { static: false }) public searchInputElement: ElementRef;
 
 
-    updatedValue() {
-      if (this.gottenProduct && this.gottenProduct.length > 0) {
-         console.log(this.gottenProduct);
-      }
-
+  updatedValue() {
+    if (this.gottenProduct && this.gottenProduct.length > 0) {
+      console.log(this.gottenProduct);
     }
 
-    listenEvent(event: Event) {
-      event.stopPropagation();
-    }
-    ngAfterViewInit(): void {
-      window.setTimeout(() => {
-        this.searchInputElement.nativeElement.focus();
+  }
+
+  listenEvent(event: Event) {
+    event.stopPropagation();
+  }
+  ngAfterViewInit(): void {
+    window.setTimeout(() => {
+      this.searchInputElement.nativeElement.focus();
     });
-      fromEvent(this.searchInputElement.nativeElement, 'input').pipe(
+    fromEvent(this.searchInputElement.nativeElement, 'input').pipe(
       map((event: any) => {
         event.preventDefault();
 
@@ -56,20 +57,20 @@ set gottenProduct(value: any[]) {
       debounceTime(1000),
       distinctUntilChanged())
       .subscribe((value: string) => {
-        console.log('val:', value);
+
         window.setTimeout(() => {
-            this.clearSearchBox();
-            if (value) {
-              this.searchEmitValue.emit(value);
-            }
-      });
+          this.clearSearchBox();
+          if (value) {
+            this.searchEmitValue.emit(value);
+          }
+        });
 
       }
-      );
+    );
 
-    }
-    clearSearchBox() {
-      this.searchInputElement.nativeElement.value = '';
-      this.searchInputElement.nativeElement.focus();
-    }
+  }
+  clearSearchBox() {
+    this.searchInputElement.nativeElement.value = '';
+    this.searchInputElement.nativeElement.focus();
+  }
 }

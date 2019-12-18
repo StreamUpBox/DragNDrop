@@ -7,10 +7,12 @@ describe('MessageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      declarations: [MessageComponent],
       imports: []
     })
       .compileComponents();
   }));
+
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MessageComponent);

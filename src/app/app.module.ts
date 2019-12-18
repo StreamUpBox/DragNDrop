@@ -1,3 +1,6 @@
+import { FlipperEventModule } from './../../projects/flipper-event/src/lib/event.module';
+import { FontModule } from 'projects/flipper-font/src/public_api';
+import { ColorModule } from 'projects/flipper-color/src/public_api';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
@@ -7,18 +10,12 @@ import { TestingComponentComponent } from './testing-component/testing-component
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlipperDashboardModule } from 'flipper-dashboard';
 import { DialogComponent } from './dialog/dialog.component';
-// import { ColorModule } from '@enexus/flipper-color';
-// import { FontModule } from '@enexus/flipper-font';
+
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { VendorsModule } from '@enexus/flipper-vendors';
 import { FlipperMenuModule } from 'flipper-menu';
-// import { FlipperPosModule } from '@enexus/flipper-pos';
-// import { FlipperEventModule } from '@enexus/flipper-event';
+import { FlipperPosModule } from '@enexus/flipper-pos';
 import { DialogModule } from '@enexus/flipper-dialog';
-import { FontModule } from 'projects/flipper-font/src/public_api';
-import { ColorModule } from 'projects/flipper-color/src/public_api';
-import { FlipperEventModule } from 'projects/flipper-event/src/public_api';
-import { FlipperPosModule } from 'projects/flipper-pos/src/public-api';
 
 
 @NgModule({

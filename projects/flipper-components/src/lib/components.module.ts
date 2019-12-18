@@ -25,6 +25,7 @@ import { ColorModule } from '@enexus/flipper-color';
     MessageComponent,
     LazyIfDirective,
   ],
+
   exports: [
     LoadingIconComponent,
     RouterProgressComponent,

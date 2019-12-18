@@ -1,3 +1,4 @@
+import { FlipperComponentsModule } from './../../../../flipper-components/src/lib/components.module';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FlipperBasicPosComponent } from './flipper-basic-pos.component';
 
@@ -7,7 +8,8 @@ describe('FlipperBasicPosComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FlipperBasicPosComponent ]
+      imports: [FlipperComponentsModule],
+      declarations: [FlipperBasicPosComponent ]
     })
     .compileComponents();
   }));
@@ -20,5 +22,9 @@ describe('FlipperBasicPosComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+  it('should receive and set input gottenProduct', () => {
+    component.gottenProduct = ['java'];
+    expect(component.gottenProduct).toEqual(['java']);
   });
 });

@@ -6,7 +6,7 @@ export class ShoppingEvent extends BusEvent {
 
     public static readonly CHANNEL = CHANNELS.SHOPPINGS;
 
-    constructor(public shopping:Shopping) {
+    constructor(public shopping: Shopping) {
       super(ShoppingEvent.CHANNEL);
     }
   }

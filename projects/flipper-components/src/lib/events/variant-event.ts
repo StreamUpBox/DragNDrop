@@ -6,7 +6,7 @@ export class VariantEvent extends BusEvent {
 
     public static readonly CHANNEL = CHANNELS.VARIANTS;
 
-    constructor(public variant:Variant) {
+    constructor(public variant: Variant) {
       super(VariantEvent.CHANNEL);
     }
   }

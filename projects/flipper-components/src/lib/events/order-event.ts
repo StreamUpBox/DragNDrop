@@ -6,7 +6,7 @@ export class OrderEvent extends BusEvent {
 
     public static readonly CHANNEL = CHANNELS.ORDER;
 
-    constructor(public order:Order) {
+    constructor(public order: Order) {
       super(OrderEvent.CHANNEL);
     }
   }

@@ -6,7 +6,7 @@ export class PriceVariantEvent extends BusEvent {
 
     public static readonly CHANNEL = CHANNELS.PRICEVARIANTS;
 
-    constructor(public priceVariant:PriceVariant) {
+    constructor(public priceVariant: PriceVariant) {
       super(PriceVariantEvent.CHANNEL);
     }
   }

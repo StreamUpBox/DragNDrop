@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FlipperDashboardComponent } from './flipper-dashboard.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
-import { FlipperComponentsModule,DashBoardEntries } from '@enexus/flipper-components';
+import { FlipperComponentsModule, DashBoardEntries } from '@enexus/flipper-components';
 
 const mocEntries: DashBoardEntries = {
 totalStore: {
@@ -91,7 +91,7 @@ let fixture: ComponentFixture<FlipperDashboardComponent>;
 const entries: DashBoardEntries = null;
 beforeEach(async(() => {
   TestBed.configureTestingModule({
-  imports: [BrowserAnimationsModule,FlipperComponentsModule],
+  imports: [BrowserAnimationsModule, FlipperComponentsModule],
   declarations: [FlipperDashboardComponent]
   })
   .compileComponents();

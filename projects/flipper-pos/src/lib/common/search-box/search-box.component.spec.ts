@@ -12,12 +12,12 @@ describe('SearchBoxComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports:[ 
+      imports: [
         FormsModule,
         FlipperComponentsModule,
         ReactiveFormsModule,
         VendorsModule],
-      declarations: [ SearchBoxComponent,AutocompleteComponent ]
+      declarations: [ SearchBoxComponent, AutocompleteComponent ]
     })
     .compileComponents();
   }));
@@ -36,15 +36,15 @@ describe('SearchBoxComponent', () => {
     component.ngOnInit();
   });
 
-    it('should search product from input', () => {
-    
-      const fixture = TestBed.createComponent(SearchBoxComponent);
-      const app=fixture.debugElement.componentInstance;
-      const el = fixture.nativeElement.querySelector('input');
-      el.value ='ganza';
+  it('should search product from input', () => {
+
+      const fixtures = TestBed.createComponent(SearchBoxComponent);
+      const app = fixtures.debugElement.componentInstance;
+      const el = fixtures.nativeElement.querySelector('input');
+      el.value = 'ganza';
       dispatchEvent(new Event(el));
-      fixture.detectChanges();
-      fixture.whenStable().then(()=>{expect(app.data).toBe('newvalue');
+      fixtures.detectChanges();
+      fixtures.whenStable().then(() => {expect(app.data).toBe('newvalue');
     });
 
   });

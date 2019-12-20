@@ -8,7 +8,7 @@ describe('AutocompleteComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports:[FlipperComponentsModule],
+      imports: [FlipperComponentsModule],
       declarations: [ AutocompleteComponent ]
     })
     .compileComponents();

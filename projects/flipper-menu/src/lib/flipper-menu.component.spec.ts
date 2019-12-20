@@ -128,7 +128,7 @@ describe('FlipperMenuComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [BrowserAnimationsModule,FlipperComponentsModule],
+      imports: [BrowserAnimationsModule, FlipperComponentsModule],
       declarations: [FlipperMenuComponent]
     })
       .compileComponents();

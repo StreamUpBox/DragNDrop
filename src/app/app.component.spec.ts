@@ -28,7 +28,7 @@ describe('AppComponent', () => {
       ],
       declarations: [
         AppComponent,
-      
+
       ],
     }).compileComponents();
   }));
@@ -44,7 +44,7 @@ describe('AppComponent', () => {
   });
 
   it('should emit the searchPosProduct value', () => {
-    let event='java';
+    const event = 'java';
     component.searchPosProduct(event);
     component.gottenProduct = event;
     expect(component.gottenProduct).toEqual('java');

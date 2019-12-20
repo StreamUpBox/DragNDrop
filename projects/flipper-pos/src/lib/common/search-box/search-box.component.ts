@@ -1,6 +1,22 @@
-import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, ViewEncapsulation, ChangeDetectionStrategy, ChangeDetectorRef, AfterViewInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  Output,
+  EventEmitter,
+  ViewEncapsulation,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  AfterViewInit
+} from '@angular/core';
+import {
+  FormControl
+} from '@angular/forms';
+import {
+  debounceTime,
+  distinctUntilChanged
+} from 'rxjs/operators';
 
 @Component({
   selector: 'flipper-search-box',
@@ -12,29 +28,29 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 export class SearchBoxComponent implements OnInit, AfterViewInit {
   @Output() searchEmitValue = new EventEmitter < string > ();
   public searchControl: FormControl;
-  private debounce: number = 600;
-  public startSearching:boolean=false;
-  public loading:boolean=false;
-  
-  constructor(private cd: ChangeDetectorRef) { }
+  private debounce = 600;
+  public startSearching = false;
+  public loading = false;
+
+  constructor(private cd: ChangeDetectorRef) {}
 
   @ViewChild('mySearchInput', {
     static: false
   }) public searchInputElement: ElementRef;
 
 
-  
+
   ngOnInit() {
     this.searchControl = new FormControl('');
 
     this.searchControl.valueChanges
       .pipe(debounceTime(this.debounce), distinctUntilChanged())
       .subscribe(query => {
-        if (query == '' || query == null) {
-          this.startSearching=false;
+        if (query === '' || query === null) {
+          this.startSearching = false;
           return;
         }
-        this.startSearching=true;
+        this.startSearching = true;
 
         this.searchEmitValue.emit(query);
       });
@@ -42,7 +58,7 @@ export class SearchBoxComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.searchInputElement.nativeElement.focus();
-  });
+    });
     this.cd.detectChanges();
   }
 

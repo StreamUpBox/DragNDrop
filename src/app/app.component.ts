@@ -9,7 +9,7 @@ import { OrderEvent } from './event';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnDestroy { 
+export class AppComponent implements OnDestroy {
   private selectedSubscription: Subscription;
 
   canGottenProduct: string;
@@ -27,22 +27,22 @@ set gottenProduct(value: string) {
     this.canGottenProduct = value;
 }
 
-  
+
   public addProducts() {
     this.eventBus.publish(new OrderEvent({ id: 100, orderno: '#O100', reference: '#0100-kigali' }));
   }
- 
+
 
   ngOnDestroy() {
     this.selectedSubscription.unsubscribe();
   }
-  
+
 
   public searchPosProduct(event) {
     if (event) {
-      this.selectedSubscription = this.eventBus.of<OrderEvent>(OrderEvent.CHANNEL)
-      .pipe(filter(event => event.order.id === 100))
-      .subscribe(event => console.log(event));
+      // this.selectedSubscription = this.eventBus.of<OrderEvent>(OrderEvent.CHANNEL)
+      // .pipe(filter(e => e.order.id === 100))
+      // .subscribe(res => console.log(res));
     }
 
   }

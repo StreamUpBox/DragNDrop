@@ -17,10 +17,10 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FlipperBasicPosComponent {
-    
+
       @Output() searchEmitValue = new EventEmitter < string > ();
 
-      private canGottenProduct: any[]=[];
+      private canGottenProduct: any[] = [];
 
       @Input('gottenProduct') set gottenProduct(value: any[]) {
         this.canGottenProduct = value;
@@ -28,7 +28,7 @@ export class FlipperBasicPosComponent {
       get gottenProduct(): any[] {
         return this.canGottenProduct;
       }
- 
+
 
       public searchPosProduct(event) {
         if (event) {

@@ -17,7 +17,7 @@ describe('FlipperBasicPosComponent', () => {
         FormsModule,
         ReactiveFormsModule,
         VendorsModule],
-      declarations: [FlipperBasicPosComponent,SearchBoxComponent,AutocompleteComponent ]
+      declarations: [FlipperBasicPosComponent, SearchBoxComponent, AutocompleteComponent ]
     })
     .compileComponents();
   }));
@@ -38,7 +38,7 @@ describe('FlipperBasicPosComponent', () => {
   });
 
   it('should emit the output value that will use to search a product', () => {
-   let  event='ganza';
+   const  event = 'ganza';
 
    component.searchEmitValue.subscribe(g => {
       expect(g).toEqual('ganza');

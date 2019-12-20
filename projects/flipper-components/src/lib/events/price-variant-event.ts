@@ -4,7 +4,7 @@ import { CHANNELS } from './channels';
 export class PriceVariantEvent extends BusEvent {
 
     public static readonly CHANNEL = CHANNELS.PRICEVARIANTS;
-  
+
     constructor() {
       super(PriceVariantEvent.CHANNEL);
     }

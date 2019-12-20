@@ -1,6 +1,11 @@
-import { Component, ViewChild, ElementRef, AfterViewInit, Output, EventEmitter, Input, OnInit } from '@angular/core';
-import { Subject, fromEvent } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map, filter } from 'rxjs/operators';
+import {
+  Component,
+  Output,
+  EventEmitter,
+  Input,
+  ViewEncapsulation,
+  ChangeDetectionStrategy
+} from '@angular/core';
 // TODO: please do not delete down code it is a sample of sql in angular.
 // import * as alasql from 'alasql';
 // const sql = alasql;
@@ -8,69 +13,26 @@ import { debounceTime, distinctUntilChanged, map, filter } from 'rxjs/operators'
   selector: 'flipper-basic-pos',
   templateUrl: './flipper-basic-pos.component.html',
   styleUrls: ['./flipper-basic-pos.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FlipperBasicPosComponent implements AfterViewInit {
+export class FlipperBasicPosComponent {
+    
+      @Output() searchEmitValue = new EventEmitter < string > ();
 
-  searchProductUpdate = new Subject<string>();
-  @Output() searchEmitValue = new EventEmitter<string>();
+      private canGottenProduct: any[]=[];
 
-
-  public searchProduct: string;
-
-  
-
-  canGottenProduct: any[];
-  
-  @Input() set gottenProduct(value: any[]) {
-    this.canGottenProduct = value;
-    this.updatedValue();
-  }
-  get gottenProduct(): any[] {
-    return this.canGottenProduct;
-  }
-
-  @ViewChild('mySearchInput', { static: false }) public searchInputElement: ElementRef;
-
-
-  updatedValue() {
-    if (this.gottenProduct && this.gottenProduct.length > 0) {
-      console.log(this.gottenProduct);
-    }
-
-  }
-
-  listenEvent(event: Event) {
-    event.stopPropagation();
-  }
-  ngAfterViewInit(): void {
-    window.setTimeout(() => {
-      this.searchInputElement.nativeElement.focus();
-    });
-    fromEvent(this.searchInputElement.nativeElement, 'input').pipe(
-      map((event: any) => {
-        event.preventDefault();
-
-        return event.target.value;
-      }),
-      filter(res => res.length > 1),
-
-      debounceTime(1000),
-      distinctUntilChanged())
-      .subscribe((value: string) => {
-
-        window.setTimeout(() => {
-          this.clearSearchBox();
-          if (value) {
-            this.searchEmitValue.emit(value);
-          }
-        });
-
+      @Input('gottenProduct') set gottenProduct(value: any[]) {
+        this.canGottenProduct = value;
       }
-    );
+      get gottenProduct(): any[] {
+        return this.canGottenProduct;
+      }
+ 
 
-  }
-  clearSearchBox() {
-    this.searchInputElement.nativeElement.value = '';
-    this.searchInputElement.nativeElement.focus();
-  }
+      public searchPosProduct(event) {
+        if (event) {
+          this.searchEmitValue.emit(event);
+        }
+      }
 }

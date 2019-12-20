@@ -1,10 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { trigger, transition, animate } from '@angular/animations';
-import { MenuEntries } from './menu-entries';
-import { Branch } from './branch';
-import { User } from './user';
-import { Business } from './business';
-import { Menu } from './menu';
+import { Menu, Business, Branch, User, MenuEntries } from '@enexus/flipper-components';
 
 @Component({
   selector: 'flipper-menu',

@@ -1,24 +1,53 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { FlipperMenuComponent } from 'flipper-menu';
+import { FlipperMenuComponent, FlipperMenuModule } from 'flipper-menu';
+import { VendorsModule } from '@enexus/flipper-vendors';
+import { FlipperEventModule } from 'projects/flipper-event/src/public_api';
+import { FlipperPosModule } from 'projects/flipper-pos/src/public-api';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DialogModule } from 'projects/flipper-dialog/src/public_api';
+import { ColorModule } from 'projects/flipper-color/src/public_api';
+import { FontModule } from 'projects/flipper-font/src/public_api';
 
 describe('AppComponent', () => {
+  let component: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
+        VendorsModule,
+        FlipperMenuModule,
+        FlipperEventModule,
+        FlipperPosModule,
+        DialogModule,
+        ColorModule,
+        FontModule,
+        BrowserAnimationsModule
       ],
       declarations: [
         AppComponent,
-        FlipperMenuComponent
+      
       ],
     }).compileComponents();
   }));
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
   });
+
+  it('should create the app', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should emit the searchPosProduct value', () => {
+    let event='java';
+    component.searchPosProduct(event);
+    component.gottenProduct = event;
+    expect(component.gottenProduct).toEqual('java');
+  });
+
 });

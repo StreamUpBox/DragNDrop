@@ -1,0 +1,6 @@
+<ng-container *ngIf="!loading"><ng-content></ng-content></ng-container>
+<div *ngIf="loading" class="loading-spinner">
+   <flipper-loading-icon [loading]="loading">
+      <span>Loading data!</span>
+    </flipper-loading-icon>
+</div>

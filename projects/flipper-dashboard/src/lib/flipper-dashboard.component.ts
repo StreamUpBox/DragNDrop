@@ -1,6 +1,5 @@
-import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
-import { DashBoardEntries } from './dashboard-entries';
-import { Subject } from 'rxjs';
+import { Component, Input } from '@angular/core';
+import { DashBoardEntries } from '@enexus/flipper-components';
 
 @Component({
   selector: 'flipper-dashboard',

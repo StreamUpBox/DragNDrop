@@ -1,0 +1,160 @@
+.icon-card {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 16px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.search-icon {
+  vertical-align: text-bottom;
+  color: #959da5;
+}
+
+.search-box {
+  width: 100%;
+  margin: 0;
+  padding: 16px;
+  padding-left: 52px;
+  font-size: inherit;
+  line-height: 1;
+  font-family: inherit;
+  background-color: #fff;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  border: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: 0;
+  border-radius: 6px;
+  font-family: Roboto;
+  font-size: 22px;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #515151;
+}
+
+.autocomplete.mat-autocomplete-panel {
+  position: relative;
+  border: solid 1px #e2e9ed;
+  background-color: #fcfeff;
+
+  flipper-autocomplete {
+    width: 100%;
+
+    .mat-option {
+      height: 83px;
+      border-top: solid 4px #fcfeff;
+      background-color: #ffffff;
+      .add-button {
+        position: relative;
+        top: 34.7px;
+        right: 0;
+        float: right;
+        width: 99px;
+        height: 45px;
+        border-radius: 2px;
+        background-color: #1174b6;
+        border: solid 1px #1174b6;
+        font-family: Roboto;
+        font-size: 14px;
+        font-weight: 500;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.14;
+        letter-spacing: 1.25px;
+        text-align: center;
+        color: #ffffff;
+      }
+      .item {
+        position: relative;
+        display: inline-table;
+        left: 30px;
+        bottom: 3px;;
+
+        .item-sub-title {
+          position: relative;
+          display: block;
+
+          .details {
+            position: relative;
+            bottom: 12px;
+            margin-right: 18px;
+            display: inline-block;
+            width: auto;
+            height: 19px;
+            font-family: Roboto;
+            font-size: 14px;
+            font-weight: 500;
+            font-stretch: normal;
+            font-style: normal;
+            line-height: normal;
+            letter-spacing: -0.05px;
+            color: #202124;
+
+            .oval {
+              position: absolute;
+              top: 5px;
+              right: 0;
+              bottom: 0;
+              left: 0;
+              width: 8px;
+              height: 8px;
+              background-color: #53be6d;
+              border-radius: 50px;;
+            }
+
+          }
+
+         
+        }
+
+        .item-title {
+          width: 240px;
+          height: 26px;
+          font-family: Roboto;
+          font-size: 20px;
+          font-weight: normal;
+          font-stretch: normal;
+          font-style: normal;
+          line-height: normal;
+          letter-spacing: -0.07px;
+          color: #2575ec;
+
+
+        }
+       
+      }
+
+      .icon {
+        position: relative;
+        left: 11px;
+        width: 53px;
+        height: 53px;
+        top: 32px;
+        border-radius: 4px;
+        border: solid 1px #d6daff;
+        background-color: #ffffff;
+        display: inline-block;
+
+        .icon-img {
+          width: 47px;
+          height: 36px;
+          position: relative;
+          top: 7px;
+          left: 4px;
+        }
+      }
+    }
+  }
+
+}

@@ -2,81 +2,81 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FlipperDashboardComponent } from './flipper-dashboard.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DashBoardEntries } from './dashboard-entries';
 import { By } from '@angular/platform-browser';
+import { FlipperComponentsModule,DashBoardEntries } from '@enexus/flipper-components';
 
 const mocEntries: DashBoardEntries = {
-total_store: {
+totalStore: {
 value: '1,024,000',
 percentage: 12,
 since: 'last month'
 },
-gross_profit: {
+grossProfit: {
 value: '1,024,000',
 percentage: 12,
 since: 'last month'
 },
-net_profit: {
+netProfit: {
 value: '1,024,000',
 percentage: 12,
 since: 'last month'
 },
-sold_items: [
+soldItems: [
 {
 id: 1,
 name: 'Mineral Water',
-updated_at: 'Updated 5m ago',
+updatedAt: 'Updated 5m ago',
 items: 100,
 total: 5000
 },
 {
 id: 2,
 name: 'Salt',
-updated_at: 'Updated 5m ago',
+updatedAt: 'Updated 5m ago',
 items: 100,
 total: 5000
 },
 {
 id: 3,
 name: 'Vinegar',
-updated_at: 'Updated 5m ago',
+updatedAt: 'Updated 5m ago',
 items: 100,
 total: 5000
 },
 {
 id: 4,
 name: 'Blueband',
-updated_at: 'Updated 5m ago',
+updatedAt: 'Updated 5m ago',
 items: 100,
 total: 5000
 }
 ],
-selling_branches: [
+sellingBranches: [
 {
 id: 1,
 name: 'Kimirongo',
-updated_at: 'Updated 5m ago',
+updatedAt: 'Updated 5m ago',
 items: 100,
 total: 5000
 },
 {
 id: 2,
 name: 'Kicukiro',
-updated_at: 'Updated 5m ago',
+updatedAt: 'Updated 5m ago',
 items: 100,
 total: 5000
 },
 {
 id: 3,
 name: 'Nyagatare',
-updated_at: 'Updated 5m ago',
+updatedAt: 'Updated 5m ago',
 items: 100,
 total: 5000
 },
 {
 id: 4,
 name: 'Gicumbi',
-updated_at: 'Updated 5m ago',
+updatedAt: 'Updated 5m ago',
 items: 100,
 total: 5000
 },
@@ -91,7 +91,7 @@ let fixture: ComponentFixture<FlipperDashboardComponent>;
 const entries: DashBoardEntries = null;
 beforeEach(async(() => {
   TestBed.configureTestingModule({
-  imports: [BrowserAnimationsModule],
+  imports: [BrowserAnimationsModule,FlipperComponentsModule],
   declarations: [FlipperDashboardComponent]
   })
   .compileComponents();
@@ -108,7 +108,7 @@ beforeEach(() => {
 
 
 it('should check if TOTAL STORE VALUE is not undefined', () => {
-     expect(component.dashboardEntries.total_store).toBe(mocEntries.total_store);
+     expect(component.dashboardEntries.totalStore).toBe(mocEntries.totalStore);
 });
 
 
@@ -122,7 +122,7 @@ it('should check if TOTAL STORE VALUE has got data', () => {
 
 
 it('should check if GROSS PROFIT is not undefined', () => {
-  expect(component.dashboardEntries.gross_profit).toBe(mocEntries.gross_profit);
+  expect(component.dashboardEntries.grossProfit).toBe(mocEntries.grossProfit);
 });
 
 it('should check if TOTAL GROSS PROFIT has got data', () => {
@@ -133,7 +133,7 @@ it('should check if TOTAL GROSS PROFIT has got data', () => {
   });
 
 it('should check if NET PROFIT is not undefined', () => {
-    expect(component.dashboardEntries.net_profit).toBe(mocEntries.net_profit);
+    expect(component.dashboardEntries.netProfit).toBe(mocEntries.netProfit);
   });
 
 it('should check if TOTAL NET PROFIT has got data', () => {
@@ -145,7 +145,7 @@ it('should check if TOTAL NET PROFIT has got data', () => {
 
     // sold-items
 it('should check if SOLD ITEMS is not undefined', () => {
-      expect(component.dashboardEntries.sold_items).toBe(mocEntries.sold_items);
+      expect(component.dashboardEntries.soldItems).toBe(mocEntries.soldItems);
     });
 
 it('should check if SOLD ITEMS has got data', () => {
@@ -156,7 +156,7 @@ it('should check if SOLD ITEMS has got data', () => {
       });
 //
 it('should check if SELLING BRANCHES is not empty', () => {
-        expect(component.dashboardEntries.sold_items).toBe(mocEntries.sold_items);
+        expect(component.dashboardEntries.soldItems).toBe(mocEntries.soldItems);
       });
 
 it('should check if SELLING BRANCHES has got data', () => {

@@ -5,7 +5,9 @@
     "entryFile": "src/public_api.ts",
     "umdModuleIds": {
       "@enexus/flipper-color": "@enexus/flipper-color",
-      "@enexus/flipper-vendors": "@enexus/flipper-vendors"
+      "@enexus/flipper-vendors": "@enexus/flipper-vendors",
+      "@enexus/flipper-event": "@enexus/flipper-event",
+      "@enexus/flipper-dialog": "@enexus/flipper-dialog"
     }
   }
 }

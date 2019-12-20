@@ -9,3 +9,12 @@ export class OrderEvent extends BusEvent {
   }
 }
 
+
+export class ProductsEvent extends BusEvent {
+
+  public static readonly CHANNEL = 'products';
+
+  constructor(public order: {id: number, orderno: string, reference: string}) {
+    super(OrderEvent.CHANNEL);
+  }
+}

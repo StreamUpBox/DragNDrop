@@ -3,7 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatOptionModule } from '@angular/material/core';
+import { MatOptionModule, MatCommonModule, MatRippleModule, MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -29,6 +29,9 @@ import { MatTreeModule } from '@angular/material/tree';
 import {A11yModule} from '@angular/cdk/a11y';
 import {PortalModule} from '@angular/cdk/portal';
 import {OverlayModule} from '@angular/cdk/overlay';
+import { MatAutocompleteModule, MatChipsModule, MatDatepickerModule, MatGridListModule, MatSliderModule, MatRadioModule, MatBottomSheetModule } from '@angular/material';
+import { ObserversModule } from '@angular/cdk/observers';
+import { BidiModule } from '@angular/cdk/bidi';
 
 @NgModule({
   imports: [
@@ -62,6 +65,25 @@ import {OverlayModule} from '@angular/cdk/overlay';
     A11yModule,
     PortalModule,
     OverlayModule,
+    MatAutocompleteModule,
+    MatChipsModule,  
+    MatDatepickerModule,
+    MatTableModule,
+    MatGridListModule,  
+    MatProgressSpinnerModule,
+    MatRippleModule,
+    MatSelectModule,
+  
+    MatSidenavModule,
+  
+    MatSliderModule,
+    MatNativeDateModule,
+    MatStepperModule,
+    MatRadioModule,
+    BidiModule,
+    MatCommonModule,
+    ObserversModule,
+    MatBottomSheetModule
   ],
   exports: [
     MatMenuModule,
@@ -94,6 +116,25 @@ import {OverlayModule} from '@angular/cdk/overlay';
     A11yModule,
     PortalModule,
     OverlayModule,
+    MatAutocompleteModule,
+    MatChipsModule,  
+    MatDatepickerModule,
+    MatTableModule,
+    MatGridListModule,  
+    MatProgressSpinnerModule,
+    MatRippleModule,
+    MatSelectModule,
+  
+    MatSidenavModule,
+  
+    MatSliderModule,
+    MatNativeDateModule,
+    MatStepperModule,
+    MatRadioModule,
+    BidiModule,
+    MatCommonModule,
+    ObserversModule,
+    MatBottomSheetModule
   ],
   providers: [
     MatIconRegistry,
@@ -102,6 +143,5 @@ import {OverlayModule} from '@angular/cdk/overlay';
   ]
 })
 export class MaterialModule {
-  // FontAwesome ones are visible here https://fontawesome.com
   // Material icon are visible here https://material.io/tools/icons/?style=baseline
 }

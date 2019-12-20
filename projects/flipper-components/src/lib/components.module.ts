@@ -9,12 +9,16 @@ import { TableOverlayComponent } from './table-overlay/table-overlay.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { MessageComponent } from './message/message.component';
 import { ColorModule } from '@enexus/flipper-color';
+import { FlipperEventModule } from '@enexus/flipper-event';
+import { DialogModule } from '@enexus/flipper-dialog';
 
 @NgModule({
   imports: [
     CommonModule,
     VendorsModule,
-    ColorModule
+    ColorModule,
+    FlipperEventModule,
+    DialogModule
   ],
   declarations: [
     LoadingIconComponent,

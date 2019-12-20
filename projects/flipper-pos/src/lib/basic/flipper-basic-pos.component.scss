@@ -196,58 +196,11 @@
 
     .search-card {
       position: relative;
+      
     }
 
-    .icon-card {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 16px;
-      display: -webkit-box;
-      display: -webkit-flex;
-      display: -ms-flexbox;
-      display: flex;
-      -webkit-align-items: center;
-      -webkit-box-align: center;
-      -ms-flex-align: center;
-      align-items: center;
-   }
-   .search-icon {
-    vertical-align: text-bottom;
-    color: #959da5;
-  }
 
-  .search-box {
-    width: 100%;
-    margin: 0;
-    padding: 16px;
-    padding-left: 52px;
-    font-size: inherit;
-    line-height: 1;
-    font-family: inherit;
-    background-color: #fff;
-    box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px 0 rgba(0,0,0,0.06);
-    border: 0;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    outline: 0;
-    border-radius: 6px;
-    font-family: Roboto;
-    font-size: 22px;
-    font-stretch: normal;
-        font-style: normal;
-        line-height: normal;
-        letter-spacing: normal;
-        color: #515151;
-}
-  }
-
-    
-  
-
- 
-   
+    }
 
   
 }

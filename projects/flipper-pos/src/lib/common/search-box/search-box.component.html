@@ -1,0 +1,32 @@
+<div class="icon-card"><svg viewBox="0 0 24 24" width="24" height="24" stroke="#607d8b" stroke-width="2"
+    fill="none" stroke-linecap="round" stroke-linejoin="round" class="search-icon">
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
+</div>
+  <input type="search" [matAutocomplete]="auto" aria-label="Search" #mySearchInput [formControl]="searchControl"  placeholder="Search product code to retreive" class="search-box">
+  
+  <mat-autocomplete #auto="matAutocomplete" class="autocomplete">
+    <flipper-autocomplete [loading]="loading"> 
+        <mat-option>
+            <div class="icon">
+                    <img [src]="'./assets/icons/search.svg'" class="icon-img">
+           </div>
+           <div class="item">
+               <span class="item-title">
+                    450089 / Vaseline Pomade
+                    
+               </span>
+               <div class="item-sub-title">
+                    <span class="details">RWF 500</span>
+                    <span class="details">Lotion</span>
+                    <span class="details"><div class="oval"></div> &nbsp;&nbsp; In stock(10)</span>
+                </div>
+               
+           </div>
+           <button type="button" class="add-button">ADD</button>
+        </mat-option> 
+
+        
+    </flipper-autocomplete>
+</mat-autocomplete>

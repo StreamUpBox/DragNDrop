@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { FlipperDashboardComponent } from './flipper-dashboard.component';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FlipperComponentsModule } from '@enexus/flipper-components';
 
 
 
@@ -9,7 +10,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   declarations: [FlipperDashboardComponent],
   imports: [
     CommonModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FlipperComponentsModule
   ],
   exports: [FlipperDashboardComponent]
 })

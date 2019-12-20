@@ -1,6 +1,4 @@
 import { FlipperEventModule } from './../../projects/flipper-event/src/lib/event.module';
-import { FontModule } from 'projects/flipper-font/src/public_api';
-import { ColorModule } from 'projects/flipper-color/src/public_api';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
@@ -9,27 +7,24 @@ import { TestingComponentComponent } from './testing-component/testing-component
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlipperDashboardModule } from 'flipper-dashboard';
-import { DialogComponent } from './dialog/dialog.component';
 
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { VendorsModule } from '@enexus/flipper-vendors';
 import { FlipperMenuModule } from 'flipper-menu';
 import { FlipperPosModule } from '@enexus/flipper-pos';
-import { DialogModule } from '@enexus/flipper-dialog';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    TestingComponentComponent,
-    DialogComponent
+    TestingComponentComponent
   ],
   imports: [
     BrowserModule,
-    DialogModule,
+    // DialogModule,
     VendorsModule,
-    ColorModule,
-    FontModule,
+    // ColorModule,
+    // FontModule,
     // FlipperButtonModule,
     FlipperMenuModule,
     FlipperDashboardModule,
@@ -38,7 +33,7 @@ import { DialogModule } from '@enexus/flipper-dialog';
     BrowserAnimationsModule,
     AppRoutingModule
   ],
-  entryComponents: [DialogComponent],
+  entryComponents: [],
   providers: [],
   bootstrap: [AppComponent]
 })

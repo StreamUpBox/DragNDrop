@@ -12,6 +12,7 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 import { VendorsModule } from '@enexus/flipper-vendors';
 import { FlipperMenuModule } from 'flipper-menu';
 import { FlipperPosModule } from '@enexus/flipper-pos';
+import { FlipperComponentsModule } from '@enexus/flipper-components';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { FlipperPosModule } from '@enexus/flipper-pos';
     FlipperMenuModule,
     FlipperDashboardModule,
     FlipperEventModule,
+    FlipperComponentsModule,
     FlipperPosModule,
     BrowserAnimationsModule,
     AppRoutingModule

@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogModule } from 'projects/flipper-dialog/src/public_api';
 import { ColorModule } from 'projects/flipper-color/src/public_api';
 import { FontModule } from 'projects/flipper-font/src/public_api';
+import { FlipperComponentsModule } from '@enexus/flipper-components';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -21,6 +22,7 @@ describe('AppComponent', () => {
         FlipperMenuModule,
         FlipperEventModule,
         FlipperPosModule,
+        FlipperComponentsModule,
         DialogModule,
         ColorModule,
         FontModule,

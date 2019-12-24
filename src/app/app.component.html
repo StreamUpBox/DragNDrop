@@ -1,3 +1,11 @@
 
- <flipper-basic-pos [gottenProduct]="gottenProduct" (searchEmitValue)="searchPosProduct($event)"></flipper-basic-pos>
+
+ <flipper-basic-pos
+  [currentOrder]="currentOrder"
+  (addToCartEmit)="addToCart($event)"
+  [gottenVariant]="gottenVariant"
+  (searchEmitValue)="searchPosVariant($event)"
+  (saveOrderUpdatedEmit)="saveOrderUpdated($event)">
+</flipper-basic-pos
+>
  

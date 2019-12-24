@@ -1,8 +1,8 @@
-export class Shopping {
+export class Shoppings {
   id?: number;
   orderId?: number;
   variantId?: number;
-  variantName?: number;
+  variantName?: string;
   price?: any;
   quantity: number;
   subTotal?: number;

@@ -40,7 +40,7 @@ import { FlipperComponentsModule } from '@enexus/flipper-components';
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(overlayContainer: OverlayContainer) {
+  constructor() {
     //  overlayContainer.getContainerElement().classList.add('unicorn-dark-theme');
   }
 }

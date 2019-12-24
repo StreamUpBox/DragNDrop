@@ -1,0 +1,49 @@
+<div class="shoppinglist">
+
+  <div class="divider">
+    <div class="title">Selected Items</div>
+    <div class="line"></div>
+  </div>
+
+  <flipper-autocomplete *ngFor="let item of orderItems; let i = index;">
+    <mat-option>
+      <div class="icon">
+        <img [src]="'./assets/icons/search.svg'" class="icon-img">
+      </div>
+      <div class="item">
+        <span class="item-title">
+          {{item.orderId}} / {{item.variantName}}
+
+        </span>
+        <div class="item-sub-title">
+          <span class="details">RWF {{item.price}}</span>
+          <span class="details">Lotion</span>
+          <span class="details">
+            <div class="oval"></div> &nbsp;&nbsp; In stock({{item.quantity}})
+          </span>
+        </div>
+
+      </div>
+      <div class="remove-item">
+
+        <img [src]="'./assets/icons/x.svg'" class="delete-icon" (click)="removeItem(item)">
+
+      </div>
+      <div class="update-qty">
+        <table>
+          <tr>
+            <td>
+              <img [src]="'./assets/icons/minus.svg'" (click)="updateQuantity(item,'-')">
+            </td>
+            <td>{{item.quantity}}</td>
+            <td>
+              <img [src]="'./assets/icons/plus.svg'" (click)="updateQuantity(item,'+')">
+            </td>
+          </tr>
+        </table>
+      </div>
+
+    </mat-option>
+
+  </flipper-autocomplete>
+</div>

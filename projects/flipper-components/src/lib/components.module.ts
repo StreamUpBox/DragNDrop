@@ -11,6 +11,9 @@ import { MessageComponent } from './message/message.component';
 import { ColorModule } from '@enexus/flipper-color';
 import { FlipperEventModule } from '@enexus/flipper-event';
 import { DialogModule } from '@enexus/flipper-dialog';
+import { RoundNumberPipe } from './pipe/round-number.pipe';
+import { CalculateTotalClassPipe } from './pipe/calculate-total-class.pipe';
+import { MatchHeightDirective } from './directive/match-height.directive';
 
 @NgModule({
   imports: [
@@ -28,6 +31,9 @@ import { DialogModule } from '@enexus/flipper-dialog';
     SpinnerComponent,
     MessageComponent,
     LazyIfDirective,
+    RoundNumberPipe,
+    CalculateTotalClassPipe,
+    MatchHeightDirective
   ],
 
   exports: [
@@ -38,8 +44,14 @@ import { DialogModule } from '@enexus/flipper-dialog';
     SpinnerComponent,
     MessageComponent,
     LazyIfDirective,
+    RoundNumberPipe,
+    CalculateTotalClassPipe,
+    MatchHeightDirective
   ],
   entryComponents: [],
+  providers: [ 
+    RoundNumberPipe,
+    CalculateTotalClassPipe]
 })
 export class FlipperComponentsModule {
 }

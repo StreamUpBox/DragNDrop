@@ -1,4 +1,4 @@
-import { DecimalPipe } from '@angular/common';
+import { Shoppings } from './shopping';
 
 export class Order {
     id?: number;
@@ -6,20 +6,22 @@ export class Order {
     branchId: number;
     orderNumber: any;
     customerId?: number;
-    status?: any;
+    status?: string;
     reference?: string;
     orderType?: string;
     supplierId?: string;
-    subTotal?: DecimalPipe;
+    subTotal?: any;
     supplierInvoiceNumber?: any;
     taxRate?: any;
-    taxAmount?: DecimalPipe;
+    taxAmount?: any;
     discountRate?: any;
-    discountAmount?: DecimalPipe;
-    cashReceived?: DecimalPipe;
-    customerChangeDue?: DecimalPipe;
-     saleTotal?: DecimalPipe;
-    customerSaving?: DecimalPipe;
+    discountAmount?: any;
+    cashReceived?: any;
+    customerChangeDue?: any;
+    saleTotal?: any;
+    customerSaving?: any;
+    isActive?:boolean;
+    orderItems:Shoppings[];
     paymentId?: number;
     orderNote?: string;
     deliverDate?: any;
@@ -32,3 +34,5 @@ export class Order {
         }
       }
 }
+
+

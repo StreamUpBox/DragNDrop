@@ -1,3 +1,5 @@
+import { PriceVariant } from './price-variant';
+
 export class Variant {
   id?: number;
   supplierId?: number;
@@ -9,6 +11,8 @@ export class Variant {
   variantableId?: number;
   variantableType?: string;
   supplierCode?: number;
+  isActive?:boolean;
+  priceVariant?:PriceVariant;
   markup?: any;
   createdAt?: any;
   updatedAt?: any;

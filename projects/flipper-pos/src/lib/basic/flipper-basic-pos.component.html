@@ -1,50 +1,79 @@
-<div class="container">
-  <div class="row">
-    <div class="column-lg">
-      <div class="search-card">
+<!-- <nav mat-tab-nav-bar [backgroundColor]="background">
+  <a mat-tab-link *ngFor="let link of links"
+     (click)="activeLink = link"
+     [active]="activeLink == link"> {{link}} </a>
+  <a mat-tab-link (click)="addLink()">+ New Order</a>
+</nav> -->
 
-        <flipper-search-box (searchEmitValue)="searchPosProduct($event)"></flipper-search-box>
-            
-      </div>
+<div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="left" fxLayoutGap="10px" fxLayoutGap.xs="0"
+  myMatchHeight="container">
+  <div class="item item-4" fxFlex fxFlexOffset="50px" fxFlexOffset.xs="0">
+    <div class="search-card">
+
+      <flipper-search-box [gottenVariant]="gottenVariant" (addToCartEmit)="addToCart($event)"
+        (searchEmitValue)="searchPosProduct($event)">
+      </flipper-search-box>
 
 
-      <flipper-message title="Search Product" message="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa."></flipper-message>
     </div>
-    <div class="column-sm">
-      <div class="calculator">
-        <div class="keys">
-          <div class="key"><span class="value">7</span></div>
-          <div class="key"><span class="value">8</span></div>
-          <div class="key"><span class="value">9</span></div>
 
-          <div class="key"><span class="value">4</span></div>
-          <div class="key"><span class="value">5</span></div>
-          <div class="key"><span class="value">6</span></div>
+    <div class="shoppinglist" *ngIf="currentOrder && currentOrder.orderItems.length > 0">
 
-          <div class="key"><span class="value">1</span></div>
-          <div class="key"><span class="value">2</span></div>
-          <div class="key"><span class="value">3</span></div>
+      <div class="divider">
+        <div class="title">Selected Items ({{currentOrder.orderItems.length}})</div>
+        <div class="line"></div>
+      </div>
+      <div class="item-lists">
+        <flipper-autocomplete *ngFor="let item of  currentOrder.orderItems; let i = index;">
+          <mat-option>
+            <div class="icon">
+              <img [src]="'./assets/icons/search.svg'" class="icon-img">
+            </div>
+            <div class="item">
+              <span class="item-title">
+                {{item.orderId}} / {{item.variantName}}
 
-          <div class="key"><span class="value">.</span></div>
-          <div class="key"><span class="value">0</span></div>
-          <div class="key"><span class="value">00</span></div>
-        </div>
+              </span>
+              <div class="item-sub-title">
+                <span class="details">RWF {{item.price}}</span>
+                <span class="details">Lotion</span>
+                <span class="details">
+                  <div class="oval"></div> &nbsp;&nbsp; In stock({{item.quantity}})
+                </span>
+              </div>
 
-        <div class="results">
-        <span class="amounts">5,000</span>  
-        <button type="button" class="clear">CLEAR</button>
-        </div>
+            </div>
+            <div class="remove-item">
 
-        <div class="totalAmounts">
-          <span class="amount-title">TOTAL TO BE PAID</span>
-          <span class="amount-number">3,400</span>
-        </div>
-        <div class="totalAmounts">
-            <span class="amount-title">CHANGE</span>
-            <span class="amount-number">1,600</span>
-        </div>
-        <button type="button" class="cash-btn"><span class="cash-btn-Text">Collect Cash</span></button>
+              <img [src]="'./assets/icons/x.svg'" class="delete-icon" (click)="removeItem(item)">
+
+            </div>
+            <div class="update-qty">
+              <table>
+                <tr>
+                  <td>
+                    <img [src]="'./assets/icons/minus.svg'" (click)="updateQuantity(item,'-')">
+                  </td>
+                  <td>{{item.quantity}}</td>
+                  <td>
+                    <img [src]="'./assets/icons/plus.svg'" (click)="updateQuantity(item,'+')">
+                  </td>
+                </tr>
+              </table>
+            </div>
+
+          </mat-option>
+
+        </flipper-autocomplete>
       </div>
     </div>
+
+    <flipper-message *ngIf="currentOrder && currentOrder.orderItems.length===0" title="Search Product"
+      message="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.">
+    </flipper-message>
+  </div>
+  <div class="item item-5" myMatchHeight="item-5" fxFlex="500px">
+    <flipper-calculator [currentOrder]="currentOrder" (saveOrderUpdatedEmit)=saveOrderUpdated($event)>
+    </flipper-calculator>
   </div>
 </div>

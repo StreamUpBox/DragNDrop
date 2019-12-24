@@ -14,13 +14,13 @@ import { VendorsModule } from '@enexus/flipper-vendors';
 describe('BasicShoppingListComponent', () => {
   let component: BasicShoppingListComponent;
   let fixture: ComponentFixture<BasicShoppingListComponent>;
-  let orderItems:Shoppings[]=[];;
-  let item:Shoppings;
+  let orderItems: Shoppings[] = [];
+  let item: Shoppings;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [FlipperBasicPosComponent, SearchBoxComponent, 
-        AutocompleteComponent, ShoppingListsComponent, BasicShoppingListComponent, 
+      declarations: [FlipperBasicPosComponent, SearchBoxComponent,
+        AutocompleteComponent, ShoppingListsComponent, BasicShoppingListComponent,
         StandardShoppingListComponent, CalculatorComponent],
       imports: [
         BrowserModule,
@@ -34,17 +34,17 @@ describe('BasicShoppingListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(BasicShoppingListComponent);
     component = fixture.componentInstance;
-    item={
-      id:1,
-      price:100,
-      variantName:'cake',
-      quantity:1,
-      variantId:1,
-      orderId:1,
-      subTotal:100
-    }
+    item = {
+      id: 1,
+      price: 100,
+      variantName: 'cake',
+      quantity: 1,
+      variantId: 1,
+      orderId: 1,
+      subTotal: 100
+    };
 
-    orderItems=component.orderItems=[item]
+    orderItems = component.orderItems = [item];
     fixture.detectChanges();
   });
 
@@ -55,39 +55,39 @@ describe('BasicShoppingListComponent', () => {
   it('should get item', () => {
     component.orderItems = orderItems;
     expect(component.orderItems).toEqual([{
-      id:1,
-      price:100,
-      variantName:'cake',
-      quantity:1,
-      variantId:1,
-      orderId:1,
-      subTotal:100
+      id: 1,
+      price: 100,
+      variantName: 'cake',
+      quantity: 1,
+      variantId: 1,
+      orderId: 1,
+      subTotal: 100
     }]);
   });
 
   it('action should be minus truthy', () => {
-    let action='-';
-    component.action=action;
-    component.updateQuantity(item,action);
-  
+    const action = '-';
+    component.action = action;
+    component.updateQuantity(item, action);
+
     expect(component.action).toBeTruthy();
   });
 
- 
+
 
   it('action should be plus truthy', () => {
-    let action='+';
-    component.action=action;
-    component.updateQuantity(item,action);
+    const action = '+';
+    component.action = action;
+    component.updateQuantity(item, action);
     expect(component.action).toBeTruthy();
   });
 
   it('should be not allowed Negative quantity  to be truthy', () => {
-    let action='-';
-    component.action=action;
-    item.quantity=-1;
-    component.updateQuantity(item,action);
+    const action = '-';
+    component.action = action;
+    item.quantity = -1;
+    component.updateQuantity(item, action);
     expect(item.quantity).toBeTruthy();
   });
-  
+
 });

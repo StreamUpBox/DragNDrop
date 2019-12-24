@@ -14,7 +14,9 @@ import {
   Shoppings,
   CalculateTotalClassPipe
 } from '@enexus/flipper-components';
-import { BehaviorSubject } from 'rxjs';
+import {
+  BehaviorSubject
+} from 'rxjs';
 // TODO: please do not delete down code it is a sample of sql in angular.
 // import * as alasql from 'alasql';
 // const sql = alasql;
@@ -26,41 +28,44 @@ import { BehaviorSubject } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FlipperBasicPosComponent implements OnChanges {
- 
- 
-  
+
+
+
   @Output() updateQtyEmit = new EventEmitter < Shoppings > ();
   @Output() searchEmitValue = new EventEmitter < string > ();
   @Output() addToCartEmit = new EventEmitter < Variant > ();
   @Output() saveOrderUpdatedEmit = new EventEmitter < Order > ();
-  action='';
-  orderItems$ = new BehaviorSubject<Shoppings[]>([]);
+  action = '';
+  orderItems$ = new BehaviorSubject < Shoppings[] > ([]);
 
-  private canGottenVariant: Variant[] = [];
+  private canfoundVariant: Variant[] = [];
   private isCurrentOrder: Order = null;
 
-  @Input('gottenVariant') set gottenVariant(value: Variant[]) {
-    this.canGottenVariant = value; 
+  @Input('foundVariant')
+  set foundVariant(value: Variant[]) {
+    this.canfoundVariant = value;
   }
-  @Input('currentOrder') set currentOrder(order: Order) {
-  
+  get foundVariant(): Variant[] {
+    return this.canfoundVariant;
+  }
+
+  @Input('currentOrder')
+  set currentOrder(order: Order) {
+
     this.isCurrentOrder = order;
-  
-  }
-
-  constructor(private totalPipe:CalculateTotalClassPipe) {
-  //  this.ref.detectChanges();
-  }
-  
-
-
-  get gottenVariant(): Variant[] {
-    return this.canGottenVariant;
   }
 
   get currentOrder(): Order {
     return this.isCurrentOrder;
   }
+
+  constructor(private totalPipe: CalculateTotalClassPipe) {
+    //  this.ref.detectChanges();
+  }
+
+
+
+
 
   public searchPosProduct(event) {
     if (event) {
@@ -72,73 +77,83 @@ export class FlipperBasicPosComponent implements OnChanges {
     this.addToCartEmit.emit(variant);
   }
 
-  updateQty(item:Shoppings){
+  updateQty(item: Shoppings) {
 
-    let orderItems:Shoppings[]=this.currentOrder.orderItems;
+    let orderItems: Shoppings[] = this.currentOrder.orderItems;
 
     orderItems = orderItems.filter(i => i.id !== item.id);
 
     if (!orderItems.find(b => b.id === item.id)) {
       orderItems.push(item);
     }
-    
-    this.currentOrder.orderItems=orderItems;
 
-    this.currentOrder.subTotal=this.totalPipe.transform<Shoppings>(this.currentOrder.orderItems,'subTotal');
-      this.currentOrder.customerChangeDue=this.currentOrder.cashReceived > 0?this.currentOrder.cashReceived-this.totalPipe.transform<Shoppings>(this.currentOrder.orderItems,'subTotal'):0.00;
-      this.currentOrder.customerChangeDue=this.currentOrder.customerChangeDue;
-      if(this.currentOrder.customerChangeDue  > 0){
-        this.saveOrderUpdatedEmit.emit(this.currentOrder);
-      }
-    
+    this.currentOrder.orderItems = orderItems;
+
+    this.currentOrder.subTotal = this.totalPipe.transform < Shoppings >
+     (this.currentOrder.orderItems, 'subTotal');
+
+    this.currentOrder.customerChangeDue = this.currentOrder.cashReceived > 0 ?
+     this.currentOrder.cashReceived - this.totalPipe.transform < Shoppings >
+      (this.currentOrder.orderItems, 'subTotal') : 0.00;
+
+    this.currentOrder.customerChangeDue = this.currentOrder.customerChangeDue;
+    if (this.currentOrder.customerChangeDue > 0) {
+      this.saveOrderUpdatedEmit.emit(this.currentOrder);
+    }
+
   }
 
-  
 
-  removeItem(item:Shoppings){
-    let orderItems:Shoppings[]=this.currentOrder.orderItems;
+
+  removeItem(item: Shoppings) {
+    let orderItems: Shoppings[] = this.currentOrder.orderItems;
 
     orderItems = orderItems.filter(i => i.id !== item.id);
 
     if (orderItems.length <= 0) {
-      this.currentOrder.orderItems=[];
+      this.currentOrder.orderItems = [];
     }
 
-    this.currentOrder.orderItems=orderItems;
-   
+    this.currentOrder.orderItems = orderItems;
 
-    this.currentOrder.subTotal=this.totalPipe.transform<Shoppings>(this.currentOrder.orderItems,'subTotal');
-    this.currentOrder.customerChangeDue=this.currentOrder.cashReceived > 0?this.currentOrder.cashReceived-this.totalPipe.transform<Shoppings>(this.currentOrder.orderItems,'subTotal'):0.00;
-    this.currentOrder.customerChangeDue=this.currentOrder.customerChangeDue;
-    if(this.currentOrder.customerChangeDue  > 0){
+
+    this.currentOrder.subTotal = this.totalPipe.transform < Shoppings >
+     (this.currentOrder.orderItems, 'subTotal');
+
+    this.currentOrder.customerChangeDue = this.currentOrder.cashReceived > 0 ?
+     this.currentOrder.cashReceived - this.totalPipe.transform < Shoppings >
+     (this.currentOrder.orderItems, 'subTotal') : 0.00;
+
+    this.currentOrder.customerChangeDue = this.currentOrder.customerChangeDue;
+    if (this.currentOrder.customerChangeDue > 0) {
       this.saveOrderUpdatedEmit.emit(this.currentOrder);
     }
 
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-   console.log(changes);
+    console.log(changes);
   }
 
-  saveOrderUpdated(event:Order){
-      this.saveOrderUpdatedEmit.emit(event);
+  saveOrderUpdated(event: Order) {
+    this.saveOrderUpdatedEmit.emit(event);
   }
 
-    
-  updateQuantity(item:Shoppings,action=null){
-    const lastQty=item.quantity;
-    this.action=action;
-    if(this.action==='-'){
-      item.quantity=item.quantity-1;
-      if(item.quantity < 0){
+
+  updateQuantity(item: Shoppings, action = null) {
+    const lastQty = item.quantity;
+    this.action = action;
+    if (this.action === '-') {
+      item.quantity = item.quantity - 1;
+      if (item.quantity < 0) {
         alert('Negative quantity is not allowed.');
-        item.quantity=lastQty;
+        item.quantity = lastQty;
       }
-    }else if(this.action==='+'){
-      item.quantity=item.quantity+1;
-      
+    } else if (this.action === '+') {
+      item.quantity = item.quantity + 1;
+
     }
-    item.subTotal=item.price*item.quantity;
+    item.subTotal = item.price * item.quantity;
     this.updateQty(item);
   }
 

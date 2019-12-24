@@ -20,8 +20,8 @@ export class Order {
     customerChangeDue?: any;
     saleTotal?: any;
     customerSaving?: any;
-    isActive?:boolean;
-    orderItems:Shoppings[];
+    isActive?: boolean;
+    orderItems: Shoppings[];
     paymentId?: number;
     orderNote?: string;
     deliverDate?: any;

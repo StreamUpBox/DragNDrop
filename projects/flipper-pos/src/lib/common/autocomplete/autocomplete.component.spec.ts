@@ -16,8 +16,8 @@ describe('AutocompleteComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [FlipperBasicPosComponent, SearchBoxComponent, 
-        AutocompleteComponent, ShoppingListsComponent, BasicShoppingListComponent, 
+      declarations: [FlipperBasicPosComponent, SearchBoxComponent,
+        AutocompleteComponent, ShoppingListsComponent, BasicShoppingListComponent,
         StandardShoppingListComponent, CalculatorComponent],
       imports: [
         BrowserModule,

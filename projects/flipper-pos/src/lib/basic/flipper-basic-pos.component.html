@@ -6,11 +6,11 @@
 </nav> -->
 
 <div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="left" fxLayoutGap="10px" fxLayoutGap.xs="0"
-  myMatchHeight="container">
+  flipperMyMatchHeight="container">
   <div class="item item-4" fxFlex fxFlexOffset="50px" fxFlexOffset.xs="0">
     <div class="search-card">
 
-      <flipper-search-box [gottenVariant]="gottenVariant" (addToCartEmit)="addToCart($event)"
+      <flipper-search-box [foundVariant]="foundVariant" (addToCartEmit)="addToCart($event)"
         (searchEmitValue)="searchPosProduct($event)">
       </flipper-search-box>
 
@@ -72,7 +72,7 @@
       message="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.">
     </flipper-message>
   </div>
-  <div class="item item-5" myMatchHeight="item-5" fxFlex="500px">
+  <div class="item item-5" flipperMyMatchHeight="item-5" fxFlex="500px">
     <flipper-calculator [currentOrder]="currentOrder" (saveOrderUpdatedEmit)=saveOrderUpdated($event)>
     </flipper-calculator>
   </div>

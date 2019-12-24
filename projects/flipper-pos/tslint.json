@@ -12,6 +12,7 @@
       "element",
       "flipper",
       "kebab-case"
-    ]
+    ],
+    "adjacent-overload-signatures": [true, {"OPTION_IGNORE_ACCESSORS": true}]
   }
 }

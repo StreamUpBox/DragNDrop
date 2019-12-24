@@ -49,7 +49,7 @@ import { MatchHeightDirective } from './directive/match-height.directive';
     MatchHeightDirective
   ],
   entryComponents: [],
-  providers: [ 
+  providers: [
     RoundNumberPipe,
     CalculateTotalClassPipe]
 })

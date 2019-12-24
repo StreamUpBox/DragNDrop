@@ -48,6 +48,7 @@
     "@ngxs/store": "^3.5.1",
     "@swimlane/ngx-charts": "^12.1.0",
     "alasql": "^0.4.11",
+    "angular-tslint-rules": "^1.20.3",
     "bootstrap": "^4.3.1",
     "deepmerge": "^4.0.0",
     "dot-object": "^1.9.0",

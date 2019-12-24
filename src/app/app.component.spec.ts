@@ -48,26 +48,26 @@ describe('AppComponent', () => {
   it('should emit the searchPosProduct value', () => {
     const event = 'java';
     component.searchPosVariant(event);
-    component.gottenVariant= [{id:1,
-      sku:'P',
-      name:'Cake',
-      isActive:true
+    component.gottenVariant = [{id: 1,
+      sku: 'P',
+      name: 'Cake',
+      isActive: true
     }];
-;
-    expect(component.gottenVariant).toEqual([{id:1,
-      sku:'P',
-      name:'Cake',
-      isActive:true
+
+    expect(component.gottenVariant).toEqual([{id: 1,
+      sku: 'P',
+      name: 'Cake',
+      isActive: true
     }]
 );
   });
 
   it('should add to cart variant', () => {
-    const event = {id:1,
-      sku:'157115276',
-      name:'Cake-',
-      isActive:true,
-      priceVariant:{
+    const event = {id: 1,
+      sku: '157115276',
+      name: 'Cake-',
+      isActive: true,
+      priceVariant: {
         id: 1,
         priceId: 1,
         variantId: 1,
@@ -81,21 +81,21 @@ describe('AppComponent', () => {
       }
     };
     component.addToCart(event);
-   
+
   });
 
   it('should emit the allVariant value', () => {
-   
-    component.variants=[{id:1,
-      sku:'P',
-      name:'Cake',
-      isActive:true
+
+    component.variants = [{id: 1,
+      sku: 'P',
+      name: 'Cake',
+      isActive: true
     }];
 
-    expect(component.variants).toEqual([{id:1,
-      sku:'P',
-      name:'Cake',
-      isActive:true
+    expect(component.variants).toEqual([{id: 1,
+      sku: 'P',
+      name: 'Cake',
+      isActive: true
     }]);
   });
 

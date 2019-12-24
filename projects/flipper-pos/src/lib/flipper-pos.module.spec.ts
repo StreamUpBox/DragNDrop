@@ -1,4 +1,4 @@
-import { FlipperPosModule } from "@enexus/flipper-pos";
+import { FlipperPosModule } from '@enexus/flipper-pos';
 
 describe('FlipperPosModule', () => {
   let layoutModule: FlipperPosModule;

@@ -1,17 +1,17 @@
 import { Directive, AfterViewChecked, Input, ElementRef, HostListener } from '@angular/core';
 
 @Directive({
-  selector: '[myMatchHeight]'
+  selector: '[flipperMyMatchHeight]'
 })
-export class MatchHeightDirective implements AfterViewChecked{
+export class MatchHeightDirective implements AfterViewChecked {
 
   @Input()
     myMatchHeight: string;
 
     constructor(private el: ElementRef) {
     }
-    
-    @HostListener('window:resize') 
+
+    @HostListener('window:resize')
     onResize() {
         // call our matchHeight function here
         this.matchHeight(this.el.nativeElement, this.myMatchHeight);
@@ -25,12 +25,12 @@ export class MatchHeightDirective implements AfterViewChecked{
   matchHeight(parent: HTMLElement, className: string) {
     // match height logic here
 
-    if (!parent) return;
+    if (!parent) { return; }
 
     // step 1: find all the child elements with the selected class name
     const children = parent.getElementsByClassName(className);
 
-    if (!children) return;
+    if (!children) { return; }
 
     // step 2a: get all the child elements heights
     const itemHeights = Array.from(children)

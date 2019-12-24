@@ -19,8 +19,8 @@ describe('SearchBoxComponent', () => {
   let button: ElementRef;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [FlipperBasicPosComponent, SearchBoxComponent, 
-        AutocompleteComponent, ShoppingListsComponent, BasicShoppingListComponent, 
+      declarations: [FlipperBasicPosComponent, SearchBoxComponent,
+        AutocompleteComponent, ShoppingListsComponent, BasicShoppingListComponent,
         StandardShoppingListComponent, CalculatorComponent],
       imports: [
         BrowserModule,
@@ -47,7 +47,7 @@ describe('SearchBoxComponent', () => {
     component.ngOnInit();
   });
 
-  
+
 
   it('should search product from input', () => {
 
@@ -70,31 +70,31 @@ describe('SearchBoxComponent', () => {
     });
   });
 
-    it('should emit add to cart variant', () => {
+  it('should emit add to cart variant', () => {
       spyOn(component.addToCartEmit, 'emit');
-    component.addToCart({id:1,
-      sku:'P',
-      name:'Cake',
-      isActive:true
+      component.addToCart({id: 1,
+      sku: 'P',
+      name: 'Cake',
+      isActive: true
     });
-    expect(component.addToCartEmit.emit).toHaveBeenCalledWith({id:1,
-      sku:'P',
-      name:'Cake',
-      isActive:true
-    });
-
+      expect(component.addToCartEmit.emit).toHaveBeenCalledWith({id: 1,
+      sku: 'P',
+      name: 'Cake',
+      isActive: true
     });
 
-  it('should receive and set input gottenVariant', () => {
-    component.gottenVariant =[{id:1,
-      sku:'P',
-      name:'Cake',
-      isActive:true
+    });
+
+  it('should receive and set input foundVariant', () => {
+    component.foundVariant = [{id: 1,
+      sku: 'P',
+      name: 'Cake',
+      isActive: true
     }];
-    expect(component.gottenVariant).toEqual([{id:1,
-      sku:'P',
-      name:'Cake',
-      isActive:true
+    expect(component.foundVariant).toEqual([{id: 1,
+      sku: 'P',
+      name: 'Cake',
+      isActive: true
     }]);
   });
 

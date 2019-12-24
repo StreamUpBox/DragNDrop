@@ -6,11 +6,11 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class CalculateTotalClassPipe implements PipeTransform {
 
-  transform<T>(arrayOfdData:Array<T>,prop?:string): any {
-    var total:any = 0.00;
+  transform<T>(arrayOfdData: Array<T>, prop?: string): any {
+    let total: any = 0.00;
     if (arrayOfdData.length > 0) {
-      for (var i = 0, _len = arrayOfdData.length; i < _len; i++) {
-        total += arrayOfdData[i][prop]
+      for (let i = 0, len = arrayOfdData.length; i < len; i++) {
+        total += arrayOfdData[i][prop];
       }
     }
     return total;

@@ -19,8 +19,8 @@ describe('StandardShoppingListComponent', () => {
       imports: [
         FlipperComponentsModule,
         VendorsModule],
-      declarations: [FlipperBasicPosComponent, ShoppingListsComponent,SearchBoxComponent, AutocompleteComponent
-         ,ShoppingListsComponent, BasicShoppingListComponent, StandardShoppingListComponent,CalculatorComponent ]
+      declarations: [FlipperBasicPosComponent, ShoppingListsComponent, SearchBoxComponent, AutocompleteComponent
+         , ShoppingListsComponent, BasicShoppingListComponent, StandardShoppingListComponent, CalculatorComponent ]
     })
     .compileComponents();
   }));

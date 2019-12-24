@@ -7,8 +7,8 @@
   <input type="search" #autoCompleteInput [matAutocomplete]="auto" aria-label="Search" #mySearchInput [formControl]="searchControl"  placeholder="Search product code to retreive" class="search-box">
   
   <mat-autocomplete #auto="matAutocomplete" class="autocomplete">
-    <flipper-autocomplete [loading]="loading" *ngIf="loading || gottenVariant.length > 0"> 
-        <mat-option  *ngFor="let variant of gottenVariant; let i = index;">
+    <flipper-autocomplete [loading]="loading" *ngIf="loading || foundVariant.length > 0"> 
+        <mat-option  *ngFor="let variant of foundVariant; let i = index;">
             <div class="icon">
                     <img [src]="'./assets/icons/search.svg'" class="icon-img">
            </div>

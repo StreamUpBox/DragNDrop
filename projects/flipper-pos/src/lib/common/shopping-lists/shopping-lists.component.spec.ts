@@ -17,8 +17,8 @@ describe('ShoppingListsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [FlipperBasicPosComponent, SearchBoxComponent, 
-        AutocompleteComponent, ShoppingListsComponent, BasicShoppingListComponent, 
+      declarations: [FlipperBasicPosComponent, SearchBoxComponent,
+        AutocompleteComponent, ShoppingListsComponent, BasicShoppingListComponent,
         StandardShoppingListComponent, CalculatorComponent],
       imports: [
         BrowserModule,
@@ -39,6 +39,6 @@ describe('ShoppingListsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  
+
 
 });

@@ -11,8 +11,8 @@ export class Variant {
   variantableId?: number;
   variantableType?: string;
   supplierCode?: number;
-  isActive?:boolean;
-  priceVariant?:PriceVariant;
+  isActive?: boolean;
+  priceVariant?: PriceVariant;
   markup?: any;
   createdAt?: any;
   updatedAt?: any;

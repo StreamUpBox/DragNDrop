@@ -22,10 +22,10 @@ describe('FlipperBasicPosComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         FlipperBasicPosComponent,
-         SearchBoxComponent, 
-        AutocompleteComponent, 
+         SearchBoxComponent,
+        AutocompleteComponent,
         ShoppingListsComponent,
-         BasicShoppingListComponent, 
+         BasicShoppingListComponent,
         StandardShoppingListComponent, CalculatorComponent],
       imports: [
         BrowserModule,
@@ -46,12 +46,12 @@ describe('FlipperBasicPosComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should receive and set input gottenVariant', () => {
-    component.gottenVariant =[{id:1,
-      sku:'P',
-      name:'Cake',
-      isActive:true,
-      priceVariant:{
+  it('should receive and set input foundVariant', () => {
+    component.foundVariant = [{id: 1,
+      sku: 'P',
+      name: 'Cake',
+      isActive: true,
+      priceVariant: {
         id: 1,
         priceId: 1,
         variantId: 1,
@@ -64,11 +64,11 @@ describe('FlipperBasicPosComponent', () => {
         markup: 1
       }
     }];
-    expect(component.gottenVariant).toEqual([{id:1,
-      sku:'P',
-      name:'Cake',
-      isActive:true,
-      priceVariant:{
+    expect(component.foundVariant).toEqual([{id: 1,
+      sku: 'P',
+      name: 'Cake',
+      isActive: true,
+      priceVariant: {
         id: 1,
         priceId: 1,
         variantId: 1,
@@ -84,23 +84,23 @@ describe('FlipperBasicPosComponent', () => {
   });
 
   it('should get current order', () => {
-    component.currentOrder = {id:1,branchId:1,orderNumber:'01',
-  orderItems:[{id:1,
-    price:100,
-    variantName:'cake',
-    quantity:1,
-    variantId:1,
-    orderId:1,
-    subTotal:100
+    component.currentOrder = {id: 1, branchId: 1, orderNumber: '01',
+  orderItems: [{id: 1,
+    price: 100,
+    variantName: 'cake',
+    quantity: 1,
+    variantId: 1,
+    orderId: 1,
+    subTotal: 100
   }]};
-    expect(component.currentOrder).toEqual({id:1,branchId:1,orderNumber:'01',
-    orderItems:[{id:1,
-      price:100,
-      variantName:'cake',
-      quantity:1,
-      variantId:1,
-      orderId:1,
-      subTotal:100
+    expect(component.currentOrder).toEqual({id: 1, branchId: 1, orderNumber: '01',
+    orderItems: [{id: 1,
+      price: 100,
+      variantName: 'cake',
+      quantity: 1,
+      variantId: 1,
+      orderId: 1,
+      subTotal: 100
     }]});
   });
 
@@ -117,20 +117,20 @@ describe('FlipperBasicPosComponent', () => {
 
   it('should emit add to cart variant', () => {
     spyOn(component.addToCartEmit, 'emit');
-  component.addToCart({id:1,
-    sku:'P',
-    name:'Cake',
-    isActive:true
+    component.addToCart({id: 1,
+    sku: 'P',
+    name: 'Cake',
+    isActive: true
   });
-  expect(component.addToCartEmit.emit).toHaveBeenCalledWith({id:1,
-    sku:'P',
-    name:'Cake',
-    isActive:true
-  });
-
+    expect(component.addToCartEmit.emit).toHaveBeenCalledWith({id: 1,
+    sku: 'P',
+    name: 'Cake',
+    isActive: true
   });
 
- 
+  });
+
+
 
 
 });

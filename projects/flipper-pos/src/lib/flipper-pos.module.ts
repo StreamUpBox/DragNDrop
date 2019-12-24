@@ -13,8 +13,8 @@ import { CalculatorComponent } from './common/calculator/calculator.component';
 import { FlipperEventModule } from '@enexus/flipper-event';
 
 @NgModule({
-  declarations: [FlipperBasicPosComponent, SearchBoxComponent, 
-    AutocompleteComponent, ShoppingListsComponent, BasicShoppingListComponent, 
+  declarations: [FlipperBasicPosComponent, SearchBoxComponent,
+    AutocompleteComponent, ShoppingListsComponent, BasicShoppingListComponent,
     StandardShoppingListComponent, CalculatorComponent],
   imports: [
     BrowserModule,
@@ -24,8 +24,8 @@ import { FlipperEventModule } from '@enexus/flipper-event';
     VendorsModule,
     FlipperEventModule
   ],
-  exports: [FlipperBasicPosComponent, SearchBoxComponent, 
-    AutocompleteComponent, ShoppingListsComponent, BasicShoppingListComponent, 
+  exports: [FlipperBasicPosComponent, SearchBoxComponent,
+    AutocompleteComponent, ShoppingListsComponent, BasicShoppingListComponent,
     StandardShoppingListComponent, CalculatorComponent]
 })
 export class FlipperPosModule { }

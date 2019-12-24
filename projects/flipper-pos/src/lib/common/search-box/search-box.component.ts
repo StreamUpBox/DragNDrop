@@ -41,24 +41,27 @@ export class SearchBoxComponent implements OnInit, AfterViewInit {
   @ViewChild('mySearchInput', {
     static: false
   }) public searchInputElement: ElementRef;
-  private canGottenVariant: Variant[] = [];
+  private canfoundVariant: Variant[] = [];
 
-  @ViewChild('autoCompleteInput', { read: MatAutocompleteTrigger,static: false }) 
+  @ViewChild('autoCompleteInput', { read: MatAutocompleteTrigger, static: false })
   autoComplete: MatAutocompleteTrigger;
 
-  @Input('gottenVariant') set gottenVariant(value: Variant[]) {
-    this.canGottenVariant = value;
+  @Input('foundVariant')
+
+  set foundVariant(value: Variant[]) {
+    this.canfoundVariant = value;
     this.loading = false;
-   this.addToCartAutomatic(value);
+    this.addToCartAutomatic(value);
+  }
+  get foundVariant(): Variant[] {
+    return this.canfoundVariant;
   }
 
   close() {
     this.autoComplete.closePanel();
   }
- 
-  get gottenVariant(): Variant[] {
-    return this.canGottenVariant;
-  }
+
+
 
   ngOnInit() {
     this.searchControl = new FormControl('');
@@ -82,22 +85,22 @@ export class SearchBoxComponent implements OnInit, AfterViewInit {
     this.cd.detectChanges();
   }
 
-  addToCartAutomatic(variants:Variant[]){
-    if(variants.length == 1){
+  addToCartAutomatic(variants: Variant[]) {
+    if (variants.length === 1) {
       this.addToCart(variants[0]);
       this.clearSearchBox();
-     
+
     }
   }
 
-  addToCart(variant:Variant){
+  addToCart(variant: Variant) {
     this.addToCartEmit.emit(variant);
     this. clearSearchBox();
   }
-  
+
   clearSearchBox() {
     this.searchControl.setValue('');
-    this.searchInputElement.nativeElement.value='';
+    this.searchInputElement.nativeElement.value = '';
     this.searchInputElement.nativeElement.focus();
     this.close();
   }

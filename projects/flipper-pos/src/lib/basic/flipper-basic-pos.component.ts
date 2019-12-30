@@ -5,32 +5,30 @@ import {
   Input,
   ViewEncapsulation,
   ChangeDetectionStrategy,
-  OnChanges,
-  SimpleChanges
+  HostListener
 } from '@angular/core';
 import {
   Order,
   Variant,
   Shoppings,
-  CalculateTotalClassPipe
+  CalculateTotalClassPipe,
+  MergeArryByIdPipe,
+  ArrayRemoveItemPipe
 } from '@enexus/flipper-components';
 import {
   BehaviorSubject
 } from 'rxjs';
-// TODO: please do not delete down code it is a sample of sql in angular.
-// import * as alasql from 'alasql';
-// const sql = alasql;
+import { DialogService } from '@enexus/flipper-dialog';
 @Component({
   selector: 'flipper-basic-pos',
   templateUrl: './flipper-basic-pos.component.html',
   styleUrls: ['./flipper-basic-pos.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers:[CalculateTotalClassPipe,MergeArryByIdPipe,ArrayRemoveItemPipe]
 })
-export class FlipperBasicPosComponent implements OnChanges {
-
-
-
+export class FlipperBasicPosComponent  {
+  
   @Output() updateQtyEmit = new EventEmitter < Shoppings > ();
   @Output() searchEmitValue = new EventEmitter < string > ();
   @Output() addToCartEmit = new EventEmitter < Variant > ();
@@ -40,6 +38,7 @@ export class FlipperBasicPosComponent implements OnChanges {
 
   private canfoundVariant: Variant[] = [];
   private isCurrentOrder: Order = null;
+ 
 
   @Input('foundVariant')
   set foundVariant(value: Variant[]) {
@@ -51,7 +50,6 @@ export class FlipperBasicPosComponent implements OnChanges {
 
   @Input('currentOrder')
   set currentOrder(order: Order) {
-
     this.isCurrentOrder = order;
   }
 
@@ -59,13 +57,48 @@ export class FlipperBasicPosComponent implements OnChanges {
     return this.isCurrentOrder;
   }
 
-  constructor(private totalPipe: CalculateTotalClassPipe) {
-    //  this.ref.detectChanges();
+  private setCartFocused:Shoppings=null;
+  
+  set cartFocused(cart: Shoppings) {
+    this.setCartFocused = cart;
+
+  }
+  get cartFocused(): Shoppings {
+    return this.setCartFocused;
   }
 
+  @HostListener('document:keydown', ['$event']) 
+  onKeydownHandler(event: KeyboardEvent) {
+   console.log(event);
 
+    //delete key
+    if(this.cartFocused){
+    if(event.keyCode===46){
+        this.removeItem(this.cartFocused);
+      }
+      if(event.shiftKey && event.keyCode===187){ //shift + (+)
+        this.updateQuantity(this.cartFocused,'+');
+      }
 
+      if(event.shiftKey && event.keyCode===189){//shift + (-)
+        this.updateQuantity(this.cartFocused,'-');
+      }
+     
+    }
+    if(event.shiftKey && event.keyCode===75){//shift + k
+      this. keyBoardShortCuts();
+    }
+  }
 
+  constructor(
+    public dialog:DialogService,
+    private totalPipe: CalculateTotalClassPipe,
+    private mergePipe:MergeArryByIdPipe,
+    private removeItemPipe:ArrayRemoveItemPipe) {}
+
+    keyBoardShortCuts(){
+      this.dialog.keyBoardShortCuts();
+    }
 
   public searchPosProduct(event) {
     if (event) {
@@ -73,70 +106,38 @@ export class FlipperBasicPosComponent implements OnChanges {
     }
   }
 
+
   addToCart(variant: Variant) {
     this.addToCartEmit.emit(variant);
   }
 
   updateQty(item: Shoppings) {
-
-    let orderItems: Shoppings[] = this.currentOrder.orderItems;
-
-    orderItems = orderItems.filter(i => i.id !== item.id);
-
-    if (!orderItems.find(b => b.id === item.id)) {
-      orderItems.push(item);
-    }
-
-    this.currentOrder.orderItems = orderItems;
-
-    this.currentOrder.subTotal = this.totalPipe.transform < Shoppings >
-     (this.currentOrder.orderItems, 'subTotal');
-
-    this.currentOrder.customerChangeDue = this.currentOrder.cashReceived > 0 ?
-     this.currentOrder.cashReceived - this.totalPipe.transform < Shoppings >
-      (this.currentOrder.orderItems, 'subTotal') : 0.00;
-
-    this.currentOrder.customerChangeDue = this.currentOrder.customerChangeDue;
-    if (this.currentOrder.customerChangeDue > 0) {
-      this.saveOrderUpdatedEmit.emit(this.currentOrder);
-    }
-
+    this.currentOrder.orderItems= this.mergePipe.
+    transform<Shoppings>(this.currentOrder.orderItems,[item]);
+    this.saveOrderUpdated();
   }
 
-
+  
 
   removeItem(item: Shoppings) {
-    let orderItems: Shoppings[] = this.currentOrder.orderItems;
-
-    orderItems = orderItems.filter(i => i.id !== item.id);
-
-    if (orderItems.length <= 0) {
-      this.currentOrder.orderItems = [];
-    }
-
-    this.currentOrder.orderItems = orderItems;
-
-
-    this.currentOrder.subTotal = this.totalPipe.transform < Shoppings >
-     (this.currentOrder.orderItems, 'subTotal');
-
-    this.currentOrder.customerChangeDue = this.currentOrder.cashReceived > 0 ?
-     this.currentOrder.cashReceived - this.totalPipe.transform < Shoppings >
-     (this.currentOrder.orderItems, 'subTotal') : 0.00;
-
-    this.currentOrder.customerChangeDue = this.currentOrder.customerChangeDue;
-    if (this.currentOrder.customerChangeDue > 0) {
-      this.saveOrderUpdatedEmit.emit(this.currentOrder);
-    }
-
+   this.currentOrder.orderItems = this.removeItemPipe.transform<Shoppings>(this.currentOrder.orderItems,item);
+      this.saveOrderUpdated();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
-  }
 
-  saveOrderUpdated(event: Order) {
-    this.saveOrderUpdatedEmit.emit(event);
+  saveOrderUpdated(event?: Order) {
+
+    let order=event?event:this.currentOrder;
+   
+    order.subTotal = this.totalPipe.
+    transform<Shoppings>(order.orderItems, 'subTotal');
+
+    order.customerChangeDue = order.cashReceived > 0 ?
+    order.cashReceived - order.subTotal : 0.00;
+
+    order.customerChangeDue = order.customerChangeDue;
+   
+      this.saveOrderUpdatedEmit.emit(order);
   }
 
 
@@ -156,17 +157,8 @@ export class FlipperBasicPosComponent implements OnChanges {
     item.subTotal = item.price * item.quantity;
     this.updateQty(item);
   }
-
-  // removeItem(item:Shoppings){
-  //   this.removeItemEmit.emit(item);
-  // }
-  // links = ['First', 'Second', 'Third'];
-  // activeLink = this.links[0];
-  // background = '';
-
-
-  // addLink() {
-  //   this.links.push(`Link ${this.links.length + 1}`);
-  // }
+  canSetCartFocused(item){
+    this.cartFocused=item;
+  }
 
 }

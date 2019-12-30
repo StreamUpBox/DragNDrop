@@ -4,7 +4,7 @@
     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
   </svg>
 </div>
-  <input type="search" #autoCompleteInput [matAutocomplete]="auto" aria-label="Search" #mySearchInput [formControl]="searchControl"  placeholder="Search product code to retreive" class="search-box">
+  <input type="search" #autoCompleteInput [matAutocomplete]="auto" aria-label="Search" #mySearchInput [formControl]="searchControl"   placeholder="Search product code to retreive" class="search-box">
   
   <mat-autocomplete #auto="matAutocomplete" class="autocomplete">
     <flipper-autocomplete [loading]="loading" *ngIf="loading || foundVariant.length > 0"> 
@@ -12,7 +12,7 @@
             <div class="icon">
                     <img [src]="'./assets/icons/search.svg'" class="icon-img">
            </div>
-           <div class="item">
+           <div class="item" (click)="addToCart(variant)">
                <span class="item-title">
                     {{variant.sku}} / {{variant.name}}
                     

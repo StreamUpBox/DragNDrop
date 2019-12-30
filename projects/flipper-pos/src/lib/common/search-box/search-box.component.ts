@@ -9,7 +9,8 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   AfterViewInit,
-  Input
+  Input,
+  HostListener
 } from '@angular/core';
 import {
   FormControl
@@ -40,18 +41,38 @@ export class SearchBoxComponent implements OnInit, AfterViewInit {
 
   @ViewChild('mySearchInput', {
     static: false
-  }) public searchInputElement: ElementRef;
+  }) public searchInputElement: ElementRef= null;
   private canfoundVariant: Variant[] = [];
 
   @ViewChild('autoCompleteInput', { read: MatAutocompleteTrigger, static: false })
   autoComplete: MatAutocompleteTrigger;
+
+  @HostListener('document:keydown', ['$event']) 
+  onKeydownHandler(event: KeyboardEvent) {
+  
+     // start focusing on search input box by presskey s or f
+     if((event.shiftKey && event.keyCode===70) || (event.shiftKey && event.keyCode===83)){
+       setTimeout(() => {
+        this.clearSearchBox();
+       }, 2);
+     
+
+    }
+    // stop focusing on search input box by presskey of shift
+     if(event.keyCode===16){
+      setTimeout(() => {
+      this.searchInputElement.nativeElement.blur();
+      this. close();
+    }, 2);
+     }
+    }
 
   @Input('foundVariant')
 
   set foundVariant(value: Variant[]) {
     this.canfoundVariant = value;
     this.loading = false;
-    this.addToCartAutomatic(value);
+    this.addToCartOnGotSingleItem(value);
   }
   get foundVariant(): Variant[] {
     return this.canfoundVariant;
@@ -85,7 +106,7 @@ export class SearchBoxComponent implements OnInit, AfterViewInit {
     this.cd.detectChanges();
   }
 
-  addToCartAutomatic(variants: Variant[]) {
+  addToCartOnGotSingleItem(variants: Variant[]) {
     if (variants.length === 1) {
       this.addToCart(variants[0]);
       this.clearSearchBox();
@@ -98,11 +119,13 @@ export class SearchBoxComponent implements OnInit, AfterViewInit {
     this. clearSearchBox();
   }
 
+
+
   clearSearchBox() {
-    this.searchControl.setValue('');
-    this.searchInputElement.nativeElement.value = '';
-    this.searchInputElement.nativeElement.focus();
-    this.close();
+        this.searchInputElement.nativeElement.value = '';
+        this.searchInputElement.nativeElement.focus();
+        this.close();
+  
   }
 
 }

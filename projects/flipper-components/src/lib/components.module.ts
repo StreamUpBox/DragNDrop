@@ -14,6 +14,9 @@ import { DialogModule } from '@enexus/flipper-dialog';
 import { RoundNumberPipe } from './pipe/round-number.pipe';
 import { CalculateTotalClassPipe } from './pipe/calculate-total-class.pipe';
 import { MatchHeightDirective } from './directive/match-height.directive';
+import { MergeArryByIdPipe } from './pipe/merge-arry-by-id.pipe';
+import { ArrayRemoveItemPipe } from './pipe/array-remove-item.pipe';
+import { FindKeyPipe } from './pipe/find-key.pipe';
 
 @NgModule({
   imports: [
@@ -33,7 +36,10 @@ import { MatchHeightDirective } from './directive/match-height.directive';
     LazyIfDirective,
     RoundNumberPipe,
     CalculateTotalClassPipe,
-    MatchHeightDirective
+    MatchHeightDirective,
+    MergeArryByIdPipe,
+    ArrayRemoveItemPipe,
+    FindKeyPipe
   ],
 
   exports: [
@@ -46,12 +52,19 @@ import { MatchHeightDirective } from './directive/match-height.directive';
     LazyIfDirective,
     RoundNumberPipe,
     CalculateTotalClassPipe,
-    MatchHeightDirective
+    MergeArryByIdPipe,
+    ArrayRemoveItemPipe,
+    MatchHeightDirective,
+    FindKeyPipe
   ],
   entryComponents: [],
   providers: [
     RoundNumberPipe,
-    CalculateTotalClassPipe]
+    CalculateTotalClassPipe,
+    MergeArryByIdPipe,
+    ArrayRemoveItemPipe,
+    FindKeyPipe
+  ]
 })
 export class FlipperComponentsModule {
 }

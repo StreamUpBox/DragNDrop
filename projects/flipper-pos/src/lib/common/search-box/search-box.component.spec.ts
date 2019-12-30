@@ -70,6 +70,15 @@ describe('SearchBoxComponent', () => {
     });
   });
 
+  it('should clear the search box', () => {
+    component.clearSearchBox();
+    const el = fixture.nativeElement;
+    const input = el.querySelector('.search-box');
+    input.value = '';
+   
+   
+  });
+
   it('should emit add to cart variant', () => {
       spyOn(component.addToCartEmit, 'emit');
       component.addToCart({id: 1,
@@ -89,17 +98,38 @@ describe('SearchBoxComponent', () => {
     component.foundVariant = [{id: 1,
       sku: 'P',
       name: 'Cake',
-      isActive: true
+      isActive: true,
+      priceVariant: {
+        id: 1,
+        priceId: 1,
+        variantId: 1,
+        minUnit: 0,
+        maxUnit: 0,
+        retailPrice: 500,
+        supplyPrice: 150,
+        wholeSalePrice: 500,
+        discount: 2,
+        markup: 1
+      }
     }];
     expect(component.foundVariant).toEqual([{id: 1,
       sku: 'P',
       name: 'Cake',
-      isActive: true
+      isActive: true,
+      priceVariant: {
+        id: 1,
+        priceId: 1,
+        variantId: 1,
+        minUnit: 0,
+        maxUnit: 0,
+        retailPrice: 500,
+        supplyPrice: 150,
+        wholeSalePrice: 500,
+        discount: 2,
+        markup: 1
+      }
     }]);
   });
 
-  it('should getNumber', () => {
-    component.clearSearchBox();
-   });
 
 });

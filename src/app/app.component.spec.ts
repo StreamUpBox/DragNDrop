@@ -48,13 +48,13 @@ describe('AppComponent', () => {
   it('should emit the searchPosProduct value', () => {
     const event = 'java';
     component.searchPosVariant(event);
-    component.gottenVariant = [{id: 1,
+    component.foundVariant = [{id: 1,
       sku: 'P',
       name: 'Cake',
       isActive: true
     }];
 
-    expect(component.gottenVariant).toEqual([{id: 1,
+    expect(component.foundVariant).toEqual([{id: 1,
       sku: 'P',
       name: 'Cake',
       isActive: true

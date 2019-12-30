@@ -10,7 +10,7 @@ import { ShoppingListsComponent } from './common/shopping-lists/shopping-lists.c
 import { BasicShoppingListComponent } from './common/basic-shopping-list/basic-shopping-list.component';
 import { StandardShoppingListComponent } from './common/standard-shopping-list/standard-shopping-list.component';
 import { CalculatorComponent } from './common/calculator/calculator.component';
-import { FlipperEventModule } from '@enexus/flipper-event';
+import { DialogModule } from '@enexus/flipper-dialog';
 
 @NgModule({
   declarations: [FlipperBasicPosComponent, SearchBoxComponent,
@@ -22,7 +22,8 @@ import { FlipperEventModule } from '@enexus/flipper-event';
     FlipperComponentsModule,
     ReactiveFormsModule,
     VendorsModule,
-    FlipperEventModule
+    DialogModule
+    
   ],
   exports: [FlipperBasicPosComponent, SearchBoxComponent,
     AutocompleteComponent, ShoppingListsComponent, BasicShoppingListComponent,

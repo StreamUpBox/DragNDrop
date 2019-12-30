@@ -82,12 +82,4 @@ describe('BasicShoppingListComponent', () => {
     expect(component.action).toBeTruthy();
   });
 
-  it('should be not allowed Negative quantity  to be truthy', () => {
-    const action = '-';
-    component.action = action;
-    item.quantity = -1;
-    component.updateQuantity(item, action);
-    expect(item.quantity).toBeTruthy();
-  });
-
 });

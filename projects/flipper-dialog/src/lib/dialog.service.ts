@@ -8,6 +8,7 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
 import { WaitDialogProgress } from './wait-dialog/wait-dialog-progress';
 import { WaitDialogComponent } from './wait-dialog/wait-dialog.component';
 import { DialogSize } from './dialog-size';
+import { KeyBoardShortCutsComponent } from './key-board-short-cuts/key-board-short-cuts.component';
 
 @Injectable()
 export class DialogService {
@@ -41,6 +42,10 @@ export class DialogService {
       title,
       message,
     });
+  }
+
+  public keyBoardShortCuts(size='SIZE_MD'): Observable<void> {
+    return this.open(KeyBoardShortCutsComponent, DialogSize[size], {});
   }
 
   public wait(progress: WaitDialogProgress): MatDialogRef<WaitDialogComponent, void> {

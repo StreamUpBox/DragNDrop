@@ -1,10 +1,14 @@
 import {
   Pipe,
-  PipeTransform
+  PipeTransform,
+  Injectable
 } from '@angular/core';
 
 @Pipe({
   name: 'roundNumber'
+})
+@Injectable({
+  providedIn: 'root'
 })
 export class RoundNumberPipe implements PipeTransform {
 
@@ -42,6 +46,7 @@ export class RoundNumberPipe implements PipeTransform {
         newString = numString.substring(0, cutoff) + d1.toString();
       }
     }
+    if(decimals > 0){
     if (newString.lastIndexOf('.') === -1) { // Do this again, to the new string
       newString += '.';
     }
@@ -49,6 +54,7 @@ export class RoundNumberPipe implements PipeTransform {
     for (let i = 0; i < decimals - decs; i++) {
       newString += '0';
     }
+  }
     // var newNumber = Number(newString);// make it a number if you like
     return this.formatNumbers(newString); // Output the result to the form field (change for your purposes)
   }

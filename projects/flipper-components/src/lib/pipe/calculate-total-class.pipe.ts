@@ -1,8 +1,11 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform, Injectable } from '@angular/core';
 
 @Pipe({
   name: 'calculateTotalClass',
   pure: true,
+})
+@Injectable({
+  providedIn: 'root'
 })
 export class CalculateTotalClassPipe implements PipeTransform {
 

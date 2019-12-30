@@ -8,6 +8,7 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
 
 import { DialogService } from './dialog.service';
 import { VendorsModule } from '@enexus/flipper-vendors';
+import { KeyBoardShortCutsComponent } from './key-board-short-cuts/key-board-short-cuts.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -18,16 +19,19 @@ import { VendorsModule } from '@enexus/flipper-vendors';
     DeleteDialogComponent,
     WaitDialogComponent,
     ConfirmDialogComponent,
+    KeyBoardShortCutsComponent,
   ],
   exports: [
     DeleteDialogComponent,
     WaitDialogComponent,
     ConfirmDialogComponent,
+    KeyBoardShortCutsComponent
   ],
   entryComponents: [
     DeleteDialogComponent,
     WaitDialogComponent,
     ConfirmDialogComponent,
+    KeyBoardShortCutsComponent
   ],
   providers: [
     DialogService,

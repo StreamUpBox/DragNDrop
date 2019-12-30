@@ -2,11 +2,10 @@
 .container {
   position: relative;
   top: 30px;
-
+  max-height: 95vh!important;
   .item-5 {
     flipper-calculator {
-      max-height: 90vh;
-      ;
+      height: 90vh;
     }
   }
 
@@ -24,6 +23,31 @@
       position: relative;
 
     }
+
+    .kbd-hotkeys-button{
+      position: relative;
+      bottom: 52px;
+      right: 12px;
+      float: right;
+      opacity: .95;
+      padding: 4px;
+      width: 70px;
+      height: 45px;
+      border-radius: 2px;
+      border: solid 1px #d6e8fa;
+      background-color: #d6e8fa;
+      font-weight: 500;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: 1.14;
+      letter-spacing: 1.25px;
+      text-align: center;
+      color: #1b2733;
+    .svg-icon-keyboard{
+      position: relative;
+    bottom: 12px;
+    }
+  }
 
 
 
@@ -64,12 +88,16 @@
           width: 100%;
           position: relative;
           top: 25px;
-
+          
+          .setCartFocused{
+            border-radius: 2px!important;
+            border: solid 2px #3f5ec6!important;
+          }
           .mat-option {
             height: 83px;
             border-top: solid 4px #fcfeff;
             background-color: #ffffff;
-
+            margin-bottom: 10px;
             .remove-item {
               position: relative;
               top: 34.7px;

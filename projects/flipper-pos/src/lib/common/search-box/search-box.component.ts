@@ -41,25 +41,25 @@ export class SearchBoxComponent implements OnInit, AfterViewInit {
 
   @ViewChild('mySearchInput', {
     static: false
-  }) public searchInputElement: ElementRef= null;
+  }) public searchInputElement: ElementRef = null;
   private canfoundVariant: Variant[] = [];
 
   @ViewChild('autoCompleteInput', { read: MatAutocompleteTrigger, static: false })
   autoComplete: MatAutocompleteTrigger;
 
-  @HostListener('document:keydown', ['$event']) 
+  @HostListener('document:keydown', ['$event'])
   onKeydownHandler(event: KeyboardEvent) {
-  
+
      // start focusing on search input box by presskey s or f
-     if((event.shiftKey && event.keyCode===70) || (event.shiftKey && event.keyCode===83)){
+     if ((event.shiftKey && event.key === 'F') || (event.shiftKey && event.key === 'S')) {
        setTimeout(() => {
         this.clearSearchBox();
        }, 2);
-     
+
 
     }
     // stop focusing on search input box by presskey of shift
-     if(event.keyCode===16){
+     if (event.key === 'Shift') {
       setTimeout(() => {
       this.searchInputElement.nativeElement.blur();
       this. close();
@@ -125,7 +125,7 @@ export class SearchBoxComponent implements OnInit, AfterViewInit {
         this.searchInputElement.nativeElement.value = '';
         this.searchInputElement.nativeElement.focus();
         this.close();
-  
+
   }
 
 }

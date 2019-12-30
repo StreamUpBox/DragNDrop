@@ -46,7 +46,7 @@ export class RoundNumberPipe implements PipeTransform {
         newString = numString.substring(0, cutoff) + d1.toString();
       }
     }
-    if(decimals > 0){
+    if (decimals > 0) {
     if (newString.lastIndexOf('.') === -1) { // Do this again, to the new string
       newString += '.';
     }

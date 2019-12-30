@@ -3,8 +3,8 @@ import {
 } from './array-remove-item.pipe';
 
 describe('ArrayRemoveItemPipe', () => {
-  let pipe=null;
-  let array: any[] = [{
+  let pipe = null;
+  const array: any[] = [{
     id: 1,
     name: 'ganza'
   },
@@ -13,7 +13,7 @@ describe('ArrayRemoveItemPipe', () => {
     name: 'res'
   }
 ];
-let element:object = {
+  const element: object = {
   id: 2,
   name: 'res'
 };
@@ -22,7 +22,7 @@ let element:object = {
     expect(pipe).toBeTruthy();
   });
   it('should return empty array when passed empty array.', () => {
-    const arr=[0];
+    const arr = [0];
     pipe.transform (arr, {});
     expect(arr.length).toBeTruthy();
 
@@ -31,8 +31,8 @@ let element:object = {
   });
 
   it('should remove one item in array', () => {
-  
-    
+
+
     expect(pipe.transform (array, element)).
     toEqual(
       [{

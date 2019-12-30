@@ -44,7 +44,7 @@ export class DialogService {
     });
   }
 
-  public keyBoardShortCuts(size='SIZE_MD'): Observable<void> {
+  public keyBoardShortCuts(size= 'SIZE_MD'): Observable<void> {
     return this.open(KeyBoardShortCutsComponent, DialogSize[size], {});
   }
 

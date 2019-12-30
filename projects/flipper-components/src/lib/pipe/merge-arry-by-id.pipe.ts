@@ -13,14 +13,14 @@ export class MergeArryByIdPipe implements PipeTransform {
     return this.mergeById(originArrayData)
     .with(mergeArrayData);
   }
-  
+
   mergeById(arr) {
     return {
-      with: function(arr2) {
+      with(arr2) {
         return _.map(arr, item => {
-          return _.find(arr2, obj => obj.id === item.id) || item
-        })
+          return _.find(arr2, obj => obj.id === item.id) || item;
+        });
       }
-    }
+    };
   }
 }

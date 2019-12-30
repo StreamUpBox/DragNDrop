@@ -23,7 +23,7 @@ import { DialogModule } from '@enexus/flipper-dialog';
     ReactiveFormsModule,
     VendorsModule,
     DialogModule
-    
+
   ],
   exports: [FlipperBasicPosComponent, SearchBoxComponent,
     AutocompleteComponent, ShoppingListsComponent, BasicShoppingListComponent,

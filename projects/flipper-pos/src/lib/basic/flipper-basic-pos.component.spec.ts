@@ -14,7 +14,7 @@ import { Order, Variant } from '@enexus/flipper-components';
 describe('FlipperBasicPosComponent', () => {
   let component: FlipperBasicPosComponent;
   let fixture: ComponentFixture<FlipperBasicPosComponent>;
-  let order:Order= {id: 1, branchId: 1, orderNumber: '01',
+  const order: Order = {id: 1, branchId: 1, orderNumber: '01',
   subTotal: 0.00,
   cashReceived: 0.00,
   customerChangeDue: 0.00,
@@ -27,7 +27,7 @@ orderItems: [{id: 1,
   subTotal: 100
 }]};
 
-let variant:Variant[]= [{id: 1,
+  const variant: Variant[] = [{id: 1,
   sku: 'P',
   name: 'Cake',
   isActive: true,
@@ -66,8 +66,8 @@ let variant:Variant[]= [{id: 1,
   beforeEach(() => {
     fixture = TestBed.createComponent(FlipperBasicPosComponent);
     component = fixture.componentInstance;
-    component.currentOrder=order;
-    component.foundVariant=variant;
+    component.currentOrder = order;
+    component.foundVariant = variant;
     fixture.detectChanges();
   });
 
@@ -76,7 +76,7 @@ let variant:Variant[]= [{id: 1,
   });
 
   it('should receive and set input foundVariant', () => {
-   
+
     expect(component.foundVariant).toEqual([{id: 1,
       sku: 'P',
       name: 'Cake',
@@ -98,7 +98,7 @@ let variant:Variant[]= [{id: 1,
   });
 
   it('should get current order', () => {
-   
+
     expect(component.currentOrder).toEqual({id: 1, branchId: 1, orderNumber: '01',
     subTotal: 0.00,
     cashReceived: 0.00,

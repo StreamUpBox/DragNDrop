@@ -1,6 +1,8 @@
 {
   "extends": "../../tslint.json",
+
   "rules": {
+    "adjacent-overload-signatures": [true, {"OPTION_IGNORE_ACCESSORS": true}],
     "directive-selector": [
       true,
       "attribute",
@@ -12,7 +14,6 @@
       "element",
       "flipper",
       "kebab-case"
-    ],
-    "adjacent-overload-signatures": [true, {"OPTION_IGNORE_ACCESSORS": true}]
+    ]
   }
 }

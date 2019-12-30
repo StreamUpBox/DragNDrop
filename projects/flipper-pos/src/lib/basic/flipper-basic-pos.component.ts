@@ -25,10 +25,10 @@ import { DialogService } from '@enexus/flipper-dialog';
   styleUrls: ['./flipper-basic-pos.component.scss'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers:[CalculateTotalClassPipe,MergeArryByIdPipe,ArrayRemoveItemPipe]
+  providers: [CalculateTotalClassPipe, MergeArryByIdPipe, ArrayRemoveItemPipe]
 })
 export class FlipperBasicPosComponent  {
-  
+
   @Output() updateQtyEmit = new EventEmitter < Shoppings > ();
   @Output() searchEmitValue = new EventEmitter < string > ();
   @Output() addToCartEmit = new EventEmitter < Variant > ();
@@ -38,7 +38,7 @@ export class FlipperBasicPosComponent  {
 
   private canfoundVariant: Variant[] = [];
   private isCurrentOrder: Order = null;
- 
+
 
   @Input('foundVariant')
   set foundVariant(value: Variant[]) {
@@ -57,8 +57,8 @@ export class FlipperBasicPosComponent  {
     return this.isCurrentOrder;
   }
 
-  private setCartFocused:Shoppings=null;
-  
+  private setCartFocused: Shoppings = null;
+
   set cartFocused(cart: Shoppings) {
     this.setCartFocused = cart;
 
@@ -67,36 +67,36 @@ export class FlipperBasicPosComponent  {
     return this.setCartFocused;
   }
 
-  @HostListener('document:keydown', ['$event']) 
+  @HostListener('document:keydown', ['$event'])
   onKeydownHandler(event: KeyboardEvent) {
    console.log(event);
 
-    //delete key
-    if(this.cartFocused){
-    if(event.keyCode===46){
+    // delete key
+   if (this.cartFocused) {
+    if (event.key === 'Delete') {
         this.removeItem(this.cartFocused);
       }
-      if(event.shiftKey && event.keyCode===187){ //shift + (+)
-        this.updateQuantity(this.cartFocused,'+');
+    if (event.shiftKey && event.key === '+') { // shift + (+)
+        this.updateQuantity(this.cartFocused, '+');
       }
 
-      if(event.shiftKey && event.keyCode===189){//shift + (-)
-        this.updateQuantity(this.cartFocused,'-');
+    if (event.shiftKey && event.key === '-') {// shift + (-)
+        this.updateQuantity(this.cartFocused, '-');
       }
-     
+
     }
-    if(event.shiftKey && event.keyCode===75){//shift + k
+   if (event.shiftKey && event.key === 'K') {// shift + k
       this. keyBoardShortCuts();
     }
   }
 
   constructor(
-    public dialog:DialogService,
+    public dialog: DialogService,
     private totalPipe: CalculateTotalClassPipe,
-    private mergePipe:MergeArryByIdPipe,
-    private removeItemPipe:ArrayRemoveItemPipe) {}
+    private mergePipe: MergeArryByIdPipe,
+    private removeItemPipe: ArrayRemoveItemPipe) {}
 
-    keyBoardShortCuts(){
+  keyBoardShortCuts() {
       this.dialog.keyBoardShortCuts();
     }
 
@@ -112,23 +112,23 @@ export class FlipperBasicPosComponent  {
   }
 
   updateQty(item: Shoppings) {
-    this.currentOrder.orderItems= this.mergePipe.
-    transform<Shoppings>(this.currentOrder.orderItems,[item]);
+    this.currentOrder.orderItems = this.mergePipe.
+    transform<Shoppings>(this.currentOrder.orderItems, [item]);
     this.saveOrderUpdated();
   }
 
-  
+
 
   removeItem(item: Shoppings) {
-   this.currentOrder.orderItems = this.removeItemPipe.transform<Shoppings>(this.currentOrder.orderItems,item);
-      this.saveOrderUpdated();
+   this.currentOrder.orderItems = this.removeItemPipe.transform<Shoppings>(this.currentOrder.orderItems, item);
+   this.saveOrderUpdated();
   }
 
 
   saveOrderUpdated(event?: Order) {
 
-    let order=event?event:this.currentOrder;
-   
+    const order = event ? event : this.currentOrder;
+
     order.subTotal = this.totalPipe.
     transform<Shoppings>(order.orderItems, 'subTotal');
 
@@ -136,8 +136,8 @@ export class FlipperBasicPosComponent  {
     order.cashReceived - order.subTotal : 0.00;
 
     order.customerChangeDue = order.customerChangeDue;
-   
-      this.saveOrderUpdatedEmit.emit(order);
+
+    this.saveOrderUpdatedEmit.emit(order);
   }
 
 
@@ -157,8 +157,8 @@ export class FlipperBasicPosComponent  {
     item.subTotal = item.price * item.quantity;
     this.updateQty(item);
   }
-  canSetCartFocused(item){
-    this.cartFocused=item;
+  canSetCartFocused(item) {
+    this.cartFocused = item;
   }
 
 }

@@ -10,7 +10,7 @@ import { Pipe, PipeTransform, Injectable } from '@angular/core';
 export class FindKeyPipe implements PipeTransform {
 
   transform(numKeys: any[], key: any): boolean {
-    return numKeys.find(k=>k===key)?true:false;
+    return numKeys.find(k => k === key) ? true : false;
   }
 
 }

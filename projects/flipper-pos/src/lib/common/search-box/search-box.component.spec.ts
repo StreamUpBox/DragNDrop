@@ -75,8 +75,8 @@ describe('SearchBoxComponent', () => {
     const el = fixture.nativeElement;
     const input = el.querySelector('.search-box');
     input.value = '';
-   
-   
+
+
   });
 
   it('should emit add to cart variant', () => {

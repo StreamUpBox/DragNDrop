@@ -5,7 +5,8 @@
     "entryFile": "src/public-api.ts",
     "umdModuleIds": {
       "@enexus/flipper-vendors": "@enexus/flipper-vendors",
-      "@enexus/flipper-dialog": "@enexus/flipper-dialog"
+      "@enexus/flipper-dialog": "@enexus/flipper-dialog",
+      "@enexus/flipper-font":"@enexus/flipper-font"
     }
   }
   

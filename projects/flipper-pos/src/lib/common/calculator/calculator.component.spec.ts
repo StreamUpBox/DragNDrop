@@ -96,4 +96,5 @@ describe('CalculatorComponent', () => {
   expect(component.currentNumber).toEqual('6');
  });
 
+
 });

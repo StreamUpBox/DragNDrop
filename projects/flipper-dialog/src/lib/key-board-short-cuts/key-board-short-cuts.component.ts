@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, HostListener } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 @Component({
@@ -8,8 +8,15 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 })
 export class KeyBoardShortCutsComponent  {
 
+  @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
+    if (event.key === 'Esc') { 
+         this.dialogRef.close();
+      }
+    }
   constructor(public dialogRef: MatDialogRef<KeyBoardShortCutsComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
 }
 
 }
+
+

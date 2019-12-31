@@ -99,28 +99,26 @@ orderItems: [{id: 1,
 
   it('should get current order', () => {
 
-    expect(component.currentOrder).toEqual({id: 1, branchId: 1, orderNumber: '01',
-    subTotal: 0.00,
-    cashReceived: 0.00,
-    customerChangeDue: 0.00,
-    orderItems: [{id: 1,
-      price: 100,
-      variantName: 'cake',
-      quantity: 1,
-      variantId: 1,
-      orderId: 1,
-      subTotal: 100
-    }]});
+   
+
+    expect(component.currentOrder).toEqual( {
+      id:1,
+    branchId: 1,
+    orderNumber: '01',
+    subTotal: 0,
+    cashReceived: 0,
+    customerChangeDue: 0,
+    orderItems: 
+     [ { id: 1,
+         price: 100,
+         variantName: 'cake',
+         quantity: 1,
+         variantId: 1,
+         orderId: 1,
+         subTotal: 100 } ] 
+        });
   });
 
-  // it('should emit the output value that will use to search a product', () => {
-  //  const  event = 'ganza';
-
-  //  component.searchEmitValue.subscribe(g => {
-  //     expect(g).toEqual('ganza');
-  //  });
-  //  component.searchPosProduct(event);
-  // });
 
 
 });

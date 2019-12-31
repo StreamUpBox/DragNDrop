@@ -2,10 +2,13 @@
 
  <flipper-basic-pos
   [currentOrder]="currentOrder"
+  [collectCashCompleted]="collectCashCompleted"
+  [currency]="currency"
   (addToCartEmit)="addToCart($event)"
   [foundVariant]="foundVariant"
   (searchEmitValue)="searchPosVariant($event)"
-  (saveOrderUpdatedEmit)="saveOrderUpdated($event)">
+  (saveOrderUpdatedEmit)="saveOrderUpdated($event)"
+  (didCollectCashEmit)="didCollectCash($event)">
 </flipper-basic-pos
 >
  

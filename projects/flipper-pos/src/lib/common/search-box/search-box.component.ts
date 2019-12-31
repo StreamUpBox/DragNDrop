@@ -34,41 +34,38 @@ export class SearchBoxComponent implements OnInit, AfterViewInit {
   @Output() addToCartEmit = new EventEmitter < Variant > ();
   public searchControl: FormControl;
   private debounce = 600;
-  public startSearching = false;
   public loading = false;
-
+  public event: KeyboardEvent;
   constructor(private cd: ChangeDetectorRef) {}
 
   @ViewChild('mySearchInput', {
     static: false
-  }) public searchInputElement: ElementRef = null;
+  }) public searchInputElement: ElementRef;
   private canfoundVariant: Variant[] = [];
 
   @ViewChild('autoCompleteInput', { read: MatAutocompleteTrigger, static: false })
   autoComplete: MatAutocompleteTrigger;
 
   @HostListener('document:keydown', ['$event'])
-  onKeydownHandler(event: KeyboardEvent) {
-
-     // start focusing on search input box by presskey s or f
-     if ((event.shiftKey && event.key === 'F') || (event.shiftKey && event.key === 'S')) {
-       setTimeout(() => {
-        this.clearSearchBox();
-       }, 2);
-
-
+      onKeydownHandler(event: KeyboardEvent) {
+        this.event=event;
+        if ((this.event.shiftKey && this.event.key === 'F') ||
+           (this.event.shiftKey && this.event.key === 'S')) {
+          setTimeout(() => {
+            this.clearSearchBox();
+              },
+            2);
+        }
+        if (this.event.key === 'Shift') {
+                setTimeout(() => {
+                this.searchInputElement.nativeElement.blur();
+                this. close();
+                }, 
+              2);
+        }
     }
-    // stop focusing on search input box by presskey of shift
-     if (event.key === 'Shift') {
-      setTimeout(() => {
-      this.searchInputElement.nativeElement.blur();
-      this. close();
-    }, 2);
-     }
-    }
-
+  @Input() currency:string='RWF';
   @Input('foundVariant')
-
   set foundVariant(value: Variant[]) {
     this.canfoundVariant = value;
     this.loading = false;
@@ -88,14 +85,14 @@ export class SearchBoxComponent implements OnInit, AfterViewInit {
     this.searchControl = new FormControl('');
 
     this.searchControl.valueChanges
-      .pipe(debounceTime(this.debounce), distinctUntilChanged())
-      .subscribe(query => {
-        if (query === '' || query === null) {
-          this.startSearching = false;
-          return;
-        }
+      .pipe(debounceTime(this.debounce),
+            distinctUntilChanged()
+            )
+          .subscribe(query => {
+            if (query === '' || query === null) {
+                  return;
+            }
         this.loading = true;
-
         this.searchEmitValue.emit(query);
       });
   }
@@ -116,16 +113,17 @@ export class SearchBoxComponent implements OnInit, AfterViewInit {
 
   addToCart(variant: Variant) {
     this.addToCartEmit.emit(variant);
-    this. clearSearchBox();
+    this.clearSearchBox();
   }
 
 
 
   clearSearchBox() {
-        this.searchInputElement.nativeElement.value = '';
-        this.searchInputElement.nativeElement.focus();
-        this.close();
-
+        if(this.searchInputElement !=undefined){
+          this.searchInputElement.nativeElement.value = '';
+          this.searchInputElement.nativeElement.focus();
+          this.close();
+        }
   }
 
 }

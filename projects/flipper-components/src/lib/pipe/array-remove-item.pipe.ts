@@ -12,10 +12,10 @@ export class ArrayRemoveItemPipe implements PipeTransform {
     return this.arrayRemove<T>(arrayOfData, value);
   }
 
-  arrayRemove<T>(arr: Array<T>= [], value): Array<T> {
+  arrayRemove<T>(arr: Array<T>= [], objectToRemove): Array<T> {
     if (arr.length > 0) {
       return arr.filter((ele) => {
-        return ele.id !== value.id;
+       return  JSON.stringify(ele) != JSON.stringify(objectToRemove);
     });
     } else {
       return arr;

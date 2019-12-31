@@ -9,6 +9,7 @@ import { DialogSize } from './dialog-size';
 import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
 import { WaitDialogComponent } from './wait-dialog/wait-dialog.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { MessageDialogComponent } from './message-dialog/message-dialog.component';
 
 export const dialogsServiceSpy = () => {
   const spy = jasmine.createSpyObj('DialogService', [
@@ -17,6 +18,8 @@ export const dialogsServiceSpy = () => {
     'delete',
     'confirm',
     'logs',
+    'message',
+    'keyBoardShortCuts'
   ]);
   return spy;
 };
@@ -93,6 +96,8 @@ describe('DialogService', () => {
         message: 'message'
       });
   });
+
+
 
   it('should wait', () => {
     service.wait({title: 'title', progress: 50});

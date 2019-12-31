@@ -9,6 +9,7 @@ import { WaitDialogProgress } from './wait-dialog/wait-dialog-progress';
 import { WaitDialogComponent } from './wait-dialog/wait-dialog.component';
 import { DialogSize } from './dialog-size';
 import { KeyBoardShortCutsComponent } from './key-board-short-cuts/key-board-short-cuts.component';
+import { MessageDialogComponent } from './message-dialog/message-dialog.component';
 
 @Injectable()
 export class DialogService {
@@ -40,7 +41,15 @@ export class DialogService {
   public confirm(title: string, message: string): Observable<void> {
     return this.open(ConfirmDialogComponent, DialogSize.SIZE_MD, {
       title,
+      message
+    });
+  }
+
+  public message(title: string, message: string, status:string,size= 'SIZE_MD'): Observable<void> {
+    return this.open(MessageDialogComponent,   DialogSize[size], {
+      title,
       message,
+      status
     });
   }
 

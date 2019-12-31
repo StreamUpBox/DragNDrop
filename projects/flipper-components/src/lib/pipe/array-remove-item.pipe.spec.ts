@@ -4,19 +4,20 @@ import {
 
 describe('ArrayRemoveItemPipe', () => {
   let pipe = null;
-  const array: any[] = [{
-    id: 1,
-    name: 'ganza'
-  },
-  {
-    id: 2,
-    name: 'res'
-  }
-];
-  const element: object = {
-  id: 2,
-  name: 'res'
-};
+  const array: any[] = [
+            {
+            id: 1,
+            name: 'ganza'
+            },
+            {
+            id: 2,
+            name: 'remove'
+            }
+    ];
+  const toBeremovedFromArray: object = {
+              id: 2,
+              name: 'remove'
+            };
   pipe = new ArrayRemoveItemPipe();
   it('create an instance', () => {
     expect(pipe).toBeTruthy();
@@ -33,7 +34,8 @@ describe('ArrayRemoveItemPipe', () => {
   it('should remove one item in array', () => {
 
 
-    expect(pipe.transform (array, element)).
+    pipe.transform (array, toBeremovedFromArray) //?
+    expect(pipe.transform (array, toBeremovedFromArray)).
     toEqual(
       [{
         id: 1,

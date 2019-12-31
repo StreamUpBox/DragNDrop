@@ -33,13 +33,17 @@ export class FlipperBasicPosComponent  {
   @Output() searchEmitValue = new EventEmitter < string > ();
   @Output() addToCartEmit = new EventEmitter < Variant > ();
   @Output() saveOrderUpdatedEmit = new EventEmitter < Order > ();
+  @Output() didCollectCashEmit = new EventEmitter < boolean > ();
+
   action = '';
   orderItems$ = new BehaviorSubject < Shoppings[] > ([]);
 
   private canfoundVariant: Variant[] = [];
   private isCurrentOrder: Order = null;
 
-
+  
+  @Input() currency:string='RWF';
+  
   @Input('foundVariant')
   set foundVariant(value: Variant[]) {
     this.canfoundVariant = value;
@@ -51,6 +55,7 @@ export class FlipperBasicPosComponent  {
   @Input('currentOrder')
   set currentOrder(order: Order) {
     this.isCurrentOrder = order;
+    
   }
 
   get currentOrder(): Order {
@@ -66,10 +71,20 @@ export class FlipperBasicPosComponent  {
   get cartFocused(): Shoppings {
     return this.setCartFocused;
   }
+  private didCollectCashCompleted: object = {isCompleted:false,collectedOrder:null};
+  //collectCashCompleted
+
+  @Input('collectCashCompleted')
+  set collectCashCompleted(inputed: object) {
+    this.didCollectCashCompleted = inputed;
+
+  }
+  get collectCashCompleted(): object {
+    return this.didCollectCashCompleted;
+  }
 
   @HostListener('document:keydown', ['$event'])
   onKeydownHandler(event: KeyboardEvent) {
-   console.log(event);
 
     // delete key
    if (this.cartFocused) {
@@ -159,6 +174,14 @@ export class FlipperBasicPosComponent  {
   }
   canSetCartFocused(item) {
     this.cartFocused = item;
+  }
+
+  collectCash(event){
+    if(event==true){
+        this.currentOrder=null;
+    }
+    this.didCollectCashEmit.emit(event);
+      
   }
 
 }

@@ -1,25 +1,27 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { KeyBoardShortCutsComponent } from './key-board-short-cuts.component';
+import { MessageDialogComponent } from './message-dialog.component';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 export const dialogRefSpy = () => jasmine.createSpyObj('MatDialogRef', ['close']);
-describe('KeyBoardShortCutsComponent', () => {
-  let component: KeyBoardShortCutsComponent;
-  let fixture: ComponentFixture<KeyBoardShortCutsComponent>;
+describe('MessageDialogComponent', () => {
+  let component: MessageDialogComponent;
+  let fixture: ComponentFixture<MessageDialogComponent>;
 
+ 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ KeyBoardShortCutsComponent ],
+      declarations: [MessageDialogComponent],
       providers: [
-        {provide: MAT_DIALOG_DATA, useValue: {}},
+        {provide: MAT_DIALOG_DATA, useValue: {title: 'title', message: 'message',success:'success'}},
         {provide: MatDialogRef, useValue: dialogRefSpy()},
       ]
     })
-    .compileComponents();
+      .overrideTemplate(MessageDialogComponent, '')
+      .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(KeyBoardShortCutsComponent);
+    fixture = TestBed.createComponent(MessageDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

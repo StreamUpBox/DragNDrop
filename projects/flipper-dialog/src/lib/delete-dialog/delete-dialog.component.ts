@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, HostListener} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 export interface DeleteDialogData {
@@ -13,7 +13,11 @@ export interface DeleteDialogData {
   styleUrls: ['./delete-dialog.component.scss']
 })
 export class DeleteDialogComponent {
-
+  @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
+    if (event.key === 'Esc') { 
+         this.dialogRef.close();
+      }
+    }
   constructor(public dialogRef: MatDialogRef<DeleteDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: DeleteDialogData) {
   }

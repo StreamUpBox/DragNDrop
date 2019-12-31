@@ -4,7 +4,9 @@
   <div class="item item-4" fxFlex fxFlexOffset="50px" fxFlexOffset.xs="0">
     <div class="search-card">
 
-      <flipper-search-box [foundVariant]="foundVariant" (addToCartEmit)="addToCart($event)"
+      <flipper-search-box [foundVariant]="foundVariant"
+      [currency]="currency"
+       (addToCartEmit)="addToCart($event)"
         (searchEmitValue)="searchPosProduct($event)">
       </flipper-search-box>
 
@@ -33,7 +35,7 @@
 
               </span>
               <div class="item-sub-title">
-                <span class="details">RWF {{item.price}}</span>
+                <span class="details">{{currency}} {{item.price}}</span>
                 <span class="details">Lotion</span>
                 <span class="details">
                   <div class="oval"></div> &nbsp;&nbsp; In stock({{item.quantity}})
@@ -66,12 +68,20 @@
       </div>
     </div>
 
-    <flipper-message *ngIf="currentOrder && currentOrder.orderItems.length===0" title="Search Product"
+    <flipper-message *ngIf="currentOrder && currentOrder.orderItems.length===0" title="Search Product!"
       message="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.">
     </flipper-message>
+
+    <flipper-message *ngIf="!currentOrder" title="No Order!"
+    message="No current order created!">
+  </flipper-message>
   </div>
   <div class="item item-5" flipperMyMatchHeight="item-5" fxFlex="500px">
-    <flipper-calculator [currentOrder]="currentOrder" (saveOrderUpdatedEmit)=saveOrderUpdated($event)>
+    <flipper-calculator [currentOrder]="currentOrder"
+    [currency]="currency"
+    [collectCashCompleted]="collectCashCompleted"
+     (collectCashEmit)="collectCash($event)"
+      (saveOrderUpdatedEmit)=saveOrderUpdated($event)>
     </flipper-calculator>
   </div>
 </div>

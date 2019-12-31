@@ -17,19 +17,20 @@
       <div class="key" [class.calculatorKeyOpen]="onKeyFocused('00')" (click) = "getNumber('00')"><span class="value">00</span></div>
     </div>
 
-    <div class="results">
+    <div class="results" *ngIf="currentOrder">
       <span class="amounts">
-        {{currentOrder.cashReceived | roundNumber}}</span>
+        {{currency}} {{currentOrder.cashReceived | roundNumber}}</span>
       <button type="button" class="clear" (click) = "clear()">CLEAR</button>
     </div>
 
-    <div class="totalAmounts">
+    <div class="totalAmounts" *ngIf="currentOrder">
       <span class="amount-title">TOTAL TO BE PAID</span>
-      <span class="amount-number">{{currentOrder.subTotal | roundNumber}}</span>
+      <span class="amount-number">{{currency}} {{currentOrder.subTotal | roundNumber}}</span>
     </div>
-    <div class="totalAmounts">
+    <div class="totalAmounts" *ngIf="currentOrder">
       <span class="amount-title">CHANGE</span>
-      <span class="amount-number" [ngClass]="isNegativeNumber?'colorToRed':'colorToBack'">{{currentOrder.customerChangeDue | roundNumber}}</span>
+      <span class="amount-number" [ngClass]="currentOrder && currentOrder.customerChangeDue < 0?'colorToRed':'colorToBack'">{{currency}} {{currentOrder.customerChangeDue | roundNumber}}</span>
     </div>
-    <button type="button" class="cash-btn"><span class="cash-btn-Text">Collect Cash</span></button>
+    <button type="button"  *ngIf="currentOrder" class="cash-btn"(click)="collectCash()">
+      <span class="cash-btn-Text">Collect Cash</span></button>
   </div>

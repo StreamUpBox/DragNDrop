@@ -7,26 +7,28 @@
   <input type="search" #autoCompleteInput [matAutocomplete]="auto" aria-label="Search" #mySearchInput [formControl]="searchControl"   placeholder="Search product code to retreive" class="search-box">
   
   <mat-autocomplete #auto="matAutocomplete" class="autocomplete">
+ 
     <flipper-autocomplete [loading]="loading" *ngIf="loading || foundVariant.length > 0"> 
-        <mat-option  *ngFor="let variant of foundVariant; let i = index;">
-            <div class="icon">
-                    <img [src]="'./assets/icons/search.svg'" class="icon-img">
-           </div>
-           <div class="item" (click)="addToCart(variant)">
-               <span class="item-title">
-                    {{variant.sku}} / {{variant.name}}
-                    
-               </span>
-               <div class="item-sub-title">
-                    <span class="details">RWF {{variant.priceVariant.retailPrice}}</span>
-                    <span class="details">Lotion</span>
-                    <span class="details"><div class="oval"></div> &nbsp;&nbsp; In stock(10)</span>
-                </div>
-               
-           </div>
-           <button type="button" class="add-button" (click)="addToCart(variant)">ADD</button>
-        </mat-option> 
-
-        
-    </flipper-autocomplete>
+      <div  *ngFor="let variant of foundVariant; let i = index;">
+      <mat-option (click)="addToCart(variant)">
+          <div class="icon">
+                  <img [src]="'./assets/icons/search.svg'" class="icon-img">
+         </div>
+         <div class="item">
+             <span class="item-title">
+                  {{variant.sku}} / {{variant.name}}
+                  
+             </span>
+             <div class="item-sub-title">
+                  <span class="details">{{currency}} {{variant.priceVariant.retailPrice}}</span>
+                  <span class="details">Lotion</span>
+                  <span class="details"><div class="oval"></div> &nbsp;&nbsp; In stock(10)</span>
+              </div>
+             
+         </div>
+      </mat-option> 
+    </div>
+      
+  </flipper-autocomplete>
+ 
 </mat-autocomplete>

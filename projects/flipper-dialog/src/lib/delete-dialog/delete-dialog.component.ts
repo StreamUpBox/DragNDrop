@@ -14,7 +14,7 @@ export interface DeleteDialogData {
 })
 export class DeleteDialogComponent {
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
-    if (event.key === 'Esc') { 
+    if (event.key === 'Esc') {
          this.dialogRef.close();
       }
     }

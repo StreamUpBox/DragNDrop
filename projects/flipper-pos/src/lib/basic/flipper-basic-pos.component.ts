@@ -1,24 +1,8 @@
-import {
-  Component,
-  Output,
-  EventEmitter,
-  Input,
-  ViewEncapsulation,
-  ChangeDetectionStrategy,
-  HostListener
-} from '@angular/core';
-import {
-  Order,
-  Variant,
-  Shoppings,
-  CalculateTotalClassPipe,
-  MergeArryByIdPipe,
-  ArrayRemoveItemPipe
-} from '@enexus/flipper-components';
-import {
-  BehaviorSubject
-} from 'rxjs';
+import {Component, Output, EventEmitter, Input, ViewEncapsulation, ChangeDetectionStrategy, HostListener} from '@angular/core';
+import {Order, Variant, Shoppings, CalculateTotalClassPipe, MergeArryByIdPipe, ArrayRemoveItemPipe} from '@enexus/flipper-components';
+import {BehaviorSubject} from 'rxjs';
 import { DialogService } from '@enexus/flipper-dialog';
+
 @Component({
   selector: 'flipper-basic-pos',
   templateUrl: './flipper-basic-pos.component.html',
@@ -41,9 +25,9 @@ export class FlipperBasicPosComponent  {
   private canfoundVariant: Variant[] = [];
   private isCurrentOrder: Order = null;
 
-  
-  @Input() currency:string='RWF';
-  
+
+  @Input() currency = 'RWF';
+
   @Input('foundVariant')
   set foundVariant(value: Variant[]) {
     this.canfoundVariant = value;
@@ -55,7 +39,7 @@ export class FlipperBasicPosComponent  {
   @Input('currentOrder')
   set currentOrder(order: Order) {
     this.isCurrentOrder = order;
-    
+
   }
 
   get currentOrder(): Order {
@@ -71,8 +55,8 @@ export class FlipperBasicPosComponent  {
   get cartFocused(): Shoppings {
     return this.setCartFocused;
   }
-  private didCollectCashCompleted: object = {isCompleted:false,collectedOrder:null};
-  //collectCashCompleted
+  private didCollectCashCompleted: object = {isCompleted: false, collectedOrder: null};
+  // collectCashCompleted
 
   @Input('collectCashCompleted')
   set collectCashCompleted(inputed: object) {
@@ -176,12 +160,12 @@ export class FlipperBasicPosComponent  {
     this.cartFocused = item;
   }
 
-  collectCash(event){
-    if(event==true){
-        this.currentOrder=null;
-    }
-    this.didCollectCashEmit.emit(event);
-      
+  collectCash(event) {
+      if (event === true) {
+          this.currentOrder = null;
+      }
+      this.didCollectCashEmit.emit(event);
+
   }
 
 }

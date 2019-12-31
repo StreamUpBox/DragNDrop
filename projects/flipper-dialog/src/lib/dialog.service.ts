@@ -45,7 +45,7 @@ export class DialogService {
     });
   }
 
-  public message(title: string, message: string, status:string,size= 'SIZE_MD'): Observable<void> {
+  public message(title: string, message: string, status: string, size= 'SIZE_MD'): Observable<void> {
     return this.open(MessageDialogComponent,   DialogSize[size], {
       title,
       message,

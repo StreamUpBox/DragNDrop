@@ -6,7 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./message-type.component.scss']
 })
 export class MessageTypeComponent implements OnInit {
-  heldStatus:string;
+  heldStatus: string;
   @Input('status')
   set status(status: string) {
     this.heldStatus = status;
@@ -14,8 +14,8 @@ export class MessageTypeComponent implements OnInit {
   get status(): string {
     return this.heldStatus;
   }
-  constructor() { 
-   
+  constructor() {
+
   }
 
   ngOnInit() {

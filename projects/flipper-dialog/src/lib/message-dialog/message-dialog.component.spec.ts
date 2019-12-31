@@ -7,12 +7,12 @@ describe('MessageDialogComponent', () => {
   let component: MessageDialogComponent;
   let fixture: ComponentFixture<MessageDialogComponent>;
 
- 
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [MessageDialogComponent],
       providers: [
-        {provide: MAT_DIALOG_DATA, useValue: {title: 'title', message: 'message',success:'success'}},
+        {provide: MAT_DIALOG_DATA, useValue: {title: 'title', message: 'message', success: 'success'}},
         {provide: MatDialogRef, useValue: dialogRefSpy()},
       ]
     })

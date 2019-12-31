@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 export interface ConfirmDialogData {
   title: string;
   message: string;
-  status:string
+  status: string;
 }
 
 @Component({
@@ -14,12 +14,12 @@ export interface ConfirmDialogData {
 export class MessageDialogComponent implements OnInit {
 
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
-    if (event.key === 'Esc') { 
+    if (event.key === 'Esc') {
          this.dialogRef.close();
       }
     }
   constructor(public dialogRef: MatDialogRef<MessageDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: ConfirmDialogData) {
+              @Inject(MAT_DIALOG_DATA) public data: ConfirmDialogData) {
 }
 
   ngOnInit() {

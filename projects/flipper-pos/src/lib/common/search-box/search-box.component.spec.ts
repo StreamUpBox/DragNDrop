@@ -131,10 +131,10 @@ describe('SearchBoxComponent', () => {
     }]);
   });
 
-//onKeydownHandler
-it('should set seach input  when user press on shift + f', () => {
-  let event={
-      key: "F",
+// onKeydownHandler
+  it('should set seach input  when user press on shift + f', () => {
+  const event = {
+      key: 'F',
       shiftKey: true,
   } as KeyboardEvent;
 
@@ -143,9 +143,9 @@ it('should set seach input  when user press on shift + f', () => {
 });
 
 
-it('should clean and focused on seach input when user press on shift + S', () => {
-  let event={
-    key: "F",
+  it('should clean and focused on seach input when user press on shift + S', () => {
+  const event = {
+    key: 'F',
     shiftKey: true,
 } as KeyboardEvent;
 
@@ -153,9 +153,9 @@ it('should clean and focused on seach input when user press on shift + S', () =>
   expect(component.event).toBeTruthy();
 });
 
-it('should set search box to blur when user need to user calculator tools', () => {
-  let event={
-    key: "Shift",
+  it('should set search box to blur when user need to user calculator tools', () => {
+  const event = {
+    key: 'Shift',
     shiftKey: true,
 } as KeyboardEvent;
 

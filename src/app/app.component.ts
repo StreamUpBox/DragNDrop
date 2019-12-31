@@ -36,8 +36,8 @@ export class AppComponent implements OnDestroy {
   isCurrentOrder: Order;
   public variants: Variant[] = [];
   public shoppings: Shoppings[] = [];
-  public collectCashCompleted:object={};
-  currency="RWF";
+  public collectCashCompleted: object = {};
+  currency = 'RWF';
   constructor(private eventBus: FlipperEventBusService, private totalPipe: CalculateTotalClassPipe) {
     this.selectedSubscription = this.eventBus.of < OrderEvent > (OrderEvent.CHANNEL)
       .pipe(filter(e => e.order.isActive === true))
@@ -171,14 +171,14 @@ export class AppComponent implements OnDestroy {
   }
 
   saveOrderUpdated(event) {
-    console.log("saved order",event);
+    console.log('saved order', event);
   }
-  didCollectCash(event){
-    //console.log("didCollectCash",event);
-    this.collectCashCompleted={isCompleted:false,collectedOrder:this.currentOrder};
-    if(event==true){
-      this.collectCashCompleted={isCompleted:true,collectedOrder:this.currentOrder};
-      this.currentOrder=null;
+  didCollectCash(event) {
+    // console.log("didCollectCash",event);
+    this.collectCashCompleted = {isCompleted: false, collectedOrder: this.currentOrder};
+    if (event === true) {
+      this.collectCashCompleted = {isCompleted: true, collectedOrder: this.currentOrder};
+      this.currentOrder = null;
       if (!this.currentOrder) {
         this.newOrder();
       }

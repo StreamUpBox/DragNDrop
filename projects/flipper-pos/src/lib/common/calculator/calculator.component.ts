@@ -27,15 +27,7 @@ import {
   providers: [CalculateTotalClassPipe, FindKeyPipe, RoundNumberPipe]
 })
 export class CalculatorComponent {
-
-  currentNumber = '0';
-
-  isNegativeNumber = false;
-
-  private isCurrentOrder: Order = null;
-  @Output() saveOrderUpdatedEmit = new EventEmitter < Order > ();
-  @Output() collectCashEmit = new EventEmitter < boolean > ();
-  //collectCash
+  // collectCash
   @Input('currentOrder')
   set currentOrder(order: Order) {
     this.isCurrentOrder = order;
@@ -43,14 +35,7 @@ export class CalculatorComponent {
   get currentOrder(): Order {
     return this.isCurrentOrder;
   }
-
-  @Input() currency:string='RWF';
-  
-  private didCollectCashCompleted: object = {
-    isCompleted: false as boolean,
-    collectedOrder: null as Order
-  };
-  //collectCashCompleted
+  // collectCashCompleted
   @Input('collectCashCompleted')
   set collectCashCompleted(inputed: object) {
     this.didCollectCashCompleted = inputed;
@@ -60,31 +45,50 @@ export class CalculatorComponent {
   get collectCashCompleted(): object {
     return this.didCollectCashCompleted;
   }
+  constructor(private totalPipe: CalculateTotalClassPipe,
+              public dialog: DialogService,
+              private randPipe: RoundNumberPipe,
+              private findKeyPipe: FindKeyPipe) {}
+
+  currentNumber = '0';
+
+  isNegativeNumber = false;
+
+  private isCurrentOrder: Order = null;
+  @Output() saveOrderUpdatedEmit = new EventEmitter < Order > ();
+  @Output() collectCashEmit = new EventEmitter < boolean > ();
+
+  @Input() currency = 'RWF';
+
+  private didCollectCashCompleted: object = {
+    isCompleted: false as boolean,
+    collectedOrder: null as Order
+  };
   public isCalculatorNumOpen = false;
   public calculatorNums = [];
-
-
-  getCollectCashCompleted(inputed) {
-    if (inputed && inputed.isCompleted) {
-      let changeDue = inputed.collectedOrder.customerChangeDue == 0 || 
-         inputed.collectedOrder.customerChangeDue == '0.00' ? 'No' :
-        this.randPipe.transform(inputed.collectedOrder.customerChangeDue);
-      let cahsReceived = this.randPipe.transform(inputed.collectedOrder.cashReceived);
-      return this.dialog.message('Success Message', changeDue + ' change out of ' + cahsReceived, 'Success', 'SIZE_MD');
-    }
-  }
 
 
   @ViewChild('mySearchInput', {
     static: false
   }) public searchInputElement: ElementRef = null;
+
+
+  getCollectCashCompleted(inputed) {
+    if (inputed && inputed.isCompleted) {
+      const changeDue = inputed.collectedOrder.customerChangeDue === 0 ||
+         inputed.collectedOrder.customerChangeDue === '0.00' ? 'No' :
+        this.randPipe.transform(inputed.collectedOrder.customerChangeDue);
+      const cahsReceived = this.randPipe.transform(inputed.collectedOrder.cashReceived);
+      return this.dialog.message('Success Message', changeDue + ' change out of ' + cahsReceived, 'Success', 'SIZE_MD');
+    }
+  }
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
-    
+
     if (!this.currentOrder) {
       return;
     }
 
-    if (event.key === 'Enter' ||  event.key === 'End' ) { 
+    if (event.key === 'Enter' ||  event.key === 'End' ) {
         this.collectCash();
       }
 
@@ -137,10 +141,6 @@ export class CalculatorComponent {
 
 
   }
-  constructor(private totalPipe: CalculateTotalClassPipe,
-    public dialog: DialogService,
-    private randPipe: RoundNumberPipe,
-    private findKeyPipe: FindKeyPipe) {}
 
 
   public clear() {
@@ -209,14 +209,14 @@ export class CalculatorComponent {
 
     }
     if (this.currentOrder.customerChangeDue < 0) {
-      return this.dialog.message('Failure Message', "Cash received can't less than 0!", 'Failure', 'SIZE_SM');
+      return this.dialog.message('Failure Message', 'Cash received can\'t less than 0!', 'Failure', 'SIZE_SM');
 
     }
-    if (this.currentOrder.customerChangeDue == 0) {
-      this.currentOrder.cashReceived = parseInt(this.currentOrder.subTotal);
-      this.currentOrder.customerChangeDue = parseInt(this.currentOrder.cashReceived) - parseInt(this.currentOrder.subTotal);
+    if (this.currentOrder.customerChangeDue === 0) {
+      this.currentOrder.cashReceived = parseInt(this.currentOrder.subTotal, 10);
+      this.currentOrder.customerChangeDue = parseInt(this.currentOrder.cashReceived, 10) - parseInt(this.currentOrder.subTotal, 10);
     }
-    this.currentOrder.cashReceived = parseInt(this.currentOrder.cashReceived);
+    this.currentOrder.cashReceived = parseInt(this.currentOrder.cashReceived, 10);
     this.currentOrder.isActive = false;
 
     this.saveOrderUpdatedEmit.emit(this.currentOrder);

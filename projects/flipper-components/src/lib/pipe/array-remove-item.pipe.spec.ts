@@ -34,7 +34,7 @@ describe('ArrayRemoveItemPipe', () => {
   it('should remove one item in array', () => {
 
 
-    pipe.transform (array, toBeremovedFromArray) //?
+    pipe.transform (array, toBeremovedFromArray); // ?
     expect(pipe.transform (array, toBeremovedFromArray)).
     toEqual(
       [{

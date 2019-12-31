@@ -15,7 +15,7 @@ export class ArrayRemoveItemPipe implements PipeTransform {
   arrayRemove<T>(arr: Array<T>= [], objectToRemove): Array<T> {
     if (arr.length > 0) {
       return arr.filter((ele) => {
-       return  JSON.stringify(ele) != JSON.stringify(objectToRemove);
+       return  JSON.stringify(ele) !== JSON.stringify(objectToRemove);
     });
     } else {
       return arr;

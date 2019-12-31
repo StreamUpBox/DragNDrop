@@ -30,13 +30,22 @@ import { MatAutocompleteTrigger } from '@angular/material';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SearchBoxComponent implements OnInit, AfterViewInit {
+  constructor(private cd: ChangeDetectorRef) {}
+  @Input('foundVariant')
+  set foundVariant(value: Variant[]) {
+    this.canfoundVariant = value;
+    this.loading = false;
+    this.addToCartOnGotSingleItem(value);
+  }
+  get foundVariant(): Variant[] {
+    return this.canfoundVariant;
+  }
   @Output() searchEmitValue = new EventEmitter < string > ();
   @Output() addToCartEmit = new EventEmitter < Variant > ();
   public searchControl: FormControl;
   private debounce = 600;
   public loading = false;
   public event: KeyboardEvent;
-  constructor(private cd: ChangeDetectorRef) {}
 
   @ViewChild('mySearchInput', {
     static: false
@@ -45,10 +54,11 @@ export class SearchBoxComponent implements OnInit, AfterViewInit {
 
   @ViewChild('autoCompleteInput', { read: MatAutocompleteTrigger, static: false })
   autoComplete: MatAutocompleteTrigger;
+  @Input() currency = 'RWF';
 
   @HostListener('document:keydown', ['$event'])
       onKeydownHandler(event: KeyboardEvent) {
-        this.event=event;
+        this.event = event;
         if ((this.event.shiftKey && this.event.key === 'F') ||
            (this.event.shiftKey && this.event.key === 'S')) {
           setTimeout(() => {
@@ -60,20 +70,10 @@ export class SearchBoxComponent implements OnInit, AfterViewInit {
                 setTimeout(() => {
                 this.searchInputElement.nativeElement.blur();
                 this. close();
-                }, 
+                },
               2);
         }
     }
-  @Input() currency:string='RWF';
-  @Input('foundVariant')
-  set foundVariant(value: Variant[]) {
-    this.canfoundVariant = value;
-    this.loading = false;
-    this.addToCartOnGotSingleItem(value);
-  }
-  get foundVariant(): Variant[] {
-    return this.canfoundVariant;
-  }
 
   close() {
     this.autoComplete.closePanel();
@@ -92,8 +92,8 @@ export class SearchBoxComponent implements OnInit, AfterViewInit {
             if (query === '' || query === null) {
                   return;
             }
-        this.loading = true;
-        this.searchEmitValue.emit(query);
+            this.loading = true;
+            this.searchEmitValue.emit(query);
       });
   }
   ngAfterViewInit(): void {
@@ -119,7 +119,7 @@ export class SearchBoxComponent implements OnInit, AfterViewInit {
 
 
   clearSearchBox() {
-        if(this.searchInputElement !=undefined){
+        if (this.searchInputElement !== undefined) {
           this.searchInputElement.nativeElement.value = '';
           this.searchInputElement.nativeElement.focus();
           this.close();

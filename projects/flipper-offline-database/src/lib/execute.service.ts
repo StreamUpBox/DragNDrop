@@ -8,13 +8,14 @@ const sql = alasql;
 export class ExecuteService extends QueryService {
 
 
-  constructor() {super()}
+  constructor() {super(); }
 
-  execute(){
-    this.callback=function(res){
-    }
-    
-    return this.extra?sql(this.query,this.extra,this.callback):sql(this.query);
+  execute() {
+    this.callback = (res) => {
+      return res;
+    };
+
+    return this.extra ? sql(this.query, this.extra, this.callback) : sql(this.query);
 
 
   }

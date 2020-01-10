@@ -1,9 +1,9 @@
 
 export interface Model  {
-     model:string;
+     model: string;
 }
 export interface DB  {
-     name:string;
-     engine?:string;
+     name: string;
+     engine?: string;
 }
 

@@ -14,85 +14,85 @@ export class ModelService extends ExecuteService {
 }
 
 
-  get<T>() :Observable<T[]> {
+  get<T>(): Observable<T[]> {
     try {
       return this.execute();
     } catch (e) {
-      //TODO: notify any error in plugin to 
-      throw (`ERROR:${e}`);
+      // TODO: notify any error in plugin to
+      throw new Error((`ERROR:${e}`));
     }
   }
 
-  filter(TABLE:string,COLUMNS:any,VALUE:any){
-    try{
-    let condition='';
-    if(Array.isArray(COLUMNS)){
-      if(COLUMNS.length > 0){
-              COLUMNS.forEach((el,i)=>{
-                if(i===0){
-                  const like=el+' LIKE "%'+VALUE+'%" ';
-                  condition+=like;
-                }else{
-                  const like=' OR '+el+' LIKE "%'+VALUE+'%" ';
-                  condition+=like;
+  filter(TABLE: string, COLUMNS: any, VALUE: any) {
+    try {
+    let condition = '';
+    if (Array.isArray(COLUMNS)) {
+      if (COLUMNS.length > 0) {
+              COLUMNS.forEach((el, i) => {
+                if (i === 0) {
+                  const like = el + ' LIKE "%' + VALUE + '%" ';
+                  condition += like;
+                } else {
+                  const like = ' OR ' + el + ' LIKE "%' + VALUE + '%" ';
+                  condition += like;
                 }
-                 
-              })
+
+              });
           }
-    }else{
-         condition=COLUMNS+' LIKE "'+VALUE+'" '
+    } else {
+         condition = COLUMNS + ' LIKE "' + VALUE + '" ';
     }
-      
-        return this.select(TABLE).condition(condition).get();
+
+    return this.select(TABLE).condition(condition).get();
 
     } catch (e) {
-     throw(`ERROR:${e}`);
+     throw new Error((`ERROR:${e}`));
     }
   }
 
 
- 
-  create < T >  (TABLE: string,ROWS:T[]):void{
+
+  create <T>(TABLE: string, ROWS: T[]): void {
     try {
          ROWS.forEach(ROW => {
-          this.insert<T>(TABLE,ROW).execute();
+          this.insert<T>(TABLE, ROW).execute();
          });
     } catch (e) {
-     throw(`ERROR:${e}`);
+     throw new Error((`ERROR:${e}`));
     }
   }
 
-  update<T>(TABLE:string,ROW:T,id:number):void{
+  update<T>(TABLE: string, ROW: T, id: number): void {
     try {
 
-          return this.updateRow<T>(TABLE,ROW,id).execute();
+          return this.updateRow<T>(TABLE, ROW, id).execute();
 
      } catch (e) {
-       throw (`ERROR:${e}`);
+       throw new Error((`ERROR:${e}`));
      }
   }
-  
 
-  truncate <T> (TABLE: T):void{
+
+  truncate <T>(TABLE: T): void {
     try {
 
          return this.truncateRows<T>(TABLE).execute();
 
         } catch (e) {
-          throw (`ERROR:${e}`);
+          throw new Error((`ERROR:${e}`));
         }
   }
 
-  delete < T > (TABLE: T,id:number):void {
+  delete < T >(TABLE: T, id: number): void {
     try {
-         return this.deleteRow< T >(TABLE,id).execute();
+         return this.deleteRow< T >(TABLE, id).execute();
 
         } catch (e) {
-          throw (`ERROR:${e}`);
+          throw new Error((`ERROR:${e}`));
         }
   }
 
- 
+
   find() {
 
   }

@@ -16,7 +16,7 @@ export class FlipperPosComponent implements OnInit {
 
   constructor() {
     // this.get('business');
-    //this.create<Menu>('menu',['id'],[]);
+    // this.create<Menu>('menu',['id'],[]);
   }
 
   ngOnInit() {
@@ -32,18 +32,18 @@ export class FlipperPosComponent implements OnInit {
     // const results = sql("SELECT * FROM test WHERE language > 1");
     // console.log(results);
   }
- 
-  //table definition
+
+  // table definition
 
 
-  //getters
+  // getters
   // get(TABLE):Observable<T>{
   //   return sql("SELECT * FROM  "+TABLE) as Observable<T>;
   // }
   // create<T>(TABLE,COLUMNS:Array<T>,VALUES):Array<T>{
   //   return sql("CREATE TABLE "+TABLE+" ("+COLUMNS+") ("+VALUES+")");
   // }
-  
-  
+
+
 }
 

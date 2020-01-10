@@ -52,7 +52,7 @@
     <div class="fp-secondary-sidebar-chevron-down">
 
     </div>
-    <div *ngIf="loggedUser">
+    <div *ngIf="loggedUser" style="position: relative; top: 5px;">
       <p class="fp-online-user"></p>
       <p class="user-name">
         {{textEllipsis(loggedUser.name,26)}}

@@ -31,6 +31,7 @@ import { MatAutocompleteTrigger } from '@angular/material';
 })
 export class SearchBoxComponent implements OnInit, AfterViewInit {
   constructor(private cd: ChangeDetectorRef) {}
+
   @Input('foundVariant')
   set foundVariant(value: Variant[]) {
     this.canfoundVariant = value;
@@ -40,8 +41,24 @@ export class SearchBoxComponent implements OnInit, AfterViewInit {
   get foundVariant(): Variant[] {
     return this.canfoundVariant;
   }
+  private userClosedModel: boolean = false;
+
+  @Input('didUserCloseModel')
+  set didUserCloseModel(bol: boolean) {
+    this.userClosedModel = bol;
+    
+        if(bol===true){
+          this.clearSearchBox();
+        }
+  
+  }
+  get didUserCloseModel(): boolean {
+    return this.userClosedModel;
+  }
+
   @Output() searchEmitValue = new EventEmitter < string > ();
   @Output() addToCartEmit = new EventEmitter < Variant > ();
+  
   public searchControl: FormControl;
   private debounce = 600;
   public loading = false;
@@ -54,8 +71,9 @@ export class SearchBoxComponent implements OnInit, AfterViewInit {
 
   @ViewChild('autoCompleteInput', { read: MatAutocompleteTrigger, static: false })
   autoComplete: MatAutocompleteTrigger;
-  @Input() currency = 'RWF';
 
+  @Input() currency = 'RWF';
+  
   @HostListener('document:keydown', ['$event'])
       onKeydownHandler(event: KeyboardEvent) {
         this.event = event;

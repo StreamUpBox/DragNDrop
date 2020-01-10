@@ -1,38 +1,67 @@
 // @import 'app-all';
-.container {
-  position: relative;
-  top: 30px;
-  max-height: 95vh!important;
-  .item-5 {
-    flipper-calculator {
-      height: 90vh;
-    }
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.row {
+
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
   }
 
-  .item-4 {
-    float: left;
-    height: 100vh;
+  
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  
+/* Create two equal columns that floats next to each other */
+.column-sm {
+  border-radius: 0.25rem;
+  box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);
+  float: right;
+  width: 35%;
+  padding: 10px;
 
-    flipper-message {
-      position: relative;
-      top: 10vh;
-      height: 100vh;
-    }
+  flipper-calculator {
+    display: flex;
+    padding: 0.8rem;
+    height: 96vh;
+  }
+}
 
-    .search-card {
-      position: relative;
 
+.column-lg {
+  border-radius: 0.25rem;
+  box-shadow: 0 5px 4px -4px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  float: left;
+  width: 65%;
+  padding: 10px;
+  height: 100vh; /* Should be removed. Only for demonstration */
+  .search-card {
+    display: flex;
+    flipper-search-box{
+      width: 100%;;
+      display: flex;
     }
 
     .kbd-hotkeys-button{
       position: relative;
-      bottom: 52px;
-      right: 12px;
+      top: 5px;
+      right: 80px;
       float: right;
       opacity: .95;
       padding: 4px;
       width: 70px;
-      height: 45px;
+      height: 40px;
       border-radius: 2px;
       border: solid 1px #d6e8fa;
       background-color: #d6e8fa;
@@ -47,74 +76,98 @@
       position: relative;
     bottom: 12px;
     }
+  
+  
+  }
+  }
+ 
+  flipper-message {
+    position: relative;
+    top: 50px;
+    width: 100%;
+      display: flex;
+      flex-direction: column;
+    overflow: hidden;
   }
 
+ 
 
+.shoppinglist {
+  display: flex;
+    height: 100vh;
+    height: 100vh;
+    width: 94%;
+    position: relative;
+    top: 35px;
 
-    .shoppinglist {
+  .item-lists {
+    height: 78vh;
+    overflow: auto;
+    width: 100%;
+
+    flipper-autocomplete {
+      width: 100%;
       position: relative;
       top: 25px;
-
-
-      .divider {
-
-        .title {
-          display: inline-block;
-          width: 150px;
-          height: 20px;
-          font-family: Roboto;
-          font-size: 16px;
-          font-weight: 500;
-          font-stretch: normal;
-          font-style: normal;
-          line-height: 1.25;
-          letter-spacing: -0.06px;
-          color: #3a3b3f;
-        }
-
-        .line {
-          display: inline-table;
-          background-color: #f9fafb;
-
-        }
+      
+      .setCartFocused{
+        border-radius: 2px!important;
+        border: solid 2px #3f5ec6!important;
       }
-
-      .item-lists {
-        height: 78vh;
-        overflow: auto;
-
-
-        flipper-autocomplete {
-          width: 100%;
+      .mat-option {
+        height: 83px;
+        border-top: solid 4px #fcfeff;
+        background-color: #ffffff;
+        margin-bottom: 10px;
+        .remove-item {
           position: relative;
-          top: 25px;
-          
-          .setCartFocused{
-            border-radius: 2px!important;
-            border: solid 2px #3f5ec6!important;
-          }
-          .mat-option {
-            height: 83px;
-            border-top: solid 4px #fcfeff;
-            background-color: #ffffff;
-            margin-bottom: 10px;
-            .remove-item {
-              position: relative;
-              top: 34.7px;
-              right: 0;
-              margin-left: 8px;
-              ;
-              float: right;
-              width: 50.3px;
-              height: 50px;
-              border-radius: 2px;
-              border: solid 1px #3f5ec6;
+          top: 34.7px;
+          right: 0;
+          margin-left: 8px;
+          ;
+          float: right;
+          width: 50.3px;
+          height: 50px;
+          border-radius: 2px;
+          border: solid 1px #3f5ec6;
 
-              .delete-icon {
+          .delete-icon {
+            position: relative;
+            top: 4px;
+            width: 16px;
+            left: 15px;
+            height: 40px;
+            font-family: Roboto;
+            font-size: 22px;
+            font-weight: 500;
+            font-stretch: normal;
+            font-style: normal;
+            line-height: normal;
+            letter-spacing: normal;
+            text-align: center;
+            color: #1b2125;
+          }
+        }
+
+        .update-qty {
+          position: relative;
+          top: 34.7px;
+          right: 0px;
+          float: right;
+          width: 123.3px;
+          height: 50px;
+          border-radius: 2px;
+          border: solid 1px #3f5ec6;
+          margin-left: 8px;
+
+          table {
+            width: 100%;
+
+            tr {
+              td {
                 position: relative;
                 top: 4px;
                 width: 16px;
-                left: 15px;
                 height: 40px;
                 font-family: Roboto;
                 font-size: 22px;
@@ -126,131 +179,100 @@
                 text-align: center;
                 color: #1b2125;
               }
-            }
 
-            .update-qty {
-              position: relative;
-              top: 34.7px;
-              right: 0px;
-              float: right;
-              width: 123.3px;
-              height: 50px;
-              border-radius: 2px;
-              border: solid 1px #3f5ec6;
-              margin-left: 8px;
-
-              table {
-                width: 100%;
-
-                tr {
-                  td {
-                    position: relative;
-                    top: 4px;
-                    width: 16px;
-                    height: 40px;
-                    font-family: Roboto;
-                    font-size: 22px;
-                    font-weight: 500;
-                    font-stretch: normal;
-                    font-style: normal;
-                    line-height: normal;
-                    letter-spacing: normal;
-                    text-align: center;
-                    color: #1b2125;
-                  }
-
-                }
-              }
-            }
-
-            .item {
-              position: relative;
-              display: inline-table;
-              left: 30px;
-              bottom: 3px;
-              ;
-
-              .item-sub-title {
-                position: relative;
-                display: block;
-
-                .details {
-                  position: relative;
-                  bottom: 12px;
-                  margin-right: 18px;
-                  display: inline-block;
-                  width: auto;
-                  height: 19px;
-                  font-family: Roboto;
-                  font-size: 14px;
-                  font-weight: 500;
-                  font-stretch: normal;
-                  font-style: normal;
-                  line-height: normal;
-                  letter-spacing: -0.05px;
-                  color: #202124;
-
-                  .oval {
-                    position: absolute;
-                    top: 5px;
-                    right: 0;
-                    bottom: 0;
-                    left: 0;
-                    width: 8px;
-                    height: 8px;
-                    background-color: #53be6d;
-                    border-radius: 50px;
-                    ;
-                  }
-
-                }
-
-
-              }
-
-              .item-title {
-                width: 240px;
-                height: 26px;
-                font-family: Roboto;
-                font-size: 20px;
-                font-weight: normal;
-                font-stretch: normal;
-                font-style: normal;
-                line-height: normal;
-                letter-spacing: -0.07px;
-                color: #2575ec;
-
-
-              }
-
-            }
-
-            .icon {
-              position: relative;
-              left: 11px;
-              width: 53px;
-              height: 53px;
-              top: 32px;
-              border-radius: 4px;
-              border: solid 1px #d6daff;
-              background-color: #ffffff;
-              display: inline-block;
-
-              .icon-img {
-                width: 47px;
-                height: 36px;
-                position: relative;
-                top: 7px;
-                left: 4px;
-              }
             }
           }
         }
 
-      }
+        .item {
+          position: relative;
+          display: inline-table;
+          left: 30px;
+          bottom: 3px;
+          ;
 
+          .item-sub-title {
+            position: relative;
+            display: block;
+
+            .details {
+              position: relative;
+              bottom: 12px;
+              margin-right: 18px;
+              display: inline-block;
+              width: auto;
+              height: 19px;
+              font-family: Roboto;
+              font-size: 14px;
+              font-weight: 500;
+              font-stretch: normal;
+              font-style: normal;
+              line-height: normal;
+              letter-spacing: -0.05px;
+              color: #202124;
+
+              .oval {
+                position: absolute;
+                top: 5px;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                width: 8px;
+                height: 8px;
+                background-color: #53be6d;
+                border-radius: 50px;
+                ;
+              }
+
+            }
+
+
+          }
+
+          .item-title {
+            width: 240px;
+            height: 26px;
+            font-family: Roboto;
+            font-size: 20px;
+            font-weight: normal;
+            font-stretch: normal;
+            font-style: normal;
+            line-height: normal;
+            letter-spacing: -0.07px;
+            color: #2575ec;
+
+
+          }
+
+        }
+
+        .icon {
+          position: relative;
+          left: 11px;
+          width: 53px;
+          height: 53px;
+          top: 32px;
+          border-radius: 4px;
+          border: solid 1px #d6daff;
+          background-color: #ffffff;
+          display: inline-block;
+
+          .icon-img {
+            width: 47px;
+            height: 36px;
+            position: relative;
+            top: 7px;
+            left: 4px;
+          }
+        }
+      }
     }
+
   }
+
+}
+
+}
 
 
 }

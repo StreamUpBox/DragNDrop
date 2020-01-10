@@ -79,11 +79,17 @@
       "flipper-button/*": [
         "dist/flipper-button/*"
       ],
-       "@enexus/flipper-components": [
+      "@enexus/flipper-components": [
         "dist/flipper-components"
       ],
       "@enexus/flipper-components/*": [
         "dist/flipper-components/*"
+      ],
+      "@enexus/flipper-offline-database": [
+        "dist/flipper-offline-database"
+      ],
+      "@enexus/flipper-offline-database/*": [
+        "dist/flipper-offline-database/*"
       ]
     }
   },

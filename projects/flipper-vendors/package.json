@@ -1,6 +1,6 @@
 {
   "name": "@enexus/flipper-vendors",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "peerDependencies": {
     "@angular/common": "~8.2.9",
     "@angular/core": "~8.2.9"
@@ -18,7 +18,7 @@
   "dependencies": {
     "tslib": "^1.9.0"
   },
-  "description": "Including all vendors",
+  "description": "Including all dependancies modules",
   "directories": {
     "lib": "lib"
   },

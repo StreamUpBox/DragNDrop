@@ -1,31 +1,27 @@
-
-<div class="container" fxLayout fxLayout.xs="column"  fxLayoutAlign="left" fxLayoutGap="10px" fxLayoutGap.xs="0"
-  flipperMyMatchHeight="container">
-  <div class="item item-4" fxFlex fxFlexOffset="50px" fxFlexOffset.xs="0">
+<div class="row">
+  <div class="column-lg">
     <div class="search-card">
 
-      <flipper-search-box [foundVariant]="foundVariant"
-      [currency]="currency"
-       (addToCartEmit)="addToCart($event)"
-        (searchEmitValue)="searchPosProduct($event)">
+      <flipper-search-box [foundVariant]="foundVariant" [currency]="currency" (addToCartEmit)="addToCart($event)"
+        (searchEmitValue)="searchPosProduct($event)" [didUserCloseModel]="userDidCloseModel">
       </flipper-search-box>
 
-
+      <button (click)="keyBoardShortCuts()" class="kbd-hotkeys-button"><svg class="icon svg-icon svg-icon-keyboard"
+        viewBox="0 0 32 32">
+        <path
+          d="M24.133 8C25.72 8 27 9.344 27 11v10c0 1.652-1.29 3-2.867 3H6.867C5.28 24 4 22.656 4 21V11c0-1.65 1.29-3 2.867-3h17.266zm-.075 2H6.942c-.51 0-.942.448-.942 1v10c0 .555.422 1 .942 1h17.116c.51 0 .942-.448.942-1V11c0-.555-.422-1-.942-1zM8.801 18c.11 0 .199.086.199.2v1.6c0 .11-.086.2-.2.2H7.2c-.11 0-.2-.086-.2-.2v-1.6c0-.11.086-.2.2-.2h1.6zm15 0c.11 0 .199.086.199.2v1.6c0 .11-.086.2-.2.2h-1.6c-.11 0-.2-.086-.2-.2v-1.6c0-.11.086-.2.2-.2h1.6zm-2.992 0c.106 0 .191.086.191.2v1.6c0 .11-.095.2-.19.2H10.19a.193.193 0 0 1-.19-.2v-1.6c0-.11.095-.2.19-.2h10.62zM9.801 15c.11 0 .199.086.199.2v1.6c0 .11-.086.2-.2.2H8.2c-.11 0-.2-.086-.2-.2v-1.6c0-.11.086-.2.2-.2h1.6zm3 0c.11 0 .199.086.199.2v1.6c0 .11-.086.2-.2.2h-1.6c-.11 0-.2-.086-.2-.2v-1.6c0-.11.086-.2.2-.2h1.6zm3 0c.11 0 .199.086.199.2v1.6c0 .11-.086.2-.2.2h-1.6c-.11 0-.2-.086-.2-.2v-1.6c0-.11.086-.2.2-.2h1.6zm3 0c.11 0 .199.086.199.2v1.6c0 .11-.086.2-.2.2h-1.6c-.11 0-.2-.086-.2-.2v-1.6c0-.11.086-.2.2-.2h1.6zm3 0c.11 0 .199.086.199.2v1.6c0 .11-.086.2-.2.2h-1.6c-.11 0-.2-.086-.2-.2v-1.6c0-.11.086-.2.2-.2h1.6zm2-3c.11 0 .199.086.199.2v1.6c0 .11-.086.2-.2.2h-1.6c-.11 0-.2-.086-.2-.2v-1.6c0-.11.086-.2.2-.2h1.6zm-3 0c.11 0 .199.086.199.2v1.6c0 .11-.086.2-.2.2h-1.6c-.11 0-.2-.086-.2-.2v-1.6c0-.11.086-.2.2-.2h1.6zm-3 0c.11 0 .199.086.199.2v1.6c0 .11-.086.2-.2.2h-1.6c-.11 0-.2-.086-.2-.2v-1.6c0-.11.086-.2.2-.2h1.6zm-3 0c.11 0 .199.086.199.2v1.6c0 .11-.086.2-.2.2h-1.6c-.11 0-.2-.086-.2-.2v-1.6c0-.11.086-.2.2-.2h1.6zm-6 0c.11 0 .199.086.199.2v1.6c0 .11-.086.2-.2.2H7.2c-.11 0-.2-.086-.2-.2v-1.6c0-.11.086-.2.2-.2h1.6zm3 0c.11 0 .199.086.199.2v1.6c0 .11-.086.2-.2.2h-1.6c-.11 0-.2-.086-.2-.2v-1.6c0-.11.086-.2.2-.2h1.6z">
+        </path>
+      </svg></button>
     </div>
 
-    <button (click)="keyBoardShortCuts()" class="kbd-hotkeys-button"><svg class="icon svg-icon svg-icon-keyboard" viewBox="0 0 32 32"><path d="M24.133 8C25.72 8 27 9.344 27 11v10c0 1.652-1.29 3-2.867 3H6.867C5.28 24 4 22.656 4 21V11c0-1.65 1.29-3 2.867-3h17.266zm-.075 2H6.942c-.51 0-.942.448-.942 1v10c0 .555.422 1 .942 1h17.116c.51 0 .942-.448.942-1V11c0-.555-.422-1-.942-1zM8.801 18c.11 0 .199.086.199.2v1.6c0 .11-.086.2-.2.2H7.2c-.11 0-.2-.086-.2-.2v-1.6c0-.11.086-.2.2-.2h1.6zm15 0c.11 0 .199.086.199.2v1.6c0 .11-.086.2-.2.2h-1.6c-.11 0-.2-.086-.2-.2v-1.6c0-.11.086-.2.2-.2h1.6zm-2.992 0c.106 0 .191.086.191.2v1.6c0 .11-.095.2-.19.2H10.19a.193.193 0 0 1-.19-.2v-1.6c0-.11.095-.2.19-.2h10.62zM9.801 15c.11 0 .199.086.199.2v1.6c0 .11-.086.2-.2.2H8.2c-.11 0-.2-.086-.2-.2v-1.6c0-.11.086-.2.2-.2h1.6zm3 0c.11 0 .199.086.199.2v1.6c0 .11-.086.2-.2.2h-1.6c-.11 0-.2-.086-.2-.2v-1.6c0-.11.086-.2.2-.2h1.6zm3 0c.11 0 .199.086.199.2v1.6c0 .11-.086.2-.2.2h-1.6c-.11 0-.2-.086-.2-.2v-1.6c0-.11.086-.2.2-.2h1.6zm3 0c.11 0 .199.086.199.2v1.6c0 .11-.086.2-.2.2h-1.6c-.11 0-.2-.086-.2-.2v-1.6c0-.11.086-.2.2-.2h1.6zm3 0c.11 0 .199.086.199.2v1.6c0 .11-.086.2-.2.2h-1.6c-.11 0-.2-.086-.2-.2v-1.6c0-.11.086-.2.2-.2h1.6zm2-3c.11 0 .199.086.199.2v1.6c0 .11-.086.2-.2.2h-1.6c-.11 0-.2-.086-.2-.2v-1.6c0-.11.086-.2.2-.2h1.6zm-3 0c.11 0 .199.086.199.2v1.6c0 .11-.086.2-.2.2h-1.6c-.11 0-.2-.086-.2-.2v-1.6c0-.11.086-.2.2-.2h1.6zm-3 0c.11 0 .199.086.199.2v1.6c0 .11-.086.2-.2.2h-1.6c-.11 0-.2-.086-.2-.2v-1.6c0-.11.086-.2.2-.2h1.6zm-3 0c.11 0 .199.086.199.2v1.6c0 .11-.086.2-.2.2h-1.6c-.11 0-.2-.086-.2-.2v-1.6c0-.11.086-.2.2-.2h1.6zm-6 0c.11 0 .199.086.199.2v1.6c0 .11-.086.2-.2.2H7.2c-.11 0-.2-.086-.2-.2v-1.6c0-.11.086-.2.2-.2h1.6zm3 0c.11 0 .199.086.199.2v1.6c0 .11-.086.2-.2.2h-1.6c-.11 0-.2-.086-.2-.2v-1.6c0-.11.086-.2.2-.2h1.6z"></path></svg></button>
     
+
 
     <div class="shoppinglist" *ngIf="currentOrder && currentOrder.orderItems.length > 0">
 
-      <div class="divider">
-        <div class="title">Selected Items ({{currentOrder.orderItems | calculateTotalClass:'quantity'}})</div>
-        <div class="line"></div>
-        
-      </div>
       <div class="item-lists">
         <flipper-autocomplete *ngFor="let item of  currentOrder.orderItems; let i = index;">
-          <mat-option  (click)="canSetCartFocused(item)" [class.setCartFocused]="cartFocused==item">
+          <mat-option (click)="canSetCartFocused(item)" [class.setCartFocused]="cartFocused==item">
             <div class="icon">
               <img [src]="'./assets/icons/search.svg'" class="icon-img">
             </div>
@@ -72,16 +68,13 @@
       message="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.">
     </flipper-message>
 
-    <flipper-message *ngIf="!currentOrder" title="No Order!"
-    message="No current order created!">
-  </flipper-message>
+    <flipper-message *ngIf="!currentOrder" title="No Order!" message="No current order created!">
+    </flipper-message>
   </div>
-  <div class="item item-5" flipperMyMatchHeight="item-5" fxFlex="500px">
-    <flipper-calculator [currentOrder]="currentOrder"
-    [currency]="currency"
-    [collectCashCompleted]="collectCashCompleted"
-     (collectCashEmit)="collectCash($event)"
-      (saveOrderUpdatedEmit)=saveOrderUpdated($event)>
+  <div class="column-sm">
+    <flipper-calculator [currentOrder]="currentOrder" [currency]="currency"
+      [collectCashCompleted]="collectCashCompleted" (collectCashEmit)="collectCash($event)"
+      (saveOrderUpdatedEmit)=saveOrderUpdated($event) (closeModelEmit)="closeModel($event)">
     </flipper-calculator>
   </div>
 </div>

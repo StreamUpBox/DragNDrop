@@ -11,6 +11,7 @@
     "build-font": "ng build flipperFont --watch",
     "build-pos": "ng build flipperPos --watch ",
     "build-event": "ng build flipperEvent --watch",
+    "build-db":"ng build flipperOfflineDatabase --watch",
     "build": "ng build  --watch",
     "publish": "npm publish --access public",
     "test": "ng test",

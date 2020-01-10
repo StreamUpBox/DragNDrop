@@ -527,6 +527,41 @@
           }
         }
       }
+    },
+    "flipperOfflineDatabase": {
+      "projectType": "library",
+      "root": "projects/flipper-offline-database",
+      "sourceRoot": "projects/flipper-offline-database/src",
+      "prefix": "flipper",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/flipper-offline-database/tsconfig.lib.json",
+            "project": "projects/flipper-offline-database/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/flipper-offline-database/src/test.ts",
+            "tsConfig": "projects/flipper-offline-database/tsconfig.spec.json",
+            "karmaConfig": "projects/flipper-offline-database/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/flipper-offline-database/tsconfig.lib.json",
+              "projects/flipper-offline-database/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "flipper-plugins"

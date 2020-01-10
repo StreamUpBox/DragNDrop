@@ -6,7 +6,7 @@
         <span class="portlet-title">
           TOTAL STORE VALUE
         </span>
-        <span class="amount">
+        <span class="amount" *ngIf="dashboardEntries.totalStore">
           RWF {{dashboardEntries.totalStore.value}}
         </span>
       </div>

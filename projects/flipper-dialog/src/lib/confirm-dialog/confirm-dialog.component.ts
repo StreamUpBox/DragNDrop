@@ -13,7 +13,7 @@ export interface ConfirmDialogData {
 })
 export class ConfirmDialogComponent {
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
-    if (event.key === 'Esc') {
+    if (event.key === 'Esc' || event.key === 'Enter') {
          this.dialogRef.close();
       }
     }

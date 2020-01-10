@@ -9,8 +9,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 export class KeyBoardShortCutsComponent  {
 
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
-    if (event.key === 'Esc') {
-         this.dialogRef.close();
+    if (event.key === 'Esc' || event.key === 'Enter') {
+         this.dialogRef.close(true);
       }
     }
   constructor(public dialogRef: MatDialogRef<KeyBoardShortCutsComponent>,

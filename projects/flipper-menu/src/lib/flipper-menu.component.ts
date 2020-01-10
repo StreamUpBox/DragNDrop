@@ -37,6 +37,7 @@ export class FlipperMenuComponent implements OnInit {
   menus: Menu[] = [];
   defaultBusiness: Business = null;
   settingMenu: Menu = null;
+  routerActive:string='';
   constructor() { }
 
   ngOnInit() {

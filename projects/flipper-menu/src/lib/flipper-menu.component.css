@@ -19,7 +19,7 @@
   left:0;
   bottom: 0;
   width: 69px;
-  height: 955px;
+  height: 100vh;
   background-color: #130f1f; 
   /* background-color: var(--purple-bg);  */
 }
@@ -48,8 +48,8 @@
 
 .rectangle {
   position: relative;
-  top: 3.6px;
-  left: 3.5px;
+  top: 2.6px;
+  left: 2px;
   width: 32px;
   height: 32px;
   opacity: 0.15;
@@ -74,8 +74,8 @@
 
 .divider{
   position: relative;
-  left: 34px;
-  top: -9px;
+  left: 33px;
+  top: 28px;
   width: 140px;
   height: 1px;
   opacity: 0.14;
@@ -83,7 +83,7 @@
 }
 .fp-menu{
   position: relative;
-  top: 8px;
+  top: 50px;
 }
 .fp-secondary-sidebar{
   position: fixed;
@@ -91,7 +91,7 @@
   bottom: 0;
   left:69.2px;
   width: 210px;
-  height: 955px;
+  height: 100vh;
   box-shadow: 0 1px 3px 0 rgba(63, 63, 68, 0.15), 0 0 0 1px rgba(63, 63, 68, 0.05);
   /* background-color: var(--purple-2); */
   background-color: #211a36; 
@@ -99,7 +99,7 @@
 
 .fp-secondary-sidebar-text {
   position: relative;
-  top: 25px;
+  top: 20px;
   left: 17px;
   width: 150px;
   height: 19px;
@@ -136,7 +136,7 @@
 }
 .fp-online-user {
   position: relative;
-  top: 9px;
+  top: 20px;
   left: 16px;
   width: 8px;
   height: 8px;
@@ -146,7 +146,7 @@
 
 .user-name{
   position: relative;
-  top: -20px;
+  top: 5px;
   left: 30px;
   width: 200px;
   height: 20px;
@@ -236,22 +236,22 @@
 }
 
 .toggled-button {
-  position: absolute;
-  margin-top: 74.3px;
-  right: -13.5px;
-  float: right;
-  width: 30px;
-  height: 30px;
+    position: fixed;
+    margin-top: 65px;
+    float: left;
+    width: 30px;
+    height: 30px;
+    margin-left: 191px;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.26);
   background-color: #955be9;
   border-radius: 50%;
   cursor: pointer;
 }
 .untoggled-button{
-  position: absolute;
+  position: fixed;
   margin-top: 74.3px;
-    left: 52px;
-    z-index: 10;
+  left: 52px;
+  z-index: 10;
   float: right;
   width: 30px;
   height: 30px;
@@ -261,13 +261,14 @@
   cursor: pointer;
 }
 .list-branches{
-  position: absolute;
-  margin-top: 68.3px;
-  left: 10px;
+  position: fixed;
+  margin-top: 70.3px;
+  left: 69px;
   z-index: 10;
   float: right;
   width: 235px;
   height: 234px;
+  overflow: auto;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.26);
   background-color: #130f1f;
   border-radius: 4px;

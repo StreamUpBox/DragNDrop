@@ -88,9 +88,8 @@ margin: 2px;
 
 .card > .card-left > .amount {
   display: block;
-  position: relative;
-  top: 29px;
-  left:24px;
+  margin-top: 40px;
+  margin-left: 24px;
   width: 163px;
   height: 28px;
   font-family: Roboto;
@@ -111,9 +110,8 @@ margin: 2px;
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  position: relative;
-  top: 20px;
-  right:24px;
+  margin-right: 25px;
+  margin-top: 15px;
   background-color: #ec4c47;
 }
 .bg-green{
@@ -123,10 +121,9 @@ margin: 2px;
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  position: relative;
-  top: 20px;
-  right:24px;
   background-color: #1070ca;
+  margin-right: 25px;
+  margin-top: 15px;
 }
 .card > .card-right > .oval-circle-icon-blue  > .icon{
   width: 30.6px;
@@ -201,7 +198,7 @@ margin: 2px;
 
 .card-items > .card-header > .card-title{
   position: relative;
-  top:24px;
+  top:20px;
   left:24px;
   width: 118px;
   height: 20px;

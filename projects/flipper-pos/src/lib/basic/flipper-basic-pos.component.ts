@@ -24,7 +24,7 @@ export class FlipperBasicPosComponent  {
 
   private canfoundVariant: Variant[] = [];
   private isCurrentOrder: Order = null;
-
+  private userClosedModel: boolean = false;
 
   @Input() currency = 'RWF';
 
@@ -55,6 +55,16 @@ export class FlipperBasicPosComponent  {
   get cartFocused(): Shoppings {
     return this.setCartFocused;
   }
+
+  //didCloseModel
+  set userDidCloseModel(m: boolean) {
+    this.userClosedModel = m;
+
+  }
+  get userDidCloseModel(): boolean {
+    return this.userClosedModel;
+  }
+
   private didCollectCashCompleted: object = {isCompleted: false, collectedOrder: null};
   // collectCashCompleted
 
@@ -166,6 +176,10 @@ export class FlipperBasicPosComponent  {
       }
       this.didCollectCashEmit.emit(event);
 
+  }
+
+  closeModel(event){
+      this.userDidCloseModel=event;
   }
 
 }

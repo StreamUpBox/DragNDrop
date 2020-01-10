@@ -1,36 +1,70 @@
 <div class="calculator" [class.calculatorNumOpen]="isCalculatorNumOpen">
-    <div class="keys">
-      <div class="key" [class.calculatorKeyOpen]="onKeyFocused('7')" (click) = "getNumber('7')"><span class="value" >7</span></div>
-      <div class="key" [class.calculatorKeyOpen]="onKeyFocused('8')" (click) = "getNumber('8')"><span class="value">8</span></div>
-      <div class="key" [class.calculatorKeyOpen]="onKeyFocused('9')" (click) = "getNumber('9')"><span class="value" >9</span></div>
-
-      <div class="key" [class.calculatorKeyOpen]="onKeyFocused('4')" (click) = "getNumber('4')"><span class="value">4</span></div>
-      <div class="key" [class.calculatorKeyOpen]="onKeyFocused('5')" (click) = "getNumber('5')"><span class="value">5</span></div>
-      <div class="key" [class.calculatorKeyOpen]="onKeyFocused('6')" (click) = "getNumber('6')"><span class="value">6</span></div>
-
-      <div class="key" [class.calculatorKeyOpen]="onKeyFocused('1')" (click) = "getNumber('1')"><span class="value" >1</span></div>
-      <div class="key" [class.calculatorKeyOpen]="onKeyFocused('2')" (click) = "getNumber('2')"><span class="value" >2</span></div>
-      <div class="key" [class.calculatorKeyOpen]="onKeyFocused('3')" (click) = "getNumber('3')"><span class="value">3</span></div>
-
-      <div class="key" [class.calculatorKeyOpen]="onKeyFocused('.')" (click) = "getNumber('.')"><span class="value">.</span></div>
-      <div class="key" [class.calculatorKeyOpen]="onKeyFocused('0')" (click) = "getNumber('0')"><span class="value">0</span></div>
-      <div class="key" [class.calculatorKeyOpen]="onKeyFocused('00')" (click) = "getNumber('00')"><span class="value">00</span></div>
+  <div class="keys">
+    <div class="key" [class.calculatorKeyOpen]="onKeyFocused('7')" (click)="getNumber('7')"><span class="value">7</span>
+    </div>
+    <div class="key" [class.calculatorKeyOpen]="onKeyFocused('8')" (click)="getNumber('8')"><span class="value">8</span>
+    </div>
+    <div class="key" [class.calculatorKeyOpen]="onKeyFocused('9')" (click)="getNumber('9')"><span class="value">9</span>
     </div>
 
-    <div class="results" *ngIf="currentOrder">
-      <span class="amounts">
-        {{currency}} {{currentOrder.cashReceived | roundNumber}}</span>
-      <button type="button" class="clear" (click) = "clear()">CLEAR</button>
+    <div class="key" [class.calculatorKeyOpen]="onKeyFocused('4')" (click)="getNumber('4')"><span class="value">4</span>
+    </div>
+    <div class="key" [class.calculatorKeyOpen]="onKeyFocused('5')" (click)="getNumber('5')"><span class="value">5</span>
+    </div>
+    <div class="key" [class.calculatorKeyOpen]="onKeyFocused('6')" (click)="getNumber('6')"><span class="value">6</span>
     </div>
 
-    <div class="totalAmounts" *ngIf="currentOrder">
-      <span class="amount-title">TOTAL TO BE PAID</span>
-      <span class="amount-number">{{currency}} {{currentOrder.subTotal | roundNumber}}</span>
+    <div class="key" [class.calculatorKeyOpen]="onKeyFocused('1')" (click)="getNumber('1')"><span class="value">1</span>
     </div>
-    <div class="totalAmounts" *ngIf="currentOrder">
-      <span class="amount-title">CHANGE</span>
-      <span class="amount-number" [ngClass]="currentOrder && currentOrder.customerChangeDue < 0?'colorToRed':'colorToBack'">{{currency}} {{currentOrder.customerChangeDue | roundNumber}}</span>
+    <div class="key" [class.calculatorKeyOpen]="onKeyFocused('2')" (click)="getNumber('2')"><span class="value">2</span>
     </div>
-    <button type="button"  *ngIf="currentOrder" class="cash-btn"(click)="collectCash()">
-      <span class="cash-btn-Text">Collect Cash</span></button>
+    <div class="key" [class.calculatorKeyOpen]="onKeyFocused('3')" (click)="getNumber('3')"><span class="value">3</span>
+    </div>
+
+    <div class="key" [class.calculatorKeyOpen]="onKeyFocused('.')" (click)="getNumber('.')"><span class="value">.</span>
+    </div>
+    <div class="key" [class.calculatorKeyOpen]="onKeyFocused('0')" (click)="getNumber('0')"><span class="value">0</span>
+    </div>
+    <div class="key" [class.calculatorKeyOpen]="onKeyFocused('00')" (click)="getNumber('00')"><span
+        class="value">00</span></div>
+  </div>
+  <div class="results-area">
+    <div class="row results" *ngIf="currentOrder">
+      <div class="col-4">
+        <div class="amounts">
+          {{currency}} {{currentOrder.cashReceived | roundNumber}}
+        </div>
+      </div>
+      <div class="col-1">
+        <div class="btn-clear">
+          <button type="button" class="clear" (click)="clear()">CLEAR</button>
+        </div>
+
+      </div>
+
+    </div>
+    <div>
+
+      <div class="row" *ngIf="currentOrder">
+        <div class="col-3 totalAmounts">
+          <span class="amount-title">TOTAL TO BE PAID</span>
+          <span class="amount-number">{{currency}} {{currentOrder.subTotal | roundNumber}}</span>
+        </div>
+
+        <div class="col-3 totalAmounts">
+          <span class="amount-title">CHANGE</span>
+          <span class="amount-number"
+            [ngClass]="currentOrder && currentOrder.customerChangeDue < 0?'colorToRed':'colorToBack'">{{currency}}
+            {{currentOrder.customerChangeDue | roundNumber}}</span>
+        </div>
+      </div>
+      <div class="row" *ngIf="currentOrder">
+        <div class="col">
+          <button type="button" *ngIf="currentOrder" class="cash-btn" (click)="collectCash()">
+            <span class="cash-btn-Text">Collect Cash</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
   </div>

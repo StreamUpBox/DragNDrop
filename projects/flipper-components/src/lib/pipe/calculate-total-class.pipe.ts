@@ -13,7 +13,7 @@ export class CalculateTotalClassPipe implements PipeTransform {
     let total: any = 0.00;
     if (arrayOfdData.length > 0) {
       for (let i = 0, len = arrayOfdData.length; i < len; i++) {
-        total += arrayOfdData[i][prop];
+        total += parseFloat(arrayOfdData[i][prop]);
       }
     }
     return total;

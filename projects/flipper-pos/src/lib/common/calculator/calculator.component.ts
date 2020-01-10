@@ -42,6 +42,7 @@ export class CalculatorComponent {
     this.getCollectCashCompleted(inputed);
 
   }
+  @Output() closeModelEmit = new EventEmitter < boolean > ();
   get collectCashCompleted(): object {
     return this.didCollectCashCompleted;
   }
@@ -79,7 +80,11 @@ export class CalculatorComponent {
          inputed.collectedOrder.customerChangeDue === '0.00' ? 'No' :
         this.randPipe.transform(inputed.collectedOrder.customerChangeDue);
       const cahsReceived = this.randPipe.transform(inputed.collectedOrder.cashReceived);
-      return this.dialog.message('Success Message', changeDue + ' change out of ' + cahsReceived, 'Success', 'SIZE_MD');
+      return this.dialog.message('Success Message', changeDue + ' change out of ' + cahsReceived, 'Success', 'SIZE_MD').subscribe(()=>{
+        this.isCalculatorNumOpen=false;
+        this.closeModelEmit.emit(true);
+        console.log('cash collected successfully');
+      });
     }
   }
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
@@ -167,7 +172,10 @@ export class CalculatorComponent {
 
   public getNumber(v: string) {
     if (!this.currentOrder) {
-      return this.dialog.message('Failure Message', 'No current order created!', 'Failure', 'SIZE_SM');
+      return this.dialog.message('Failure Message', 'No current order created!', 'Failure', 'SIZE_SM').subscribe(()=>{
+        this.isCalculatorNumOpen=false;
+        this.closeModelEmit.emit(true);
+      });
     }
     this.isCalculatorNumOpen = true;
     this.calculatorNums.push(v);
@@ -182,7 +190,10 @@ export class CalculatorComponent {
       if (subTotal <= 0) {
         this.isCalculatorNumOpen = false;
         this.calculatorNums.pop();
-        return this.dialog.message('Failure Message', 'No shopping list could found!', 'Failure', 'SIZE_SM');
+        return this.dialog.message('Failure Message', 'No shopping list could found!', 'Failure', 'SIZE_SM').subscribe(()=>{
+          this.isCalculatorNumOpen=false;
+          this.closeModelEmit.emit(true);
+        });;
       }
       this.currentOrder.cashReceived = this.currentNumber;
 
@@ -205,7 +216,10 @@ export class CalculatorComponent {
     }
     this.collectCashEmit.emit(false);
     if (this.currentOrder.subTotal <= 0) {
-      return this.dialog.message('Failure Message', 'No shopping list could found!', 'Failure', 'SIZE_SM');
+      return this.dialog.message('Failure Message', 'No shopping list could found!', 'Failure', 'SIZE_SM').subscribe(()=>{
+        this.isCalculatorNumOpen=false;
+        this.closeModelEmit.emit(true);
+      });;
 
     }
     if (this.currentOrder.customerChangeDue < 0) {

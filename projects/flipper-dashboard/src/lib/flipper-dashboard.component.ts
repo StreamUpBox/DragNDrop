@@ -7,5 +7,5 @@ import { DashBoardEntries } from '@enexus/flipper-components';
   styleUrls: ['./flipper-dashboard.component.css'],
 })
 export class FlipperDashboardComponent {
-  @Input() dashboardEntries: DashBoardEntries;
+  @Input() dashboardEntries: DashBoardEntries={};
 }

@@ -22,7 +22,7 @@ export class WaitDialogComponent {
   }
   private ps: WaitDialogProgress;
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
-    if (event.key === 'Esc') {
+    if (event.key === 'Esc' || event.key === 'Enter') {
          this.dialogRef.close();
       }
     }

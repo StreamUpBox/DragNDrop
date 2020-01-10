@@ -8,11 +8,11 @@ import { TestingComponentComponent } from './testing-component/testing-component
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlipperDashboardModule } from 'flipper-dashboard';
 
-import { OverlayContainer } from '@angular/cdk/overlay';
 import { VendorsModule } from '@enexus/flipper-vendors';
 import { FlipperMenuModule } from 'flipper-menu';
 import { FlipperPosModule } from '@enexus/flipper-pos';
 import { FlipperComponentsModule } from '@enexus/flipper-components';
+import { FlipperOfflineDatabaseModule } from '@enexus/flipper-offline-database';
 
 
 @NgModule({
@@ -33,6 +33,7 @@ import { FlipperComponentsModule } from '@enexus/flipper-components';
     FlipperComponentsModule,
     FlipperPosModule,
     BrowserAnimationsModule,
+    FlipperOfflineDatabaseModule,
     AppRoutingModule
   ],
   entryComponents: [],

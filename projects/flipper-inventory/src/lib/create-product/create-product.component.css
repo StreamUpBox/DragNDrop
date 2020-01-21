@@ -11,6 +11,23 @@ input{
     border: none!important;
 }
 
+mat-select{
+    padding: 12px 16px!important;
+    font-size: 14px!important;;
+    line-height: 1.715!important;;
+    width: 100%!important;;
+    background-color: #fff!important;;
+    border: none!important;
+    color: #2996cc!important;
+    width:100%
+}
+.mat-select-placeholder {
+    color: #2996cc!important;  
+}
+.mat-select-value{
+    color: #2996cc!important;   
+}
+
 textarea {
     padding: 12px 16px;
     border: 0;
@@ -41,4 +58,7 @@ textarea {
 }
 .tdIsFocused{
     background-color: #d4eaf5;
+}
+.invalid{
+    border-bottom: 1px #ad061c solid;
 }

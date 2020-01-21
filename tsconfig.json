@@ -102,6 +102,12 @@
       ],
       "@enexus/flipper-inventory/*": [
         "dist/flipper-inventory/*"
+      ],
+      "@enexus/flipper-file-upload": [
+        "dist/flipper-file-upload"
+      ],
+      "@enexus/flipper-file-upload/*": [
+        "dist/flipper-file-upload/*"
       ]
     }
   },

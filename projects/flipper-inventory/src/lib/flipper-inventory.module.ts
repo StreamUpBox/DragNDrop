@@ -6,6 +6,8 @@ import { CommonModule } from '@angular/common';
 import { VendorsModule } from '@enexus/flipper-vendors';
 import { FlipperEventModule } from '@enexus/flipper-event';
 import { FlipperComponentsModule } from '@enexus/flipper-components';
+import { FlipperFileUploadModule } from '@enexus/flipper-file-upload';
+import { DialogModule } from '@enexus/flipper-dialog';
 
 
 
@@ -15,7 +17,9 @@ import { FlipperComponentsModule } from '@enexus/flipper-components';
     CommonModule,
     VendorsModule,
     FlipperEventModule,
-    FlipperComponentsModule
+    FlipperComponentsModule,
+    FlipperFileUploadModule,
+    DialogModule
   ],
   exports: [FlipperInventoryComponent, ProductsComponent, CreateProductComponent]
 })

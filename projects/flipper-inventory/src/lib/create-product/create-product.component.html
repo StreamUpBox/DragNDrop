@@ -1,4 +1,5 @@
 
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" style="height: 100%;">
 <mat-toolbar class="toolbar"  fxLayout
 fxLayout.xs="column"
 fxLayoutAlign="center"
@@ -9,7 +10,7 @@ fxLayoutGap.xs="0">
 </div>
     <div  class="container mt-3" fxFlex="50"><h3 class="title align-center-at-medium">Let’s create an item.</h3></div>
     <div class="mt-2" fxFlex="25">
-        <button style="float:right" (click)="save()">Save</button>
+        <button class="button" style="float:right" type="submit">Save</button>
     </div>
   </mat-toolbar>
 
@@ -25,7 +26,7 @@ fxLayoutGap.xs="0">
 
     <div class="card">
         <div class="card-body">
-            <!-- <form [formGroup]="registerForm" (ngSubmit)="onSubmit()"> -->
+          
 
               
                 <div class="grid-2-at-medium grid-row-space-line">
@@ -35,21 +36,21 @@ fxLayoutGap.xs="0">
                     <div class="col-5">
                     <table style="width: 100%;">
                         <tr>
-                            <td style="width: 70%;">
+                            <td style="width: 75%;">
                                     <table style="width: 100%;border: 1px solid #d5d9dc;
                                     border-bottom: 0;">
-                                        <tr class="tr" [class.trIsFocused]="isFocused=='name'">
-                                            <td class="td" [class.tdIsFocused]="isFocused=='name'">
+                                        <tr class="tr" [class.trIsFocused]="isFocused=='name'" [class.invalid]="submitted && f.name.errors">
+                                            <td class="td" [class.tdIsFocused]="isFocused=='name' || (submitted && f.name.errors) ">
                                                <label>Name</label>
                                             </td>
                                             <td style="width: 60%;">
                                                
                                                    
-                                                    <input type="text" (focus)="focusing('name')" (focusout)="focusingOut()" placeholder="Item Name" />
+                                                    <input class="input" formControlName="name"  type="text" (focus)="focusing('name')" (focusout)="focusingOut()" placeholder="Item Name" />
                                                    
-                                                    <!-- <mat-error *ngIf="submitted && f.name.errors">
-                                                        <div *ngIf="f.name.errors.required">Business name is required</div>
-                                                    </mat-error> -->
+                                                     <mat-error *ngIf="submitted && f.name.errors">
+                                                        <div *ngIf="f.name.errors.required">Item name is required</div>
+                                                    </mat-error> 
                             
                                                
                                             </td>
@@ -60,7 +61,7 @@ fxLayoutGap.xs="0">
                                              </td>
                                             <td style="width: 60%;">
                                                
-                                                <textarea (focus)="focusing('category')" (focusout)="focusingOut()" placeholder="Enter a description of this item. Describe details like features, options, and measurements." maxlength="4096"></textarea>
+                                                <textarea  class="textarea" (focus)="focusing('category')" (focusout)="focusingOut()" placeholder="Enter a description of this item. Describe details like features, options, and measurements." maxlength="4096"></textarea>
                                                    
                                                      <!-- <mat-error *ngIf="submitted && f.name.errors">
                                                         <div *ngIf="f.name.errors.required">Business name is required</div>
@@ -69,11 +70,53 @@ fxLayoutGap.xs="0">
                                                
                                             </td>
                                         </tr>
+
+                                        <tr class="tr" [class.trIsFocused]="isFocused=='location'">
+                                            <td class="td" [class.tdIsFocused]="isFocused=='location'">
+                                                <label>Locations</label>
+                                             </td>
+                                            <td style="width: 60%;">
+                                               
+                                                <mat-select class="select" [formControl]="toppings" placeholder="Choose Location" (focus)="focusing('location')" (focusout)="focusingOut()" multiple>
+                                                    <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+                                                </mat-select>
+
+                                                   
+                                                     <!-- <mat-error *ngIf="submitted && f.name.errors">
+                                                        <div *ngIf="f.name.errors.required">Business name is required</div>
+                                                    </mat-error> -->
+                            
+                                               
+                                            </td>
+                                        </tr>
+
+                                        <tr class="tr" [class.trIsFocused]="isFocused=='taxes'">
+                                            <td class="td" [class.tdIsFocused]="isFocused=='taxes'">
+                                                <label>Tax</label>
+                                             </td>
+                                            <td style="width: 60%;">
+                                               
+                                                <mat-select class="select" placeholder="Choose Tax" (focus)="focusing('taxes')" (focusout)="focusingOut()">
+                                                    <mat-option *ngFor="let topping of toppingList" [value]="topping">
+                                                      {{topping}}
+                                                    </mat-option>
+                                                  </mat-select>
+
+                                                   
+                                                     <!-- <mat-error *ngIf="submitted && f.name.errors">
+                                                        <div *ngIf="f.name.errors.required">Business name is required</div>
+                                                    </mat-error> -->
+                            
+                                               
+                                            </td>
+                                        </tr>
+
+                                       
                                     </table>
 
                             </td>
-                            <td style="width: 30%;float: right;">
-                                pic
+                            <td style="width: 35%">
+                                <flipper-file-upload style="position: relative; left: 10px;" (imageUploaded)="viewImageUploaded($event)" baseImage="assets/icons/add-image-placeholder.png" baseTitle="Add Image" baseWidth="150" baseHeight="150" [activeColor]="'orangered'" [baseColor]="'lightgray'"></flipper-file-upload>
                             </td>
                         </tr>
                     </table>
@@ -84,7 +127,6 @@ fxLayoutGap.xs="0">
                
                     
               
-            <!-- </form> -->
         </div>
     </div>
   </div>
@@ -93,3 +135,4 @@ fxLayoutGap.xs="0">
       
   </div>
 </div>
+</form>

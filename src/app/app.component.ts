@@ -56,4 +56,7 @@ export class AppComponent  {
 
   }
 
+  viewImageUploaded(src){
+console.log(src);
+  }
 }

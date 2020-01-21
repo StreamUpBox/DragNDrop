@@ -3,7 +3,7 @@
 <flipper-create-product (savedItem)="didSaveItem($event)" *ngIf="isAddingItem"></flipper-create-product>
 
 <div *ngIf="!isAddingItem">
-    <button (click)="addItem()">create item</button>
+    <button class="button" (click)="addItem()">create item</button>
     <p>products works!</p>
 </div>
 

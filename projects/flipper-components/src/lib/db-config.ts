@@ -142,6 +142,7 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
                     active BOOL,
                     hasPicture BOOL,
                     isDraft BOOL,
+                    isCurrentUpdate BOOL,
                     businessId int(11) NOT NULL,
                     supplierId int(11) NULL,
                     createdAt DATETIME,

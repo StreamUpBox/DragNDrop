@@ -8,7 +8,7 @@ import { MainModelService, Product, Tables, Business } from '@enexus/flipper-com
 })
 export class ProductsComponent implements OnInit {
 isAddingItem = false;
-  hasDraftProduct: Product=null;
+  hasDraftProduct: Product = null;
   constructor(private model: MainModelService) {
     this.isAddingItem = localStorage.getItem('userIsCreatingAnItem') === '1' ? true : false;
   }
@@ -17,22 +17,22 @@ isAddingItem = false;
   }
   addItem() {
     this.isAddingItem = true;
-      localStorage.setItem('userIsCreatingAnItem', '1');
-      this.hasDraftProduct = this.model.filters<Product>(Tables.products,['isDraft'],true as any)[0];
-      if(!this.hasDraftProduct){
+    localStorage.setItem('userIsCreatingAnItem', '1');
+    this.hasDraftProduct = this.model.filters<Product>(Tables.products, ['isDraft'], true as any)[0];
+    if (!this.hasDraftProduct) {
         this.model.create<Product>(Tables.products,
           {
-            name:'new item',
-            businessId:this.model.active<Business>(Tables.business).id,
-            isDraft:true,
-            active:false,
-            isCurrentUpdate:false,
-            createdAt:new Date(),
-            updatedAt:new Date()
+            name: 'new item',
+            businessId: this.model.active<Business>(Tables.business).id,
+            isDraft: true,
+            active: false,
+            isCurrentUpdate: false,
+            createdAt: new Date(),
+            updatedAt: new Date()
           }
         );
       }
-     
+
   }
   didSaveItem(event) {
     if (event) {

@@ -19,43 +19,43 @@ export class CreateProductComponent implements OnInit {
   submitted = false;
   branches$: Observable<Branch[]>;
   taxes$: Observable<Taxes[]>;
-  hasDraftProduct:Product =null;
+  hasDraftProduct: Product = null;
 
   constructor(private router: Router, protected notificationSvc: NotificationService,
-    private formBuilder: FormBuilder, private model: MainModelService) {
+              private formBuilder: FormBuilder, private model: MainModelService) {
 }
 
 ngOnInit() {
-  this.hasDraftProduct = this.model.filters<Product>(Tables.products,['isDraft'],true as any)[0];
-  if(!this.hasDraftProduct){
+  this.hasDraftProduct = this.model.filters<Product>(Tables.products, ['isDraft'], true as any)[0];
+  if (!this.hasDraftProduct) {
     this.model.create<Product>(Tables.products,
       {
-        name:'new item',
-        businessId:this.model.active<Business>(Tables.business).id,
-        isDraft:true,
-        active:false,
-        isCurrentUpdate:false,
-        createdAt:new Date(),
-        updatedAt:new Date()
+        name: 'new item',
+        businessId: this.model.active<Business>(Tables.business).id,
+        isDraft: true,
+        active: false,
+        isCurrentUpdate: false,
+        createdAt: new Date(),
+        updatedAt: new Date()
       }
     );
   }
- 
+
   this.branches$ = this.model.loadAll<Branch>(Tables.branch);
 
   this.registerForm = this.formBuilder.group({
-    name: [this.hasDraftProduct.name=='new item'?'':this.hasDraftProduct.name, Validators.required],
+    name: [this.hasDraftProduct.name === 'new item' ? '' : this.hasDraftProduct.name, Validators.required],
     categoryId: this.hasDraftProduct.categoryId,
     description: this.hasDraftProduct.description,
     picture: this.hasDraftProduct.picture,
     taxId: this.hasDraftProduct.taxId,
-    supplierId:this.hasDraftProduct.supplierId,
-    createdAt:new Date(),
-    updatedAt:new Date(),
+    supplierId: this.hasDraftProduct.supplierId,
+    createdAt: new Date(),
+    updatedAt: new Date(),
 
   }
   );
- 
+
 }
 
 
@@ -70,7 +70,7 @@ onSubmit() {
   }
 }
 
-  viewImageUploaded(src){
+  viewImageUploaded(src) {
     console.log(src);
       }
 

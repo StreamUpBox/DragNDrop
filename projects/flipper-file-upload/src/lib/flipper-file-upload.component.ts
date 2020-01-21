@@ -1,57 +1,56 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'flipper-file-upload',
   templateUrl: 'flipper-file-upload.component.html',
-    styleUrls: ['flipper-file-upload.component.css'],
-    inputs:['activeColor','baseColor','overlayColor','baseWidth','baseHeight','baseTitle','baseImage']
+    styleUrls: ['flipper-file-upload.component.css']
 })
 export class FlipperFileUploadComponent  {
-  activeColor: string = 'green';
-  baseColor: string = '#ccc';
-  overlayColor: string = 'rgba(255,255,255,0.5)';
-  baseWidth:string='300';
-  baseHeight:string='300';
-  baseTitle:string="Add Image";
-  baseImage:string='';
+  @Input() activeColor = 'green';
+  @Input() baseColor = '#ccc';
+  @Input() overlayColor = 'rgba(255,255,255,0.5)';
+  @Input() baseWidth = '300';
+  @Input() baseHeight = '300';
+  @Input() baseTitle = 'Add Image';
+  @Input() baseImage = '';
 
-  dragging: boolean = false;
-  loaded: boolean = false;
-  imageLoaded: boolean = false;
-  imageSrc: any = this.baseImage?this.baseImage:'';
+  dragging = false;
+  loaded = false;
+  imageLoaded = false;
+  imageSrc: any = this.baseImage ? this.baseImage : '';
   borderColor: string;
   iconColor: string;
-  
+
   @Output() imageUploaded: any = new EventEmitter<string>();
-  
+
   constructor(private domSanitizer: DomSanitizer) {
   }
 
   handleDragEnter() {
       this.dragging = true;
   }
-  
+
   handleDragLeave() {
       this.dragging = false;
   }
-  
+
   handleDrop(e) {
       e.preventDefault();
       this.dragging = false;
       this.handleInputChange(e);
   }
-  
+
   handleImageLoad() {
       this.imageLoaded = true;
       this.iconColor = this.overlayColor;
   }
 
   handleInputChange(e) {
-      var file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];
+      const file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];
 
-      var pattern = /image-*/;
-      var reader = new FileReader();
+      const pattern = /image-*/;
+      const reader = new FileReader();
 
       if (!file.type.match(pattern)) {
           alert('invalid format');
@@ -63,33 +62,33 @@ export class FlipperFileUploadComponent  {
       reader.onload = this.handleReaderLoaded.bind(this);
       reader.readAsDataURL(file);
   }
-  
+
   handleReaderLoaded(e) {
-      var reader = e.target;
+      const reader = e.target;
       this.imageSrc = this.domSanitizer.bypassSecurityTrustUrl(reader.result);
       this.loaded = true;
       this.imageUploaded.emit(this.imageSrc.changingThisBreaksApplicationSecurity);
   }
-  
+
   setActive() {
-      
+
       this.borderColor = this.activeColor;
       if (this.imageSrc.length === 0) {
           this.iconColor = this.activeColor;
       }
   }
-  
+
   setInactive() {
       this.borderColor = this.baseColor;
       if (this.imageSrc.length === 0) {
           this.iconColor = this.baseColor;
       }
   }
-  
-  cancel(){
-         this.imageSrc=this.baseImage;
-         this.imageUploaded.emit('')
+
+  cancel() {
+         this.imageSrc = this.baseImage;
+         this.imageUploaded.emit('');
   }
-  
+
 }
-  
+

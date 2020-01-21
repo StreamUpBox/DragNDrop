@@ -10,8 +10,8 @@ export class Variant {
   itemId?: number;
   supplyPrice?: number;
   retailPrice?: number;
-  wholeSalePrice?:number;
-  unitId?:number;
+  wholeSalePrice?: number;
+  unitId?: number;
   isActive?: boolean;
   priceVariant?: PriceVariant;
   markup?: any;

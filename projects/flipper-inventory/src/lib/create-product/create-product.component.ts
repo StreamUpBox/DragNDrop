@@ -6,23 +6,23 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./create-product.component.css']
 })
 export class CreateProductComponent implements OnInit {
-  isFocused:string='';
+  isFocused = '';
   @Output() savedItem: any = new EventEmitter<boolean>();
   constructor() { }
 
   ngOnInit() {
 
   }
-  focusing(value){
-    this.isFocused=value;
+  focusing(value) {
+    this.isFocused = value;
   }
-  focusingOut(){
-    this.isFocused='';
+  focusingOut() {
+    this.isFocused = '';
   }
-  save(){
+  save() {
     this.savedItem.emit(true);
   }
-  discard(){
+  discard() {
     this.savedItem.emit(true);
   }
 }

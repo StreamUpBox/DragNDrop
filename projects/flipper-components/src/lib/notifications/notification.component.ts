@@ -1,21 +1,21 @@
-import { Component } from '@angular/core';
-import { NotificationService } from "./notification.service";
-import { Notification, NotificationType } from "./notification";
-import { Subscription } from "rxjs";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { NotificationService } from './notification.service';
+import { Notification, NotificationType } from './notification';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-notification',
+  selector: 'flipper-notification',
   templateUrl: './notification.component.html',
   styleUrls: ['./notification.component.scss']
 })
-export class NotificationListComponent {
+export class NotificationListComponent implements OnInit, OnDestroy {
 
   notifications: Notification[] = [];
-  private _subscription: Subscription;
+  private subscription: Subscription;
 
-  constructor(private _notificationSvc: NotificationService) { }
+  constructor(private notificationSvc: NotificationService) { }
 
-private _addNotification(notification: Notification) {
+  private addNotification(notification: Notification) {
     this.notifications.push(notification);
 
     if (notification.timeout !== 0) {
@@ -24,12 +24,12 @@ private _addNotification(notification: Notification) {
     }
   }
 
- ngOnInit() {
-    this._subscription = this._notificationSvc.getObservable().subscribe(notification => this._addNotification(notification));
+  ngOnInit() {
+    this.subscription = this.notificationSvc.getObservable().subscribe(notification => this.addNotification(notification));
   }
 
   ngOnDestroy() {
-    this._subscription.unsubscribe();
+    this.subscription.unsubscribe();
   }
 
   close(notification: Notification) {
@@ -37,7 +37,7 @@ private _addNotification(notification: Notification) {
   }
 
 
-className(notification: Notification): string {
+  className(notification: Notification): string {
 
     let style: string;
 

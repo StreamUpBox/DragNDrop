@@ -25,8 +25,8 @@ export class Order {
     paymentId?: number;
     orderNote?: string;
     deliverDate?: Date;
-    createdAt?:Date;
-    updatedAt?:Date;
+    createdAt?: Date;
+    updatedAt?: Date;
     constructor(params: object = {}) {
         for (const name in params) {
           this[name] = params[name];

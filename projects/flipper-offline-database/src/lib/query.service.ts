@@ -1,5 +1,5 @@
 
-export type ORDER='DESC' | 'ASC';
+export type ORDER= 'DESC' | 'ASC';
 
 export class QueryService {
 
@@ -62,7 +62,7 @@ public select<T>(TABLE: T, COLUMNS?: string) {
     return this;
 }
 
-public orderBy(by: string, order: ORDER="DESC") {
+public orderBy(by: string, order: ORDER= 'DESC') {
     this.query = this.query + `  ORDER BY ${by} ${order}`;
     return this;
   }

@@ -14,38 +14,38 @@ export class ModelService extends ExecuteService {
 }
 
 
-  get<T>(Table?:string): Observable<T[]> {
+  get<T>(Table?: string): Observable<T[]> {
     try {
-      if(Table){
+      if (Table) {
         return this.select(Table).execute();
-      }else{
+      } else {
         return this.execute();
       }
-     
+
     } catch (e) {
       // TODO: notify any error in plugin to
       throw new Error((`ERROR:${e}`));
     }
   }
 
-  first<T>():T {
+  first<T>(): T {
     try {
-      return this.orderBy('id',"DESC").get()[0];
+      return this.orderBy('id', 'DESC').get()[0];
     } catch (e) {
       // TODO: notify any error in plugin to
       throw new Error((`ERROR:${e}`));
     }
   }
-  last<T>():T {
+  last<T>(): T {
     try {
-      return this.orderBy('id','ASC').get()[0];
+      return this.orderBy('id', 'ASC').get()[0];
     } catch (e) {
       // TODO: notify any error in plugin to
       throw new Error((`ERROR:${e}`));
     }
   }
 
-  filter<T>(TABLE: string, COLUMNS: any, VALUE: any):Observable<T[]> {
+  filter<T>(TABLE: string, COLUMNS: any, VALUE: any): Observable<T[]> {
     try {
     let condition = '';
     if (Array.isArray(COLUMNS)) {
@@ -76,17 +76,17 @@ export class ModelService extends ExecuteService {
 
   create <T>(TABLE: string, ROWS: T[]): T[] {
     try {
-      let inserted=[];
-      if(ROWS.length > 0){
+      const inserted = [];
+      if (ROWS.length > 0) {
         ROWS.forEach(ROW => {
           this.insert<T>(TABLE, ROW).execute();
-           inserted.push(ROW);
+          inserted.push(ROW);
           });
-          return inserted.length===1 && inserted.length > 0?inserted[0]:inserted;
-      }else{
+        return inserted.length === 1 && inserted.length > 0 ? inserted[0] : inserted;
+      } else {
         return [];
       }
-         
+
     } catch (e) {
      throw new Error((`ERROR:${e}`));
     }
@@ -124,18 +124,18 @@ export class ModelService extends ExecuteService {
   }
 
 
-  find<T>(Table:string,id:number):T {
+  find<T>(Table: string, id: number): T {
     try {
-      return this.select(Table).where('id',id).first<T>();
+      return this.select(Table).where('id', id).first<T>();
         } catch (e) {
           throw new Error((`ERROR:${e}`));
         }
   }
 
-  active<T>(Table:string):T{
-    try{
-    return this.select(Table).where('active',true).first<T>();
-       }  catch (e) { throw new Error((`ERROR:${e}`)) }
+  active<T>(Table: string): T {
+    try {
+    return this.select(Table).where('active', true).first<T>();
+       }  catch (e) { throw new Error((`ERROR:${e}`)); }
   }
 
 

@@ -4,9 +4,9 @@ export class Taxes {
   percentage?: number;
   businessId?: number;
   active?: boolean;
-  isDefault?:boolean;
-  createdAt?:Date;
-  updatedAt?:Date;
+  isDefault?: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
   constructor(params: object = {}) {
     for (const name in params) {
       this[name] = params[name];

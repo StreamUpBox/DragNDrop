@@ -1,4 +1,4 @@
-import { InjectionToken } from "@angular/core";
+import { InjectionToken } from '@angular/core';
 import { Menu } from './entries';
 import { Taxes } from './entries/taxes';
 import { Reason } from './entries/reason';
@@ -13,16 +13,21 @@ export enum TABLES {
     MENU = 'menu',
     BRANCHES = 'branches',
     BUSINESSCATEGORY = 'businessCategory',
-    USERBUSINESS = "userBusiness",
-    TAXES = "taxes",
-    PRODUCTS = "products",
-    VARIANTS = "variants",
-    REASON = "reasons",
-    STOCKS = "stocks",
-    BRANCHPRODUCTS = "branchProducts"
-};
+    USERBUSINESS = 'userBusiness',
+    TAXES = 'taxes',
+    PRODUCTS = 'products',
+    VARIANTS = 'variants',
+    REASON = 'reasons',
+    STOCKS = 'stocks',
+    BRANCHPRODUCTS = 'branchProducts'
+}
 
-export type TABLE = TABLES.USER | TABLES.TYPES | TABLES.MENU | TABLES.BUSINESS | TABLES.BRANCHES | TABLES.BUSINESSCATEGORY | TABLES.USERBUSINESS | TABLES.TAXES | TABLES.PRODUCTS | TABLES.VARIANTS | TABLES.STOCKS | TABLES.REASON | TABLES.BRANCHPRODUCTS;
+export type TABLE = TABLES.USER |
+TABLES.TYPES | TABLES.MENU |
+ TABLES.BUSINESS | TABLES.BRANCHES |
+ TABLES.BUSINESSCATEGORY | TABLES.USERBUSINESS |
+  TABLES.TAXES | TABLES.PRODUCTS | TABLES.VARIANTS |
+   TABLES.STOCKS | TABLES.REASON | TABLES.BRANCHPRODUCTS;
 
 
 
@@ -141,7 +146,7 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
                     supplierId int(11) NULL,
                     createdAt DATETIME,
                     updatedAt DATETIME,
-                    PRIMARY KEY (id) 
+                    PRIMARY KEY (id)
                 `
         },
         {
@@ -149,7 +154,7 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
             query: ` id int(11) NOT NULL AUTO_INCREMENT,
                      productId int(11) NOT NULL,
                      branchId int(11) NOT NULL,
-                    PRIMARY KEY (id) 
+                    PRIMARY KEY (id)
                 `
         },
         {
@@ -169,7 +174,7 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
                     isDraft BOOL,
                     createdAt DATETIME,
                     updatedAt DATETIME,
-                    PRIMARY KEY (id) 
+                    PRIMARY KEY (id)
                 `
         },
         {
@@ -187,7 +192,7 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
                     showlowStockAlert BOOL,
                     createdAt DATETIME,
                     updatedAt DATETIME,
-                    PRIMARY KEY (id) 
+                    PRIMARY KEY (id)
                 `
         }
     ],
@@ -364,12 +369,12 @@ export interface FlipperDBConfig {
     [key: string]: any;
 
     database: { name: string, engine: string };
-    tables: Array<{ name: TABLE, query: string }>,
-    defaultMenu: Array<Menu>,
-    defaultTaxes: Array<Taxes>,
-    defaultReasons: Array<Reason>,
-    defaultType: Array<{ name: string, category: any[] }>
-};
+    tables: Array<{ name: TABLE, query: string }>;
+    defaultMenu: Array<Menu>;
+    defaultTaxes: Array<Taxes>;
+    defaultReasons: Array<Reason>;
+    defaultType: Array<{ name: string, category: any[] }>;
+}
 
 
 export const Tables = {
@@ -386,4 +391,4 @@ export const Tables = {
     stocks: DEFAULT_FLIPPER_DB_CONFIG.database.name + '.' + TABLES.STOCKS,
     branchProducts: DEFAULT_FLIPPER_DB_CONFIG.database.name + '.' + TABLES.BRANCHPRODUCTS,
     reasons: DEFAULT_FLIPPER_DB_CONFIG.database.name + '.' + TABLES.REASON,
-}
+};

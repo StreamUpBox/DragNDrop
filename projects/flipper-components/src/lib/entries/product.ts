@@ -1,11 +1,11 @@
 export class Product {
   id?: number;
   name: string;
-  description?:string;
-  picture?:string;
-  
+  description?: string;
+  picture?: string;
+
   branchId?: number;
-  businessId?:number;
+  businessId?: number;
   supplierId?: number;
   isManufactured?: boolean;
   isBatchTracked?: boolean;
@@ -17,8 +17,8 @@ export class Product {
   brandId?: number;
   taxId?: number;
   active?: boolean;
-  hasPicture?:boolean;
-  isDraft?:boolean;
+  hasPicture?: boolean;
+  isDraft?: boolean;
   isOnPos?: boolean;
   createdAt?: any;
   updatedAt?: any;

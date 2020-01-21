@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { trigger, transition, animate } from '@angular/animations';
 import { Menu, Business, Branch, User, MenuEntries } from '@enexus/flipper-components';
 
@@ -6,6 +6,8 @@ import { Menu, Business, Branch, User, MenuEntries } from '@enexus/flipper-compo
   selector: 'flipper-menu',
   templateUrl: './flipper-menu.component.html',
   styleUrls: ['./flipper-menu.component.css'],
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('toggleBox', [
 
@@ -26,7 +28,16 @@ export class FlipperMenuComponent implements OnInit {
   @Output() routerClicked: any = new EventEmitter<any>();
   @Output() logoutUser: any = new EventEmitter<User>();
 
-  @Input() menuEntries: MenuEntries;
+  entry: MenuEntries = null;
+
+  @Input('menuEntries')
+  set menuEntries(value: MenuEntries) {
+    this.entry = value;
+    this.init();
+  }
+  get menuEntries(): MenuEntries {
+    return this.entry;
+  }
 
   isOpen = false;
   canViewBranches = false;
@@ -41,7 +52,7 @@ export class FlipperMenuComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.init();
+    // this.init();
 
   }
   init() {
@@ -50,11 +61,11 @@ export class FlipperMenuComponent implements OnInit {
       this.defaultBranch = this.menuEntries.branches.find(b => b.active === true);
       this.defaultBusiness = this.menuEntries.businesses.find(b => b.active === true);
       // TODO: why do we need settingMenu && why is active =false?
-      this.settingMenu = this.menuEntries.menu.find(m => m.route === 'settings');
+      this.settingMenu = this.menuEntries.menu.find(m => m.isSetting === true);
       this.loggedUser = this.menuEntries.user ? this.menuEntries.user : null;
       this.branches = this.menuEntries.branches.length > 0 ? this.menuEntries.branches : [];
       this.businesses = this.menuEntries.businesses.length > 0 ? this.menuEntries.businesses.filter(b => b.active === false) : [];
-      this.menus = this.menuEntries.menu.length > 0 ? this.menuEntries.menu.filter(m => m.route !== 'settings') : [];
+      this.menus = this.menuEntries.menu.length > 0 ? this.menuEntries.menu.filter(m => !m.isSetting ) : [];
       this.canViewBranches = false;
     }
   }

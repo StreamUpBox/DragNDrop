@@ -12,10 +12,10 @@ import { Business } from '@enexus/flipper-components';
 export class AppComponent  {
 
   constructor(private schema: Schema, private model: ModelService) {
-    this.schema.createDb('flipper', 'LOCALSTORAGE');
+    // this.schema.createDb('db', 'LOCALSTORAGE');
 
 
-    // this.schema.create('flipper.business',
+    // this.schema.create('db.business',
     // ` id int(11) NOT NULL AUTO_INCREMENT,
     //   name STRING,
     //   active BOOL,
@@ -27,28 +27,28 @@ export class AppComponent  {
       //   active BOOL,
       //   PRIMARY KEY (id)`);
 
-    console.log(this.model.select('flipper.business')
-      .where('id', 34).
-      orWhere('name', 'yegobox')
-      .get());
+    // console.log(this.model.select('flipper.business')
+    //   .where('id', 34).
+    //   orWhere('name', 'yegobox')
+    //   .get());
 
       // console.log(this.schema.show('flipper'));
         // this.schema.rename('flipper.business','flipper.buss');
 
 
-      // this.model.create<Business>('flipper.business',[{
-      //   name: 'La grace',
-      //   active: false
-      // },
-      // {
-      //   name: 'The grace',
-      //   active: false
-      // }]);
+    //  console.log(this.model.create<Business>('db.business',[{
+    //   name: 'La grace',
+    //   active: false
+    // },
+    // {
+    //   name: 'The grace',
+    //   active: false
+    // }]));
 
-      // this.model.update<Business>('flipper.business',{
-      //   name: 'yegobox',
-      //   active: true
-      // },35);
+    //  console.log( this.model.update<Business>('db.business',{
+    //   name: 'yegobox',
+    //   active: true
+    // },19));
 
       // this.model.truncate('flipper.business');
 

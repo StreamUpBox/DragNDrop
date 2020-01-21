@@ -1,4 +1,6 @@
 
+export type ORDER='DESC' | 'ASC';
+
 export class QueryService {
 
   protected query: string = null;
@@ -60,8 +62,8 @@ public select<T>(TABLE: T, COLUMNS?: string) {
     return this;
 }
 
-public orderBy(by: string, order: string) {
-    this.query = this.query + `  ORDER BY  ${by}, ${order}`;
+public orderBy(by: string, order: ORDER="DESC") {
+    this.query = this.query + `  ORDER BY ${by} ${order}`;
     return this;
   }
 
@@ -74,13 +76,10 @@ public orderBy(by: string, order: string) {
     return this;
   }
 
-  protected first() {}
 
 
   protected groupBy() {}
 
-
-  protected  last() {}
 
 
   //////////////////////// DATABASE /////////////////////////////////////////////////////////////////////////////////

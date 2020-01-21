@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
+import { ProductsComponent } from '@enexus/flipper-inventory';
 
 
 const routes: Routes = [
@@ -8,7 +9,8 @@ const routes: Routes = [
   {path: 'settings', component: AppComponent},
   {path: 'analytics', component: AppComponent},
   {path: 'inventory-count', component: AppComponent},
-  {path: 'inventory', component: AppComponent},
+  {path: 'items/library', component: ProductsComponent},
+
 ];
 
 @NgModule({

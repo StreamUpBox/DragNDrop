@@ -1,0 +1,126 @@
+<!-- main app container -->
+<flipper-header *ngIf="!hasBusiness"></flipper-header>
+
+  <br /> <br />
+
+<div class="container"
+     fxLayout
+     fxLayout.xs="column"
+     fxLayoutAlign="center"
+     fxLayoutGap="10px"
+     fxLayoutGap.xs="0">
+  <div class="" fxFlex="25"></div>
+  <div class="container" fxFlex="50">
+
+    <div class="card">
+        <div class="card-body">
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+              
+                <div class="grid-2-at-medium grid-row-space-line">
+                    <div class="col">
+                        <h3 class="title align-center-at-medium">Let’s create your business.</h3>
+                        <p class="description align-center-at-medium">Let’s start create  your business with basic information.<br>You can always edit these details later.</p>
+                        
+                    </div>
+                    <table>
+                        <tr>
+                            <td>
+                                <div class="col-5">
+                                    <div class="field-label">
+                                        <label for="email">Your business type?</label>
+                                    </div>
+                
+                                    <select formControlName="typeId" #t (change)="getBusinessCategory(t.value)"  [class.is-invalid]="submitted && f.typeId.errors">
+                                        <option value=""></option>
+                                        <option *ngFor="let item of types$; let i = index;" [value]="item.id">{{item.name}}</option>
+                                    </select>
+                                    <mat-error *ngIf="submitted && f.typeId.errors">
+                                        <div *ngIf="f.typeId.errors.required">Business type is required</div>
+                                    </mat-error>
+                                    
+                                </div>
+                            </td>
+                            <td>
+                                
+                                <div class="col-5">
+                                    <label>Your business category?</label>
+                
+                                    <select formControlName="businessCategoryId"   [class.is-invalid]="submitted && f.businessCategoryId.errors">
+                                        <option value=""></option>
+                                        <option *ngFor="let item of categories$; let i = index;" [value]="item.id">{{item.name}}</option>
+                                    </select>
+                                    <mat-error *ngIf="submitted && f.businessCategoryId.errors">
+                                        <div *ngIf="f.businessCategoryId.errors.required">Business category is required</div>
+                                    </mat-error>
+                                    
+                                </div>
+    
+                            </td>
+                        </tr>
+                    </table>
+                    
+             
+              
+
+    
+    
+                    <div class="col-5">
+                        <label>Business name</label>
+                        <input type="text" formControlName="name"  [class.is-invalid]="submitted && f.name.errors" />
+                       
+                        <mat-error *ngIf="submitted && f.name.errors">
+                            <div *ngIf="f.name.errors.required">Business name is required</div>
+                        </mat-error>
+
+                    </div>
+                    <div class=" col-5">
+                        <label>Default branch</label>
+                        <input type="text" formControlName="branchName"  [class.is-invalid]="submitted && f.branchName.errors" />
+                       
+                        <mat-error *ngIf="submitted && f.branchName.errors">
+                            <div *ngIf="f.branchName.errors.required">Default Branch is required</div>
+                        </mat-error>
+
+                    </div>
+               
+    
+                <div class=" col-5">
+                    <label>Currency</label>
+                    <input type="text" formControlName="currency"  [class.is-invalid]="submitted && f.currency.errors" />
+                   
+                    <mat-error *ngIf="submitted && f.currency.errors">
+                        <div *ngIf="f.currency.errors.required">Currency is required</div>
+                    </mat-error>
+                </div>
+    
+                <div class=" col-5">
+                    <label>Country</label>
+                    <input type="text" formControlName="country"  [class.is-invalid]="submitted && f.country.errors" />
+                   
+                    <mat-error *ngIf="submitted && f.country.errors">
+                        <div *ngIf="f.country.errors.required">Country is required</div>
+                    </mat-error>
+
+                </div>
+
+                <div class="col-5">
+                    <button class="expand">Continue</button>
+                    <!-- <button class="expand" type="reset" (click)="onReset()">Clear</button> -->
+                </div>
+    
+            </div>
+               
+                    
+              
+            </form>
+        </div>
+    </div>
+  </div>
+
+    <div class="item item-3" fxFlex="25">
+      
+  </div>
+</div>
+
+

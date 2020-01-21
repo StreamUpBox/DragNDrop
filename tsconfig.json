@@ -90,6 +90,18 @@
       ],
       "@enexus/flipper-offline-database/*": [
         "dist/flipper-offline-database/*"
+      ],
+      "@enexus/flipper-settings": [
+        "dist/flipper-settings"
+      ],
+      "@enexus/flipper-settings/*": [
+        "dist/flipper-settings/*"
+      ],
+      "@enexus/flipper-inventory": [
+        "dist/flipper-inventory"
+      ],
+      "@enexus/flipper-inventory/*": [
+        "dist/flipper-inventory/*"
       ]
     }
   },

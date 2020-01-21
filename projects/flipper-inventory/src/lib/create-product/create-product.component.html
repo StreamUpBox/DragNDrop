@@ -1,0 +1,95 @@
+
+<mat-toolbar class="toolbar"  fxLayout
+fxLayout.xs="column"
+fxLayoutAlign="center"
+fxLayoutGap="10px"
+fxLayoutGap.xs="0">
+<div class="mt-3" fxFlex="25">
+    <img [src]="'./assets/icons/chevron-left.svg'" (click)="discard()" class="icon-toggle">
+</div>
+    <div  class="container mt-3" fxFlex="50"><h3 class="title align-center-at-medium">Let’s create an item.</h3></div>
+    <div class="mt-2" fxFlex="25">
+        <button style="float:right" (click)="save()">Save</button>
+    </div>
+  </mat-toolbar>
+
+  
+<div class="container"
+     fxLayout
+     fxLayout.xs="column"
+     fxLayoutAlign="center"
+     fxLayoutGap="10px"
+     fxLayoutGap.xs="0" style="background: #fff;">
+  <div class="" fxFlex="15"></div>
+  <div class="container  mt-5" fxFlex="70" >
+
+    <div class="card">
+        <div class="card-body">
+            <!-- <form [formGroup]="registerForm" (ngSubmit)="onSubmit()"> -->
+
+              
+                <div class="grid-2-at-medium grid-row-space-line">
+                    <div class="col">
+                        <h3>Details</h3>
+                    </div>
+                    <div class="col-5">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td style="width: 70%;">
+                                    <table style="width: 100%;border: 1px solid #d5d9dc;
+                                    border-bottom: 0;">
+                                        <tr class="tr" [class.trIsFocused]="isFocused=='name'">
+                                            <td class="td" [class.tdIsFocused]="isFocused=='name'">
+                                               <label>Name</label>
+                                            </td>
+                                            <td style="width: 60%;">
+                                               
+                                                   
+                                                    <input type="text" (focus)="focusing('name')" (focusout)="focusingOut()" placeholder="Item Name" />
+                                                   
+                                                    <!-- <mat-error *ngIf="submitted && f.name.errors">
+                                                        <div *ngIf="f.name.errors.required">Business name is required</div>
+                                                    </mat-error> -->
+                            
+                                               
+                                            </td>
+                                        </tr>
+                                        <tr class="tr" [class.trIsFocused]="isFocused=='category'">
+                                            <td class="td" [class.tdIsFocused]="isFocused=='category'">
+                                                <label>Description</label>
+                                             </td>
+                                            <td style="width: 60%;">
+                                               
+                                                <textarea (focus)="focusing('category')" (focusout)="focusingOut()" placeholder="Enter a description of this item. Describe details like features, options, and measurements." maxlength="4096"></textarea>
+                                                   
+                                                     <!-- <mat-error *ngIf="submitted && f.name.errors">
+                                                        <div *ngIf="f.name.errors.required">Business name is required</div>
+                                                    </mat-error> -->
+                            
+                                               
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                            </td>
+                            <td style="width: 30%;float: right;">
+                                pic
+                            </td>
+                        </tr>
+                    </table>
+             </div>
+            
+    
+            </div>
+               
+                    
+              
+            <!-- </form> -->
+        </div>
+    </div>
+  </div>
+
+    <div class="item item-3" fxFlex="15">
+      
+  </div>
+</div>

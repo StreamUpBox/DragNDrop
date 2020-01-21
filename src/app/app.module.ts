@@ -13,6 +13,8 @@ import { FlipperMenuModule } from 'flipper-menu';
 import { FlipperPosModule } from '@enexus/flipper-pos';
 import { FlipperComponentsModule } from '@enexus/flipper-components';
 import { FlipperOfflineDatabaseModule } from '@enexus/flipper-offline-database';
+import { FlipperSettingsModule } from '@enexus/flipper-settings';
+import { FlipperInventoryModule } from '@enexus/flipper-inventory';
 
 
 @NgModule({
@@ -27,6 +29,7 @@ import { FlipperOfflineDatabaseModule } from '@enexus/flipper-offline-database';
     // ColorModule,
     // FontModule,
     // FlipperButtonModule,
+    FlipperSettingsModule,
     FlipperMenuModule,
     FlipperDashboardModule,
     FlipperEventModule,
@@ -34,6 +37,7 @@ import { FlipperOfflineDatabaseModule } from '@enexus/flipper-offline-database';
     FlipperPosModule,
     BrowserAnimationsModule,
     FlipperOfflineDatabaseModule,
+    FlipperInventoryModule,
     AppRoutingModule
   ],
   entryComponents: [],

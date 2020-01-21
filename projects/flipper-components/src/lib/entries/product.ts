@@ -1,7 +1,11 @@
 export class Product {
   id?: number;
   name: string;
+  description?:string;
+  picture?:string;
+  
   branchId?: number;
+  businessId?:number;
   supplierId?: number;
   isManufactured?: boolean;
   isBatchTracked?: boolean;
@@ -11,7 +15,10 @@ export class Product {
   enableTrackingInventory?: boolean;
   categoryId?: number;
   brandId?: number;
-  isActive?: boolean;
+  taxId?: number;
+  active?: boolean;
+  hasPicture?:boolean;
+  isDraft?:boolean;
   isOnPos?: boolean;
   createdAt?: any;
   updatedAt?: any;

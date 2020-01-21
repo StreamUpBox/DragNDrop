@@ -2,15 +2,16 @@ import { PriceVariant } from './price-variant';
 
 export class Variant {
   id?: number;
-  supplierId?: number;
-  sku: any;
+  SKU: any;
   name: string;
   productName?: string;
   categoryName?: string;
   brandName?: string;
-  variantableId?: number;
-  variantableType?: string;
-  supplierCode?: number;
+  itemId?: number;
+  supplyPrice?: number;
+  retailPrice?: number;
+  wholeSalePrice?:number;
+  unitId?:number;
   isActive?: boolean;
   priceVariant?: PriceVariant;
   markup?: any;

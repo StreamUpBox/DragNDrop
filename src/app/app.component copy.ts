@@ -119,7 +119,7 @@ export class AppComponent implements OnDestroy {
     for (let i = 0; i < 10; i++) {
       this.eventBus.publish(new VariantEvent({
         id: rand + i,
-        sku: '157115276' + i,
+        SKU: '157115276' + i,
         name: 'Cake-' + i,
         isActive: true,
         priceVariant: {

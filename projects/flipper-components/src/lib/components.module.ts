@@ -17,17 +17,21 @@ import { MatchHeightDirective } from './directive/match-height.directive';
 import { MergeArryByIdPipe } from './pipe/merge-arry-by-id.pipe';
 import { ArrayRemoveItemPipe } from './pipe/array-remove-item.pipe';
 import { FindKeyPipe } from './pipe/find-key.pipe';
-
+import { FlipperOfflineDatabaseModule } from '@enexus/flipper-offline-database';
+import { NotificationListComponent } from './notifications/notification.component';
+import { NotificationService } from './notifications/notification.service';
 @NgModule({
   imports: [
     CommonModule,
     VendorsModule,
     ColorModule,
     FlipperEventModule,
-    DialogModule
+    DialogModule,
+    FlipperOfflineDatabaseModule
   ],
   declarations: [
     LoadingIconComponent,
+    NotificationListComponent,
     RouterProgressComponent,
     HeaderComponent,
     TableOverlayComponent,
@@ -45,6 +49,7 @@ import { FindKeyPipe } from './pipe/find-key.pipe';
   exports: [
     LoadingIconComponent,
     RouterProgressComponent,
+    NotificationListComponent,
     HeaderComponent,
     TableOverlayComponent,
     SpinnerComponent,
@@ -59,6 +64,7 @@ import { FindKeyPipe } from './pipe/find-key.pipe';
   ],
   entryComponents: [],
   providers: [
+    NotificationService,
     RoundNumberPipe,
     CalculateTotalClassPipe,
     MergeArryByIdPipe,

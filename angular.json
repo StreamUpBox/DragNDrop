@@ -562,6 +562,76 @@
           }
         }
       }
+    },
+    "flipperSettings": {
+      "projectType": "library",
+      "root": "projects/flipper-settings",
+      "sourceRoot": "projects/flipper-settings/src",
+      "prefix": "flipper",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/flipper-settings/tsconfig.lib.json",
+            "project": "projects/flipper-settings/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/flipper-settings/src/test.ts",
+            "tsConfig": "projects/flipper-settings/tsconfig.spec.json",
+            "karmaConfig": "projects/flipper-settings/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/flipper-settings/tsconfig.lib.json",
+              "projects/flipper-settings/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "flipperInventory": {
+      "projectType": "library",
+      "root": "projects/flipper-inventory",
+      "sourceRoot": "projects/flipper-inventory/src",
+      "prefix": "flipper",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/flipper-inventory/tsconfig.lib.json",
+            "project": "projects/flipper-inventory/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/flipper-inventory/src/test.ts",
+            "tsConfig": "projects/flipper-inventory/tsconfig.spec.json",
+            "karmaConfig": "projects/flipper-inventory/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/flipper-inventory/tsconfig.lib.json",
+              "projects/flipper-inventory/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "flipper-plugins"

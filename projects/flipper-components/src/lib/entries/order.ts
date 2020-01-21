@@ -24,10 +24,9 @@ export class Order {
     orderItems: Shoppings[];
     paymentId?: number;
     orderNote?: string;
-    deliverDate?: any;
-    createdAt?: any;
-    updatedAt?: any;
-
+    deliverDate?: Date;
+    createdAt?:Date;
+    updatedAt?:Date;
     constructor(params: object = {}) {
         for (const name in params) {
           this[name] = params[name];

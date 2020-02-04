@@ -16,6 +16,7 @@ import { FlipperOfflineDatabaseModule } from '@enexus/flipper-offline-database';
 import { FlipperSettingsModule } from '@enexus/flipper-settings';
 import { FlipperInventoryModule } from '@enexus/flipper-inventory';
 import { FlipperFileUploadModule } from '@enexus/flipper-file-upload';
+import { MigrationModule } from './migration/migration.module';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { FlipperFileUploadModule } from '@enexus/flipper-file-upload';
     FlipperOfflineDatabaseModule,
     FlipperInventoryModule,
     FlipperFileUploadModule,
+    MigrationModule.forRoot(),
     AppRoutingModule
   ],
   entryComponents: [],

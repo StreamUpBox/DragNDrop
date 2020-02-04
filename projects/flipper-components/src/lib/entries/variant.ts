@@ -1,4 +1,6 @@
 import { PriceVariant } from './price-variant';
+import { Stock } from './stocks';
+import { Product } from './product';
 
 export class Variant {
   id?: number;
@@ -7,14 +9,17 @@ export class Variant {
   productName?: string;
   categoryName?: string;
   brandName?: string;
-  itemId?: number;
+  productId?: number;
   supplyPrice?: number;
   retailPrice?: number;
   wholeSalePrice?: number;
-  unitId?: number;
+  unit?: string;
   isActive?: boolean;
   priceVariant?: PriceVariant;
+  stock?: Stock;
+  product?: Product;
   markup?: any;
+  syncedOnline?: boolean;
   createdAt?: any;
   updatedAt?: any;
 

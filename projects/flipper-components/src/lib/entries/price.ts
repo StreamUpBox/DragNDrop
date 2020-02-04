@@ -6,6 +6,7 @@ export class Price {
   validFrom?: any;
   validTo?: any;
   isDefault?: boolean;
+  syncedOnline?: boolean;
   createdAt?: any;
   updatedAt?: any;
   constructor(params: object = {}) {

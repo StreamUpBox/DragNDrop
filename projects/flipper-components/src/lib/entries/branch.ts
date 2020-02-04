@@ -3,6 +3,9 @@ export class Branch {
   name?: string;
   active?: boolean;
   businessId?: number;
+  syncedOnline?: boolean;
+  mapLatitude?: number;
+  mapLongitude?: number;
   createdAt?: Date;
   updatedAt?: Date;
 

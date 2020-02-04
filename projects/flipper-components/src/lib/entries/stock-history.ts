@@ -1,15 +1,14 @@
-export class Shoppings {
+export class StockHistory {
   id?: number;
   orderId?: number;
   variantId?: number;
   variantName?: string;
-  price?: any;
+  stockId?: number;
+  reason?: string;
   quantity: number;
-  subTotal?: number;
-  taxRate?: number;
-  taxAmount?: number;
-  discountRate?: number;
-  discountAmount?: number;
+  isDraft?: boolean;
+  isPreviously?: boolean;
+  syncedOnline?: boolean;
   note?: string;
   createdAt?: any;
   updatedAt?: any;

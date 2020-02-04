@@ -82,7 +82,7 @@ describe('SearchBoxComponent', () => {
   it('should emit add to cart variant', () => {
       spyOn(component.addToCartEmit, 'emit');
       component.addToCart({id: 1,
-      sku: 'P',
+      SKU: 'P',
       name: 'Cake',
       isActive: true
     });
@@ -96,7 +96,7 @@ describe('SearchBoxComponent', () => {
 
   it('should receive and set input foundVariant', () => {
     component.foundVariant = [{id: 1,
-      sku: 'P',
+      SKU: 'P',
       name: 'Cake',
       isActive: true,
       priceVariant: {
@@ -113,7 +113,7 @@ describe('SearchBoxComponent', () => {
       }
     }];
     expect(component.foundVariant).toEqual([{id: 1,
-      sku: 'P',
+      SKU: 'P',
       name: 'Cake',
       isActive: true,
       priceVariant: {

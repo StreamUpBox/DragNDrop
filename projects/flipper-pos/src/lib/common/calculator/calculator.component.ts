@@ -5,15 +5,13 @@ import {
   Output,
   HostListener,
   ViewChild,
-  ElementRef,
-  OnInit,
-  AfterViewInit
+  ElementRef
 } from '@angular/core';
 import {
   Order,
   CalculateTotalClassPipe,
   FindKeyPipe,
-  Shoppings,
+  OrderDetails,
   RoundNumberPipe
 } from '@enexus/flipper-components';
 import {
@@ -106,7 +104,7 @@ export class CalculatorComponent {
     // if not searching or not delete item on cart
     // tslint:disable
     /* tslint:disable */
-    if (!(event.target['type'] === 'search')) {
+    if (!(event.target['type'] === 'search' || event.target['type'] === 'number')) {
       /* tslint:enable */
       // tslint:enable
 
@@ -187,7 +185,7 @@ export class CalculatorComponent {
   public makeTotal() {
     if (this.currentOrder) {
 
-      const subTotal = this.totalPipe.transform < Shoppings > (this.currentOrder.orderItems, 'subTotal');
+      const subTotal = this.totalPipe.transform < OrderDetails > (this.currentOrder.orderItems, 'subTotal');
       if (subTotal <= 0) {
         this.isCalculatorNumOpen = false;
         this.calculatorNums.pop();
@@ -217,7 +215,7 @@ export class CalculatorComponent {
     }
     this.collectCashEmit.emit(false);
     if (this.currentOrder.subTotal <= 0) {
-      return this.dialog.message('Failure Message', 'No shopping list could found!', 'Failure', 'SIZE_SM').subscribe(() => {
+      return this.dialog.message('Failure Message', 'Total to be paid is equal to zero.', 'Failure', 'SIZE_SM').subscribe(() => {
         this.isCalculatorNumOpen = false;
         this.closeModelEmit.emit(true);
       });
@@ -232,7 +230,7 @@ export class CalculatorComponent {
       this.currentOrder.customerChangeDue = parseInt(this.currentOrder.cashReceived, 10) - parseInt(this.currentOrder.subTotal, 10);
     }
     this.currentOrder.cashReceived = parseInt(this.currentOrder.cashReceived, 10);
-    this.currentOrder.isActive = false;
+    this.currentOrder.active = false;
 
     this.saveOrderUpdatedEmit.emit(this.currentOrder);
     this.collectCashEmit.emit(true);

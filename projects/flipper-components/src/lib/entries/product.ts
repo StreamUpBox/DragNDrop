@@ -20,6 +20,7 @@ export class Product {
   hasPicture?: boolean;
   isDraft?: boolean;
   isOnPos?: boolean;
+  syncedOnline?: boolean;
   isCurrentUpdate?: boolean;
   createdAt?: any;
   updatedAt?: any;

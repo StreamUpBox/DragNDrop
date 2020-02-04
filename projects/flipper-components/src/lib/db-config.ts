@@ -19,15 +19,33 @@ export enum TABLES {
     VARIANTS = 'variants',
     REASON = 'reasons',
     STOCKS = 'stocks',
-    BRANCHPRODUCTS = 'branchProducts'
+    BRANCHPRODUCTS = 'branchProducts',
+    ORDER= 'orders',
+    ORDERDETAILS= 'orderDetails',
+    STOCKHISTORY= 'stockHistory',
+    DEVICE= 'device',
+    RECEIPT= 'receipt',
 }
 
-export type TABLE = TABLES.USER |
-TABLES.TYPES | TABLES.MENU |
- TABLES.BUSINESS | TABLES.BRANCHES |
- TABLES.BUSINESSCATEGORY | TABLES.USERBUSINESS |
-  TABLES.TAXES | TABLES.PRODUCTS | TABLES.VARIANTS |
-   TABLES.STOCKS | TABLES.REASON | TABLES.BRANCHPRODUCTS;
+export type TABLE =
+    TABLES.USER
+  | TABLES.TYPES
+  | TABLES.MENU
+  | TABLES.BUSINESS
+  | TABLES.BRANCHES
+  | TABLES.BUSINESSCATEGORY
+  | TABLES.USERBUSINESS
+  | TABLES.TAXES
+  | TABLES.PRODUCTS
+  | TABLES.VARIANTS
+  | TABLES.STOCKS
+  | TABLES.ORDER
+  | TABLES.ORDERDETAILS
+  | TABLES.REASON
+  | TABLES.DEVICE
+  | TABLES.RECEIPT
+  | TABLES.STOCKHISTORY
+  | TABLES.BRANCHPRODUCTS;
 
 
 
@@ -40,37 +58,42 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
         {
             name: TABLES.USER,
             query: `id int(11) NOT NULL AUTO_INCREMENT,
-            name STRING,
-            email STRING,
-            active BOOL,
-            token STRING,
-            createdAt DATETIME,
-            updatedAt DATETIME,
-            PRIMARY KEY (id)`
+                    name STRING,
+                    email STRING,
+                    active BOOL,
+                    token STRING,
+                    createdAt DATETIME,
+                    updatedAt DATETIME,
+                    PRIMARY KEY (id)
+            `
         },
         {
             name: TABLES.BUSINESSCATEGORY,
             query: `id int(11) NOT NULL AUTO_INCREMENT,
-                name STRING,
-                typeId int(11) NOT NULL,
-                PRIMARY KEY (id)`,
+                    name STRING,
+                    typeId int(11) NOT NULL,
+                    syncedOnline BOOL,
+                    PRIMARY KEY (id)
+                `,
         },
         {
             name: TABLES.REASON,
-            query: ` id int(11) NOT NULL AUTO_INCREMENT,
-                        name STRING,
-                        operation STRING,
-                        active BOOL,
-                        createdAt DATETIME,
-                        updatedAt DATETIME,
-                        PRIMARY KEY (id)
-                        `
+            query: `id int(11) NOT NULL AUTO_INCREMENT,
+                    name STRING,
+                    operation STRING,
+                    active BOOL,
+                    createdAt DATETIME,
+                    updatedAt DATETIME,
+                    PRIMARY KEY (id)
+                 `
         },
         {
             name: TABLES.TYPES,
             query: `id int(11) NOT NULL AUTO_INCREMENT,
-            name STRING,
-            PRIMARY KEY (id)`
+                    name STRING,
+                    syncedOnline BOOL,
+                    PRIMARY KEY (id)
+            `
         },
 
         {
@@ -90,10 +113,12 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
                 country STRING,
                 currency STRING,
                 businessUrl STRING,
+                timeZone STRING,
                 active BOOL,
                 userId int(11) NOT NULL,
                 typeId int(11) NOT NULL,
                 categoryId int(11) NOT NULL,
+                syncedOnline BOOL,
                 createdAt DATETIME,
                 updatedAt DATETIME,
                 PRIMARY KEY (id)
@@ -105,6 +130,9 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
                 name STRING,
                 active BOOL,
                 businessId int(11) NOT NULL,
+                syncedOnline BOOL,
+                mapLatitude STRING NULL,
+                mapLongitude STRING NULL,
                 createdAt DATETIME,
                 updatedAt DATETIME,
                 PRIMARY KEY (id)
@@ -112,28 +140,30 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
         },
         {
             name: TABLES.USERBUSINESS,
-            query: ` id int(11) NOT NULL AUTO_INCREMENT,
+            query: `id int(11) NOT NULL AUTO_INCREMENT,
                     userId int(11) NOT NULL,
                     businessId int(11) NOT NULL,
+                    syncedOnline BOOL,
                     PRIMARY KEY (id)
                     `
         },
         {
             name: TABLES.TAXES,
-            query: ` id int(11) NOT NULL AUTO_INCREMENT,
-                        name STRING,
-                        percentage int(11),
-                        active BOOL,
-                        isDefault BOOL,
-                        businessId int(11) NOT NULL,
-                        createdAt DATETIME,
-                        updatedAt DATETIME,
-                        PRIMARY KEY (id)
+            query: `id int(11) NOT NULL AUTO_INCREMENT,
+                    name STRING,
+                    percentage int(11),
+                    active BOOL,
+                    isDefault BOOL,
+                    businessId int(11) NOT NULL,
+                    syncedOnline BOOL,
+                    createdAt DATETIME,
+                    updatedAt DATETIME,
+                    PRIMARY KEY (id)
                         `
         },
         {
             name: TABLES.PRODUCTS,
-            query: ` id int(11) NOT NULL AUTO_INCREMENT,
+            query: `id int(11) NOT NULL AUTO_INCREMENT,
                     name STRING,
                     categoryId int(11) NULL,
                     description STRING NULL,
@@ -145,6 +175,7 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
                     isCurrentUpdate BOOL,
                     businessId int(11) NOT NULL,
                     supplierId int(11) NULL,
+                    syncedOnline BOOL,
                     createdAt DATETIME,
                     updatedAt DATETIME,
                     PRIMARY KEY (id)
@@ -152,27 +183,26 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
         },
         {
             name: TABLES.BRANCHPRODUCTS,
-            query: ` id int(11) NOT NULL AUTO_INCREMENT,
-                     productId int(11) NOT NULL,
-                     branchId int(11) NOT NULL,
+            query: `id int(11) NOT NULL AUTO_INCREMENT,
+                    productId int(11) NOT NULL,
+                    branchId int(11) NOT NULL,
+                    syncedOnline BOOL,
                     PRIMARY KEY (id)
                 `
         },
         {
             name: TABLES.VARIANTS,
-            query: ` id int(11) NOT NULL AUTO_INCREMENT,
+            query: `id int(11) NOT NULL AUTO_INCREMENT,
                     name STRING,
                     productName STRING,
                     SKU STRING,
                     categoryName STRING NULL,
+                    brandName  STRING NULL,
                     productId int(11) NOT NULL,
-                    supplyPrice int(11) NULL,
-                    retailPrice int(11) NULL,
-                    wholeSalePrice int(11) NULL,
-                    unitId int(11) NULL,
+                    unit STRING NULL,
                     isActive BOOL,
-                    inStock int(11) NULL,
                     isDraft BOOL,
+                    syncedOnline BOOL,
                     createdAt DATETIME,
                     updatedAt DATETIME,
                     PRIMARY KEY (id)
@@ -183,14 +213,120 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
             query: ` id int(11) NOT NULL AUTO_INCREMENT,
                     branchId int(11) NOT NULL,
                     variantId int(11) NOT NULL,
-                    reasonId int(11) NOT NULL,
                     lowStock int(11) NOT NULL,
                     currentStock int(11) NOT NULL,
-                    unitId int(11) NULL,
+                    supplyPrice int(11) NULL,
+                    retailPrice int(11) NULL,
+                    wholeSalePrice int(11) NULL,
                     active BOOL,
-                    inStock int(11) NULL,
+                    isDraft BOOL,
+                    syncedOnline BOOL,
                     canTrackingStock BOOL,
                     showlowStockAlert BOOL,
+                    syncedOnline BOOL,
+                    createdAt DATETIME,
+                    updatedAt DATETIME,
+                    PRIMARY KEY (id)
+                `
+        },
+        {
+            name: TABLES.ORDER,
+            query: `id int(11) NOT NULL AUTO_INCREMENT,
+                    branchId int(11) NOT NULL,
+                    userId int(11) NOT NULL,
+                    orderNumber STRING NOT NULL,
+                    customerId int(11) NULL,
+                    status STRING NOT NULL,
+                    reference STRING NULL,
+                    orderType STRING NOT NULL,
+                    supplierId int(11) NULL,
+                    subTotal int(11) NULL,
+                    supplierInvoiceNumber STRING NULL,
+                    taxRate int(11) NULL,
+                    taxAmount int(11) NULL,
+                    discountRate int(11) NULL,
+                    discountAmount int(11) NULL,
+                    cashReceived int(11) NULL,
+                    customerChangeDue int(11) NULL,
+                    saleTotal int(11) NULL,
+                    customerSaving int(11) NULL,
+                    paymentId int(11) NULL,
+                    orderNote STRING NULL,
+                    active BOOL,
+                    isDraft BOOL,
+                    syncedOnline BOOL,
+                    deliverDate DATETIME,
+                    orderDate DATETIME,
+                    createdAt DATETIME,
+                    updatedAt DATETIME,
+                    PRIMARY KEY (id)
+                `
+        },
+        {
+            name: TABLES.ORDERDETAILS,
+            query: ` id int(11) NOT NULL AUTO_INCREMENT,
+                    orderId int(11) NOT NULL,
+                    variantId int(11) NOT NULL,
+                    variantName STRING NOT NULL,
+                    price int(11) NULL,
+                    quantity int(11) NOT NULL,
+                    subTotal int(11) NULL,
+                    taxRate int(11) NULL,
+                    taxAmount int(11) NULL,
+                    discountRate int(11) NULL,
+                    discountAmount int(11) NULL,
+                    note STRING NULL,
+                    syncedOnline BOOL,
+                    createdAt DATETIME,
+                    updatedAt DATETIME,
+                    PRIMARY KEY (id)
+                `
+        },
+        {
+            name: TABLES.STOCKHISTORY,
+            query: `id int(11) NOT NULL AUTO_INCREMENT,
+                    variantId int(11) NOT NULL,
+                    variantName STRING NOT NULL,
+                    stockId int(11) NOT NULL,
+                    quantity int(11) NOT NULL,
+                    reason STRING NULL,
+                    note STRING NULL,
+                    isPreviously BOOL,
+                    isDraft BOOL,
+                    syncedOnline BOOL,
+                    createdAt DATETIME,
+                    updatedAt DATETIME,
+                    PRIMARY KEY (id)
+                `
+        },
+        {
+            name: TABLES.DEVICE,
+            query: ` id int(11) NOT NULL AUTO_INCREMENT,
+                    branchId int(11) NOT NULL,
+                    name int(11) NOT NULL,
+                    token STRING NOT NULL,
+                    syncedOnline BOOL,
+                    createdAt DATETIME,
+                    updatedAt DATETIME,
+                    PRIMARY KEY (id)
+                `
+        },
+        {
+            name: TABLES.RECEIPT,
+            query: ` id int(11) NOT NULL AUTO_INCREMENT,
+                    branchId int(11) NOT NULL,
+                    businessName int(11) NOT NULL,
+                    digitalLogo STRING  NULL,
+                    printedLogo STRING  NULL,
+                    showLocation BOOL  NULL,
+                    color STRING  NULL,
+                    address1 STRING  NULL,
+                    address1 STRING  NULL,
+                    city STRING  NULL,
+                    customerText STRING  NULL,
+                    returnPolicy STRING  NULL,
+                    showItemNote BOOL  NULL,
+                    syncedOnline BOOL,
                     createdAt DATETIME,
                     updatedAt DATETIME,
                     PRIMARY KEY (id)
@@ -392,4 +528,7 @@ export const Tables = {
     stocks: DEFAULT_FLIPPER_DB_CONFIG.database.name + '.' + TABLES.STOCKS,
     branchProducts: DEFAULT_FLIPPER_DB_CONFIG.database.name + '.' + TABLES.BRANCHPRODUCTS,
     reasons: DEFAULT_FLIPPER_DB_CONFIG.database.name + '.' + TABLES.REASON,
+    order: DEFAULT_FLIPPER_DB_CONFIG.database.name + '.' + TABLES.ORDER,
+    orderDetails: DEFAULT_FLIPPER_DB_CONFIG.database.name + '.' + TABLES.ORDERDETAILS,
+    stockHistory: DEFAULT_FLIPPER_DB_CONFIG.database.name + '.' + TABLES.STOCKHISTORY,
 };

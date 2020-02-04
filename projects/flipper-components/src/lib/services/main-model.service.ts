@@ -44,16 +44,36 @@ export class MainModelService {
        }  catch (e) { throw new Error((`ERROR:${e}`)); }
   }
 
-  loadAll<T>(table: string): Observable<T[]> {
+  loadAll<T>(table: string): T[] {
     this. checkTable(table);
     try {
     return this.model.get<T>(table);
       }  catch (e) { throw new Error((`ERROR:${e}`)); }
   }
 
-  active<T>(table: string): T {
+  getObservable<T>(table: string): Observable<T[]> {
+    this. checkTable(table);
     try {
-    return this.model.active<T>(table);
+    return this.model.getObservable<T>(table);
+      }  catch (e) { throw new Error((`ERROR:${e}`)); }
+  }
+
+  getQueryObservable<T>(Table: string, query: string): Observable<T[]> {
+    this. checkTable(Table);
+    try {
+    return this.model.getQueryObservable<T>(Table, query);
+      }  catch (e) { throw new Error((`ERROR:${e}`)); }
+  }
+
+  active<T>(table: string, key= 'active'): T {
+    try {
+    return this.model.active<T>(table, key);
+       }  catch (e) { throw new Error((`ERROR:${e}`)); }
+  }
+
+  draft<T>(table: string, key= 'isDraft'): T {
+    try {
+    return this.model.draft<T>(table, key);
        }  catch (e) { throw new Error((`ERROR:${e}`)); }
   }
 
@@ -63,10 +83,28 @@ export class MainModelService {
           return this.model.find<T>(table, id);
       }  catch (e) { throw new Error((`ERROR:${e}`)); }
   }
-  filters<T>(table: string, COLUMNS: any, VALUE: string): Observable<T[]> {
+
+  findByFirst<T>(table: string, key= 'id', val: any): T {
+    this. checkTable(table);
+    try {
+          return this.model.findByFirst<T>(table, key, val);
+      }  catch (e) { throw new Error((`ERROR:${e}`)); }
+  }
+
+  findByLast<T>(table: string, key= 'id', val: any): T {
+    this. checkTable(table);
+    try {
+          return this.model.findByLast<T>(table, key, val);
+      }  catch (e) { throw new Error((`ERROR:${e}`)); }
+  }
+
+  filters<T>(table: string, COLUMNS: any, VALUE: any): T[] {
     this. checkTable(table);
     try {
     return this.model.filter<T>(table, COLUMNS, VALUE);
       }  catch (e) { throw new Error((`ERROR:${e}`)); }
   }
+
+
+
 }

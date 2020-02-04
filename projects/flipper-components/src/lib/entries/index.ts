@@ -7,7 +7,8 @@ export * from './branch';
 export * from './price';
 export * from './product';
 export * from './price-variant';
-export * from './shopping';
+export * from './order-details';
+export * from './stock-history';
 export * from './status-enum';
 export * from './order-type-enum';
 export * from './order';
@@ -19,4 +20,5 @@ export * from './taxes';
 export * from './reason';
 export * from './branch-products';
 export * from './stocks';
+export * from './map-geolocation';
 

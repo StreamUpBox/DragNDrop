@@ -1,7 +1,8 @@
 import {Component, Output, EventEmitter, Input, ViewEncapsulation, ChangeDetectionStrategy, HostListener} from '@angular/core';
-import {Order, Variant, Shoppings, CalculateTotalClassPipe, MergeArryByIdPipe, ArrayRemoveItemPipe} from '@enexus/flipper-components';
+import {Order, Variant, CalculateTotalClassPipe, MergeArryByIdPipe, ArrayRemoveItemPipe, OrderDetails} from '@enexus/flipper-components';
 import {BehaviorSubject} from 'rxjs';
-import { DialogService } from '@enexus/flipper-dialog';
+import { DialogService, DialogSize } from '@enexus/flipper-dialog';
+import { UpdatePriceDialogComponent } from '../common/update-price-dialog/update-price-dialog.component';
 
 @Component({
   selector: 'flipper-basic-pos',
@@ -13,14 +14,15 @@ import { DialogService } from '@enexus/flipper-dialog';
 })
 export class FlipperBasicPosComponent  {
 
-  @Output() updateQtyEmit = new EventEmitter < Shoppings > ();
+  @Output() updateQtyEmit = new EventEmitter < OrderDetails > ();
   @Output() searchEmitValue = new EventEmitter < string > ();
   @Output() addToCartEmit = new EventEmitter < Variant > ();
   @Output() saveOrderUpdatedEmit = new EventEmitter < Order > ();
+  @Output() updateOrderDetailsEmit = new EventEmitter < object > ();
   @Output() didCollectCashEmit = new EventEmitter < boolean > ();
 
   action = '';
-  orderItems$ = new BehaviorSubject < Shoppings[] > ([]);
+  orderItems$ = new BehaviorSubject < OrderDetails[] > ([]);
 
   private canfoundVariant: Variant[] = [];
   private isCurrentOrder: Order = null;
@@ -46,13 +48,13 @@ export class FlipperBasicPosComponent  {
     return this.isCurrentOrder;
   }
 
-  private setCartFocused: Shoppings = null;
+  private setCartFocused: OrderDetails = null;
 
-  set cartFocused(cart: Shoppings) {
+  set cartFocused(cart: OrderDetails) {
     this.setCartFocused = cart;
 
   }
-  get cartFocused(): Shoppings {
+  get cartFocused(): OrderDetails {
     return this.setCartFocused;
   }
 
@@ -101,9 +103,7 @@ export class FlipperBasicPosComponent  {
 
   constructor(
     public dialog: DialogService,
-    private totalPipe: CalculateTotalClassPipe,
-    private mergePipe: MergeArryByIdPipe,
-    private removeItemPipe: ArrayRemoveItemPipe) {}
+    private totalPipe: CalculateTotalClassPipe) {}
 
   keyBoardShortCuts() {
       this.dialog.keyBoardShortCuts();
@@ -117,21 +117,45 @@ export class FlipperBasicPosComponent  {
 
 
   addToCart(variant: Variant) {
-    this.addToCartEmit.emit(variant);
+    if (variant.priceVariant.retailPrice === 0 || variant.priceVariant.retailPrice === 0.00) {
+      return this.dialog.open(UpdatePriceDialogComponent, DialogSize.SIZE_SM, variant.priceVariant.retailPrice).subscribe(result => {
+        if (result !== 'close') {
+          if (result.price && result.price > 0) {
+            variant.priceVariant.retailPrice = result.price;
+            this.addToCartEmit.emit(variant);
+          }
+
+        }
+
+      });
+
+    } else {
+      this.addToCartEmit.emit(variant);
+    }
+
+  }
+  updatePrice(item: OrderDetails) {
+    return this.dialog.open(UpdatePriceDialogComponent, DialogSize.SIZE_SM, item.price).subscribe(result => {
+      if (result !== 'close' || result.price > 0) {
+        item.price = result.price;
+        item.subTotal = item.quantity * item.price;
+        this.updateQty(item);
+      }
+
+    });
   }
 
-  updateQty(item: Shoppings) {
-    this.currentOrder.orderItems = this.mergePipe.
-    transform<Shoppings>(this.currentOrder.orderItems, [item]);
-    this.saveOrderUpdated();
+
+  updateQty(item: OrderDetails) {
+    this.updateOrderDetailsEmit.emit({action: 'UPDATE', item});
   }
 
 
 
-  removeItem(item: Shoppings) {
-   this.currentOrder.orderItems = this.removeItemPipe.transform<Shoppings>(this.currentOrder.orderItems, item);
-   this.saveOrderUpdated();
+  removeItem(item: OrderDetails) {
+   this.updateOrderDetailsEmit.emit({action: 'DELETE', item});
   }
+
 
 
   saveOrderUpdated(event?: Order) {
@@ -139,7 +163,7 @@ export class FlipperBasicPosComponent  {
     const order = event ? event : this.currentOrder;
 
     order.subTotal = this.totalPipe.
-    transform<Shoppings>(order.orderItems, 'subTotal');
+    transform<OrderDetails>(order.orderItems, 'subTotal');
 
     order.customerChangeDue = order.cashReceived > 0 ?
     order.cashReceived - order.subTotal : 0.00;
@@ -150,13 +174,15 @@ export class FlipperBasicPosComponent  {
   }
 
 
-  updateQuantity(item: Shoppings, action = null) {
+  updateQuantity(item: OrderDetails, action = null) {
     const lastQty = item.quantity;
     this.action = action;
     if (this.action === '-') {
       item.quantity = item.quantity - 1;
       if (item.quantity < 0) {
-        alert('Negative quantity is not allowed.');
+        this.dialog.message('Failure Message', 'Negative quantity is not allowed.', 'Failure', 'SIZE_SM').subscribe(() => {
+          item.quantity = lastQty;
+        });
         item.quantity = lastQty;
       }
     } else if (this.action === '+') {

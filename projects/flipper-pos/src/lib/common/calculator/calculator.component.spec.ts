@@ -40,7 +40,7 @@ describe('CalculatorComponent', () => {
       branchId: 1,
       status: 'open',
       orderType: 'sales',
-      isActive: true,
+      active: true,
       orderItems: [{id: 1,
         price: 100,
         variantName: 'cake',

@@ -1,0 +1,27 @@
+<h1 mat-dialog-title>Add Price</h1>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+
+<div>
+   
+        <table style="width: 100%;">
+    
+            <tr class="tr" [class.trIsFocused]="isFocused=='price'" style="border-top: 1px #d5d9dc solid; border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
+                
+                <td class="td"  [class.tdIsFocused]="isFocused=='price'">
+                    Add Price
+                  </td>
+                  <td style="width:60%">
+                    <input type="number" class="input" formControlName="price"
+                    (focus)="focusing('price')" (focusout)="focusingOut()" autofocus placeholder="Add Price" />
+                  </td>
+             </tr>
+        </table>    
+  
+
+</div>
+<div class="mt-3 mb-3" style="float: right;">
+    <button mat-button (click)="dialogRef.close()" class="ml-3" cdkFocusInitial>Cancel</button>
+    <button  type="submit" class="button-default button--secondary ml-1" cdkFocusInitial>Done</button>
+</div>
+</form>

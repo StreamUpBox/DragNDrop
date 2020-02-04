@@ -1,12 +1,20 @@
 <div class="message">
-  <span class="message-icon">
-    <img [src]="'./assets/icons/'+icon" class="icon">
-  </span>
-  <span class="message-title">
-    {{title}}
-  </span>
 
-  <div class="message-desc">
-    {{message}}
+  <div class="grid-2-at-medium grid-row-space-line">
+    <div class="col">
+      <span class="message-icon">
+        <img [src]="'./assets/icons/'+icon" class="icon">
+      </span>
+    </div>
+    <div class="col">
+      <span class="message-title">
+        {{title}}
+      </span>
+      <div class="message-desc mt-4">
+        {{message}}
+      </div>
+    </div>
   </div>
+
+
 </div>

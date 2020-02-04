@@ -1,0 +1,88 @@
+<h1 mat-dialog-title>Add variation</h1>
+<form [formGroup]="variant.form" (ngSubmit)="onSubmit()" style="height: 100%;">
+
+<div mat-dialog-content>
+    <table style="width: 100%;" class="mt-4">
+
+        <tr class="tr" [class.trIsFocused]="isFocused=='name'" [class.invalid]="submitted && variant.formControl.name.errors" style="border-top: 1px #d5d9dc solid; border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
+            
+            <td class="td"  [class.tdIsFocused]="isFocused=='name'" >
+                Variation Name
+              </td>
+              <td style="width:60%">
+                <input class="input" formControlName="name" type="text"
+                (focus)="focusing('name')" (focusout)="focusingOut()" placeholder="Variation Name" />
+                <mat-error *ngIf="submitted && variant.formControl.name.errors">
+                    <div *ngIf="variant.formControl.name.errors.required">Variation name is required</div>
+                </mat-error>
+              </td>
+         </tr>
+
+         <tr class="tr" [class.trIsFocused]="isFocused=='SKU'" style=" border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
+            
+            <td class="td"  [class.tdIsFocused]="isFocused=='SKU'">
+                SKU
+              </td>
+              <td style="width:60%">
+                <input class="input" formControlName="SKU" type="text"
+                (focus)="focusing('SKU')" (focusout)="focusingOut()" placeholder="SKU" />
+              </td>
+         </tr>
+
+         <tr class="tr" [class.trIsFocused]="isFocused=='unit'" style=" border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
+            <td class="td"  [class.tdIsFocused]="isFocused=='unit'">
+              Unit Type
+            </td>
+            <td style="width:60%">
+                <mat-select class="select" formControlName="unit" placeholder="Choose Unit Type"
+               (focus)="focusing('unit')"  (focusout)="focusingOut()">
+                        <mat-option *ngFor="let unit of variant.units" [value]="unit.value">
+                        {{unit.name}}
+                        </mat-option>
+              </mat-select>
+            </td>
+           
+          </tr>
+      
+        <tr class="tr" [class.trIsFocused]="isFocused=='retailPrice'" style=" border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
+          <td class="td"  [class.tdIsFocused]="isFocused=='retailPrice'">
+            Retail Price
+          </td>
+          <td style="width:60%">
+           <div class="price">
+
+            <span class="currency">{{variant.activeBusiness().currency}} {{variant.form.value.unit?'/ '+variant.form.value.unit:''}}</span>
+            <span class="pinput">
+            <input class="input" formControlName="retailPrice" type="text"
+            (focus)="focusing('retailPrice')" (focusout)="focusingOut()" placeholder="retail Price" />
+            </span>
+           </div>
+          </td>
+        </tr>
+
+        <tr class="tr" [class.trIsFocused]="isFocused=='supplyPrice'" style=" border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
+          <td class="td" [class.tdIsFocused]="isFocused=='supplyPrice'">
+            Supply Price
+          </td>
+          <td style="width:60%">
+            <div class="price">
+
+                <span class="currency">{{variant.activeBusiness().currency}} {{variant.form.value.unit?'/ '+variant.form.value.unit:''}}</span>
+                <span class="pinput">
+                <input class="input" formControlName="supplyPrice" type="text"
+                (focus)="focusing('supplyPrice')" (focusout)="focusingOut()" placeholder="supply Price" />
+                </span>
+               </div>
+          </td>
+        </tr>
+    
+      </table>
+</div>
+
+<div mat-dialog-actions style="float: right;">
+    <button mat-button (click)="dialogRef.close()"  cdkFocusInitial>Cancel</button>
+  <button mat-button type="submit" color="primary" cdkFocusInitial>Save</button>
+</div>
+
+</form>
+

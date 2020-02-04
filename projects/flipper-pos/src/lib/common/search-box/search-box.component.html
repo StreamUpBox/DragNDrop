@@ -16,13 +16,15 @@
          </div>
          <div class="item">
              <span class="item-title">
-                  {{variant.sku}} / {{variant.name}}
+                  {{variant.SKU}} / {{variant.name}}
                   
              </span>
              <div class="item-sub-title">
-                  <span class="details">{{currency}} {{variant.priceVariant.retailPrice}}</span>
-                  <span class="details">Lotion</span>
-                  <span class="details"><div class="oval"></div> &nbsp;&nbsp; In stock(10)</span>
+                  <span class="details">{{currency}} {{variant.priceVariant.retailPrice}} {{variant.unit?'/ '+variant.unit:''}}</span>
+                  <span class="details">{{variant.productName}}</span>
+                  <span class="details" *ngIf="variant.stock && variant.stock.canTrackingStock">
+                    <div class="oval"></div> &nbsp;&nbsp; In stock({{variant.stock.currentStock}})
+                  </span>
               </div>
              
          </div>

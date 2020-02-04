@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BasicShoppingListComponent } from './basic-shopping-list.component';
-import {Shoppings, FlipperComponentsModule, Order } from '@enexus/flipper-components';
+import {OrderDetails, FlipperComponentsModule, Order } from '@enexus/flipper-components';
 import { FlipperBasicPosComponent } from '../../basic/flipper-basic-pos.component';
 import { SearchBoxComponent } from '../search-box/search-box.component';
 import { ShoppingListsComponent } from '../shopping-lists/shopping-lists.component';
@@ -14,8 +14,8 @@ import { VendorsModule } from '@enexus/flipper-vendors';
 describe('BasicShoppingListComponent', () => {
   let component: BasicShoppingListComponent;
   let fixture: ComponentFixture<BasicShoppingListComponent>;
-  let orderItems: Shoppings[] = [];
-  let item: Shoppings;
+  let orderItems: OrderDetails[] = [];
+  let item: OrderDetails;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

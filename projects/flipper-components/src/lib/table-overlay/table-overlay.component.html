@@ -4,9 +4,8 @@
     <flipper-spinner *ngIf="loading" [size]="48"></flipper-spinner>
   </div>
 
-  <div class="no-data-shade"
-       *ngIf="!loading && (!dataSource || dataSource.data.length === 0)">
-    <flipper-message icon="empty.svg" title="No Data" [message]="noDataLabel">
+  <div class="no-data-shade" *ngIf="!loading && (!dataSource || dataSource.data.length === 0)">
+    <flipper-message icon="empty.svg" [title]="title" [message]="noDataLabel">
     </flipper-message>
   </div>
 

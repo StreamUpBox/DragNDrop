@@ -7,8 +7,12 @@ export class Stock {
   unitId?: number;
   lowStock?: number;
   currentStock?: number;
+  supplyPrice?: 0;
+  retailPrice?: 0;
+  wholeSalePrice?: 0;
   active?: boolean;
   inStock?: number;
+  syncedOnline?: boolean;
   canTrackingStock?: boolean;
   showlowStockAlert?: boolean;
   createdAt?: any;

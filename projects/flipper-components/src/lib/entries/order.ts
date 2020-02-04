@@ -1,4 +1,4 @@
-import { Shoppings } from './shopping';
+import { OrderDetails } from './order-details';
 
 export class Order {
     id?: number;
@@ -20,11 +20,14 @@ export class Order {
     customerChangeDue?: any;
     saleTotal?: any;
     customerSaving?: any;
-    isActive?: boolean;
-    orderItems: Shoppings[];
+    active?: boolean;
+    isDraft?: boolean;
+    orderItems: OrderDetails[];
     paymentId?: number;
     orderNote?: string;
     deliverDate?: Date;
+    syncedOnline?: boolean;
+    orderDate?: Date;
     createdAt?: Date;
     updatedAt?: Date;
     constructor(params: object = {}) {

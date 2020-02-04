@@ -3,6 +3,7 @@ export class Reason {
   name?: string;
   operation?: string;
   active?: boolean;
+  syncedOnline?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
   constructor(params: object = {}) {

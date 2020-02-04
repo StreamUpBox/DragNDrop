@@ -13,7 +13,6 @@ export class FlipperInventoryComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
 }

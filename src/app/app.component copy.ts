@@ -15,8 +15,7 @@ import {
   Order,
   VariantEvent,
   Variant,
-  ShoppingEvent,
-  Shoppings,
+  OrderDetails,
   CalculateTotalClassPipe
 } from '@enexus/flipper-components';
 import {
@@ -31,16 +30,16 @@ import {
 export class AppComponent implements OnDestroy {
   private selectedSubscription: Subscription;
   private variantSubscription: Subscription;
-  private shoppingSubscription: Subscription;
+  private OrderDetailsubscription: Subscription;
   canfoundVariant: Variant[] = [];
   isCurrentOrder: Order;
   public variants: Variant[] = [];
-  public shoppings: Shoppings[] = [];
+  public OrderDetails: OrderDetails[] = [];
   public collectCashCompleted: object = {};
   currency = 'RWF';
   constructor(private eventBus: FlipperEventBusService, private totalPipe: CalculateTotalClassPipe) {
     this.selectedSubscription = this.eventBus.of < OrderEvent > (OrderEvent.CHANNEL)
-      .pipe(filter(e => e.order.isActive === true))
+      .pipe(filter(e => e.order.active === true))
       .subscribe(res =>
         this.currentOrder = res.order);
 
@@ -67,12 +66,12 @@ export class AppComponent implements OnDestroy {
     this.canfoundVariant = value;
   }
 
-  get gotShopping(): Shoppings[] {
-    return this.shoppings;
+  get gotShopping(): OrderDetails[] {
+    return this.OrderDetails;
   }
 
-  set gotShopping(value: Shoppings[]) {
-    this.shoppings = value;
+  set gotShopping(value: OrderDetails[]) {
+    this.OrderDetails = value;
   }
 
   get currentOrder(): Order {
@@ -93,7 +92,7 @@ export class AppComponent implements OnDestroy {
       branchId: 1,
       status: STATUS.OPEN,
       orderType: ORDERTYPE.SALES,
-      isActive: true,
+      active: true,
       orderItems: [],
       subTotal: 0.00,
       cashReceived: 0.00,
@@ -104,10 +103,10 @@ export class AppComponent implements OnDestroy {
   public addOrderItem(item) {
 
     this.currentOrder.orderItems.push(item);
-    this.currentOrder.subTotal = this.totalPipe.transform < Shoppings >
+    this.currentOrder.subTotal = this.totalPipe.transform < OrderDetails >
     (this.currentOrder.orderItems, 'subTotal');
     this.currentOrder.customerChangeDue = this.currentOrder.cashReceived > 0 ?
-     this.currentOrder.cashReceived - this.totalPipe.transform < Shoppings >
+     this.currentOrder.cashReceived - this.totalPipe.transform < OrderDetails >
       (this.currentOrder.orderItems, 'subTotal') : 0.00;
     this.currentOrder.customerChangeDue = this.currentOrder.customerChangeDue;
     this.eventBus.publish(new OrderEvent(
@@ -144,7 +143,7 @@ export class AppComponent implements OnDestroy {
   ngOnDestroy() {
     this.selectedSubscription.unsubscribe();
     this.variantSubscription.unsubscribe();
-    this.shoppingSubscription.unsubscribe();
+    this.OrderDetailsubscription.unsubscribe();
   }
 
 

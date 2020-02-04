@@ -1,7 +1,6 @@
 import { FlipperComponentsModule } from '@enexus/flipper-components';
 import { NgModule } from '@angular/core';
 import { FlipperBasicPosComponent } from './basic/flipper-basic-pos.component';
-import { ReactiveFormsModule } from '@angular/forms';
 import { VendorsModule } from '@enexus/flipper-vendors';
 import { SearchBoxComponent } from './common/search-box/search-box.component';
 import { AutocompleteComponent } from './common/autocomplete/autocomplete.component';
@@ -11,11 +10,12 @@ import { StandardShoppingListComponent } from './common/standard-shopping-list/s
 import { CalculatorComponent } from './common/calculator/calculator.component';
 import { DialogModule } from '@enexus/flipper-dialog';
 import { CommonModule } from '@angular/common';
+import { UpdatePriceDialogComponent } from './common/update-price-dialog/update-price-dialog.component';
 
 @NgModule({
   declarations: [FlipperBasicPosComponent, SearchBoxComponent,
     AutocompleteComponent, ShoppingListsComponent, BasicShoppingListComponent,
-    StandardShoppingListComponent, CalculatorComponent],
+    StandardShoppingListComponent, CalculatorComponent, UpdatePriceDialogComponent],
   imports: [
    CommonModule,
     FlipperComponentsModule,
@@ -23,6 +23,7 @@ import { CommonModule } from '@angular/common';
     DialogModule
 
   ],
+  entryComponents: [UpdatePriceDialogComponent],
   exports: [FlipperBasicPosComponent, SearchBoxComponent,
     AutocompleteComponent, ShoppingListsComponent, BasicShoppingListComponent,
     StandardShoppingListComponent, CalculatorComponent]

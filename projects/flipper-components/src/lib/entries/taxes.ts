@@ -5,6 +5,7 @@ export class Taxes {
   businessId?: number;
   active?: boolean;
   isDefault?: boolean;
+  syncedOnline?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
   constructor(params: object = {}) {

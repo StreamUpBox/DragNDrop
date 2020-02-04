@@ -9,6 +9,7 @@ export class PriceVariant {
   wholeSalePrice?: number;
   discount?: number;
   markup?: number;
+  syncedOnline?: boolean;
   createdAt?: any;
   updatedAt?: any;
 

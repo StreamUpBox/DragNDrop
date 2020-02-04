@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { Component, Output, EventEmitter, Input, OnInit, AfterViewInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
@@ -6,25 +6,35 @@ import { DomSanitizer } from '@angular/platform-browser';
   templateUrl: 'flipper-file-upload.component.html',
     styleUrls: ['flipper-file-upload.component.css']
 })
-export class FlipperFileUploadComponent  {
+export class FlipperFileUploadComponent implements OnInit, AfterViewInit  {
   @Input() activeColor = 'green';
   @Input() baseColor = '#ccc';
   @Input() overlayColor = 'rgba(255,255,255,0.5)';
   @Input() baseWidth = '300';
   @Input() baseHeight = '300';
   @Input() baseTitle = 'Add Image';
-  @Input() baseImage = '';
+  @Input() baseImage: string;
 
   dragging = false;
   loaded = false;
   imageLoaded = false;
-  imageSrc: any = this.baseImage ? this.baseImage : '';
+  imageSrc: any = '';
   borderColor: string;
   iconColor: string;
 
   @Output() imageUploaded: any = new EventEmitter<string>();
 
   constructor(private domSanitizer: DomSanitizer) {
+
+  }
+
+  ngOnInit() {
+    this.imageSrc = this.baseImage ? this.domSanitizer.bypassSecurityTrustUrl(this.baseImage) : '';
+    this.loaded = this.imageSrc ? true : false;
+  }
+  ngAfterViewInit(): void {
+    this.imageSrc = this.baseImage ? this.domSanitizer.bypassSecurityTrustUrl(this.baseImage) : '';
+    this.loaded = this.imageSrc ? true : false;
   }
 
   handleDragEnter() {

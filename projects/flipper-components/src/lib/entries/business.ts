@@ -6,6 +6,8 @@ export class Business {
   currency?: string;
   country?: string;
   businessUrl?: string;
+  timeZone?: string;
+  syncedOnline?: boolean;
   typeId?: number;
   createdAt?: Date;
   updatedAt?: Date;

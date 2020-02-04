@@ -1,16 +1,5 @@
-import {
-  Component,
-  Input,
-  ViewEncapsulation,
-  ChangeDetectionStrategy,
-  Output,
-  EventEmitter,
-  OnChanges,
-  SimpleChanges
-} from '@angular/core';
-import {
-  Shoppings
-} from '@enexus/flipper-components';
+import {Component, Input, ViewEncapsulation, ChangeDetectionStrategy, Output, EventEmitter, OnChanges, SimpleChanges} from '@angular/core';
+import {OrderDetails} from '@enexus/flipper-components';
 
 @Component({
   selector: 'flipper-basic-shopping-list',
@@ -22,20 +11,20 @@ import {
 export class BasicShoppingListComponent implements OnChanges {
   public loading = false;
   action = '';
-  private getOrderItems: Shoppings[] = [];
-  @Output() updateQtyEmit = new EventEmitter < Shoppings > ();
-  @Output() removeItemEmit = new EventEmitter < Shoppings > ();
+  private getOrderItems: OrderDetails[] = [];
+  @Output() updateQtyEmit = new EventEmitter < OrderDetails > ();
+  @Output() removeItemEmit = new EventEmitter < OrderDetails > ();
 
 
-  @Input('orderItems') set orderItems(value: Shoppings[]) {
+  @Input('orderItems') set orderItems(value: OrderDetails[]) {
     this.getOrderItems = value;
   }
-  get orderItems(): Shoppings[] {
+  get orderItems(): OrderDetails[] {
     return this.getOrderItems;
   }
 
 
-  updateQuantity(item: Shoppings, action = null) {
+  updateQuantity(item: OrderDetails, action = null) {
     const lastQty = item.quantity;
     this.action = action;
     if (this.action === '-') {
@@ -53,7 +42,7 @@ export class BasicShoppingListComponent implements OnChanges {
 
   }
 
-  removeItem(item: Shoppings) {
+  removeItem(item: OrderDetails) {
     this.removeItemEmit.emit(item);
   }
   ngOnChanges(changes: SimpleChanges): void {

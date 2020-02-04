@@ -1,0 +1,76 @@
+<form [formGroup]="variant.form" (ngSubmit)="onSubmit()" style="height: 100%;">
+    <table style="width: 100%;">
+
+        <tr class="tr" [class.trIsFocused]="isFocused=='name'" style="border-top: 1px #d5d9dc solid; border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
+            
+            <td class="td"  [class.tdIsFocused]="isFocused=='name'">
+                Variation Name
+              </td>
+              <td style="width:60%">
+                <input class="input" formControlName="name" type="text" (input)="updateVariant('name',$event)"
+                (focus)="focusing('name')" (focusout)="focusingOut()" placeholder="Variation Name" />
+              </td>
+         </tr>
+
+         <tr class="tr" [class.trIsFocused]="isFocused=='SKU'" style=" border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
+            
+            <td class="td"  [class.tdIsFocused]="isFocused=='SKU'">
+                SKU
+              </td>
+              <td style="width:60%">
+                <input class="input" formControlName="SKU" type="text" (input)="updateVariant('SKU',$event)"
+                (focus)="focusing('SKU')" (focusout)="focusingOut()" placeholder="SKU" />
+              </td>
+         </tr>
+
+         <tr class="tr" [class.trIsFocused]="isFocused=='unit'" style=" border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
+            <td class="td"  [class.tdIsFocused]="isFocused=='unit'">
+              Unit Type
+            </td>
+            <td style="width:60%">
+                <mat-select class="select" formControlName="unit" placeholder="Choose Unit Type"
+                (selectionChange)="updateVariant('unit',$event)" (focus)="focusing('unit')"  (focusout)="focusingOut()">
+                        <mat-option *ngFor="let unit of variant.units" [value]="unit.value">
+                        {{unit.name}}
+                        </mat-option>
+              </mat-select>
+            </td>
+           
+          </tr>
+      
+        <tr class="tr" [class.trIsFocused]="isFocused=='retailPrice'" style=" border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
+          <td class="td"  [class.tdIsFocused]="isFocused=='retailPrice'">
+            Retail Price
+          </td>
+          <td style="width:60%">
+           <div class="price">
+
+            <span class="currency">{{variant.activeBusiness().currency}} {{variation.unit?'/ '+variation.unit:''}}</span>
+            <span class="pinput">
+            <input class="input" formControlName="retailPrice" type="text" (input)="updateVariant('retailPrice',$event)"
+            (focus)="focusing('retailPrice')" (focusout)="focusingOut()" placeholder="retail Price" />
+            </span>
+           </div>
+          </td>
+        </tr>
+
+        <tr class="tr" [class.trIsFocused]="isFocused=='supplyPrice'" style=" border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
+          <td class="td" [class.tdIsFocused]="isFocused=='supplyPrice'">
+            Supply Price
+          </td>
+          <td style="width:60%">
+            <div class="price">
+
+                <span class="currency">{{variant.activeBusiness().currency}} {{variation.unit?'/ '+variation.unit:''}}</span>
+                <span class="pinput">
+                <input class="input" formControlName="supplyPrice" type="text" (input)="updateVariant('supplyPrice',$event)"
+                (focus)="focusing('supplyPrice')" (focusout)="focusingOut()" placeholder="supply Price" />
+                </span>
+               </div>
+          </td>
+        </tr>
+    
+      </table>
+      
+
+</form>

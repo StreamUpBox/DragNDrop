@@ -18,6 +18,7 @@ public select<T>(TABLE: T, COLUMNS?: string) {
 
 
 
+
   public where(key: string, value: any, sign= '=') {
     let val = '';
     if (typeof value === 'string' || value instanceof String) {
@@ -26,7 +27,18 @@ public select<T>(TABLE: T, COLUMNS?: string) {
       val = value;
     }
     this.query = this.query + ` WHERE
-    ${key.toLowerCase()} ${sign.toUpperCase()}${sign.toUpperCase() === 'LIKE' ? '"%' + value + '%"' : val}`;
+    ${key} ${sign.toUpperCase()}${sign.toUpperCase() === 'LIKE' ? '"%' + value + '%"' : val}`;
+    return this;
+  }
+
+  public andWhere(key: string, value: any, sign= '=') {
+    let val = '';
+    if (typeof value === 'string' || value instanceof String) {
+      val = '\'' + value + '\'';
+    } else {
+      val = value;
+    }
+    this.query = this.query + ` AND ${key} ${sign.toUpperCase()}${sign.toUpperCase() === 'LIKE' ? '"%' + value + '%"' : val}`;
     return this;
   }
 
@@ -37,7 +49,7 @@ public select<T>(TABLE: T, COLUMNS?: string) {
     } else {
       val = value;
     }
-    this.query = this.query + ` OR ${key.toLowerCase()} ${sign.toUpperCase()}${sign.toUpperCase() === 'LIKE' ? '"%' + value + '%"' : val}`;
+    this.query = this.query + ` OR ${key} ${sign.toUpperCase()}${sign.toUpperCase() === 'LIKE' ? '"%' + value + '%"' : val}`;
     return this;
   }
   protected condition(where: string) {

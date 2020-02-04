@@ -1,43 +1,42 @@
 import { Component, OnInit } from '@angular/core';
-import { MainModelService, Product, Tables, Business } from '@enexus/flipper-components';
+import { ProductService } from '../services/product.service';
+import { trigger, transition, useAnimation } from '@angular/animations';
+import { fadeInAnimation } from '@enexus/flipper-components';
 
 @Component({
   selector: 'flipper-products',
   templateUrl: './products.component.html',
-  styleUrls: ['./products.component.css']
+  styleUrls: ['./products.component.css'],
+  animations: [
+    trigger('products', [
+      transition(':enter', useAnimation(fadeInAnimation, { params: { duration: '1s' } }))
+    ]),
+  ],
 })
 export class ProductsComponent implements OnInit {
-isAddingItem = false;
-  hasDraftProduct: Product = null;
-  constructor(private model: MainModelService) {
-    this.isAddingItem = localStorage.getItem('userIsCreatingAnItem') === '1' ? true : false;
+
+  searching: string = null;
+  set applySearch(value: string) {
+    this.searching = value;
   }
+  get applySearch(): string {
+    return this.searching;
+  }
+ constructor(public product: ProductService) {}
 
   ngOnInit() {
+    this.product.hasDraft();
+    this.product.canAddProduct();
   }
-  addItem() {
-    this.isAddingItem = true;
-    localStorage.setItem('userIsCreatingAnItem', '1');
-    this.hasDraftProduct = this.model.filters<Product>(Tables.products, ['isDraft'], true as any)[0];
-    if (!this.hasDraftProduct) {
-        this.model.create<Product>(Tables.products,
-          {
-            name: 'new item',
-            businessId: this.model.active<Business>(Tables.business).id,
-            isDraft: true,
-            active: false,
-            isCurrentUpdate: false,
-            createdAt: new Date(),
-            updatedAt: new Date()
-          }
-        );
-      }
 
+  createProduct() {
+        this.product.allowToAddProduct(true);
+        this.product.create();
   }
-  didSaveItem(event) {
-    if (event) {
-      this.isAddingItem = false;
-      localStorage.setItem('userIsCreatingAnItem', '0');
-    }
+
+  saveProductChange(event) {
+    if (event) { this.product.allowToAddProduct(false); }
   }
+
+
 }

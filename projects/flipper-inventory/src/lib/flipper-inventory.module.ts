@@ -27,7 +27,7 @@ import { ViewStockHistoryComponent } from './view-stock-history/view-stock-histo
   declarations: [FlipperInventoryComponent, VariantsComponent,
      ProductsComponent, CreateProductComponent, RegularVariantsComponent,
       AddedVariantsComponent, VariantsDialogModelComponent, EditVariantComponent,
-       DisacrdDialogModelComponent, ManageStockComponent, AddVariantComponent, 
+       DisacrdDialogModelComponent, ManageStockComponent, AddVariantComponent,
        ListProductsComponent, ProductVariantsComponent, ViewStockHistoryComponent
       ],
   imports: [

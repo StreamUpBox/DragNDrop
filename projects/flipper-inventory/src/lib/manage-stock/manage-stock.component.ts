@@ -20,7 +20,7 @@ export class ManageStockComponent implements OnInit {
   }
   loadStocks() {
     if (this.variation) {
-      this.stocks = this.stock.variantStocks<Stock>(this.variation.id);
+      this.stocks = this.stock.variantStocks(this.variation.id);
     }
   }
   onSubmit() {

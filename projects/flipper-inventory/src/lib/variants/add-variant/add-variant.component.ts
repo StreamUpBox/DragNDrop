@@ -11,9 +11,9 @@ import { StockService } from '../../services/stock.service';
 })
 export class AddVariantComponent implements OnInit {
   constructor(private stock: StockService,
-               protected notificationSvc: NotificationService,
-               public variant: VariationService,
-               public dialogRef: MatDialogRef<AddVariantComponent>,
+              protected notificationSvc: NotificationService,
+              public variant: VariationService,
+              public dialogRef: MatDialogRef<AddVariantComponent>,
               @Inject(MAT_DIALOG_DATA) public product: Product) {
 }
   isFocused = '';

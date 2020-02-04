@@ -43,7 +43,7 @@ export class ListProductsComponent implements OnInit, OnDestroy {
 
 
   constructor(private totalPipe: CalculateTotalClassPipe, private stock: StockService,
-     public variant: VariationService, public product: ProductService) {
+              public variant: VariationService, public product: ProductService) {
     this.dataSource = new MatTableDataSource([]);
     this.subscription = this.product.productsSubject.
     subscribe((loadAllProducts) => this.loadAllProducts = loadAllProducts);

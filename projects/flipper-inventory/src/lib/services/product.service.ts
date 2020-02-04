@@ -23,7 +23,7 @@ export class ProductService {
 
 
   constructor(private dialog: DialogService, private model: MainModelService,
-     private variant: VariationService, private formBuilder: FormBuilder) {
+              private variant: VariationService, private formBuilder: FormBuilder) {
       this.productsSubject = new BehaviorSubject([]);
   }
 
@@ -213,12 +213,12 @@ export class ProductService {
     } else {
       return this.dialog.open(DisacrdDialogModelComponent, DialogSize.SIZE_MD).subscribe(result => {
 
-        if (result == 'discard') {
+        if (result === 'discard') {
           this.discardProduct();
           this.allowToAddProduct(false);
         }
 
-        if (result == 'save') {
+        if (result === 'save') {
             this.saveProduct();
         }
       });

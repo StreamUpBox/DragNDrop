@@ -16,11 +16,11 @@ export class ViewStockHistoryComponent implements OnInit, OnDestroy {
               private stockHsSvc: StockHistoryService) {
       this.dataSource = new MatTableDataSource([]);
       if (data.isArray) {
-       this.data.variant.forEach(v =>{
+       this.data.variant.forEach(v => {
               this.variantIds.push(v.id);
               this.variants.push(v as Variant);
             });
-        }else {
+        } else {
           this.variants.push(this.data.variant);
           this.variantIds.push(this.data.variant.id);
       }

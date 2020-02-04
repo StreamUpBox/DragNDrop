@@ -48,7 +48,8 @@ init() {
   this.loadVariants();
 }
   generateCode(): string {
-    return this.date.getSeconds() + this.date.getHours() + this.date.getDay() + '' + '' + this.date.getDate() + '' + this.date.getMonth() + '' + this.date.getFullYear();
+    return this.date.getSeconds() + this.date.getHours() + this.date.getDay() + '' +
+     '' + this.date.getDate() + '' + this.date.getMonth() + '' + this.date.getFullYear();
   }
 
   public newOrder() {
@@ -115,7 +116,8 @@ init() {
 
          if (variants.length > 0) {
             variants.forEach(variant => {
-              const stock: Stock = this.query.select(Tables.stocks).where('variantId', variant.id).andWhere('branchId', this.defaultBranch.id).first<Stock>();
+              const stock: Stock = this.query.select(Tables.stocks).where('variantId', variant.id)
+              .andWhere('branchId', this.defaultBranch.id).first<Stock>();
 
               const product: Product = this.model.find<Product>(Tables.products, variant.productId);
 

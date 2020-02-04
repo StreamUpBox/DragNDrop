@@ -16,7 +16,7 @@ export class StockService {
   findBranch(id: number): Branch {
     return this.model.find<Branch>(Tables.branch, id);
   }
-  variantStocks<Stock>(variantId: number): Stock[] {
+  variantStocks(variantId: number): Stock[] {
     return this.model.filters<Stock>(Tables.stocks, 'variantId', variantId);
   }
 
@@ -93,7 +93,7 @@ export class StockService {
   updateStockHistoryAction(variantId: number) {
     const draft = this.findDraftStockHistory(variantId);
 
-    const stockVariant: StockHistory[] = this.variantStocks(variantId);
+    const stockVariant: StockHistory[] = this.variantStockHistory(variantId);
     if (stockVariant.length > 0) {
         stockVariant.forEach(vs => {
           vs.isPreviously = false;

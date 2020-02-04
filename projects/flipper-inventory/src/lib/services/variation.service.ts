@@ -248,7 +248,7 @@ export class VariationService {
 
   stockUpdates(): void {
     if (this.hasRegular) {
-      const stock = this.stock.variantStocks<Stock>(this.hasRegular.id);
+      const stock = this.stock.variantStocks(this.hasRegular.id);
       this.variantStock = {
         length: stock.length,
         lowStock: stock[0].lowStock,

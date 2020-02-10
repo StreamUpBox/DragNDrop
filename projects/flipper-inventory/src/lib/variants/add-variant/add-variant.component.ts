@@ -47,7 +47,7 @@ export class AddVariantComponent implements OnInit {
       supplyPrice: parseInt(this.variant.form.value.supplyPrice, 10),
       retailPrice: parseInt(this.variant.form.value.retailPrice, 10),
       unit: this.variant.form.value.unit,
-      SKU: this.variant.form.value.SKU ? this.variant.form.value.SKU : this.variant.generateSKU(),
+      SKU: this.variant.form.value.SKU ? this.variant.form.value.SKU : this.variant.generateSKU(this.product.id),
       syncedOnline: false,
       isActive: false,
       createdAt: new Date(),

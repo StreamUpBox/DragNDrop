@@ -14,10 +14,12 @@
   -->
   <!-- <flipper-settings></flipper-settings> -->
   <flipper-notification></flipper-notification>
-  <flipper-products></flipper-products>
+  <!-- <flipper-products></flipper-products> -->
   <!-- <div style="margin-left: 30px; margin-top:30px"> -->
   <!-- <flipper-file-upload (imageUploaded)="viewImageUploaded($event)" baseImage="./assets/icons/add-image-placeholder.PNG" baseTitle="Upload" baseWidth="200" baseHeight="200" [activeColor]="'orangered'" [baseColor]="'lightgray'"></flipper-file-upload> -->
 <!-- </div> -->
+<flipper-dashboard [currency]="currency" [totalRevenue]="totalRevenue" [totalStore]="totalStore" [netProfit]="netProfit"
+ [grossProfit]="grossProfits" [lowStockItem]="lowStockItem" [topSoldItem]="topSoldItem"></flipper-dashboard>
 <!-- <flipper-basic-pos
 [currentOrder]="currentOrder"
 [collectCashCompleted]="collectCashCompleted"

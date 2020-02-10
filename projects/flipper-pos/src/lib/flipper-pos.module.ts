@@ -11,11 +11,12 @@ import { CalculatorComponent } from './common/calculator/calculator.component';
 import { DialogModule } from '@enexus/flipper-dialog';
 import { CommonModule } from '@angular/common';
 import { UpdatePriceDialogComponent } from './common/update-price-dialog/update-price-dialog.component';
+import { AddCartItemDialogComponent } from './common/add-cart-item-dialog/add-cart-item-dialog.component';
 
 @NgModule({
   declarations: [FlipperBasicPosComponent, SearchBoxComponent,
     AutocompleteComponent, ShoppingListsComponent, BasicShoppingListComponent,
-    StandardShoppingListComponent, CalculatorComponent, UpdatePriceDialogComponent],
+    StandardShoppingListComponent, CalculatorComponent, UpdatePriceDialogComponent, AddCartItemDialogComponent],
   imports: [
    CommonModule,
     FlipperComponentsModule,
@@ -23,7 +24,7 @@ import { UpdatePriceDialogComponent } from './common/update-price-dialog/update-
     DialogModule
 
   ],
-  entryComponents: [UpdatePriceDialogComponent],
+  entryComponents: [UpdatePriceDialogComponent,AddCartItemDialogComponent],
   exports: [FlipperBasicPosComponent, SearchBoxComponent,
     AutocompleteComponent, ShoppingListsComponent, BasicShoppingListComponent,
     StandardShoppingListComponent, CalculatorComponent]

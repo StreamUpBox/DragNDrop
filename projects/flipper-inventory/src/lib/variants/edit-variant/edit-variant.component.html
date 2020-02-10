@@ -47,8 +47,8 @@
 
             <span class="currency">{{variant.activeBusiness().currency}} {{variation.unit?'/ '+variation.unit:''}}</span>
             <span class="pinput">
-            <input class="input" formControlName="retailPrice" type="text" (input)="updateVariant('retailPrice',$event)"
-            (focus)="focusing('retailPrice')" (focusout)="focusingOut()" placeholder="retail Price" />
+            <input class="input" style="width:100%" formControlName="retailPrice" type="number" (input)="updateVariant('retailPrice',$event)"
+            (focus)="focusing('retailPrice')" (focusout)="focusingOut()" placeholder="0.00" />
             </span>
            </div>
           </td>
@@ -63,8 +63,8 @@
 
                 <span class="currency">{{variant.activeBusiness().currency}} {{variation.unit?'/ '+variation.unit:''}}</span>
                 <span class="pinput">
-                <input class="input" formControlName="supplyPrice" type="text" (input)="updateVariant('supplyPrice',$event)"
-                (focus)="focusing('supplyPrice')" (focusout)="focusingOut()" placeholder="supply Price" />
+                <input class="input" style="width:100%" formControlName="supplyPrice" type="number" (input)="updateVariant('supplyPrice',$event)"
+                (focus)="focusing('supplyPrice')" (focusout)="focusingOut()" placeholder="0.00" />
                 </span>
                </div>
           </td>

@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { VariationService } from '../../services/variation.service';
 import { StockService } from '../../services/stock.service';
 import { Product, Variant } from '@enexus/flipper-components';
+import { DialogService, DialogSize } from '@enexus/flipper-dialog';
+import { AddVariantComponent } from '../add-variant/add-variant.component';
 
 @Component({
   selector: 'flipper-added-variants',
@@ -10,7 +12,7 @@ import { Product, Variant } from '@enexus/flipper-components';
 })
 export class AddedVariantsComponent implements OnInit {
   @Input() product: Product;
-  constructor(public variant: VariationService, public stock: StockService) { }
+  constructor(private dialog: DialogService,public variant: VariationService, public stock: StockService) { }
 
   ngOnInit() {
 
@@ -18,6 +20,14 @@ export class AddedVariantsComponent implements OnInit {
 
   convertInt(num) {
     return parseInt(num, 10);
+  }
+
+  public openAddVariantDialog(product: Product): any {
+    return this.dialog.open(AddVariantComponent, DialogSize.SIZE_MD, product).subscribe(result => {
+      if (result === 'done') {
+        this.variant.init(product);
+      }
+    });
   }
 
 
@@ -32,8 +42,7 @@ export class AddedVariantsComponent implements OnInit {
 
   deleteVariation(variant: Variant) {
      if (this.product) {
-      this.variant.deleteVariation(variant);
-      this.variant.init(this.product);
+      this.variant.deleteVariation(variant,this.product);
     }
   }
 }

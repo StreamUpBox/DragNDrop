@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MainModelService, Tables, Stock, Branch, SettingsService, StockHistory, Variant } from '@enexus/flipper-components';
 import { ModelService } from '@enexus/flipper-offline-database';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'

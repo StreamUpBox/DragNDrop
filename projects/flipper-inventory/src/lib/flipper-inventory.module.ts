@@ -20,6 +20,7 @@ import { AddVariantComponent } from './variants/add-variant/add-variant.componen
 import { ListProductsComponent } from './list-products/list-products.component';
 import { ProductVariantsComponent } from './list-products/product-variants/product-variants.component';
 import { ViewStockHistoryComponent } from './view-stock-history/view-stock-history.component';
+import { PrintBarcodeLabelsDialogComponent } from './print-barcode-labels-dialog/print-barcode-labels-dialog.component';
 
 
 
@@ -28,7 +29,7 @@ import { ViewStockHistoryComponent } from './view-stock-history/view-stock-histo
      ProductsComponent, CreateProductComponent, RegularVariantsComponent,
       AddedVariantsComponent, VariantsDialogModelComponent, EditVariantComponent,
        DisacrdDialogModelComponent, ManageStockComponent, AddVariantComponent,
-       ListProductsComponent, ProductVariantsComponent, ViewStockHistoryComponent
+       ListProductsComponent, ProductVariantsComponent, ViewStockHistoryComponent, PrintBarcodeLabelsDialogComponent
       ],
   imports: [
     CommonModule,
@@ -40,9 +41,12 @@ import { ViewStockHistoryComponent } from './view-stock-history/view-stock-histo
     DialogModule
   ],
   entryComponents: [VariantsDialogModelComponent, DisacrdDialogModelComponent,
-     AddVariantComponent, ViewStockHistoryComponent],
-  exports: [FlipperInventoryComponent, ProductsComponent,
-     VariantsComponent, CreateProductComponent, VariantsDialogModelComponent,
-      ViewStockHistoryComponent, EditVariantComponent, DisacrdDialogModelComponent]
+     AddVariantComponent, ViewStockHistoryComponent,
+     PrintBarcodeLabelsDialogComponent],
+  exports: [FlipperInventoryComponent, VariantsComponent,
+   ProductsComponent, CreateProductComponent, RegularVariantsComponent,
+    AddedVariantsComponent, VariantsDialogModelComponent, EditVariantComponent,
+     DisacrdDialogModelComponent, ManageStockComponent, AddVariantComponent,
+     ListProductsComponent, ProductVariantsComponent, ViewStockHistoryComponent, PrintBarcodeLabelsDialogComponent]
 })
 export class FlipperInventoryModule { }

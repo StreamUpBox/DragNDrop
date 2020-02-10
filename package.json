@@ -59,6 +59,7 @@
     "dot-object": "^1.9.0",
     "event-source-polyfill": "^1.0.11",
     "hammerjs": "^2.0.8",
+    "ngx-barcode": "^0.2.4",
     "ngx-model": "^6.0.2",
     "raven-js": "^3.27.2",
     "rxjs": "^6.2.2",

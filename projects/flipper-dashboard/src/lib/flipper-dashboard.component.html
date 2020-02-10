@@ -1,148 +1,217 @@
-<div class="row">
-  <div class="column-3" *ngIf="dashboardEntries">
-    <div class="card" id="total-store" *ngIf="dashboardEntries.totalStore">
+<div class="mt-5 ml-5">
 
-      <div class="card-left">
-        <span class="portlet-title">
-          TOTAL STORE VALUE
-        </span>
-        <span class="amount" *ngIf="dashboardEntries.totalStore">
-          RWF {{dashboardEntries.totalStore.value}}
-        </span>
-      </div>
+  <div class="row" style="height: 100vh;overflow: auto;">
+    <div class="column-3">
+      <div class="row">
+        <div class="column">
+          <div class="card" id="total-store" *ngIf="totalStore">
 
-      <div class="card-right">
-        <div class="oval-circle-icon">
-          <img [src]="'./assets/icons/monitor.svg'" class="icon">
-        </div>
-      </div>
+            <div class="card-left">
+              <span class="portlet-title">
+                TOTAL STORE VALUE
+              </span>
+              <span class="amount" *ngIf="totalStore">
+                {{currency}} {{totalStore}}
+              </span>
+            </div>
 
-      <p class="card-bottom">
-        <span class="percentage">{{ dashboardEntries.totalStore.percentage }}%</span>
-        <span class="since-last-month">
-          Since {{ dashboardEntries.totalStore.since }}
-        </span>
-      </p>
+            <div class="card-right">
+              <div class="oval-circle-icon">
+                <img [src]="'./assets/icons/inventory.svg'" class="icon">
+              </div>
+            </div>
 
-    </div>
-  </div>
+            <!-- <p class="card-bottom">
+          <span class="percentage">{{ dashboardEntries.totalStore.percentage }}</span>
+          <span class="since-last-month">
+             {{ dashboardEntries.totalStore.since }}
+          </span>
+        </p> -->
 
-
-  <div class="column-3">
-    <div class="card" id="gross-profit" *ngIf="dashboardEntries.grossProfit">
-
-      <div class="card-left">
-        <span class="portlet-title">
-          GROSS PROFIT
-        </span>
-        <span class="amount">
-          RWF {{dashboardEntries.grossProfit.value}}
-        </span>
-      </div>
-
-      <div class="card-right">
-        <div class="oval-circle-icon-blue">
-          <img [src]="'./assets/icons/trending-up.svg'" class="icon">
-        </div>
-      </div>
-
-      <p class="card-bottom">
-        <span class="percentage">{{dashboardEntries.grossProfit.percentage}}%</span>
-        <span class="since-last-month">
-          Since {{dashboardEntries.grossProfit.since}}
-        </span>
-      </p>
-
-    </div>
-  </div>
-
-  <div class="column-3">
-    <div class="card card-green" id="net-profit" *ngIf="dashboardEntries.netProfit">
-
-      <div class="card-left">
-        <span class="portlet-title text-white">
-          NET PROFIT
-        </span>
-        <span class="amount text-white">
-          RWF {{dashboardEntries.netProfit.value}}
-        </span>
-      </div>
-
-      <div class="card-right">
-        <div class="oval-circle-icon-blue bg-green">
-          <img [src]="'./assets/icons/bar-chart.svg'" class="icon">
-        </div>
-      </div>
-
-      <p class="card-bottom">
-        <span class="percentage text-white">{{dashboardEntries.netProfit.percentage}}%</span>
-        <span class="since-last-month text-white">
-          Since {{dashboardEntries.netProfit.since}}
-        </span>
-      </p>
-
-    </div>
-  </div>
-</div>
-
-
-<div class="row">
-  <div class="column-3">
-    <div class="card-items" id="sold-items" *ngIf="dashboardEntries.soldItems && dashboardEntries.soldItems.length > 0">
-      <div class="card-header">
-        <span class="card-title">Most Sold Items </span>
-        <span class="card-subtitle">{{dashboardEntries.soldItems.length}} in total </span>
-      </div>
-
-      <div class="card-body">
-        <div class="card-item" id="sold-items" *ngFor="let item of dashboardEntries.soldItems; let i = index;">
-          <div class="image">
-            <img [src]="'./assets/icons/archive-'+(i+1)+'.svg'" class="archive-icon">
           </div>
-          <div class="item">
-            <span class="item-name">{{item.name}} </span>
-            <span class="item-date">{{item.updatedAt}} </span>
-            <span class="more"><img [src]="'./assets/icons/more-vertical.svg'" class="more-vertical"></span>
+        </div>
+
+
+        <div class="column">
+          <div class="card" id="total-store" *ngIf="totalRevenue">
+
+            <div class="card-left">
+              <span class="portlet-title">
+                TOTAL REVENUE
+              </span>
+              <span class="amount" *ngIf="totalStore">
+                {{currency}} {{totalRevenue}}
+              </span>
+            </div>
+
+            <div class="card-right">
+              <div class="oval-circle-icon bg-dark">
+                <img [src]="'./assets/icons/transaction.svg'" class="icon">
+              </div>
+            </div>
+
+            <!-- <p class="card-bottom">
+              <span class="percentage">{{ dashboardEntries.totalStore.percentage }}</span>
+              <span class="since-last-month">
+                 {{ dashboardEntries.totalStore.since }}
+              </span>
+            </p> -->
+
           </div>
-          <div class="divider"></div>
+        </div>
+
+
+       
+        <div class="column">
+          <div class="card" id="gross-profit" *ngIf="grossProfit">
+
+            <div class="card-left">
+              <span class="portlet-title">
+                GROSS PROFIT
+              </span>
+              <span class="amount">
+                {{currency}} {{grossProfit}}
+              </span>
+            </div>
+
+            <div class="card-right">
+              <div class="oval-circle-icon-blue">
+                <img [src]="'./assets/icons/trending-up.svg'" class="icon">
+              </div>
+            </div>
+
+            <!-- <p class="card-bottom">
+          <span class="percentage">{{dashboardEntries.grossProfit.percentage}}</span>
+          <span class="since-last-month">
+             {{dashboardEntries.grossProfit.since}}
+          </span>
+        </p> -->
+
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="card card-green" id="net-profit" *ngIf="netProfit">
+
+            <div class="card-left">
+              <span class="portlet-title text-white">
+                NET PROFIT
+              </span>
+              <span class="amount text-white">
+                {{currency}} {{netProfit}}
+              </span>
+            </div>
+
+            <div class="card-right">
+              <div class="oval-circle-icon-blue bg-green">
+                <img [src]="'./assets/icons/bar-chart.svg'" class="icon">
+              </div>
+            </div>
+
+            <!-- <p class="card-bottom">
+          <span class="percentage text-white">{{dashboardEntries.netProfit.percentage}}</span>
+          <span class="since-last-month text-white">
+             {{dashboardEntries.netProfit.since}}
+          </span>
+        </p> -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column-3">
+      <div class="card-items" id="sold-items" *ngIf="topSoldItem && topSoldItem.length > 0">
+        <div class="card-header">
+          <span class="card-title">Top Items by Sales </span>
+          <span class="card-subtitle">{{topSoldItem.length}} in total </span>
+        </div>
+
+        <div class="card-body">
+          <div class="card-item" id="sold-items" *ngFor="let item of topSoldItem; let i = index;">
+            <div class="image">
+              <img [src]="'./assets/icons/archive-'+(i+1)+'.svg'" class="archive-icon">
+            </div>
+            <div class="item">
+              <span class="item-name">{{item.name}} </span>
+              <span class="item-date">{{currency}} {{item.total}} </span>
+              <span class="more">{{item.items}}</span>
+            </div>
+            <div class="divider mt-5"></div>
+          </div>
+          <br />
+
+        </div>
+
+        <div class="card-footer">
+          <div class="view-all">View all</div>
+        </div>
+      </div>
+
+      <div class="card-items" id="sold-items" *ngIf="topSoldItem && topSoldItem.length == 0">
+        <div class="card-header">
+          <span class="card-title">Top Items by Sales </span>
+          <span class="card-subtitle">0 in total </span>
+        </div>
+
+        <div class="card-body">
+          <div style="margin-right: 43px;margin-top: 80px;">
+            <flipper-message title="No Sales item(s)">
+            </flipper-message>
+          </div>
         </div>
 
 
       </div>
 
-      <div class="card-footer">
-        <div class="view-all">View all</div>
-      </div>
     </div>
-  </div>
 
-  <div class="column-3">
-    <div class="card-items" id="selling-branches"
-      *ngIf="dashboardEntries.sellingBranches && dashboardEntries.sellingBranches.length > 0">
-      <div class="card-header">
-        <span class="card-title">Most Selling Branches </span>
-        <span class="card-subtitle">{{dashboardEntries.sellingBranches.length}} in total </span>
-      </div>
 
-      <div class="card-body">
-        <div class="card-item" *ngFor="let item of dashboardEntries.sellingBranches; let i = index;">
-          <div class="image">
-            <img [src]="'./assets/icons/home-'+(i+1)+'.svg'" class="archive-icon">
-          </div>
-          <div class="item">
-            <span class="item-name">{{item.name}} </span>
-            <span class="item-date">{{item.updatedAt}} </span>
-            <span class="more"><img [src]="'./assets/icons/more-vertical.svg'" class="more-vertical"></span>
-          </div>
-          <div class="divider"></div>
+    <div class="column-3">
+      <div class="card-items" id="selling-branches" *ngIf="lowStockItem && lowStockItem.length > 0">
+        <div class="card-header">
+          <span class="card-title">Low Stock Item(s) </span>
+          <span class="card-subtitle">{{lowStockItem.length}} in total </span>
         </div>
 
+        <div class="card-body">
+          <div class="card-item" *ngFor="let item of lowStockItem; let i = index;">
+            <div class="image">
+              <img [src]="'./assets/icons/alert-triangle-'+(i+1)+'.svg'" class="archive-icon">
+            </div>
+            <div class="item">
+              <span class="item-name">{{item.name}} </span>
+              <span class="item-date">{{item.updatedAt}} </span>
+              <span class="more">
+                {{item.currentStock}}
+              </span>
+            </div>
+          </div>
+
+
+        </div>
+
+        <div class="card-footer">
+          <div class="view-all">View all</div>
+        </div>
+      </div>
+
+      <div class="card-items" id="selling-branches" *ngIf="lowStockItem && lowStockItem.length == 0">
+        <div class="card-header">
+          <span class="card-title">Low Stock Item(s) </span>
+          <span class="card-subtitle">0 in total </span>
+        </div>
+
+        <div class="card-body">
+          <div style="margin-right: 43px;margin-top: 80px;">
+            <flipper-message title="No Low Stock">
+            </flipper-message>
+          </div>
+
+        </div>
 
       </div>
 
-      <div class="card-footer">
-        <div class="view-all">View all</div>
-      </div>
     </div>
   </div>
+
 </div>

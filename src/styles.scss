@@ -41,6 +41,7 @@
 }
 
 @import '~styles/app-all';
+
 :host {
   @include block-filler();
   @include compact-table();
@@ -405,6 +406,11 @@ button {
   color: rgb(4, 160, 74) !important;
   background: 0px 0px;
   border-color: rgb(4, 160, 74) !important;
+}
+.button--dark {
+  color: rgb(27, 29, 28) !important;
+  background: 0px 0px;
+  border-color: rgb(27, 29, 28) !important;
 }
 
 .button--destructive {

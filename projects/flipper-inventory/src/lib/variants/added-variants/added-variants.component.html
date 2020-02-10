@@ -1,4 +1,4 @@
- <div class="table--editable table--flex editable-variation-table__header">
+ <div class="table--editable table--flex editable-variation-table__header" style="height: 200px;overflow: auto;">
    <div class="table-header">
 
      <div class="table-row">
@@ -108,7 +108,7 @@
 
  </div>
  <div class="mt-3">
-   <button class="button-default button--secondary ml-1" (click)="variant.openAddVariantDialog(product)">
+   <button class="button-default button--secondary ml-1" (click)="openAddVariantDialog(product)">
      Add Variation
    </button>
 
@@ -116,6 +116,11 @@
       Vew Stock History
     </button>
 
+    <button class="button-default button--dark ml-1" (click)="variant.openPrintBarcodeLablesDialog()">
+      Print Labels
+    </button>
+
+    
    <button class="button-default button--destructive  ml-1" (click)="variant.deleteAllVariantsDialog(product)">
      Delete All Variation
    </button>

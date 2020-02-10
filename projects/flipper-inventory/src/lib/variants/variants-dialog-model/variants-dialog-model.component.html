@@ -8,12 +8,12 @@
             </mat-tab>
         <mat-tab label="Manage stock"> 
                 <div class="mt-4">
-                    <flipper-manage-stock [variation]="data.variant"></flipper-manage-stock>
+                    <flipper-manage-stock [variation]="data.variant" (stockControlEmit)="stockControl($event)"></flipper-manage-stock>
                 </div>
             </mat-tab>
       </mat-tab-group>
 </div>
 <div mat-dialog-actions style="float: right;">
  
-  <button mat-button (click)="dialogRef.close('done')" color="primary" cdkFocusInitial>Done</button>
+  <button mat-button (click)="close()" color="primary" cdkFocusInitial>Done</button>
 </div>

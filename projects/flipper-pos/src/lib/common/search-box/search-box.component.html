@@ -4,11 +4,11 @@
     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
   </svg>
 </div>
-  <input type="search" #autoCompleteInput [matAutocomplete]="auto" aria-label="Search" #mySearchInput [formControl]="searchControl"   placeholder="Search product code to retreive" class="search-box">
+  <input type="search" (focus)="focusing()" #autoCompleteInput [matAutocomplete]="auto" aria-label="Search" #mySearchInput [formControl]="searchControl"   placeholder="Search product code to retreive" class="search-box">
   
   <mat-autocomplete #auto="matAutocomplete" class="autocomplete">
  
-    <flipper-autocomplete [loading]="loading" *ngIf="loading || foundVariant.length > 0"> 
+    <flipper-autocomplete [loading]="false" *ngIf="isSearching || foundVariant.length > 0"> 
       <div  *ngFor="let variant of foundVariant; let i = index;">
       <mat-option (click)="addToCart(variant)">
           <div class="icon">
@@ -32,5 +32,20 @@
     </div>
       
   </flipper-autocomplete>
+
+  <flipper-autocomplete [loading]="false" *ngIf="isSearching || foundVariant.length == 0"> 
+  
+    <mat-option>
+      
+       <div class="item">
+           <span class="item-title">
+               Sorry! There is no item(s) found.
+           </span>
+        
+       </div>
+    </mat-option> 
+
+    
+</flipper-autocomplete>
  
 </mat-autocomplete>

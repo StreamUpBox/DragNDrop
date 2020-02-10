@@ -4,6 +4,9 @@
 
 <div>
    
+  <mat-error *ngIf="submitted && formControl.price.errors">
+    <div *ngIf="formControl.price.errors.required">Price is required</div>
+</mat-error>
         <table style="width: 100%;">
     
             <tr class="tr" [class.trIsFocused]="isFocused=='price'" style="border-top: 1px #d5d9dc solid; border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
@@ -14,6 +17,7 @@
                   <td style="width:60%">
                     <input type="number" class="input" formControlName="price"
                     (focus)="focusing('price')" (focusout)="focusingOut()" autofocus placeholder="Add Price" />
+                   
                   </td>
              </tr>
         </table>    
@@ -21,7 +25,7 @@
 
 </div>
 <div class="mt-3 mb-3" style="float: right;">
-    <button mat-button (click)="dialogRef.close()" class="ml-3" cdkFocusInitial>Cancel</button>
+    <button mat-button (click)="dialogRef.close('close')" class="ml-3" cdkFocusInitial>Cancel</button>
     <button  type="submit" class="button-default button--secondary ml-1" cdkFocusInitial>Done</button>
 </div>
 </form>

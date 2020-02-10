@@ -27,6 +27,11 @@
   width: 50%;
   padding: 0 10px 10px 0px;
 }
+.column {
+  float: left;
+  width: 100%;
+  padding: 0 10px 10px 0px;
+}
 
 /* Remove extra left and right margins, due to padding */
 .row {margin: 3px}
@@ -51,7 +56,7 @@
 /* Style the counter cards */
 .card {
   width: auto;
-  height: 152px;
+  height: 120px;
   padding: 2px;
   border-radius: 4px;
   box-shadow: 0 1px 3px 0 rgba(63, 63, 68, 0.15), 0 0 0 1px rgba(63, 63, 68, 0.05);
@@ -116,6 +121,10 @@ margin: 2px;
 }
 .bg-green{
   background-color: #47b881!important;
+}
+
+.bg-dark{
+  background-color: #211a36!important;
 }
 .card > .card-right > .oval-circle-icon-blue {
   width: 64px;

@@ -5,7 +5,6 @@ import { DialogService, DialogSize } from '@enexus/flipper-dialog';
 import { DisacrdDialogModelComponent } from '../products/disacrd-dialog-model/disacrd-dialog-model.component';
 import { VariationService } from './variation.service';
 import { Observable, BehaviorSubject, of } from 'rxjs';
-import { tap, finalize } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })

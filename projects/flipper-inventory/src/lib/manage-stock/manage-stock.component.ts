@@ -1,18 +1,35 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Variant, Stock } from '@enexus/flipper-components';
+import { Component, OnInit, Input, ChangeDetectionStrategy, ChangeDetectorRef, EventEmitter, Output } from '@angular/core';
+import { Variant, Stock, ArrayRemoveItemPipe } from '@enexus/flipper-components';
 import { StockService } from '../services/stock.service';
 
+export class StockControl {
+  id?: number;
+  reason?: string;
+  currentStock?: number;
+  previousStock?: number;
+  lowStock?:number;
+  branchId?:number;
+  canTrackingStock?:boolean;
+  showlowStockAlert?:boolean;
+}
 @Component({
   selector: 'flipper-manage-stock',
   templateUrl: './manage-stock.component.html',
-  styleUrls: ['../create-product/create-product.component.css', './manage-stock.component.css']
+  styleUrls: ['../create-product/create-product.component.css', './manage-stock.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ManageStockComponent implements OnInit {
   @Input() variation: Variant;
   isFocused = '';
   stocks: Stock[] = [];
 
-  constructor(public stock: StockService) { }
+  stockControl:StockControl[]=[];
+  
+  @Output() stockControlEmit = new EventEmitter < StockControl[] > ();
+
+  constructor(public stock: StockService,
+    private cd: ChangeDetectorRef,
+    private removeArrayItem:ArrayRemoveItemPipe) { }
 
   ngOnInit() {
     this.stock.init();
@@ -20,42 +37,37 @@ export class ManageStockComponent implements OnInit {
   }
   loadStocks() {
     if (this.variation) {
-      this.stocks = this.stock.variantStocks(this.variation.id);
+      const stockControl:StockControl[]= this.stock.variantStocks(this.variation.id);
+      if(stockControl.length > 0){
+        stockControl.forEach(stock=>{
+          const stockCtrl:StockControl={id:stock.id,reason:'',
+          branchId:stock.branchId,currentStock:stock.currentStock,
+          previousStock:stock.currentStock,
+          lowStock:stock.lowStock,
+          canTrackingStock:stock.canTrackingStock,
+          showlowStockAlert:stock.showlowStockAlert
+        };
+          this.stockControl.push(stockCtrl);
+        });
+      }
     }
   }
   onSubmit() {
   }
 
 
-  updateReason(stock: Stock, event: any) {
+  updateReason(stockControl: StockControl, event: any) {
 
-
-    const draft = this.stock.findDraftStockHistory(stock.variantId);
-    const previously = this.stock.findPreviouslyStockHistory(stock.variantId);
-
-
-    if (draft === undefined) {
-      this.stock.createHistory({
-       orderId: 0,
-       variantId: stock.variantId,
-       variantName: this.stock.findVariant(stock.variantId).name,
-       stockId: stock.id,
-       reason: event.value,
-       quantity: 0,
-       isDraft: true,
-       isPreviously: !previously ? true : false,
-       syncedOnline: false,
-       note: event.value,
-       createdAt: new Date(),
-       updatedAt: new Date()
-      });
-    } else {
-     draft.reason = event.value;
-     draft.variantName = this.stock.findVariant(stock.variantId).name;
-     this.stock.updateHistory(draft);
-    }
+      stockControl.reason=event.value;
+      stockControl.currentStock=0;
+      this.updateStockControl(stockControl);
+      this.stockControlEmit.emit(this.stockControl);
 
   }
+  updateInput(){
+    this.stockControlEmit.emit(this.stockControl);
+  }
+
   updateCurrentStock(stock: Stock, event: any) {
 
     const draft = this.stock.findDraftStockHistory(stock.variantId);
@@ -100,10 +112,23 @@ export class ManageStockComponent implements OnInit {
   focusingOut() {
     this.isFocused = '';
   }
-  toggled(stock: Stock, key: string, bol: boolean) {
+  toggled(stockControl: StockControl, key: string, bol: boolean) {
     bol = !bol;
-    stock[key] = bol;
-    this.stock.update(stock);
-    this.loadStocks();
+    stockControl[key] = bol;
+    this.updateStockControl(stockControl);
+    this.cd.detectChanges();
+  }
+
+  updateStockControl(stockControl:StockControl){
+    const stockControls=this.stockControl;
+    const arr:StockControl[]=[];
+    this.stockControl=[];
+          stockControls.forEach(sc=>{
+            if(sc.id===stockControl.id){
+              sc=stockControl;
+            }
+            arr.push(sc);
+          });
+          this.stockControl= arr;
   }
 }

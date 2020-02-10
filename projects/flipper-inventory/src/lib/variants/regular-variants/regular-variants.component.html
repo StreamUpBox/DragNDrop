@@ -94,12 +94,29 @@
              
       </td>
     </tr>
-    <tr class="tr" style="border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
-      <td style="width:100%">
-        <a class="form-link-with-spacing hyperlink" (click)="variant.openAddVariantDialog(product)">
+    <tr class="tr"  style="border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
+      <td>
+        <a class="form-link-with-spacing hyperlink" (click)="openAddVariantDialog(product)">
           Add Variation
         </a>
       </td>
+      <td>
+        
+        <a class="form-link-with-spacing hyperlink" *ngIf="stock.variantStockHistory(variant.hasRegular.id).length > 0" 
+          (click)="variant.openStockHistoryDialog(variant.hasRegular)">
+           View Stock History
+         </a>
+
+      </td>
+      <td>
+        
+        <a class="form-link-with-spacing hyperlink"
+        (click)="variant.openPrintBarcodeLablesDialog()">
+           Print Label
+        </a>
+
+      </td>
+    
     </tr>
   </table>
 

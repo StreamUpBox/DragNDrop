@@ -3,6 +3,7 @@ import {Order, Variant, CalculateTotalClassPipe, MergeArryByIdPipe, ArrayRemoveI
 import {BehaviorSubject} from 'rxjs';
 import { DialogService, DialogSize } from '@enexus/flipper-dialog';
 import { UpdatePriceDialogComponent } from '../common/update-price-dialog/update-price-dialog.component';
+import { AddCartItemDialogComponent } from '../common/add-cart-item-dialog/add-cart-item-dialog.component';
 
 @Component({
   selector: 'flipper-basic-pos',
@@ -16,7 +17,7 @@ export class FlipperBasicPosComponent  {
 
   @Output() updateQtyEmit = new EventEmitter < OrderDetails > ();
   @Output() searchEmitValue = new EventEmitter < string > ();
-  @Output() addToCartEmit = new EventEmitter < Variant > ();
+  @Output() addToCartEmit = new EventEmitter < {variant:Variant,quantity:number} > ();
   @Output() saveOrderUpdatedEmit = new EventEmitter < Order > ();
   @Output() updateOrderDetailsEmit = new EventEmitter < object > ();
   @Output() didCollectCashEmit = new EventEmitter < boolean > ();
@@ -41,6 +42,7 @@ export class FlipperBasicPosComponent  {
   @Input('currentOrder')
   set currentOrder(order: Order) {
     this.isCurrentOrder = order;
+    this.cartFocused=order && order.orderItems.length >0?order.orderItems[0]:null;
 
   }
 
@@ -116,13 +118,14 @@ export class FlipperBasicPosComponent  {
   }
 
 
-  addToCart(variant: Variant) {
+  addToCart(variant: Variant,quantity=1) {
+
     if (variant.priceVariant.retailPrice === 0 || variant.priceVariant.retailPrice === 0.00) {
       return this.dialog.open(UpdatePriceDialogComponent, DialogSize.SIZE_SM, variant.priceVariant.retailPrice).subscribe(result => {
         if (result !== 'close') {
           if (result.price && result.price > 0) {
             variant.priceVariant.retailPrice = result.price;
-            this.addToCartEmit.emit(variant);
+            this.addToCartEmit.emit({variant:variant,quantity:quantity});
           }
 
         }
@@ -130,7 +133,7 @@ export class FlipperBasicPosComponent  {
       });
 
     } else {
-      this.addToCartEmit.emit(variant);
+      this.addToCartEmit.emit({variant:variant,quantity:quantity});
     }
 
   }
@@ -144,6 +147,38 @@ export class FlipperBasicPosComponent  {
 
     });
   }
+
+  addCartItem() {
+    return this.dialog.open(AddCartItemDialogComponent, DialogSize.SIZE_MD).subscribe(result => {
+      if (result !== 'close' || result.price > 0 || result.quantity > 0) {
+
+        let variation:Variant={name:result.name,SKU:'p'+Math.floor(Math.random() * 100),productName:result.name,
+        unit:'',
+        priceVariant:{
+                   id: 0,
+                   priceId: 0,
+                   variantId: 0,
+                   minUnit: 0,
+                   maxUnit: 0,
+                   retailPrice: result.price,
+                   supplyPrice:0,
+                   wholeSalePrice: 0,
+                   discount: 0,
+                   markup: 0
+        },stock:{
+          canTrackingStock:false,
+          currentStock:0,
+          id:0
+        }
+      };
+       
+      this.addToCart(variation,result.quantity);
+
+      }
+
+    });
+  }
+
 
 
   updateQty(item: OrderDetails) {

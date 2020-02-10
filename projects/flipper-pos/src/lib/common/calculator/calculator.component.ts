@@ -92,7 +92,7 @@ export class CalculatorComponent {
       return;
     }
 
-    if (event.key === 'Enter' ||  event.key === 'End' ) {
+    if (!(event.target['type'] === 'search' || event.target['type'] === 'number' || event.target['type'] === 'text') && ( event.key === 'Enter' ||  event.key === 'End') ) {
         this.collectCash();
       }
 
@@ -104,7 +104,7 @@ export class CalculatorComponent {
     // if not searching or not delete item on cart
     // tslint:disable
     /* tslint:disable */
-    if (!(event.target['type'] === 'search' || event.target['type'] === 'number')) {
+    if (!(event.target['type'] === 'search' || event.target['type'] === 'number' || event.target['type'] === 'text')) {
       /* tslint:enable */
       // tslint:enable
 

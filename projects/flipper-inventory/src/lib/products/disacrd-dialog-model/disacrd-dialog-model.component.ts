@@ -21,7 +21,7 @@ export class DisacrdDialogModelComponent implements OnInit {
       }
     }
 
-  constructor(public dialogRef: MatDialogRef<DisacrdDialogModelComponent>, public product: ProductService) {}
+  constructor(public dialogRef: MatDialogRef<DisacrdDialogModelComponent>) {}
 
   ngOnInit() {
   }

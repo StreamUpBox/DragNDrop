@@ -20,6 +20,8 @@ import { FindKeyPipe } from './pipe/find-key.pipe';
 import { FlipperOfflineDatabaseModule } from '@enexus/flipper-offline-database';
 import { NotificationListComponent } from './notifications/notification.component';
 import { NotificationService } from './notifications/notification.service';
+import { GenerateBarcodeComponent } from './generate-barcode/generate-barcode.component';
+import { NgxBarcodeModule } from 'ngx-barcode';
 @NgModule({
   imports: [
     CommonModule,
@@ -27,7 +29,8 @@ import { NotificationService } from './notifications/notification.service';
     ColorModule,
     FlipperEventModule,
     DialogModule,
-    FlipperOfflineDatabaseModule
+    FlipperOfflineDatabaseModule,
+    NgxBarcodeModule
   ],
   declarations: [
     LoadingIconComponent,
@@ -43,7 +46,8 @@ import { NotificationService } from './notifications/notification.service';
     MatchHeightDirective,
     MergeArryByIdPipe,
     ArrayRemoveItemPipe,
-    FindKeyPipe
+    FindKeyPipe,
+    GenerateBarcodeComponent
   ],
 
   exports: [
@@ -60,7 +64,8 @@ import { NotificationService } from './notifications/notification.service';
     MergeArryByIdPipe,
     ArrayRemoveItemPipe,
     MatchHeightDirective,
-    FindKeyPipe
+    FindKeyPipe,
+    GenerateBarcodeComponent
   ],
   entryComponents: [],
   providers: [

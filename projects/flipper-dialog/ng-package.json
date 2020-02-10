@@ -4,7 +4,8 @@
   "lib": {
     "entryFile": "src/public_api.ts",
     "umdModuleIds": {
-      "@enexus/flipper-vendors": "@enexus/flipper-vendors"
+      "@enexus/flipper-vendors": "@enexus/flipper-vendors",
+      "@enexus/flipper-font":"@enexus/flipper-font"
     }
   }
 }

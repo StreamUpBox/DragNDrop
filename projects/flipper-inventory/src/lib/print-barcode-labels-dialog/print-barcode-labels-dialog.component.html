@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>Print Barcode Labels</h1>
+<div style="height:600px; overflow: auto;" mat-dialog-content>
+
+  <span class="mr-4">
+    <mat-slide-toggle [(ngModel)]="showName" name="show-name">Show Variant Name</mat-slide-toggle>
+  </span>
+  <span>
+    <mat-slide-toggle [(ngModel)]="showSku" name="show-name">Show Variant SKU</mat-slide-toggle>
+  </span>
+
+  <hr />
+  <div class="mt-5" #barcodeLabels>
+    <flipper-generate-barcode [labels]="labels" [showName]="showName" [showSku]="showSku"></flipper-generate-barcode>
+  </div>
+
+</div>
+<div mat-dialog-actions style="float: right;">
+  <button mat-button (click)="close() " cdkFocusInitial>Cancel</button>&nbsp;&nbsp;
+  <button mat-button color="primary" (click)="printOut()" cdkFocusInitial>Print</button>
+</div>

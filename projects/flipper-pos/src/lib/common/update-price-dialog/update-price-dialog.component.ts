@@ -36,14 +36,17 @@ export class UpdatePriceDialogComponent implements OnInit {
 
     // stop here if form is invalid
     if (this.form.invalid) {
-      this.notificationSvc.error('Create Business', 'We need you to complete all of the required fields before we can continue');
+      this.notificationSvc.error('Add price', 'We need you to complete all of the required fields before we can continue');
       return;
+    }else{
+      this.dialogRef.close({price: this.form.value.price});
     }
-    this.dialogRef.close({price: this.form.value.price});
+   
   }
 
   focusing(value: any) {
     this.isFocused = value;
+    this.form.controls['price'].setValue('');
   }
   focusingOut() {
     this.isFocused = '';

@@ -1,63 +1,92 @@
-
-<form  *ngFor="let stk of stocks; let i = index;" style="height: 100%;">
+<div *ngIf="stockControl.length > 0">
+  <form *ngFor="let stk of stockControl; let i = index;" style="height: 100%;">
     <table style="width: 100%;">
 
-        <tr class="tr" [class.trIsFocused]="isFocused==stk.id" style="border-top: 1px #d5d9dc solid; border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
-            <td style="width:100%;" colspan="3"><span style="font-size: 14px;padding: 12px 16px;font-weight: 500;">Available at {{stock.findBranch(stk.branchId).name}}</span></td> 
-        </tr>
+      <tr class="tr" [class.trIsFocused]="isFocused==stk.id"
+        style="border-top: 1px #d5d9dc solid; border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
+        <td style="width:100%;" colspan="3"><span style="font-size: 14px;padding: 12px 16px;font-weight: 500;">Available
+            at {{stock.findBranch(stk.branchId).name}}</span></td>
+      </tr>
 
-        <tr class="tr" [class.trIsFocused]="isFocused==stk.id+'reason' && stk.canTrackingStock"  style=" border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
-            
-          <td class="td"  [class.tdIsFocused]="isFocused==stk.id+'reason' && stk.canTrackingStock">
-              Stock Action
-            </td>
-            <td style="width:60%" colspan="2">
-              <mat-select class="select"  placeholder="Select Reason"  [disabled]="!stk.canTrackingStock"
-              (selectionChange)="updateReason(stk,$event)" (focus)="focusing(stk.id+'reason')" (focusout)="focusingOut()">
-              <mat-option *ngFor="let reason of stock.reasons" [value]="reason.value">
-                {{reason.name}}
-              </mat-option>
-            </mat-select>
+      <tr class="tr" *ngIf="stk.canTrackingStock"
+        [class.trIsFocused]="isFocused==stk.id+'reason' && stk.canTrackingStock"
+        style=" border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
+
+        <td class="td" [class.tdIsFocused]="isFocused==stk.id+'reason' && stk.canTrackingStock">
+          Stock Action
+        </td>
+        <td style="width:60%" colspan="2">
+          <mat-select class="select" placeholder="Select Reason" [disabled]="!stk.canTrackingStock"
+            (selectionChange)="updateReason(stk,$event)" (focus)="focusing(stk.id+'reason')" (focusout)="focusingOut()">
+            <mat-option *ngFor="let reason of stock.reasons" [value]="reason.value">
+              {{reason.name}}
+            </mat-option>
+          </mat-select>
+
+        </td>
+
+      </tr>
+
+      <tr class="tr" [class.trIsFocused]="isFocused==stk.id+'current' && stk.canTrackingStock"
+        style=" border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
+
+        <td class="td" [class.tdIsFocused]="isFocused==stk.id+'current' && stk.canTrackingStock">
+          <span *ngIf="stk.reason=='Re-counted' || stk.reason==''; else anything">Current Stock</span>
+          <ng-template #anything>
+            <span *ngIf="stk.reason=='Received' || stk.reason=='Restocked'">
+              Add Stock
+            </span>
+            <span *ngIf="stk.reason=='Lost' || stk.reason=='Damaged' || stk.reason=='Damaged' || stk.reason=='Sold' || stk.reason=='Canceled' || stk.reason=='Thief'">
+              Remove Stock
+            </span>
+          </ng-template>
+        </td>
+        <td style="width:30%">
+          <input class="input" style="width:100%" type="number" (input)="updateInput()" name="stk.id+'currentStock'"
+            [(ngModel)]="stk.currentStock" (focus)="focusing(stk.id+'current')" [disabled]="!stk.canTrackingStock"
+            (focusout)="focusingOut()" placeholder="{{stk.currentStock}}" />
+        </td>
+        <td style="width:30%">
+          <span class="current-stock" *ngIf="stk.reason=='Re-counted' || stk.reason==''; else anything1">
+            Current stock: {{stk.currentStock}}
+          </span>
+
+          <ng-template #anything1>
+            <span *ngIf="stk.reason=='Received' || stk.reason=='Restocked'" class="current-stock">
+              Current stock:{{stk.currentStock}}+{{stk.previousStock}}={{stk.currentStock+stk.previousStock}}
+            </span>
+            <span *ngIf="stk.reason=='Lost' || stk.reason=='Damaged' || stk.reason=='Damaged' || stk.reason=='Sold' || stk.reason=='Canceled' || stk.reason=='Thief'" class="current-stock">
+              Current stock:{{stk.currentStock}}-{{stk.previousStock}}={{stk.currentStock-stk.previousStock}}
+            </span>
+          </ng-template>
+
+          <mat-slide-toggle name="stk.id+'current'" (input)="updateInput()" [(ngModel)]="stk.canTrackingStock"
+            style="float:right; margin-top: 12px;margin-left: 10px;">Tracking</mat-slide-toggle>
+        </td>
+      </tr>
+
+      <tr class="tr" [class.trIsFocused]="isFocused==stk.id+'low' && stk.showlowStockAlert"
+        style=" border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
+
+        <td class="td" [class.tdIsFocused]="isFocused==stk.id+'low' && stk.showlowStockAlert">
+          Low Stock Alert
+        </td>
+        <td style="width:30%">
+          <input class="input" style="width:100%" type="number" (input)="updateInput()" [(ngModel)]="stk.lowStock" name="stk.id+'lowStock'"
+            (focus)="focusing(stk.id+'low')" [disabled]="!stk.showlowStockAlert" (focusout)="focusingOut()"
+            placeholder="{{stk.lowStock}}" />
+        </td>
+        <td style="width:30%">
+          <mat-slide-toggle [(ngModel)]="stk.showlowStockAlert" (input)="updateInput()" name="stk.id+'low'"
+            style="float:right; margin-top: 12px;margin-left: 10px;">Alerts</mat-slide-toggle>
+        </td>
+      </tr>
 
 
-            </td>
-            
-       </tr>
 
-        <tr class="tr" [class.trIsFocused]="isFocused==stk.id+'current' && stk.canTrackingStock"  style=" border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
-            
-            <td class="td"  [class.tdIsFocused]="isFocused==stk.id+'current' && stk.canTrackingStock">
-                Current Stock
-              </td>
-              <td style="width:40%">
-                <input class="input"  type="text" (input)="updateCurrentStock(stk,$event)"
-                (focus)="focusing(stk.id+'current')" [disabled]="!stk.canTrackingStock" (focusout)="focusingOut()" [value]="stk.currentStock" placeholder="current Stock" />
-              </td>
-              <td style="width:20%">
-                <mat-slide-toggle [(ngModel)]="stk.canTrackingStock" name="stk.id+'current'"  (click)="toggled(stk,'canTrackingStock',stk.canTrackingStock)" style="margin-top: 12px;margin-left: 10px;">Tracking</mat-slide-toggle>
-            </td>
-         </tr>
-
-         <tr class="tr" [class.trIsFocused]="isFocused==stk.id+'low' && stk.showlowStockAlert" style=" border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
-            
-            <td class="td"  [class.tdIsFocused]="isFocused==stk.id+'low' && stk.showlowStockAlert">
-                Low Stock Alert
-              </td>
-              <td style="width:40%">
-                <input class="input"  type="text" [value]="stk.lowStock" (input)="updateLowStock(stk,'lowStock',$event)"
-                (focus)="focusing(stk.id+'low')" [disabled]="!stk.showlowStockAlert" (focusout)="focusingOut()" placeholder="low Stock" />
-              </td>
-              <td style="width:20%">
-                <mat-slide-toggle [(ngModel)]="stk.showlowStockAlert" name="stk.id+'low'" (click)="toggled(stk,'showlowStockAlert',stk.showlowStockAlert)" style="margin-top: 12px;margin-left: 10px;">Alerts</mat-slide-toggle>
-              </td>
-         </tr>
-
-      
-       
-      </table>
-      <br /><br />
-      
-
-</form>
+    </table>
+    <br /><br />
 
 
+  </form>
+</div>

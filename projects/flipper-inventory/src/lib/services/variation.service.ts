@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
 import { MainModelService, Tables, Variant, SettingsService, Business,
-         Branch, Product, Stock, StockHistory } from '@enexus/flipper-components';
+         Branch, Product, StockHistory,Labels } from '@enexus/flipper-components';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { VariantsDialogModelComponent } from '../variants/variants-dialog-model/variants-dialog-model.component';
 import { DialogService, DialogSize } from '@enexus/flipper-dialog';
 import { StockService } from './stock.service';
-import { AddVariantComponent } from '../variants/add-variant/add-variant.component';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { ViewStockHistoryComponent } from '../view-stock-history/view-stock-history.component';
+import { PrintBarcodeLabelsDialogComponent } from '../print-barcode-labels-dialog/print-barcode-labels-dialog.component';
 @Injectable({
   providedIn: 'root'
 })
 export class VariationService {
   hasRegular: Variant = null;
-  allVariants: Variant[] = [];
+  myAllVariants: Variant[] = [];
   SKU = '';
   d = new Date();
   units: any[] = [];
@@ -21,6 +21,13 @@ export class VariationService {
   product: Product;
   variantsSubject: BehaviorSubject<Variant[]>;
   private readonly variantsMap = new Map<string, Variant>();
+
+  set allVariants(variants:Variant[]){
+    this.myAllVariants=variants;
+  }
+  get allVariants():Variant[]{
+      return this.myAllVariants;
+  }
 
   variantStock = { length: 0, currentStock: 0, lowStock: 0 };
   constructor(private stock: StockService, private dialog: DialogService,
@@ -71,7 +78,7 @@ export class VariationService {
   request(action = null, variant = null): void {
     this.form = this.formBuilder.group({
       name: [!action && variant && variant.name ? variant.name : '', Validators.required],
-      SKU: !action && variant && variant.SKU ? variant.SKU : this.generateSKU(),
+      SKU: !action && variant && variant.SKU ? variant.SKU : this.generateSKU(this.product.id),
       retailPrice: !action && variant && this.stock.findStock(variant.id).retailPrice ? this.stock.findStock(variant.id).retailPrice : 0.00,
       supplyPrice: !action && variant && this.stock.findStock(variant.id).supplyPrice ? this.stock.findStock(variant.id).supplyPrice : 0.00,
       unit: !action && variant && variant.unit ? variant.unit : '',
@@ -81,9 +88,13 @@ export class VariationService {
     });
   }
 
-  generateSKU(): string {
-    return this.d.getSeconds() + this.d.getHours() + this.d.getDay() + '' + ''
-     + this.d.getDate() + '' + this.d.getMonth() + '' + this.d.getFullYear();
+  generateSKU(productId:number): string {
+    const variant=this.findFirst(productId);
+    var timestmp = new Date().setFullYear(new Date().getFullYear(), 0, 1);     
+    var yearFirstDay = Math.floor(timestmp / 86400000);      
+    var today = Math.ceil((new Date().getTime()) / 86400000);
+    var dayOfYear = today - yearFirstDay; 
+    return this.d.getFullYear() +''+dayOfYear+''+  Math.ceil(variant?variant.id+1:1 / 12);
   }
 
   create(variant: Variant): Variant | Variant[] {
@@ -95,7 +106,7 @@ export class VariationService {
       this.create({
         name: 'Regular',
         productName: product.name,
-        SKU: this.generateSKU(),
+        SKU: this.generateSKU(product.id),
         productId: product.id,
         supplyPrice: 0,
         retailPrice: 0,
@@ -129,6 +140,7 @@ export class VariationService {
 
 
   variants(product: Product): void {
+    this.allVariants=[];
     this.allVariants = this.model.filters<Variant>(Tables.variants, 'productId', product.id);
   }
 
@@ -185,25 +197,76 @@ export class VariationService {
 
   public openVariantDialog(variant: Variant, selectedIndex: number): any {
     return this.dialog.open(VariantsDialogModelComponent, DialogSize.SIZE_MD, { variant, selectedIndex }).subscribe(result => {
+     
+       this.updateStockControl(result,variant);
       this.regular(this.product);
       this.request(null, variant);
-      this.stockUpdates();
+      this.variants(this.product);
+      this. stockUpdates();
     });
   }
 
+updateStockControl(result:any,variant:Variant){
+  if(result){
+    if(result.length > 0){
+      result.forEach(res=>{
+        if(res.reason && res.currentStock > 0){
+          this.stock.createHistory({
+            orderId:0,
+            variantId:variant.id,
+            variantName:variant.name,
+            stockId:res.id,
+            reason:res.reason,
+            quantity:res.currentStock,
+            isDraft:false,
+            isPreviously:false,
+            syncedOnline:false,
+            note:res.reason,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          })
+        }
+          // update Stock
+          const stock=this.stock.findStock(res.id);
+         if(res.currentStock > 0){
+
+            if (res.reason === 'Received' || res.reason === 'Restocked') {
+              stock.currentStock = stock.currentStock + res.currentStock;
+            } 
+            else if (res.reason === 'Re-counted') {
+                  stock.currentStock = res.currentStock;
+            } 
+            else {
+              stock.currentStock = stock.currentStock - res.currentStock;
+            }
+
+          }
+          
+          stock.canTrackingStock=res.canTrackingStock;
+          stock.lowStock=res.lowStock;
+          stock.showlowStockAlert=res.showlowStockAlert;
+
+
+          this.stock.update(stock);
+      
+      })
+    }
+  }
+}
 
   public openStockHistoryDialog(variant: any= null, isArray= false): any {
     return this.dialog.open(ViewStockHistoryComponent, DialogSize.SIZE_LG, {variant, isArray}).subscribe();
   }
 
-  public openAddVariantDialog(product: Product): any {
-    return this.dialog.open(AddVariantComponent, DialogSize.SIZE_MD, product).subscribe(result => {
-      if (result === 'done') {
-        this.variants(product);
-      }
-
+  public openPrintBarcodeLablesDialog(): any {
+    const labels:Labels[]=[];
+    this.allVariants.forEach(v => {
+      labels.push({name:v.name,sku:v.SKU});
     });
+    return this.dialog.open(PrintBarcodeLabelsDialogComponent, DialogSize.SIZE_LG, labels).subscribe();
   }
+
+
 
   deleteProductVariations(product: Product): void {
     if (product) {
@@ -232,12 +295,13 @@ export class VariationService {
     }
   }
 
-  deleteVariation(variant: Variant): void {
+  deleteVariation(variant: Variant,product:Product): void {
     if (variant) {
       this.dialog.delete('Variant', [`Variant: ${variant.name}`]).subscribe(confirm => {
         this.stock.deleteStocks(variant);
         this.stock.deleteStocksHistory(variant);
         this.model.delete(Tables.variants, variant.id);
+        this.init(product);
       });
 
 

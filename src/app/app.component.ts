@@ -2,278 +2,196 @@ import {
   Component
 } from '@angular/core';
 import { Schema, ModelService } from '@enexus/flipper-offline-database';
-import {MainModelService, Order, Tables, Branch, STATUS, ORDERTYPE,
-   Variant, Stock, Product, OrderDetails,
-    CalculateTotalClassPipe, StockHistory } from '@enexus/flipper-components';
+import {
+  MainModelService, Order, Tables, Branch, STATUS, ORDERTYPE,
+  Variant, Stock, Product, OrderDetails,
+  CalculateTotalClassPipe, StockHistory, Business, RoundNumberPipe, DashBoardEntries
+} from '@enexus/flipper-components';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent  {
+export class AppComponent {
 
-  get theVariantFiltered(): Variant[] {
-    return this.seTheVariantFiltered;
+
+  public branch: Branch | null;
+  public totalStore: number = 0.00;
+  public netProfit: number = 0.00;
+  public grossProfits: number = 0.00;
+  public totalRevenue: number = 0.00;
+
+  public topSoldItem = [];
+  public lowStockItem=[];
+  public currency = this.model.active<Business>(Tables.business) ? this.model.active<Business>(Tables.business).currency : 'RWF';
+  constructor(private totalPipe: CalculateTotalClassPipe,
+    private radomNumberPipe: RoundNumberPipe,
+    private query: ModelService, private model: MainModelService) {
+    this.branch = this.model.active<Branch>(Tables.branch);
+    this.totalStore = this.getStockValue();
+    this.netProfit = this.getNetProfit();
+    this.totalRevenue = this.getGrossProfit();
+    this.grossProfits = this.getGrossProfit();
+    this.topSoldItem = this.topSoldItems();
+   
+    
+    this.lowStockItem = this.lowStockItems();
+
   }
 
-  set theVariantFiltered(value: Variant[]) {
-    this.seTheVariantFiltered = value;
+  ngOnInit(): void {
+    this.totalRevenue = this.getGrossProfit();
+    this.totalStore = this.getStockValue();
+    this.netProfit = this.getNetProfit();
+    this.grossProfits = this.getGrossProfit();
+    this.lowStockItem = this.lowStockItems();
+
   }
 
-  get currentOrder(): Order {
-    return this.setCurrentOrder;
+  ngAfterViewInit(): void {
+    this.totalRevenue = this.getGrossProfit();
+    this.totalStore = this.getStockValue();
+    this.netProfit = this.getNetProfit();
+    this.grossProfits = this.getGrossProfit();
+    this.lowStockItem = this.lowStockItems();
+  }
+  lowStockItems() {
+    const lowStocks = [{
+      id: 1,
+      name: 'Kimirongo',
+      updatedAt: new Date(),
+      currentStock: 4
+    },
+    {
+      id: 2,
+      name: 'Kicukiro',
+      updatedAt: new Date(),
+      currentStock: 4
+    },
+    {
+      id: 3,
+      name: 'Nyagatare',
+      updatedAt: new Date(),
+      currentStock: 4
+    },
+    {
+      id: 4,
+      name: 'Gicumbi',
+      updatedAt: new Date(),
+      currentStock: 10,
+    },
+    {
+      id: 5,
+      name: 'Gicumbi',
+      updatedAt: new Date(),
+      currentStock: 10,
+    }
+    ];
+    return lowStocks;
   }
 
-  set currentOrder(value: Order) {
-    this.setCurrentOrder = value;
+  topSoldItems() {
+    const soldItems = [{
+      id: 1,
+      name: 'Mineral Water',
+      updatedAt: 'Updated 5m ago',
+      items: 100,
+      total: 5000
+    },
+    {
+      id: 2,
+      name: 'Salt',
+      updatedAt: 'Updated 5m ago',
+      items: 100,
+      total: 5000
+    },
+    {
+      id: 3,
+      name: 'Vinegar',
+      updatedAt: 'Updated 5m ago',
+      items: 100,
+      total: 5000
+    },
+    {
+      id: 4,
+      name: 'Blueband',
+      updatedAt: 'Updated 5m ago',
+      items: 100,
+      total: 5000
+    },{
+      id: 5,
+      name: 'Blueband',
+      updatedAt: 'Updated 5m ago',
+      items: 100,
+      total: 5000
+    }
+    ];
+    return soldItems;
   }
 
-  constructor(private model: MainModelService, private query: ModelService, private totalPipe: CalculateTotalClassPipe) {
-  this.init();
+
+  getStockValue() {
+    return this.radomNumberPipe.transform(this.stockValue());
   }
-  defaultBranch: Branch = this.model.active<Branch>(Tables.business);
-  public variants: Variant[] = [];
-  private seTheVariantFiltered: Variant[] = [];
-  public collectCashCompleted: object = {};
+  stockValue() {
+    const stocks: Stock[] = this.stocks();
+    const results = [{ retailPrice: 0 }];
 
-  public currency = 'RWF';
-  private setCurrentOrder: Order;
+    if (stocks.length > 0) {
+      stocks.forEach(result => {
+        results.push({ retailPrice: result.currentStock * result.retailPrice });
+      });
+    }
 
-  date = new Date();
+    return this.totalPipe.transform(results, 'retailPrice');
 
-init() {
-  this.hasDraftOrder();
-  this.newOrder();
-  this.loadVariants();
-}
-  generateCode(): string {
-    return this.date.getSeconds() + this.date.getHours() + this.date.getDay() + '' +
-     '' + this.date.getDate() + '' + this.date.getMonth() + '' + this.date.getFullYear();
+  }
+  grossProfit() {
+    const stocks = this.getSaleStocks();
+    return this.totalPipe.transform(stocks, 'retailPrice');
   }
 
-  public newOrder() {
-      if (!this.setCurrentOrder) {
-        const rand = Math.floor(Math.random() * 10);
-        this.model.create<Order>(Tables.order, {
-          id: rand,
-          reference: 'SO' + rand + this.generateCode(),
-          orderNumber: 'SO' + rand + this.generateCode(),
-          branchId: this.defaultBranch ? this.defaultBranch.id : 0,
-          status: STATUS.OPEN,
-          orderType: ORDERTYPE.SALES,
-          active: true,
-          orderItems: [],
-          isDraft: true,
-          subTotal: 0.00,
-          cashReceived: 0.00,
-          customerChangeDue: 0.00,
-          createdAt: this.date,
-          updatedAt: this.date
-        });
-        this.hasDraftOrder();
-
-        }
-      }
-
-      hasDraftOrder(): void {
-        this.setCurrentOrder = this.model.draft<Order>(Tables.order, 'isDraft');
-        if (this.setCurrentOrder) {
-          const orderDetails: OrderDetails[] = this.getOrderDetails(this.setCurrentOrder.id);
-          this.setCurrentOrder.orderItems = orderDetails;
-        }
-      }
-
-      getOrderDetails(orderId: number): OrderDetails[] {
-        const orderDetails: OrderDetails[] = [];
-        this.model.filters<OrderDetails>(Tables.orderDetails, 'orderId', orderId)
-        .forEach(details => {
-
-          const variant: Variant = this.model.find<Variant>(Tables.variants, details.variantId);
-
-          const stock: Stock = this.query.select(Tables.stocks).where('variantId', variant.id)
-          .andWhere('branchId', this.defaultBranch.id).first<Stock>();
-
-          const product: Product = this.model.find<Product>(Tables.products, variant.productId);
-          if (stock) {
-            details.stock = stock;
-          }
-          if (variant) {
-            details.variant = variant;
-          }
-          if (product) {
-            details.product = product;
-          }
-
-          orderDetails.push(details);
-        });
-        return orderDetails;
-      }
+  getGrossProfit() {
+    return this.radomNumberPipe.transform(this.grossProfit());
+  }
 
 
-      public loadVariants() {
-         const variants: Variant[] = this.model.loadAll<Variant>(Tables.variants);
+  getNetProfit() {
+    return this.radomNumberPipe.transform(this.grossProfit() - this.salesStockCostPrice());
+  }
 
-         if (variants.length > 0) {
-            variants.forEach(variant => {
-              const stock: Stock = this.query.select(Tables.stocks).where('variantId', variant.id)
-              .andWhere('branchId', this.defaultBranch.id).first<Stock>();
+  salesStockCostPrice() {
+    const stocks = this.getSaleStocks();
+    return this.totalPipe.transform(stocks, 'supplyPrice');
+  }
 
-              const product: Product = this.model.find<Product>(Tables.products, variant.productId);
+  stocks() {
+    return this.query.queries<Stock>(Tables.stocks, ` branchId=${this.branch.id} AND currentStock > 0 AND canTrackingStock=true`);
+  }
 
-              const variation: Variant = variant;
-              variation.productName = product.name;
-              if (stock) {
-                  variation.stock = stock;
-                }
-              variation.name = variation.name === 'Regular' ? variation.productName : variation.name;
-              variation.priceVariant = {
-                      id: 0,
-                      priceId: 0,
-                      variantId: variation.id,
-                      minUnit: 0,
-                      maxUnit: 0,
-                      retailPrice: stock && stock.retailPrice ? stock.retailPrice : 0.00,
-                      supplyPrice: stock && stock.supplyPrice ? stock.supplyPrice : 0.00,
-                      wholeSalePrice: stock && stock.wholeSalePrice ? stock.wholeSalePrice : 0.00,
-                      discount: 0,
-                      markup: 0
-                    };
+  sales() {
+    return this.query.queries<Order>(Tables.order, ` branchId=${this.branch.id} AND orderType='sales' AND status='complete'`);
+  }
 
-              if (!stock.canTrackingStock) {
-                this.variants.push(variation);
-               } else {
-                    if (stock.canTrackingStock && stock.currentStock > 0) {
-                          this.variants.push(variation);
-                    }
-               }
-
-            });
-         }
-
-      }
-
-      public iWantToSearchVariant(event) {
-        if (event) {
-          this.theVariantFiltered = this.filterByValue(this.variants, event);
-        }
-
-      }
-
-
-      filterByValue(arrayOfObject: Variant[], term: any) {
-        const query = term.toString().toLowerCase();
-        return arrayOfObject.filter((v, i) => {
-          if (v.name.toString().toLowerCase().indexOf(query) >= 0 || v.SKU.toString().toLowerCase().indexOf(query) >= 0
-           ||  v.productName.toString().toLowerCase().indexOf(query) >= 0
-           ||  v.priceVariant && v.priceVariant.retailPrice.toString().toLowerCase().indexOf(query) >= 0 ) {
-            return true;
-          } else {
-            return false;
-          }
-        });
-      }
-
-      updateOrderDetails(details: {action: string, item: OrderDetails}) {
-        if (details.action === 'DELETE') {
-          this.model.delete(Tables.orderDetails, details.item.id);
-        }
-
-        if (details.action === 'UPDATE') {
-          this.model.update<OrderDetails>(Tables.orderDetails, details.item, details.item.id);
-        }
-
-        this.updateOrder();
-      }
-
-      public updateOrder() {
-        const subtotal = this.totalPipe.transform<OrderDetails>
-        (this.model.filters<OrderDetails>(Tables.orderDetails, 'orderId', this.setCurrentOrder.id), 'subTotal');
-        this.setCurrentOrder.subTotal = subtotal;
-        this.setCurrentOrder.customerChangeDue = this.setCurrentOrder.cashReceived > 0 ?
-          parseInt(this.setCurrentOrder.cashReceived, 10) - parseInt(subtotal, 10) : 0.00;
-        this.setCurrentOrder.customerChangeDue = this.setCurrentOrder.customerChangeDue;
-        this.model.update<Order>(Tables.order, this.setCurrentOrder, this.setCurrentOrder.id);
-        this.hasDraftOrder();
-      }
-
-
-      public addToCart(variant: Variant) {
-        const orderDetails: OrderDetails = {
-          price: variant.priceVariant.retailPrice,
-          variantName: variant.name,
-          productName: variant.productName,
-          canTrackStock: variant.stock.canTrackingStock,
-          stockId: variant.stock.id,
-          unit: variant.unit,
-          SKU: variant.SKU,
-          quantity: 1,
-          variantId: variant.id,
-          orderId: this.setCurrentOrder.id,
-          subTotal: variant.priceVariant.retailPrice,
-          createdAt: this.date,
-          updatedAt: this.date
-        };
-        this.model.create<OrderDetails>(Tables.orderDetails, orderDetails);
-        this.setCurrentOrder.orderItems = this.getOrderDetails(this.setCurrentOrder.id);
-        this.updateOrder();
-
-      }
-
-      didCollectCash(event) {
-        this.collectCashCompleted = { isCompleted: false, collectedOrder: this.currentOrder };
-        if (event === true) {
-         this.createStockHistory();
-         this.currentOrder.isDraft = false;
-         this.currentOrder.status = STATUS.COMPLETE;
-         this.model.update<Order>(Tables.order, this.currentOrder, this.currentOrder.id);
-         this.currentOrder = null;
-         this.init();
-         this.collectCashCompleted = { isCompleted: true, collectedOrder: this.currentOrder };
-        }
-
-      }
-
-      createStockHistory() {
-
-        const orderDetails: OrderDetails[] = this.getOrderDetails(this.currentOrder.id);
-        if (orderDetails.length) {
-          orderDetails.forEach(details => {
-            if (details.stockId > 0) {
-              this.model.create<StockHistory>(Tables.stockHistory, {
-                orderId: details.orderId,
-                variantId: details.variantId,
-                variantName: details.variantName,
-                stockId: details.stockId,
-                reason: 'Sold',
-                quantity: details.quantity,
-                isDraft: false,
-                isPreviously: false,
-                syncedOnline: false,
-                note: 'Customer sales',
-                createdAt: new Date(),
-                updatedAt: new Date()
-               });
-
-              this.updateStock(details);
+  getSaleStocks() {
+    const stocks = [{ retailPrice: 0, supplyPrice: 0 }];
+    this.sales().forEach(sale => {
+      if (sale) {
+        if (this.loadOrderDetails(sale.id).length > 0) {
+          this.loadOrderDetails(sale.id).forEach(orderDetails => {
+            if (orderDetails.canTrackStock && orderDetails.stockId > 0) {
+              const stock: Stock = this.model.find<Stock>(Tables.stocks, orderDetails.stockId);
+              stocks.push({ retailPrice: orderDetails.quantity * stock.retailPrice, supplyPrice: orderDetails.quantity * stock.supplyPrice });
             }
-
           });
         }
-
       }
-      updateStock(stockDetails: OrderDetails) {
-        const stock: Stock = this.model.find<Stock>(Tables.stocks, stockDetails.stockId);
-        if (stock) {
-          stock.currentStock = stock.currentStock - stockDetails.quantity;
-          this.model.update<Stock>(Tables.stocks, stock, stock.id);
-        }
+    });
+    return stocks;
+  }
 
-      }
-
-      saveOrderUpdated(event: Order) {
-         this.model.update<Order>(Tables.order, event, event.id);
-         this.hasDraftOrder();
-      }
-
+  loadOrderDetails(orderId: number) {
+    return this.model.filters<OrderDetails>(Tables.orderDetails, 'orderId', orderId);
+  }
 }

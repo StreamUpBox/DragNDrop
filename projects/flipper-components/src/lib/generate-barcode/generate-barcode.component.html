@@ -1,0 +1,8 @@
+
+<div class="row" *ngIf="labels && labels.length > 0">
+    <div class="col m-3"  *ngFor="let label of labels">
+        <span *ngIf="showName" class="name">{{label.name}}</span>
+        <ngx-barcode [bc-value]="label.sku" [bc-display-value]="showSku"></ngx-barcode>
+    </div>
+</div>
+

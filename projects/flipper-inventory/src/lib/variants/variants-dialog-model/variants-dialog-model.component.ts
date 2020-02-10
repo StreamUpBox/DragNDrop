@@ -1,6 +1,5 @@
 import { Component, OnInit, Inject, HostListener } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { Variant } from '@enexus/flipper-components';
 
 @Component({
   selector: 'flipper-variants-dialog-model',
@@ -11,14 +10,14 @@ export class VariantsDialogModelComponent implements OnInit {
 
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
     if (event.key === 'Esc') {
-      this.dialogRef.close('done');
+      this.done();
     }
 
     if (event.key === 'Enter') {
-        this.dialogRef.close('done');
+        this.done();
     }
   }
-
+  stockControls:any=null;
   constructor(public dialogRef: MatDialogRef<VariantsDialogModelComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
 }
@@ -28,4 +27,16 @@ export class VariantsDialogModelComponent implements OnInit {
 
   }
 
+  stockControl(event){
+    this.stockControls=event;
+  }
+
+  done(){
+    this.dialogRef.close(this.stockControls);
+  }
+
+  close(){
+    this.done();
+  }
+  
 }

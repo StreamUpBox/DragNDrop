@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MainModelService, Tables, Variant, SettingsService, Business,
-         Branch, Product, StockHistory,Labels } from '@enexus/flipper-components';
+         Branch, Product, StockHistory, Labels } from '@enexus/flipper-components';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { VariantsDialogModelComponent } from '../variants/variants-dialog-model/variants-dialog-model.component';
 import { DialogService, DialogSize } from '@enexus/flipper-dialog';
@@ -22,10 +22,10 @@ export class VariationService {
   variantsSubject: BehaviorSubject<Variant[]>;
   private readonly variantsMap = new Map<string, Variant>();
 
-  set allVariants(variants:Variant[]){
-    this.myAllVariants=variants;
+  set allVariants(variants: Variant[]) {
+    this.myAllVariants = variants;
   }
-  get allVariants():Variant[]{
+  get allVariants(): Variant[] {
       return this.myAllVariants;
   }
 
@@ -88,13 +88,13 @@ export class VariationService {
     });
   }
 
-  generateSKU(productId:number): string {
-    const variant=this.findFirst(productId);
-    var timestmp = new Date().setFullYear(new Date().getFullYear(), 0, 1);     
-    var yearFirstDay = Math.floor(timestmp / 86400000);      
-    var today = Math.ceil((new Date().getTime()) / 86400000);
-    var dayOfYear = today - yearFirstDay; 
-    return this.d.getFullYear() +''+dayOfYear+''+  Math.ceil(variant?variant.id+1:1 / 12);
+  generateSKU(productId: number): string {
+    const variant = this.findFirst(productId);
+    const timestmp = new Date().setFullYear(new Date().getFullYear(), 0, 1);
+    const yearFirstDay = Math.floor(timestmp / 86400000);
+    const today = Math.ceil((new Date().getTime()) / 86400000);
+    const dayOfYear = today - yearFirstDay;
+    return this.d.getFullYear() + '' + dayOfYear + '' +  Math.ceil(variant ? variant.id + 1 : 1 / 12);
   }
 
   create(variant: Variant): Variant | Variant[] {
@@ -140,7 +140,7 @@ export class VariationService {
 
 
   variants(product: Product): void {
-    this.allVariants=[];
+    this.allVariants = [];
     this.allVariants = this.model.filters<Variant>(Tables.variants, 'productId', product.id);
   }
 
@@ -197,59 +197,57 @@ export class VariationService {
 
   public openVariantDialog(variant: Variant, selectedIndex: number): any {
     return this.dialog.open(VariantsDialogModelComponent, DialogSize.SIZE_MD, { variant, selectedIndex }).subscribe(result => {
-     
-       this.updateStockControl(result,variant);
-      this.regular(this.product);
-      this.request(null, variant);
-      this.variants(this.product);
-      this. stockUpdates();
+
+       this.updateStockControl(result, variant);
+       this.regular(this.product);
+       this.request(null, variant);
+       this.variants(this.product);
+       this. stockUpdates();
     });
   }
 
-updateStockControl(result:any,variant:Variant){
-  if(result){
-    if(result.length > 0){
-      result.forEach(res=>{
-        if(res.reason && res.currentStock > 0){
+updateStockControl(result: any, variant: Variant) {
+  if (result) {
+    if (result.length > 0) {
+      result.forEach(res => {
+        if (res.reason && res.currentStock > 0) {
           this.stock.createHistory({
-            orderId:0,
-            variantId:variant.id,
-            variantName:variant.name,
-            stockId:res.id,
-            reason:res.reason,
-            quantity:res.currentStock,
-            isDraft:false,
-            isPreviously:false,
-            syncedOnline:false,
-            note:res.reason,
+            orderId: 0,
+            variantId: variant.id,
+            variantName: variant.name,
+            stockId: res.id,
+            reason: res.reason,
+            quantity: res.currentStock,
+            isDraft: false,
+            isPreviously: false,
+            syncedOnline: false,
+            note: res.reason,
             createdAt: new Date(),
             updatedAt: new Date(),
-          })
+          });
         }
           // update Stock
-          const stock=this.stock.findStock(res.id);
-         if(res.currentStock > 0){
+        const stock = this.stock.findStock(res.id);
+        if (res.currentStock > 0) {
 
             if (res.reason === 'Received' || res.reason === 'Restocked') {
               stock.currentStock = stock.currentStock + res.currentStock;
-            } 
-            else if (res.reason === 'Re-counted') {
+            } else if (res.reason === 'Re-counted') {
                   stock.currentStock = res.currentStock;
-            } 
-            else {
+            } else {
               stock.currentStock = stock.currentStock - res.currentStock;
             }
 
           }
-          
-          stock.canTrackingStock=res.canTrackingStock;
-          stock.lowStock=res.lowStock;
-          stock.showlowStockAlert=res.showlowStockAlert;
+
+        stock.canTrackingStock = res.canTrackingStock;
+        stock.lowStock = res.lowStock;
+        stock.showlowStockAlert = res.showlowStockAlert;
 
 
-          this.stock.update(stock);
-      
-      })
+        this.stock.update(stock);
+
+      });
     }
   }
 }
@@ -259,9 +257,9 @@ updateStockControl(result:any,variant:Variant){
   }
 
   public openPrintBarcodeLablesDialog(): any {
-    const labels:Labels[]=[];
+    const labels: Labels[] = [];
     this.allVariants.forEach(v => {
-      labels.push({name:v.name,sku:v.SKU});
+      labels.push({name: v.name, sku: v.SKU});
     });
     return this.dialog.open(PrintBarcodeLabelsDialogComponent, DialogSize.SIZE_LG, labels).subscribe();
   }
@@ -295,7 +293,7 @@ updateStockControl(result:any,variant:Variant){
     }
   }
 
-  deleteVariation(variant: Variant,product:Product): void {
+  deleteVariation(variant: Variant, product: Product): void {
     if (variant) {
       this.dialog.delete('Variant', [`Variant: ${variant.name}`]).subscribe(confirm => {
         this.stock.deleteStocks(variant);

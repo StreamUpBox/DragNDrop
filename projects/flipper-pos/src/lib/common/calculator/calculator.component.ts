@@ -92,7 +92,8 @@ export class CalculatorComponent {
       return;
     }
 
-    if (!(event.target['type'] === 'search' || event.target['type'] === 'number' || event.target['type'] === 'text') && ( event.key === 'Enter' ||  event.key === 'End') ) {
+    if (!(event.target.type === 'search' || event.target.type === 'number' ||
+     event.target.type === 'text') && ( event.key === 'Enter' ||  event.key === 'End') ) {
         this.collectCash();
       }
 

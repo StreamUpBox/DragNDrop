@@ -17,45 +17,30 @@ export class AppComponent {
 
 
   public branch: Branch | null;
-  public totalStore: number = 0.00;
-  public netProfit: number = 0.00;
-  public grossProfits: number = 0.00;
-  public totalRevenue: number = 0.00;
+  public totalStore = 0.00;
+  public netProfit = 0.00;
+  public grossProfits = 0.00;
+  public totalRevenue = 0.00;
 
   public topSoldItem = [];
-  public lowStockItem=[];
+  public lowStockItem = [];
   public currency = this.model.active<Business>(Tables.business) ? this.model.active<Business>(Tables.business).currency : 'RWF';
   constructor(private totalPipe: CalculateTotalClassPipe,
-    private radomNumberPipe: RoundNumberPipe,
-    private query: ModelService, private model: MainModelService) {
+              private radomNumberPipe: RoundNumberPipe,
+              private query: ModelService, private model: MainModelService) {
     this.branch = this.model.active<Branch>(Tables.branch);
     this.totalStore = this.getStockValue();
     this.netProfit = this.getNetProfit();
     this.totalRevenue = this.getGrossProfit();
     this.grossProfits = this.getGrossProfit();
     this.topSoldItem = this.topSoldItems();
-   
-    
+
+
     this.lowStockItem = this.lowStockItems();
 
   }
 
-  ngOnInit(): void {
-    this.totalRevenue = this.getGrossProfit();
-    this.totalStore = this.getStockValue();
-    this.netProfit = this.getNetProfit();
-    this.grossProfits = this.getGrossProfit();
-    this.lowStockItem = this.lowStockItems();
 
-  }
-
-  ngAfterViewInit(): void {
-    this.totalRevenue = this.getGrossProfit();
-    this.totalStore = this.getStockValue();
-    this.netProfit = this.getNetProfit();
-    this.grossProfits = this.getGrossProfit();
-    this.lowStockItem = this.lowStockItems();
-  }
   lowStockItems() {
     const lowStocks = [{
       id: 1,
@@ -119,7 +104,7 @@ export class AppComponent {
       updatedAt: 'Updated 5m ago',
       items: 100,
       total: 5000
-    },{
+    }, {
       id: 5,
       name: 'Blueband',
       updatedAt: 'Updated 5m ago',
@@ -182,7 +167,8 @@ export class AppComponent {
           this.loadOrderDetails(sale.id).forEach(orderDetails => {
             if (orderDetails.canTrackStock && orderDetails.stockId > 0) {
               const stock: Stock = this.model.find<Stock>(Tables.stocks, orderDetails.stockId);
-              stocks.push({ retailPrice: orderDetails.quantity * stock.retailPrice, supplyPrice: orderDetails.quantity * stock.supplyPrice });
+              stocks.push({ retailPrice: orderDetails.quantity * stock.retailPrice,
+                supplyPrice: orderDetails.quantity * stock.supplyPrice });
             }
           });
         }

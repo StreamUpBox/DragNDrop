@@ -14,9 +14,9 @@ import {MainModelService, Order, Tables, Branch, STATUS, ORDERTYPE,
 export class AppComponent  {
 
 
-  labels=[{name:'amata',sku:'001'},{name:'fanta',sku:'002'},
-  {name:'fanta',sku:'002'},{name:'fanta',sku:'002'},{name:'fanta',sku:'002'}
-  ,{name:'fanta',sku:'002'},{name:'fanta',sku:'002'}]
+  labels = [{name: 'amata', sku: '001'}, {name: 'fanta', sku: '002'},
+  {name: 'fanta', sku: '002'}, {name: 'fanta', sku: '002'}, {name: 'fanta', sku: '002'}
+  , {name: 'fanta', sku: '002'}, {name: 'fanta', sku: '002'}];
   get theVariantFiltered(): Variant[] {
     return this.seTheVariantFiltered;
   }
@@ -50,10 +50,10 @@ init() {
   this.hasDraftOrder();
   this.newOrder();
   this.loadVariants();
-  if(this.currentOrder){
+  if (this.currentOrder) {
     this.getOrderDetails(this.currentOrder.id);
   }
- 
+
 }
   generateCode(): string {
     return this.date.getSeconds() + this.date.getHours() + this.date.getDay() + '' +
@@ -96,23 +96,23 @@ init() {
         const orderDetails: OrderDetails[] = [];
         this.model.filters<OrderDetails>(Tables.orderDetails, 'orderId', orderId)
         .forEach(details => {
-          let stock: Stock=null;
-          let variant: Variant=null;
-          let product: Product =null;
+          let stock: Stock = null;
+          let variant: Variant = null;
+          let product: Product = null;
           variant = this.model.find<Variant>(Tables.variants, details.variantId);
-          if(variant){
+          if (variant) {
              stock = this.query.select(Tables.stocks).where('variantId', variant.id)
             .andWhere('branchId', this.defaultBranch.id).first<Stock>();
           }
-         
-          if(variant){
+
+          if (variant) {
             product = this.model.find<Product>(Tables.products, variant.productId);
           }
-            
-            details.stock = stock;
-            details.variant = variant;
-            details.product = product;
-          
+
+          details.stock = stock;
+          details.variant = variant;
+          details.product = product;
+
 
           orderDetails.unshift(details);
         });
@@ -122,7 +122,7 @@ init() {
 
       public loadVariants() {
          const variants: Variant[] = this.model.loadAll<Variant>(Tables.variants);
-         this.variants=[];
+         this.variants = [];
          if (variants.length > 0) {
             variants.forEach(variant => {
               const stock: Stock = this.query.select(Tables.stocks).where('variantId', variant.id)
@@ -208,8 +208,8 @@ init() {
       }
 
 
-      public addToCart(event:any) {
-        const variant: Variant=event.variant;
+      public addToCart(event: any) {
+        const variant: Variant = event.variant;
         const orderDetails: OrderDetails = {
           price: variant.priceVariant.retailPrice,
           variantName: variant.name,
@@ -241,7 +241,7 @@ init() {
          this.collectCashCompleted = { isCompleted: true, collectedOrder: this.currentOrder };
          this.currentOrder = null;
          this.init();
-        
+
         }
 
       }

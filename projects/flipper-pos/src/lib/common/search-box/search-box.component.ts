@@ -63,7 +63,7 @@ export class SearchBoxComponent implements OnInit, AfterViewInit {
   private debounce = 600;
   public loading = false;
   public event: KeyboardEvent;
-  isSearching:boolean=false;
+  isSearching = false;
 
   @ViewChild('mySearchInput', {
     static: false
@@ -109,11 +109,11 @@ export class SearchBoxComponent implements OnInit, AfterViewInit {
             )
           .subscribe(query => {
             if (query === '' || query === null) {
-              this.isSearching=false;
-                  return;
+              this.isSearching = false;
+              return;
             }
             this.loading = true;
-            this.isSearching=true;
+            this.isSearching = true;
             this.searchEmitValue.emit(query);
       });
   }
@@ -136,7 +136,7 @@ export class SearchBoxComponent implements OnInit, AfterViewInit {
     this.addToCartEmit.emit(variant);
     this.clearSearchBox();
   }
-  focusing(){
+  focusing() {
     this.clearSearchBox();
   }
 
@@ -145,7 +145,7 @@ export class SearchBoxComponent implements OnInit, AfterViewInit {
         if (this.searchInputElement !== undefined) {
           this.searchInputElement.nativeElement.value = '';
           this.searchInputElement.nativeElement.focus();
-          this.isSearching=false;
+          this.isSearching = false;
           this.close();
         }
   }

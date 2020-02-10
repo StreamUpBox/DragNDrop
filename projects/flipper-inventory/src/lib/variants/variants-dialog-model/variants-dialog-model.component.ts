@@ -7,6 +7,10 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
   styleUrls: ['./variants-dialog-model.component.css']
 })
 export class VariantsDialogModelComponent implements OnInit {
+  constructor(public dialogRef: MatDialogRef<VariantsDialogModelComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: any) {
+}
+  stockControls: any = null;
 
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
     if (event.key === 'Esc') {
@@ -17,26 +21,22 @@ export class VariantsDialogModelComponent implements OnInit {
         this.done();
     }
   }
-  stockControls:any=null;
-  constructor(public dialogRef: MatDialogRef<VariantsDialogModelComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any) {
-}
 
 
   ngOnInit() {
 
   }
 
-  stockControl(event){
-    this.stockControls=event;
+  stockControl(event) {
+    this.stockControls = event;
   }
 
-  done(){
+  done() {
     this.dialogRef.close(this.stockControls);
   }
 
-  close(){
+  close() {
     this.done();
   }
-  
+
 }

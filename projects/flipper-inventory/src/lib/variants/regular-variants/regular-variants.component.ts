@@ -14,8 +14,8 @@ import { AddVariantComponent } from '../add-variant/add-variant.component';
 export class RegularVariantsComponent implements OnInit {
   isFocused = '';
   @Input() product: Product;
-  constructor(private dialog: DialogService,public variant: VariationService,
-     public stock: StockService) { }
+  constructor(private dialog: DialogService, public variant: VariationService,
+              public stock: StockService) { }
 
   ngOnInit() {
     if (this.variant.hasRegular) {

@@ -38,15 +38,15 @@ export class UpdatePriceDialogComponent implements OnInit {
     if (this.form.invalid) {
       this.notificationSvc.error('Add price', 'We need you to complete all of the required fields before we can continue');
       return;
-    }else{
+    } else {
       this.dialogRef.close({price: this.form.value.price});
     }
-   
+
   }
 
   focusing(value: any) {
     this.isFocused = value;
-    this.form.controls['price'].setValue('');
+    this.form.controls.price.setValue('');
   }
   focusingOut() {
     this.isFocused = '';

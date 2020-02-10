@@ -8,12 +8,12 @@ import { DashBoardEntries } from '@enexus/flipper-components';
 })
 export class FlipperDashboardComponent {
   @Input() dashboardEntries: DashBoardEntries = {};
-  totalStores:any | null;
-  netProfits:any | null;
-  grossProfits:any | null;
-  totalRevenues:any | null;
-  topSoldItems:any[] | [];
-  lowStockItems:any[] | [];
+  totalStores: any | null;
+  netProfits: any | null;
+  grossProfits: any | null;
+  totalRevenues: any | null;
+  topSoldItems: any[] | [];
+  lowStockItems: any[] | [];
 
 
   @Input('totalStore')
@@ -23,7 +23,7 @@ export class FlipperDashboardComponent {
   get totalStore(): any {
     return this.totalStores;
   }
-  //netProfit
+  // netProfit
   @Input('netProfit')
   set netProfit(value: any) {
     this.netProfits = value;
@@ -31,7 +31,7 @@ export class FlipperDashboardComponent {
   get netProfit(): any {
     return this.netProfits;
   }
-   //grossProfit
+   // grossProfit
    @Input('grossProfit')
    set grossProfit(value: any) {
      this.grossProfits = value;
@@ -40,7 +40,7 @@ export class FlipperDashboardComponent {
      return this.grossProfits;
    }
 
-   //topSoldItem
+   // topSoldItem
    @Input('topSoldItem')
    set topSoldItem(value: any) {
      this.topSoldItems = value;
@@ -49,7 +49,7 @@ export class FlipperDashboardComponent {
      return this.topSoldItems;
    }
 
-   //totalRevenue
+   // totalRevenue
    @Input('totalRevenue')
    set totalRevenue(value: any) {
      this.totalRevenues = value;
@@ -58,7 +58,7 @@ export class FlipperDashboardComponent {
      return this.totalRevenues;
    }
 
-    //lowStockItem
+    // lowStockItem
     @Input('lowStockItem')
     set lowStockItem(value: any) {
       this.lowStockItems = value;
@@ -66,5 +66,5 @@ export class FlipperDashboardComponent {
     get lowStockItem(): any {
       return this.lowStockItems;
     }
-    @Input() currency:string;
+    @Input() currency: string;
 }

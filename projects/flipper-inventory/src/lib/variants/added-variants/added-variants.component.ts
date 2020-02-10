@@ -12,7 +12,7 @@ import { AddVariantComponent } from '../add-variant/add-variant.component';
 })
 export class AddedVariantsComponent implements OnInit {
   @Input() product: Product;
-  constructor(private dialog: DialogService,public variant: VariationService, public stock: StockService) { }
+  constructor(private dialog: DialogService, public variant: VariationService, public stock: StockService) { }
 
   ngOnInit() {
 
@@ -42,7 +42,7 @@ export class AddedVariantsComponent implements OnInit {
 
   deleteVariation(variant: Variant) {
      if (this.product) {
-      this.variant.deleteVariation(variant,this.product);
+      this.variant.deleteVariation(variant, this.product);
     }
   }
 }

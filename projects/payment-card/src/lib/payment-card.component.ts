@@ -6,7 +6,6 @@ import { ICardDetails } from './domain/i-card-details';
 import { CardDetails } from './domain/card-details';
 import { PaymentCardService } from './service/payment-card.service';
 import { NotificationService } from '@enexus/flipper-components';
-import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 
 /**
  * NgPaymentCard without any dependencies other then ReactiveFormsModule
@@ -37,129 +36,129 @@ export class PaymentCardComponent implements OnInit {
    * Validation message for missing payment card number
    */
   @Input()
-  public ccNumMissingTxt? = 'Card number is required';
+  public ccNumMissingTxt ? = 'Card number is required';
 
   /**
    * Validation message for too short payment card number
    */
   @Input()
-  public ccNumTooShortTxt? = 'Card number is too short';
+  public ccNumTooShortTxt ? = 'Card number is too short';
 
   /**
    * Validation message for too long payment card number
    */
   @Input()
-  public ccNumTooLongTxt? = 'Card number is too long';
+  public ccNumTooLongTxt ? = 'Card number is too long';
 
   /**
    * Validation message for payment card number that contains characters other than digits
    */
   @Input()
-  public ccNumContainsLettersTxt? = 'Card number can contain digits only';
+  public ccNumContainsLettersTxt ? = 'Card number can contain digits only';
 
   /**
    * Validation message for invalid payment card  number (Luhn's validation)
    */
   @Input()
-  public ccNumChecksumInvalidTxt? = 'Provided card number is invalid';
+  public ccNumChecksumInvalidTxt ? = 'Provided card number is invalid';
 
   /**
    * Validation message for missing card holder name
    */
   @Input()
-  public cardHolderMissingTxt? = 'Card holder name is required';
+  public cardHolderMissingTxt ? = 'Card holder name is required';
 
   /**
    * Validation message for too long card holder name
    */
   @Input()
-  public cardHolderTooLongTxt? = 'Card holder name is too long';
+  public cardHolderTooLongTxt ? = 'Card holder name is too long';
 
   /**
    * Validation message for missing expiration month
    */
   @Input()
-  public expirationMonthMissingTxt? = 'Expiration month is required';
+  public expirationMonthMissingTxt ? = 'Expiration month is required';
 
   /**
    * Validation message for missing expiration year
    */
   @Input()
-  public expirationYearMissingTxt? = 'Expiration year is required';
+  public expirationYearMissingTxt ? = 'Expiration year is required';
 
   /**
    * Validation message for missing CCV number
    */
   @Input()
-  public ccvMissingTxt? = 'CCV number is required';
+  public ccvMissingTxt ? = 'CCV number is required';
 
   /**
    * Validation message for too short CCV number
    */
   @Input()
-  public ccvNumTooShortTxt? = 'CCV number is too short';
+  public ccvNumTooShortTxt ? = 'CCV number is too short';
 
   /**
    * Validation message for too long CCV number
    */
   @Input()
-  public ccvNumTooLongTxt? = 'CCV number is too long';
+  public ccvNumTooLongTxt ? = 'CCV number is too long';
 
   /**
    * Validation message for incorrect CCV number containing characters other than digits
    */
   @Input()
-  public ccvContainsLettersTxt? = 'CCV number can contain digits only';
+  public ccvContainsLettersTxt ? = 'CCV number can contain digits only';
 
   @Input()
-  public currency? = '';
+  public currency ? = '';
 
   @Input()
-  public amount? = null;
+  public amount ? = null;
 
   @Input()
-  public app? = null;
+  public app ? = null;
   /**
    * Validation message for expired card
    */
   @Input()
-  public cardExpiredTxt? = 'Card has expired';
+  public cardExpiredTxt ? = 'Card has expired';
 
   /**
    * Switch validation of the payment card number
    */
   @Input()
-  public validateCCNum? = true;
+  public validateCCNum ? = true;
 
   /**
    * Switch validation of the payment card holder
    */
   @Input()
-  public validateCardHolder? = true;
+  public validateCardHolder ? = true;
 
   /**
    * Switch validation of the payment card expiration month
    */
   @Input()
-  public validateExpirationMonth? = true;
+  public validateExpirationMonth ? = true;
 
   /**
    * Switch validation of the payment card expiration year
    */
   @Input()
-  public validateExpirationYear? = true;
+  public validateExpirationYear ? = true;
 
   /**
    * Switch validation of the payment card expiration
    */
   @Input()
-  public validateCardExpiration? = true;
+  public validateCardExpiration ? = true;
 
   /**
    * Switch validation of the payment card CCV number
    */
   @Input()
-  public validateCCV? = true;
+  public validateCCV ? = true;
 
   /**
    * EventEmitter for payment card object
@@ -167,7 +166,7 @@ export class PaymentCardComponent implements OnInit {
   @Output()
   public formSaved: EventEmitter<ICardDetails> = new EventEmitter<CardDetails>();
 
-  public startLoading:boolean=false;
+  public startLoading = false;
 
   @Input('loading')
   set loading(value: boolean) {
@@ -177,7 +176,7 @@ export class PaymentCardComponent implements OnInit {
     return this.startLoading;
   }
 
-  constructor( protected notificationSvc: NotificationService,private _ccService: PaymentCardService, private _fb: FormBuilder) {}
+  constructor( protected notificationSvc: NotificationService, private fb: FormBuilder) {}
 
   public ngOnInit(): void {
     this.buildForm();
@@ -196,7 +195,7 @@ export class PaymentCardComponent implements OnInit {
    * Build reactive form
    */
   private buildForm(): void {
-    this.ccForm = this._fb.group(
+    this.ccForm = this.fb.group(
       {
         cardNumber: [
           '',
@@ -252,7 +251,7 @@ export class PaymentCardComponent implements OnInit {
       this.notificationSvc.error('Payment', 'We need you to complete all of the required fields before we can continue');
       return;
     }
-    const cardDetails: ICardDetails = <CardDetails>this.ccForm.value;
+    const cardDetails: ICardDetails = this.ccForm.value as CardDetails;
     this.formSaved.emit(cardDetails);
   }
 }

@@ -8,7 +8,7 @@ export class Business {
   businessUrl?: string;
   timeZone?: string;
   syncedOnline?: boolean;
-  userId?:any;
+  userId?: any;
   typeId?: any;
   createdAt?: Date;
   updatedAt?: Date;

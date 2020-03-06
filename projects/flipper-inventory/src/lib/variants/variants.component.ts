@@ -8,26 +8,26 @@ import { VariationService } from '../services/variation.service';
   styleUrls: ['../create-product/create-product.component.css']
 })
 export class VariantsComponent implements OnInit {
- 
+
 
 products: Product;
 @Input('product')
-set product(bol:Product){
-this.products=bol;
+set product(bol: Product) {
+this.products = bol;
 }
-get product():Product{
+get product(): Product {
 return this.products;
 }
 
 
-addNew:boolean=false;
+addNew = false;
 
 @Input('didAddNew')
-set didAddNew(bol:boolean){
-this.addNew=bol;
+set didAddNew(bol: boolean) {
+this.addNew = bol;
 this.refresh();
 }
-get didAddNew():boolean{
+get didAddNew(): boolean {
 return this.addNew;
 }
   constructor(public variant: VariationService) {}
@@ -38,7 +38,7 @@ return this.addNew;
 
   }
 
-  refresh(){
+  refresh() {
     if (this.product) {
       this.variant.init(this.product);
   }

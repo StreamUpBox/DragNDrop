@@ -16,20 +16,20 @@ export class RegularVariantsComponent implements OnInit {
   item: Product;
 
   @Input('product')
-  set product(item:Product){
-  this.item=item;
+  set product(item: Product) {
+  this.item = item;
   this.refresh();
   }
-  get product():Product{
+  get product(): Product {
   return this.item;
   }
   constructor(private dialog: DialogService, public variant: VariationService,
               public stock: StockService) { }
 
   ngOnInit() {
-    
+
   }
-  refresh(){
+  refresh() {
     if (this.variant.hasRegular) {
       this.variant.request(null, this.variant.hasRegular);
     }
@@ -66,20 +66,23 @@ export class RegularVariantsComponent implements OnInit {
   }
 
   focusingOut() {
-  const stock=this.stock.findStock(this.variant.hasRegular.id);
-    if(this.isFocused==='retailPrice' && (this.variant.form.controls.retailPrice.value===0 || this.variant.form.controls.retailPrice.value==='')){
-    this.variant.form.controls.retailPrice.setValue(stock.retailPrice ? stock.retailPrice:0);
+  const stock = this.stock.findStock(this.variant.hasRegular.id);
+  if (this.isFocused === 'retailPrice' && (this.variant.form.controls.retailPrice.value === 0 ||
+    this.variant.form.controls.retailPrice.value === '')) {
+    this.variant.form.controls.retailPrice.setValue(stock.retailPrice ? stock.retailPrice : 0);
     }
-    if(this.isFocused==='supplyPrice' && (this.variant.form.controls.supplyPrice.value===0 || this.variant.form.controls.supplyPrice.value==='')){
-      this.variant.form.controls.supplyPrice.setValue(stock.supplyPrice ? stock.supplyPrice:0);
+  if (this.isFocused === 'supplyPrice' && (this.variant.form.controls.supplyPrice.value === 0 ||
+    this.variant.form.controls.supplyPrice.value === '')) {
+      this.variant.form.controls.supplyPrice.setValue(stock.supplyPrice ? stock.supplyPrice : 0);
     }
 
-    if(this.isFocused==='SKU' && (this.variant.form.controls.SKU.value===0 || this.variant.form.controls.SKU.value==='')){
+  if (this.isFocused === 'SKU' && (this.variant.form.controls.SKU.value === 0 ||
+    this.variant.form.controls.SKU.value === '')) {
       this.variant.form.controls.SKU.setValue(this.variant.hasRegular.SKU);
     }
-    
 
-    this.isFocused = '';
+
+  this.isFocused = '';
   }
 
 

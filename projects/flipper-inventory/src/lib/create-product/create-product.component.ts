@@ -18,11 +18,11 @@ import { DisacrdDialogModelComponent } from '../products/disacrd-dialog-model/di
 })
 export class CreateProductComponent implements OnInit {
   isFocused = '';
- addNew:boolean=false;
-set didAddNew(bol){
-this.addNew=bol;
+ addNew = false;
+set didAddNew(bol) {
+this.addNew = bol;
 }
-get didAddNew():boolean{
+get didAddNew(): boolean {
 return this.addNew;
 }
   submitted = false;
@@ -33,7 +33,8 @@ return this.addNew;
     if (event.key === 'Delete') {
         this.deleteProduct();
       }
-    if ((event.key === 'Esc' || event.key === 'esc' || event.key === 'ESC') || (event.key === 'tab' || event.key === 'Tab' || event.key === 'TAB')) { // shift + (+)
+    if ((event.key === 'Esc' || event.key === 'esc' || event.key === 'ESC')
+    || (event.key === 'tab' || event.key === 'Tab' || event.key === 'TAB')) { // shift + (+)
         this.openDiscardDialog();
       }
 
@@ -41,24 +42,26 @@ return this.addNew;
         this.onSubmit('new');
       }
 
-    
-   if ( event.key === 'Enter') {// shift + k
+
+    if ( event.key === 'Enter') {// shift + k
     this.onSubmit('close');
     }
   }
 
-  constructor(private dialog: DialogService, private model: MainModelService,private router: Router,public product: ProductService, protected notificationSvc: NotificationService) {}
+  constructor(private dialog: DialogService, private model: MainModelService,
+              private router: Router, public product: ProductService,
+              protected notificationSvc: NotificationService) {}
 
   ngOnInit() {
     this.checkNewItem();
   }
 
-checkNewItem(){
-  this.didAddNew=false;
-    this.product.init();
-    this.product.request();
-    this.product.hasDraftProduct=this.model.findByFirst<Product>(Tables.products, 'isDraft',true);
-  
+checkNewItem() {
+  this.didAddNew = false;
+  this.product.init();
+  this.product.request();
+  this.product.hasDraftProduct = this.model.findByFirst<Product>(Tables.products, 'isDraft', true);
+
 }
 
   updateItem(key, event) {
@@ -79,22 +82,22 @@ checkNewItem(){
 
   onSubmit(action) {
     this.submitted = true;
-    this.didAddNew=false;
+    this.didAddNew = false;
     if (this.product.form.invalid) {
       this.notificationSvc.error('Create an item', 'Please enter a name for your item.');
       return;
     }
     this.product.saveProduct();
-    if(action==='new'){
+    if (action === 'new') {
       this.checkNewItem();
-      this.didAddNew=true;
+      this.didAddNew = true;
       window.location.reload();
-    }else{
-      
+    } else {
+
       this.goToProduct();
     }
   }
-goToProduct(){
+goToProduct() {
   return this.router.navigate(['/admin/inventory']);
 }
 

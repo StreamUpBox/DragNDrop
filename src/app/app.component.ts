@@ -13,11 +13,11 @@ import {MainModelService, Order, Tables, Branch, STATUS, ORDERTYPE,
 })
 export class AppComponent  {
   constructor(private model: MainModelService, private query: ModelService, private totalPipe: CalculateTotalClassPipe) {
-    localStorage.setItem("channel", "001");
-    localStorage.setItem("bucket", "lagrace");
-    localStorage.setItem("syncUrl", "http://64.227.5.49:4984");
-    localStorage.setItem("canSync", "true");
-  
+    localStorage.setItem('channel', '001');
+    localStorage.setItem('bucket', 'lagrace');
+    localStorage.setItem('syncUrl', 'http://64.227.5.49:4984');
+    localStorage.setItem('canSync', 'true');
+
   }
 }
 

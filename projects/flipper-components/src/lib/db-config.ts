@@ -25,7 +25,7 @@ export enum TABLES {
     STOCKHISTORY= 'stockHistory',
     DEVICE= 'devices',
     RECEIPT= 'receipts',
-    SUBSCRIPTION='subscription',
+    SUBSCRIPTION= 'subscription',
 }
 
 export type TABLE =
@@ -110,7 +110,7 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
         },
         {
             name: TABLES.BUSINESS,
-            query: ` 
+            query: `
                 id int(11) NOT NULL AUTO_INCREMENT,
                 name STRING,
                 country STRING,
@@ -130,7 +130,7 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
         },
         {
             name: TABLES.BRANCHES,
-            query: ` 
+            query: `
                 id int(11) NOT NULL AUTO_INCREMENT,
                 name STRING,
                 active BOOL,
@@ -529,27 +529,27 @@ export const Tables = {
 };
 
 export const PouchConfig = {
-    channel:localStorage.getItem("channel"),
-    bucket:localStorage.getItem("bucket"),
-    syncUrl:localStorage.getItem('syncUrl')+'/'+localStorage.getItem("bucket"),
-    canSync:JSON.parse(localStorage.getItem("canSync")),
-    Tables:{
-    user: TABLES.USER+"_"+localStorage.getItem("channel"),
-    business: TABLES.BUSINESS+"_"+localStorage.getItem("channel"),
-    branches: TABLES.BRANCHES+"_"+localStorage.getItem("channel"),
+    channel: localStorage.getItem('channel'),
+    bucket: localStorage.getItem('bucket'),
+    syncUrl: localStorage.getItem('syncUrl') + '/' + localStorage.getItem('bucket'),
+    canSync: JSON.parse(localStorage.getItem('canSync')),
+    Tables: {
+    user: TABLES.USER + '_' + localStorage.getItem('channel'),
+    business: TABLES.BUSINESS + '_' + localStorage.getItem('channel'),
+    branches: TABLES.BRANCHES + '_' + localStorage.getItem('channel'),
     menus: TABLES.MENU,
-    businessTypes:TABLES.TYPES,
-    businessCategories:TABLES.BUSINESSCATEGORY,
-    businessUsers:TABLES.USERBUSINESS+"_"+localStorage.getItem("channel"),
-    taxes: TABLES.TAXES+"_"+localStorage.getItem("channel"),
-    variants:TABLES.VARIANTS+"_"+localStorage.getItem("channel"),
-    products: TABLES.STOCKS+"_"+localStorage.getItem("channel"),
-    branchProducts:TABLES.BRANCHPRODUCTS+"_"+localStorage.getItem("channel"),
-    reasons: TABLES.REASON+"_"+localStorage.getItem("channel"),
-    orders: TABLES.ORDER+"_"+localStorage.getItem("channel"),
-    orderDetails: TABLES.ORDERDETAILS+"_"+localStorage.getItem("channel"),
-    stockHistories:TABLES.STOCKHISTORY+"_"+localStorage.getItem("channel"),
-    subscription:TABLES.SUBSCRIPTION+"_"+localStorage.getItem("channel"),
+    businessTypes: TABLES.TYPES,
+    businessCategories: TABLES.BUSINESSCATEGORY,
+    businessUsers: TABLES.USERBUSINESS + '_' + localStorage.getItem('channel'),
+    taxes: TABLES.TAXES + '_' + localStorage.getItem('channel'),
+    variants: TABLES.VARIANTS + '_' + localStorage.getItem('channel'),
+    products: TABLES.STOCKS + '_' + localStorage.getItem('channel'),
+    branchProducts: TABLES.BRANCHPRODUCTS + '_' + localStorage.getItem('channel'),
+    reasons: TABLES.REASON + '_' + localStorage.getItem('channel'),
+    orders: TABLES.ORDER + '_' + localStorage.getItem('channel'),
+    orderDetails: TABLES.ORDERDETAILS + '_' + localStorage.getItem('channel'),
+    stockHistories: TABLES.STOCKHISTORY + '_' + localStorage.getItem('channel'),
+    subscription: TABLES.SUBSCRIPTION + '_' + localStorage.getItem('channel'),
     }
 };
-//localStorage.setItem("lastname", "Smith");
+// localStorage.setItem("lastname", "Smith");

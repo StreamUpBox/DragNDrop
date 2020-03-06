@@ -43,7 +43,7 @@ export class ListProductsComponent implements OnInit, OnDestroy {
   }
 
 
-  constructor(private router: Router,private totalPipe: CalculateTotalClassPipe, private stock: StockService,
+  constructor(private router: Router, private totalPipe: CalculateTotalClassPipe, private stock: StockService,
               public variant: VariationService, public product: ProductService) {
     this.dataSource = new MatTableDataSource([]);
     this.subscription = this.product.productsSubject.

@@ -50,7 +50,7 @@ export class VariationService {
   }
 
   init(product: Product): void {
-   
+
     if (product) {
       this.product = product;
       this.regular(product);
@@ -79,8 +79,10 @@ export class VariationService {
     this.form = this.formBuilder.group({
       name: [!action && variant && variant.name ? variant.name : '', Validators.required],
       SKU: !action && variant && variant.SKU ? variant.SKU : this.generateSKU(this.product.id),
-      retailPrice: [!action && variant && this.stock.findStock(variant.id).retailPrice ? this.stock.findStock(variant.id).retailPrice : 0.00,Validators.min(0)],
-      supplyPrice: [!action && variant && this.stock.findStock(variant.id).supplyPrice ? this.stock.findStock(variant.id).supplyPrice : 0.00,Validators.min(0)],
+      retailPrice: [!action && variant && this.stock.findStock(variant.id).retailPrice ?
+         this.stock.findStock(variant.id).retailPrice : 0.00, Validators.min(0)],
+      supplyPrice: [!action && variant && this.stock.findStock(variant.id).supplyPrice ?
+         this.stock.findStock(variant.id).supplyPrice : 0.00, Validators.min(0)],
       unit: !action && variant && variant.unit ? variant.unit : '',
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -89,14 +91,14 @@ export class VariationService {
   }
 
   generateSKU(productId: number): string {
-    return this.d.getFullYear() + ''+ this.makeid(4);
+    return this.d.getFullYear() + '' + this.makeid(4);
   }
-  
-  makeid(length:number) {
-    var result           = '';
-    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    var charactersLength = characters.length;
-    for ( var i = 0; i < length; i++ ) {
+
+  makeid(length: number) {
+    let result           = '';
+    const characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    for ( let i = 0; i < length; i++ ) {
        result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result;
@@ -236,29 +238,29 @@ updateStockControl(result: any, variant: Variant) {
         if (res.reason && res.currentStock > 0) {
 
             if (res.reason === 'Received' || res.reason === 'Restocked') {
-             
-              if(!(res.currentStock===0 || res.currentStock===null)){
+
+              if (!(res.currentStock === 0 || res.currentStock === null)) {
                 stock.currentStock = stock.currentStock + res.currentStock;
                }
-               
+
             } else if (res.reason === 'Re-counted') {
-                 
-                  if(!(res.currentStock===0 || res.currentStock===null)){
+
+                  if (!(res.currentStock === 0 || res.currentStock === null)) {
                     stock.currentStock = res.currentStock;
                    }
             } else {
-              if(!(res.currentStock===0 || res.currentStock===null)){
+              if (!(res.currentStock === 0 || res.currentStock === null)) {
                     stock.currentStock = stock.currentStock - res.currentStock;
               }
-              
+
             }
 
-          }else{
-            res.currentStock=stock.currentStock;
+          } else {
+            res.currentStock = stock.currentStock;
           }
-        
-         if(res.currentStock===0 || res.currentStock===null || res.currentStock===''){
-               stock.currentStock=stock.currentStock;
+
+        if (res.currentStock === 0 || res.currentStock === null || res.currentStock === '') {
+               stock.currentStock = stock.currentStock;
           }
 
         stock.canTrackingStock = res.canTrackingStock;

@@ -28,7 +28,7 @@ export class Order {
     orderNote?: string;
     deliverDate?: Date;
     syncedOnline?: boolean;
-    branch?:Branch;
+    branch?: Branch;
     orderDate?: Date;
     createdAt?: Date;
     updatedAt?: Date;

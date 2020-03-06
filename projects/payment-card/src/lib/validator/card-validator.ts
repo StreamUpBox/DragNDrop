@@ -42,11 +42,13 @@ export class CardValidator {
     const luhnArray: Array<number> = [0, 2, 4, 6, 8, 1, 3, 5, 7, 9];
     let length: number = ccNumber ? ccNumber.length : 0;
     let sum = 0;
-    let shouldMultiply = true;
+    const shouldMultiply = true;
 
     while (length) {
       const val: number = parseInt(ccNumber.charAt(--length), 10);
-      sum += (shouldMultiply = !shouldMultiply) ? luhnArray[val] : val;
+
+      const sm = (shouldMultiply === !shouldMultiply) ? luhnArray[val] : val;
+      sum += sm;
     }
     return !(sum && sum % 10 === 0) ? CardValidator.CHECKSUM_INVALID : null;
   }

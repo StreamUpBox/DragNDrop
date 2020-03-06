@@ -14,11 +14,11 @@ export class AddedVariantsComponent implements OnInit {
  item: Product;
 
   @Input('product')
-set product(item:Product){
-this.item=item;
+set product(item: Product) {
+this.item = item;
 this.variant.init(item);
 }
-get product():Product{
+get product(): Product {
 return this.item;
 }
 

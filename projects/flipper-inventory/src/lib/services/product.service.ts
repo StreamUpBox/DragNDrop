@@ -12,7 +12,7 @@ export class ProductService {
   hasDraftProduct: Product = null;
   form: FormGroup;
   branches$: Branch[] = [];
-  taxes$: Taxes[]=[];
+  taxes$: Taxes[] = [];
   branchList = new FormControl();
   products: Product[] = [];
 
@@ -21,7 +21,7 @@ export class ProductService {
 
 
   constructor(private query: ModelService,
-    private model: MainModelService,
+              private model: MainModelService,
               private variant: VariationService, private formBuilder: FormBuilder) {
       this.productsSubject = new BehaviorSubject([]);
       this.init();
@@ -30,14 +30,14 @@ export class ProductService {
   init(): void {
     this.hasDraft();
     this.branches$ = this.model.loadAll<Branch>(Tables.branch);
-    this.taxes$ = this.model.filters<Taxes>(Tables.taxes,'businessId',this.model.active<Business>(Tables.business).id);
+    this.taxes$ = this.model.filters<Taxes>(Tables.taxes, 'businessId', this.model.active<Business>(Tables.business).id);
     this.create();
     this.loadBranches();
   }
 
   public loadAllProducts(): Observable<Product[]> {
     const data: Product[] = [];
-    this.query.queries<Product>(Tables.products,`  isDraft=${false} ORDER BY id DESC `).forEach(d => data.push(d as Product));
+    this.query.queries<Product>(Tables.products, `  isDraft=${false} ORDER BY id DESC `).forEach(d => data.push(d as Product));
     this.productsSubject.next(data);
     this.productsMap.clear();
     data.forEach(product => this.productsMap.set(product.id as any, product));
@@ -50,11 +50,11 @@ export class ProductService {
 
 
   request(): void {
-    const hasDraftProduct=this.model.findByFirst<Product>(Tables.products, 'isDraft',true);
-    this.hasDraftProduct=hasDraftProduct;
+    const hasDraftProduct = this.model.findByFirst<Product>(Tables.products, 'isDraft', true);
+    this.hasDraftProduct = hasDraftProduct;
     this.form = this.formBuilder.group({
       name: [hasDraftProduct && hasDraftProduct.name && hasDraftProduct.name === 'new item' ? ''
-       :hasDraftProduct.name, Validators.required],
+       : hasDraftProduct.name, Validators.required],
       categoryId: hasDraftProduct && hasDraftProduct.categoryId ? hasDraftProduct.categoryId : 0,
       description: hasDraftProduct && hasDraftProduct.description ? hasDraftProduct.description : '',
       picture: hasDraftProduct && hasDraftProduct.picture ? hasDraftProduct.picture : '',
@@ -73,16 +73,16 @@ export class ProductService {
   }
 
   create(): void {
-    let hasDraftProduct=this.model.draft<Product>(Tables.products, 'isDraft');
+    const hasDraftProduct = this.model.draft<Product>(Tables.products, 'isDraft');
     if (!hasDraftProduct) {
       this.model.create<Product>(Tables.products, {
         name: 'new item',
         businessId: this.model.active<Business>(Tables.business).id,
         isDraft: true,
         active: false,
-        taxId:this.model.findByFirst<Taxes>(Tables.taxes,'isDefault',true).id,
-        description:'',
-        picture:'/assets/icons/add-image-placeholder.png',
+        taxId: this.model.findByFirst<Taxes>(Tables.taxes, 'isDefault', true).id,
+        description: '',
+        picture: '/assets/icons/add-image-placeholder.png',
         isCurrentUpdate: false,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -176,7 +176,7 @@ export class ProductService {
 
   }
 
- 
+
 
 
   saveProduct() {
@@ -193,6 +193,6 @@ export class ProductService {
     }
   }
 
- 
+
 
 }

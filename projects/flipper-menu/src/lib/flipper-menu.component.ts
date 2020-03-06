@@ -1,9 +1,9 @@
-import {
-  Component, OnInit, Output, EventEmitter, ChangeDetectorRef, NgZone
+import { Component, OnInit, Output, EventEmitter, ChangeDetectorRef, NgZone
 } from '@angular/core';
 import { trigger, transition, animate } from '@angular/animations';
-import { Menu, Business, Branch, User, MenuEntries, PouchDBService, MainModelService, Tables, PouchConfig } from '@enexus/flipper-components';
-import { Router, NavigationEnd } from '@angular/router';
+import { Menu, Business, Branch, User, MenuEntries, PouchDBService, MainModelService, Tables,
+   PouchConfig } from '@enexus/flipper-components';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'flipper-menu',
@@ -61,19 +61,19 @@ export class FlipperMenuComponent implements OnInit {
   data: MenuEntries = null;
   user: User = null;
 
-  business$:Business[]=[];
-  branches$:Branch[]=[];
+  business$: Business[] = [];
+  branches$: Branch[] = [];
 
-  //loadAll
+  // loadAll
 
-  allBusiness$:Business[]=[];
-  allBranches$:Branch[]=[];
+  allBusiness$: Business[] = [];
+  allBranches$: Branch[] = [];
 
   user$: User = null;
 
   constructor(private database: PouchDBService, private model: MainModelService, private route: Router,
-    private ref: ChangeDetectorRef,
-    private ngZone: NgZone) {
+              private ref: ChangeDetectorRef,
+              private ngZone: NgZone) {
     this.database.connect(PouchConfig.bucket);
   }
 
@@ -83,31 +83,34 @@ export class FlipperMenuComponent implements OnInit {
     this.menu = this.model.loadAll<Menu>(Tables.menu).filter(m => m.isSetting === false);
     this.settingMenu = this.model.loadAll<Menu>(Tables.menu).find(m => m.isSetting === true);
   }
- 
-  async ngOnInit() {  
+
+  async ngOnInit() {
     this.loadMenu();
 
-    if(PouchConfig.canSync){
+    if (PouchConfig.canSync) {
       this.database.sync(PouchConfig.syncUrl);
     }
     await this.database.getChangeListener().subscribe(data => {
-      if (data && data.change && data.change.docs) {
 
-        for (let i = 0; i < data.change.docs.length; i++) {
+      if (data && data.change && data.change.docs) {
+        for (const doc of data.change.docs) {
           this.ngZone.run(() => {
 
-            if (data.change && data.change.docs[i] && data.change.docs[i]['_id'] && data.change.docs[i]['_id']===PouchConfig.Tables.user) {
-              this.user$ = data.change.docs[i];
+            if (doc &&
+              doc._id && doc._id === PouchConfig.Tables.user) {
+              this.user$ = doc;
             }
 
-            if (data.change.docs[i] && this.user$ && data.change.docs[i]['_id'] && data.change.docs[i]['_id']===PouchConfig.Tables.business) {
-               this.allBusiness$=data.change.docs[i]["businesses"].filter(bus=>bus.userId===this.user$.id);
-                this. updateBusiness();
-                this.updateBranch();
+            if (doc && this.user$ &&
+              doc._id && doc._id === PouchConfig.Tables.business) {
+               this.allBusiness$ = doc.businesses.filter(bus => bus.userId === this.user$.id);
+               this. updateBusiness();
+               this.updateBranch();
             }
 
-            if (data.change.docs[i] && this.defaultBusiness$ && data.change.docs[i]['_id'] && data.change.docs[i]['_id']===PouchConfig.Tables.branches) {
-                this.allBranches$=data.change.docs[i]['branches'];
+            if (doc && this.defaultBusiness$ &&
+              doc._id && doc._id === PouchConfig.Tables.branches) {
+                this.allBranches$ = doc.branches;
                 this.updateBranch();
             }
 
@@ -115,33 +118,33 @@ export class FlipperMenuComponent implements OnInit {
 
           });
         }
-       
+
         this.ref.detectChanges();
       }
     });
 
     this.database.get(PouchConfig.Tables.user).then(result => {
-      if(result){
-        this.user$=result;
+      if (result) {
+        this.user$ = result;
       }
     }, error => {
       console.error(error);
     });
 
     this.database.get(PouchConfig.Tables.business).then(result => {
-      if(result && this.user$){
-        this.allBusiness$=result['businesses'].filter(bus=>bus.userId===this.user$.id);
+      if (result && this.user$) {
+        this.allBusiness$ = result.businesses.filter(bus => bus.userId === this.user$.id);
         this. updateBusiness();
       }
     }, error => {
       console.error(error);
     });
 
-  this.database.get(PouchConfig.Tables.branches).then(result => {
-      if(result && this.defaultBusiness$){
-        this.allBranches$=result['branches'];
+    this.database.get(PouchConfig.Tables.branches).then(result => {
+      if (result && this.defaultBusiness$) {
+        this.allBranches$ = result.branches;
         this.updateBranch();
-       
+
       }
     }, error => {
       console.error(error);
@@ -157,15 +160,15 @@ export class FlipperMenuComponent implements OnInit {
     this.ref.detectChanges();
   }
 
-  private updateBusiness(){
-    this.business$=this.allBusiness$.filter(bus=>bus.active===false);
-    this.defaultBusiness$ = this.allBusiness$.find(b =>b.active === true);
+  private updateBusiness() {
+    this.business$ = this.allBusiness$.filter(bus => bus.active === false);
+    this.defaultBusiness$ = this.allBusiness$.find(b => b.active === true);
     this.switchedBusiness.emit(this.defaultBusiness$);
   }
 
-  private updateBranch(){
-    this.branches$=this.allBranches$.filter(branch =>branch.businessId===this.defaultBusiness$.id && branch.active===false);
-    this.defaultBranch$ = this.allBranches$.find(b =>b.businessId===this.defaultBusiness$.id && b.active === true);
+  private updateBranch() {
+    this.branches$ = this.allBranches$.filter(branch => branch.businessId === this.defaultBusiness$.id && branch.active === false);
+    this.defaultBranch$ = this.allBranches$.find(b => b.businessId === this.defaultBusiness$.id && b.active === true);
     this.switchedBranch.emit(this.defaultBranch$);
   }
 
@@ -204,7 +207,7 @@ export class FlipperMenuComponent implements OnInit {
     if (!business == null) {
       throw new Error('No current default business set.');
     }
-    let businesses: Business[] = [];
+    const businesses: Business[] = [];
     this.allBusiness$.forEach(bus => {
       if (bus.id === business.id) {
         bus.active = true;
@@ -215,7 +218,7 @@ export class FlipperMenuComponent implements OnInit {
     });
 
     this.canViewBranches = false;
-    this.allBusiness$=businesses;
+    this.allBusiness$ = businesses;
     this.database.put(PouchConfig.Tables.business, { businesses: this.allBusiness$ });
     this.updateBusiness();
     this.updateBranch();
@@ -228,9 +231,9 @@ export class FlipperMenuComponent implements OnInit {
     if (!branch == null) {
       throw new Error('No current default business set.');
     }
-    let branches: Branch[] = [];
+    const branches: Branch[] = [];
     this.allBranches$.forEach(bus => {
-      if(this.defaultBusiness$.id===bus.businessId){
+      if (this.defaultBusiness$.id === bus.businessId) {
         if (bus.id === branch.id) {
           bus.active = true;
         } else {
@@ -238,37 +241,37 @@ export class FlipperMenuComponent implements OnInit {
         }
       }
       branches.push(bus);
-    
+
     });
-    this.allBranches$=branches;
+    this.allBranches$ = branches;
     this.database.put(PouchConfig.Tables.branches, { branches: this.allBranches$ });
     this.updateBranch();
 
     this.ref.detectChanges();
   }
 
-  router(menu: Menu,isSetting:boolean) {
-    let menus:Menu[]=this.menu;
-    let menuPusher:Menu[]=[];
- 
-    if(isSetting){
-      menus.filter(m=>{
-          m.active=false;
+  router(menu: Menu, isSetting: boolean) {
+    const menus: Menu[] = this.menu;
+    const menuPusher: Menu[] = [];
+
+    if (isSetting) {
+      menus.filter(m => {
+          m.active = false;
           menuPusher.push(m);
       });
-      this.settingMenu.active=true;
-    }else{
-      menus.filter(m=>{
-        if(m.id===menu.id){
-          m.active=true;
-        }else{
-          m.active=false;
+      this.settingMenu.active = true;
+    } else {
+      menus.filter(m => {
+        if (m.id === menu.id) {
+          m.active = true;
+        } else {
+          m.active = false;
         }
         menuPusher.push(m);
       });
-  
+
     }
-    this.menu=menuPusher;
+    this.menu = menuPusher;
     this.route.navigate([menu.route]);
   }
 

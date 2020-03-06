@@ -20,12 +20,12 @@ export class ProductsComponent implements OnInit {
   set applySearch(value: string) {
     this.searching = value;
   }
- 
+
 
   get applySearch(): string {
     return this.searching;
   }
- constructor(private router: Router,public product: ProductService) {}
+ constructor(private router: Router, public product: ProductService) {}
 
   ngOnInit() {
     this.product.hasDraft();

@@ -92,8 +92,8 @@ export class CalculatorComponent {
       return;
     }
 
-    if (!(event.target['type'] === 'search' || event.target['type']  === 'number' ||
-     event.target['type']  === 'text') && ( event.key === 'Enter' ||  event.key === 'End') ) {
+    if (!(event.target.type === 'search' || event.target.type  === 'number' ||
+     event.target.type  === 'text') && ( event.key === 'Enter' ||  event.key === 'End') ) {
         this.collectCash();
       }
 
@@ -198,12 +198,14 @@ export class CalculatorComponent {
       this.currentOrder.taxAmount = this.totalPipe.
       transform<OrderDetails>(this.currentOrder.orderItems, 'taxAmount');
 
-      this.currentOrder.saleTotal=this.currentOrder.subTotal+this.currentOrder.taxAmount ;
+      this.currentOrder.saleTotal = this.currentOrder.subTotal + this.currentOrder.taxAmount ;
       this.currentOrder.cashReceived = this.currentNumber;
 
-      this.currentOrder.cashReceived =this.currentOrder.cashReceived?this.currentOrder.cashReceived :this.currentOrder.saleTotal;
+      this.currentOrder.cashReceived = this.currentOrder.cashReceived ?
+      this.currentOrder.cashReceived : this.currentOrder.saleTotal;
 
-      this.currentOrder.customerChangeDue = this.currentOrder.cashReceived > 0 ? this.currentOrder.cashReceived - this.currentOrder.saleTotal : 0.00;
+      this.currentOrder.customerChangeDue = this.currentOrder.cashReceived > 0 ?
+       this.currentOrder.cashReceived - this.currentOrder.saleTotal : 0.00;
 
       this.saveOrderUpdatedEmit.emit(this.currentOrder);
     }
@@ -220,7 +222,7 @@ export class CalculatorComponent {
     if (!this.currentOrder) {
       return this.dialog.message('Failure Message', 'No current order created!', 'Failure', 'SIZE_SM');
     }
-    this.currentOrder.orderItems.forEach(item=>{
+    this.currentOrder.orderItems.forEach(item => {
       if (item.quantity <= 0) {
               this.dialog.message('Failure Message', 'Negative quantity is not allowed.', 'Failure', 'SIZE_SM').subscribe(() => {
               });
@@ -237,7 +239,7 @@ export class CalculatorComponent {
     if (this.currentOrder.customerChangeDue < 0) {
       return this.dialog.message('Failure Message', 'Cash received can\'t less than 0!', 'Failure', 'SIZE_SM');
     }
-    
+
     if (this.currentOrder.customerChangeDue === 0) {
       this.currentOrder.cashReceived = parseFloat(this.currentOrder.saleTotal);
       this.currentOrder.customerChangeDue = parseFloat(this.currentOrder.cashReceived) - parseFloat(this.currentOrder.saleTotal);

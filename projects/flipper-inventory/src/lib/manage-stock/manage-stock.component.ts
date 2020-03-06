@@ -28,7 +28,7 @@ export class ManageStockComponent implements OnInit {
 
   @Output() stockControlEmit = new EventEmitter < StockControl[] > ();
 
-  constructor(public stock: StockService,private cd: ChangeDetectorRef) { }
+  constructor(public stock: StockService, private cd: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.stock.init();
@@ -92,10 +92,10 @@ export class ManageStockComponent implements OnInit {
         } else if (draft.reason === 'Re-counted') {
               stock.currentStock = qty;
         } else {
-          if(!(qty===null || qty===0)){
+          if (!(qty === null || qty === 0)) {
                 stock.currentStock = previously.quantity <= 0 ? 0 : previously.quantity - qty;
           }
-         
+
         }
         this.stock.update(stock);
       }
@@ -115,7 +115,7 @@ export class ManageStockComponent implements OnInit {
     this.isFocused = '';
   }
 
-  
+
   toggled(stockControl: StockControl, key: string, bol: boolean) {
     bol = !bol;
     stockControl[key] = bol;

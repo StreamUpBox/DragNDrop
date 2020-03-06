@@ -17,7 +17,7 @@ export class FlipperBasicPosComponent  {
 
   @Output() updateQtyEmit = new EventEmitter < OrderDetails > ();
   @Output() searchEmitValue = new EventEmitter < string > ();
-  @Output() addToCartEmit = new EventEmitter < {variant: Variant, quantity: number} > ();
+  @Output() addToCartEmit = new EventEmitter < {variant: Variant, quantity: number,tax:string} > ();
   @Output() saveOrderUpdatedEmit = new EventEmitter < Order > ();
   @Output() updateOrderDetailsEmit = new EventEmitter < object > ();
   @Output() didCollectCashEmit = new EventEmitter < boolean > ();
@@ -101,6 +101,9 @@ export class FlipperBasicPosComponent  {
    if (event.shiftKey && event.key === 'K') {// shift + k
       this. keyBoardShortCuts();
     }
+    if (event.ctrlKey && event.key === 'N') {// shift + k
+        this. addCartItem();
+    }
   }
 
   constructor(
@@ -118,14 +121,15 @@ export class FlipperBasicPosComponent  {
   }
 
 
-  addToCart(variant: Variant, quantity= 1) {
+  addToCart(variant: Variant, quantity= 1,tax=null) {
 
     if (variant.priceVariant.retailPrice === 0 || variant.priceVariant.retailPrice === 0.00) {
       return this.dialog.open(UpdatePriceDialogComponent, DialogSize.SIZE_SM, variant.priceVariant.retailPrice).subscribe(result => {
         if (result !== 'close') {
           if (result.price && result.price > 0) {
             variant.priceVariant.retailPrice = result.price;
-            this.addToCartEmit.emit({variant, quantity});
+           
+            this.addToCartEmit.emit({variant, quantity,tax});
           }
 
         }
@@ -133,17 +137,20 @@ export class FlipperBasicPosComponent  {
       });
 
     } else {
-      this.addToCartEmit.emit({variant, quantity});
+      this.addToCartEmit.emit({variant, quantity,tax});
     }
 
   }
   updatePrice(item: OrderDetails) {
     return this.dialog.open(UpdatePriceDialogComponent, DialogSize.SIZE_SM, item.price).subscribe(result => {
-      if (result !== 'close' || result.price > 0) {
+      
+      if (result !== 'close') {
+      if (result.price  && result.price > 0) {
         item.price = result.price;
         item.subTotal = item.quantity * item.price;
         this.updateQty(item);
       }
+    }
 
     });
   }
@@ -152,8 +159,8 @@ export class FlipperBasicPosComponent  {
     return this.dialog.open(AddCartItemDialogComponent, DialogSize.SIZE_MD).subscribe(result => {
       if (result !== 'close' || result.price > 0 || result.quantity > 0) {
 
-        const variation: Variant = {name: result.name, SKU: 'p' + Math.floor(Math.random() * 100), productName: result.name,
-        unit: '',
+        const variation: Variant = {unit:result.unit,name: result.name, SKU: 'p' + Math.floor(Math.random() * 100), productName: result.name,
+        
         priceVariant: {
                    id: 0,
                    priceId: 0,
@@ -172,7 +179,7 @@ export class FlipperBasicPosComponent  {
         }
       };
 
-        this.addToCart(variation, result.quantity);
+        this.addToCart(variation, result.quantity,result.tax);
 
       }
 
@@ -199,9 +206,14 @@ export class FlipperBasicPosComponent  {
 
     order.subTotal = this.totalPipe.
     transform<OrderDetails>(order.orderItems, 'subTotal');
+    order.taxAmount = this.totalPipe.
+    transform<OrderDetails>(order.orderItems, 'taxAmount');
+    
+    order.saleTotal=order.subTotal+order.taxAmount ;
 
+    order.cashReceived =order.cashReceived?order.cashReceived :order.saleTotal;
     order.customerChangeDue = order.cashReceived > 0 ?
-    order.cashReceived - order.subTotal : 0.00;
+    order.cashReceived - order.saleTotal : 0.00;
 
     order.customerChangeDue = order.customerChangeDue;
 
@@ -214,7 +226,7 @@ export class FlipperBasicPosComponent  {
     this.action = action;
     if (this.action === '-') {
       item.quantity = item.quantity - 1;
-      if (item.quantity < 0) {
+      if (item.quantity <= 0) {
         this.dialog.message('Failure Message', 'Negative quantity is not allowed.', 'Failure', 'SIZE_SM').subscribe(() => {
           item.quantity = lastQty;
         });

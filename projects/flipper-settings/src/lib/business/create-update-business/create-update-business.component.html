@@ -1,5 +1,5 @@
 <!-- main app container -->
-<flipper-header *ngIf="!hasBusiness"></flipper-header>
+<flipper-header></flipper-header>
 
   <br /> <br />
 
@@ -26,12 +26,12 @@
                     <table>
                         <tr>
                             <td>
-                                <div class="col-5">
+                                <div class="col-5" *ngIf="types$.length > 0">
                                     <div class="field-label">
                                         <label for="email">Your business type?</label>
                                     </div>
                 
-                                    <select class="select" formControlName="typeId" #t (change)="getBusinessCategory(t.value)"  [class.is-invalid]="submitted && f.typeId.errors">
+                                    <select class="select" [formControlName]="'typeId'" #t (change)="getBusinessCategory(t.value)"  [class.is-invalid]="submitted && f.typeId.errors">
                                         <option *ngFor="let item of types$; let i = index;" [value]="item.id">{{item.name}}</option>
                                     </select>
                                     <mat-error *ngIf="submitted && f.typeId.errors">
@@ -42,11 +42,11 @@
                             </td>
                             <td>
                                 
-                                <div class="col-5">
+                                <div class="col-5" *ngIf="searchCategoryByTypes$.length > 0">
                                     <label>Your business category?</label>
                 
-                                    <select  class="select" formControlName="businessCategoryId"   [class.is-invalid]="submitted && f.businessCategoryId.errors">
-                                        <option *ngFor="let item of categories$; let i = index;" [value]="item.id">{{item.name}}</option>
+                                    <select  class="select" [formControlName]="'businessCategoryId'"   [class.is-invalid]="submitted && f.businessCategoryId.errors">
+                                        <option *ngFor="let item of searchCategoryByTypes$; let i = index;" [value]="item.id">{{item.name}}</option>
                                     </select>
                                     <mat-error *ngIf="submitted && f.businessCategoryId.errors">
                                         <div *ngIf="f.businessCategoryId.errors.required">Business category is required</div>
@@ -65,7 +65,7 @@
     
                     <div class="col-5">
                         <label>Business name</label>
-                        <input  class="input" type="text" formControlName="name"  [class.is-invalid]="submitted && f.name.errors" />
+                        <input  class="input" type="text" [formControlName]="'name'"  [class.is-invalid]="submitted && f.name.errors" />
                        
                         <mat-error *ngIf="submitted && f.name.errors">
                             <div *ngIf="f.name.errors.required">Business name is required</div>
@@ -76,7 +76,7 @@
                 <div class=" col-5">
                     <label>Currency</label>
                    
-                    <select class="select"  formControlName="currency" [class.is-invalid]="submitted && f.currency.errors">
+                    <select class="select"  [formControlName]="'currency'" [class.is-invalid]="submitted && f.currency.errors">
                         <option *ngFor="let cy of currencies; let i = index;"  [value]="cy.symbol"> {{cy.name}}</option>
                         
                     </select>
@@ -89,7 +89,7 @@
                 <div class=" col-5">
                     <label>Country</label>
 
-                    <select class="select"  formControlName="country" [class.is-invalid]="submitted && f.country.errors">
+                    <select class="select"  [formControlName]="'country'" [class.is-invalid]="submitted && f.country.errors">
                         <option *ngFor="let cc of countries" [value]="cc" > {{cc}}</option>
         
                     </select>
@@ -103,7 +103,7 @@
                 <div class=" col-5">
                     <label>Timezone(utc)</label>
 
-                    <select class="select"  formControlName="timeZone" [class.is-invalid]="submitted && f.timeZone.errors">
+                    <select class="select"  [formControlName]="'timeZone'" [class.is-invalid]="submitted && f.timeZone.errors">
                         <option *ngFor="let z of timezones" [value]="z.utc && z.utc.length > 0?z.utc[0]:''"> {{z.value}} - {{z.text}}</option>
         
                     </select>

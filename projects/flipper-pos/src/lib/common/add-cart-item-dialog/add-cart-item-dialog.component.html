@@ -1,50 +1,87 @@
 <h1 mat-dialog-title>Add Cart Item</h1>
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div>
+            <mat-error *ngIf="submitted && formControl.price.errors">
+                <div *ngIf="formControl.price.errors.required">Price is required.</div>
+                <div *ngIf="formControl.price.errors.min">Price entered is negative number. </div>
+            </mat-error>
 
-<div>
-    <mat-error *ngIf="submitted && formControl.price.errors">
-        <div *ngIf="formControl.price.errors.required">Price is required</div>
-    </mat-error>
-   
-        <table style="width: 100%;">
-    
-            <tr class="tr" [class.trIsFocused]="isFocused=='price'" style="border-top: 1px #d5d9dc solid; border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
-                
-                <td class="td"  [class.tdIsFocused]="isFocused=='price'">
-                    Price
-                  </td>
-                  <td style="width:60%">
-                    <input type="number" class="input" formControlName="price"
-                    (focus)="focusing('price')" (focusout)="focusingOut()" autofocus placeholder="0.00" />
-                    
-                  </td>
-             </tr>
-             <tr class="tr" [class.trIsFocused]="isFocused=='quantity'" style=" border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
-                
-                <td class="td"  [class.tdIsFocused]="isFocused=='quantity'">
-                    Quantity
-                  </td>
-                  <td style="width:60%">
-                    <input type="number" class="input" formControlName="quantity"
-                    (focus)="focusing('quantity')" (focusout)="focusingOut()" autofocus placeholder="0" />
-                  </td>
-             </tr>
-             <tr class="tr" [class.trIsFocused]="isFocused=='name'" style="border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
-                
-                <td class="td"  [class.tdIsFocused]="isFocused=='name'">
-                    Name
-                  </td>
-                  <td style="width:60%">
-                    <input type="text" class="input" formControlName="name"
-                    (focus)="focusing('name')" (focusout)="focusingOut()" autofocus placeholder="Customer Amount" />
-                  </td>
-             </tr>
-        </table>    
-  
+            <mat-error *ngIf="submitted && formControl.quantity.errors">
+                <div *ngIf="formControl.quantity.errors.required">Quantity is required  </div>
+                <div *ngIf="formControl.quantity.errors.min">Quantity entered is negative number. </div>
+            </mat-error>
+        
+              <table style="width: 100%;">
+          
+                  <tr class="tr" [class.trIsFocused]="isFocused=='price'" style="border-top: 1px #d5d9dc solid; border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
+                      
+                      <td class="td"  [class.tdIsFocused]="isFocused=='price'">
+                          Price
+                        </td>
+                        <td style="width:60%">
+                          <input type="number" class="input" formControlName="price"
+                          (focus)="focusing('price')" (focusout)="focusingOut()" autofocus placeholder="0.00" />
+                          
+                        </td>
+                  </tr>
+                  <tr class="tr" [class.trIsFocused]="isFocused=='quantity' || isFocused=='unit'" style=" border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
+                      
+                      <td class="td"  [class.tdIsFocused]="isFocused=='quantity' || isFocused=='unit'">
+                          Quantity/unit
+                        </td>
+                        <td style="width:60%">
+                        <table style="width:100%">
+                          <tr>
+                            <td style="width:50%">
+                              <input type="number" class="input" formControlName="quantity"
+                              (focus)="focusing('quantity')" (focusout)="focusingOut()" autofocus placeholder="0" />
+                            </td>
+                          <td style="width:50%">
+                            <mat-select class="select" formControlName="unit" placeholder="Choose Unit"
+                            (focus)="focusing('unit')"  (focusout)="focusingOut()">
+                                    <mat-option *ngFor="let unit of units" [value]="unit.value">
+                                    {{unit.name}}
+                                    </mat-option>
+                          </mat-select>
+                          </td>
+                          </tr>
+                        </table>
+          
+                        </td>
+                  </tr>
+                  <tr class="tr" [class.trIsFocused]="isFocused=='name'" style="border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
+                      
+                      <td class="td"  [class.tdIsFocused]="isFocused=='name'">
+                        Description
+                        </td>
+                        <td style="width:60%">
+                          <input type="text" class="input" formControlName="name"
+                          (focus)="focusing('name')" (focusout)="focusingOut()" autofocus placeholder="Description(item or service name)" />
+                        </td>
+                  </tr>
 
-</div>
-<div class="mt-3 mb-3" style="float: right;">
-    <button mat-button (click)="dialogRef.close('close')" class="ml-3" cdkFocusInitial>Cancel</button>
-    <button  type="submit" class="button-default button--success ml-1" cdkFocusInitial>Add</button>
-</div>
+                  <tr style=" border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;" class="tr" [class.trIsFocused]="isFocused=='taxes'">
+                    <td class="td" [class.tdIsFocused]="isFocused=='taxes'">
+                      <label>Tax</label>
+                    </td>
+                    <td style="width: 60%;">
+
+                      <mat-select class="select" formControlName="tax" placeholder="Choose Tax"
+                        (focus)="focusing('taxes')"
+                        (focusout)="focusingOut()">
+                        <mat-option *ngFor="let tax of taxes$" [value]="tax.percentage">
+                          {{tax.name}} ({{tax.percentage}}%)
+                        </mat-option>
+                      </mat-select>
+
+                    </td>
+                  </tr>
+
+              </table>    
+        
+      </div>
+      <div class="mt-3 mb-3" style="float: right;">
+          <button mat-button (click)="dialogRef.close('close')" class="ml-3" cdkFocusInitial>Cancel</button>
+          <button  type="submit" class="button-default button--success ml-1" cdkFocusInitial>Add</button>
+      </div>
 </form>

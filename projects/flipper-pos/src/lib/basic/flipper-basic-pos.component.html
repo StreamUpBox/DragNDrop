@@ -54,10 +54,7 @@
 
                 <span>
                     <a class="link" (click)="updatePrice(item)">
-                      {{item.price}}
-                    </a>
-                   
-                    <span *ngIf="item.variant">{{item.variant.unit?'/ '+item.variant.unit:''}}</span> 
+                     {{currency}} {{item.price}}</a><span *ngIf="item.unit">{{item.unit?'/'+item.unit:''}}</span> 
                </span>
                </span>
                 <span class="details" *ngIf="item.product; else noProduct">{{item.product.name}}</span>
@@ -67,7 +64,7 @@
                   </span>
                 </ng-template>
                 <span class="details">
-                  <div class="oval"></div> &nbsp;&nbsp; Quantity({{item.quantity}})
+                  <div class="oval"></div> &nbsp;&nbsp; Quantity({{item.quantity}}<span *ngIf="item.unit">{{item.unit?'/'+item.unit:''}}</span>)
                 </span>
               </div>
 

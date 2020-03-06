@@ -1,0 +1,13 @@
+{
+  "_id": "users",
+      "active": true,
+      "createdAt": "2020-02-29T21:18:28.389918",
+      "email": "admin@yegobox.com",
+      "id": 1,
+      "ownerId": 1,
+      "name": "Yegobox Account",
+      "permissions": "",
+      "role": "Admin",
+      "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI2IiwianRpIjoiNWRmNDM3ZWZlMTdhZDZmOWIzMmIxNTU4NDlmMTQ3OWI0OGU5YTExMWYzN2JjNTY5MjAyNjQ3M2NjYTRkMmU1NzYxYTdhYWM3ZDIwNDkwYjEiLCJpYXQiOjE1ODMwMDM4OTAsIm5iZiI6MTU4MzAwMzg5MCwiZXhwIjoxNTk4NzI4Njg5LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.WGBmPwcpBobrE0qx3hkwtEPblZAzHW82_sf3lq-bSZCYyMrrycckMSsc-eAbXZq1FqAXcRQmsQ9rKcnnqiF8xHuIlRz3eJIIxjkTxWeA0agKFG8E0CeImIFEHKDe2o7wxAhCPAc-G8QGclELNR-O_NX-AcfH2PH5aoILDFShrNMS16mQpH5QA_W0N4af2cmZuSuRohJlYDUToFCVU-uilcZkghUgVxj1C9QWupNkbcl_irZmxJwULUHO8zxuVl3_Vi46iKNf3U_zaZ5P2oXyVZv1FC958TreXGKYiKPQ5BA_Z0aZBuodOdf1ZGDgsWioD4suB7O0yPHYL1kOW3nD0CeUHaUVgnNq5mA1247BkzH4SqYsshHewcl1eD_qex3-Rmv2G1NUIKrT1I-1dAs2LnK9cZyS72PF9ImQWeyouKWCIuGHR-wLDBpPpFbn4iH3VZsp9HFdSKwhowPaT1Xul5VVkVbhF-MTelt1mo5NSKoF0nc5taft3byL9dWdy-K4qTPOdQ_OIZp9w-miCIjjBiz5wyqCqBLdH8UyxCtrJd5dvF7-TtuAIGdCYV5T9JvduA8rGau1QMA0W_SIWyHI1cbg3jZZuyvldFny4Lx-p_WE5gvsTPdwccX9vfi2Bxol5DCzal_g6TfMd8kxvoSKVUG51y65Igaecpk6zGOjuIQ",
+      "updatedAt": "2020-02-29T21:18:28.390447"
+}

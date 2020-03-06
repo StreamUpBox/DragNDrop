@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { VariationService } from '../services/variation.service';
 import { StockService } from '../services/stock.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'flipper-list-products',
@@ -42,7 +43,7 @@ export class ListProductsComponent implements OnInit, OnDestroy {
   }
 
 
-  constructor(private totalPipe: CalculateTotalClassPipe, private stock: StockService,
+  constructor(private router: Router,private totalPipe: CalculateTotalClassPipe, private stock: StockService,
               public variant: VariationService, public product: ProductService) {
     this.dataSource = new MatTableDataSource([]);
     this.subscription = this.product.productsSubject.
@@ -86,10 +87,10 @@ export class ListProductsComponent implements OnInit, OnDestroy {
   }
 
   editProduct(product: Product) {
-    this.product.allowToAddProduct(true);
     product.isDraft = true;
     product.isCurrentUpdate = true;
     this.product.updateProduct(product);
+    this.router.navigate(['/add/product']);
   }
 
 

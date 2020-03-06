@@ -22,6 +22,7 @@ import { NotificationListComponent } from './notifications/notification.componen
 import { NotificationService } from './notifications/notification.service';
 import { GenerateBarcodeComponent } from './generate-barcode/generate-barcode.component';
 import { NgxBarcodeModule } from 'ngx-barcode';
+import { PouchDBService } from './services';
 @NgModule({
   imports: [
     CommonModule,
@@ -74,7 +75,7 @@ import { NgxBarcodeModule } from 'ngx-barcode';
     CalculateTotalClassPipe,
     MergeArryByIdPipe,
     ArrayRemoveItemPipe,
-    FindKeyPipe
+    FindKeyPipe,
   ]
 })
 export class FlipperComponentsModule {

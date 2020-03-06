@@ -1,5 +1,5 @@
 export class Types {
-  id?: number;
+  id?: any;
   name?: string;
   syncedOnline?: boolean;
   constructor(params: object = {}) {

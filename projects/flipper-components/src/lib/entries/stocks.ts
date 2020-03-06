@@ -1,17 +1,17 @@
 export class Stock {
 
-  id?: number;
-  branchId?: number;
-  variantId?: number;
-  reasonId?: number;
-  unitId?: number;
-  lowStock?: number;
-  currentStock?: number;
+  id?: any;
+  branchId?: any;
+  variantId?: any;
+  reasonId?: any;
+  unitId?: any;
+  lowStock?: any;
+  currentStock?: any;
   supplyPrice?: 0;
   retailPrice?: 0;
   wholeSalePrice?: 0;
   active?: boolean;
-  inStock?: number;
+  inStock?: any;
   syncedOnline?: boolean;
   canTrackingStock?: boolean;
   showlowStockAlert?: boolean;

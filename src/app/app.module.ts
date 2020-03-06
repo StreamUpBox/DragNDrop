@@ -11,12 +11,13 @@ import { FlipperDashboardModule } from 'flipper-dashboard';
 import { VendorsModule } from '@enexus/flipper-vendors';
 import { FlipperMenuModule } from 'flipper-menu';
 import { FlipperPosModule } from '@enexus/flipper-pos';
-import { FlipperComponentsModule } from '@enexus/flipper-components';
+import { FlipperComponentsModule, PouchDBService } from '@enexus/flipper-components';
 import { FlipperOfflineDatabaseModule } from '@enexus/flipper-offline-database';
 import { FlipperSettingsModule } from '@enexus/flipper-settings';
 import { FlipperInventoryModule } from '@enexus/flipper-inventory';
 import { FlipperFileUploadModule } from '@enexus/flipper-file-upload';
-import { MigrationModule } from './migration/migration.module';
+import { FlipperPaymentCardModule } from '@enexus/payment-card';
+// import { MigrationModule } from './migration/migration.module';
 
 
 @NgModule({
@@ -31,21 +32,21 @@ import { MigrationModule } from './migration/migration.module';
     // ColorModule,
     // FontModule,
     // FlipperButtonModule,
-    FlipperSettingsModule,
+    // FlipperSettingsModule,
     FlipperMenuModule,
-    FlipperDashboardModule,
-    FlipperEventModule,
+    FlipperPaymentCardModule,
+    // FlipperDashboardModule,
+    // FlipperEventModule,
     FlipperComponentsModule,
-    FlipperPosModule,
+    // FlipperPosModule,
     BrowserAnimationsModule,
-    FlipperOfflineDatabaseModule,
-    FlipperInventoryModule,
-    FlipperFileUploadModule,
-    MigrationModule.forRoot(),
+    // FlipperOfflineDatabaseModule,
+    // FlipperInventoryModule,
+    // FlipperFileUploadModule,
+    // MigrationModule.forRoot(),
     AppRoutingModule
   ],
   entryComponents: [],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {

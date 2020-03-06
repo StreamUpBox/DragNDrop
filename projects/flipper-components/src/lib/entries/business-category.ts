@@ -1,7 +1,7 @@
 export class BusinessCategory {
-  id?: number;
+  id?: any;
   name?: string;
-  typeId?: number;
+  typeId?: any;
   syncedOnline?: boolean;
   createdAt?: Date;
   updatedAt?: Date;

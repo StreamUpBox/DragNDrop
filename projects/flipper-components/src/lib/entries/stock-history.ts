@@ -1,11 +1,11 @@
 export class StockHistory {
-  id?: number;
-  orderId?: number;
-  variantId?: number;
+  id?: any;
+  orderId?: any;
+  variantId?: any;
   variantName?: string;
-  stockId?: number;
+  stockId?: any;
   reason?: string;
-  quantity: number;
+  quantity: any;
   isDraft?: boolean;
   isPreviously?: boolean;
   syncedOnline?: boolean;

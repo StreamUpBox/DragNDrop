@@ -75,6 +75,14 @@ export class ModelService extends ExecuteService {
     }
   }
 
+  row<T>(TABLE: string,COLUMNS:string, condition: string): T[] {
+    try {
+      return this.select(TABLE,COLUMNS).condition(condition).get<T>();
+    } catch (e) {
+      // TODO: notify any error in plugin to
+      throw new Error((`ERROR:${e}`));
+    }
+  }
 
   last<T>(): T {
     try {

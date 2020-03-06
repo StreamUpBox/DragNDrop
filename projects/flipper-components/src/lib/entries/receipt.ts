@@ -1,7 +1,7 @@
 export class Receipt {
-  id?: number;
+  id?: any;
   businessName?: string;
-  branchId?: number;
+  branchId?: any;
   digitalLogo?: string;
   printedLogo?: string;
   showLocation?: string;

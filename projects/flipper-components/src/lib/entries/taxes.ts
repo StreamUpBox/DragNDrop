@@ -1,8 +1,8 @@
 export class Taxes {
-  id?: number;
+  id?: any;
   name?: string;
-  percentage?: number;
-  businessId?: number;
+  percentage?: any;
+  businessId?: any;
   active?: boolean;
   isDefault?: boolean;
   syncedOnline?: boolean;

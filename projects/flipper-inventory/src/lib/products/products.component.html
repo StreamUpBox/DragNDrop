@@ -1,25 +1,23 @@
 <div @products>
-  
-  <flipper-create-product (savedItem)="saveProductChange($event)" *ngIf="product.enableToAdd"></flipper-create-product>
+  <div class="mt-5 ml-5 mb-4 mr-5">
+        <div class="grid-2-at-medium grid-row-space-line">
+              <div class="col">
+              <table>
+                <tr>
+                  <td>
+                    <input  class="input" type="text" (keyup)="applySearch = $event.target.value" placeholder="Filter a product" />
+                  </td>
+                  <td>
+                    <button class="button mt-2" style="float:right;" (click)="createProduct()">Create item</button>
+                  </td>
+                </tr>
+              </table>
+                
+              </div>
+          <div class="col">
+            <flipper-list-products [applySearch]="applySearch"></flipper-list-products>
+          </div>
 
-  <div *ngIf="!product.enableToAdd" class="mt-5 ml-5 mb-4 mr-5">
-    <div class="grid-2-at-medium grid-row-space-line">
-      <div class="col">
-       <table>
-         <tr>
-           <td>
-            <input  class="input" type="text" (keyup)="applySearch = $event.target.value" placeholder="Filter a product" />
-           </td>
-           <td>
-            <button class="button mt-2" style="float:right;" (click)="createProduct()">Create item</button>
-           </td>
-         </tr>
-       </table>
-         
-      </div>
-      <div class="col">
-        <flipper-list-products [applySearch]="applySearch"></flipper-list-products>
-      </div>
-
-    </div>
+        </div>
   </div>
+</div>

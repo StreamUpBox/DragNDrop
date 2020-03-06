@@ -7,13 +7,13 @@ import { Reason } from './entries/reason';
 export const APP_CONFIG = new InjectionToken<FlipperDBConfig[]>('APP_CONFIG');
 
 export enum TABLES {
-    USER = 'users',
+    USER = 'user',
     BUSINESS = 'business',
-    TYPES = 'types',
-    MENU = 'menu',
+    TYPES = 'businessTypes',
+    MENU = 'menus',
     BRANCHES = 'branches',
-    BUSINESSCATEGORY = 'businessCategory',
-    USERBUSINESS = 'userBusiness',
+    BUSINESSCATEGORY = 'businessCategories',
+    USERBUSINESS = 'businessUsers',
     TAXES = 'taxes',
     PRODUCTS = 'products',
     VARIANTS = 'variants',
@@ -23,8 +23,9 @@ export enum TABLES {
     ORDER= 'orders',
     ORDERDETAILS= 'orderDetails',
     STOCKHISTORY= 'stockHistory',
-    DEVICE= 'device',
-    RECEIPT= 'receipt',
+    DEVICE= 'devices',
+    RECEIPT= 'receipts',
+    SUBSCRIPTION='subscription',
 }
 
 export type TABLE =
@@ -45,7 +46,8 @@ export type TABLE =
   | TABLES.DEVICE
   | TABLES.RECEIPT
   | TABLES.STOCKHISTORY
-  | TABLES.BRANCHPRODUCTS;
+  | TABLES.BRANCHPRODUCTS
+  | TABLES.SUBSCRIPTION;
 
 
 
@@ -108,7 +110,8 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
         },
         {
             name: TABLES.BUSINESS,
-            query: ` id int(11) NOT NULL AUTO_INCREMENT,
+            query: ` 
+                id int(11) NOT NULL AUTO_INCREMENT,
                 name STRING,
                 country STRING,
                 currency STRING,
@@ -118,6 +121,7 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
                 userId int(11) NOT NULL,
                 typeId int(11) NOT NULL,
                 categoryId int(11) NOT NULL,
+                taxRate int(11) NOT NULL,
                 syncedOnline BOOL,
                 createdAt DATETIME,
                 updatedAt DATETIME,
@@ -126,7 +130,8 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
         },
         {
             name: TABLES.BRANCHES,
-            query: ` id int(11) NOT NULL AUTO_INCREMENT,
+            query: ` 
+                id int(11) NOT NULL AUTO_INCREMENT,
                 name STRING,
                 active BOOL,
                 businessId int(11) NOT NULL,
@@ -276,8 +281,6 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
                     discountAmount int(11) NULL,
                     discountRate int(11) NULL,
                     subTotal int(11) NULL,
-                    taxRate int(11) NULL,
-                    taxAmount int(11) NULL,
                     discountRate int(11) NULL,
                     discountAmount int(11) NULL,
                     note STRING NULL,
@@ -371,18 +374,6 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
             route: 'admin/settings',
             active: false,
             isSetting: true,
-        }
-    ],
-    defaultTaxes: [
-        {
-            name: 'no Tax',
-            percentage: 0,
-            businessId: 0,
-
-            active: true,
-            isDefault: true,
-            createdAt: new Date(),
-            updatedAt: new Date()
         }
     ],
     defaultReasons: [
@@ -513,7 +504,6 @@ export interface FlipperDBConfig {
     database: { name: string, engine: string };
     tables: Array<{ name: TABLE, query: string }>;
     defaultMenu: Array<Menu>;
-    defaultTaxes: Array<Taxes>;
     defaultReasons: Array<Reason>;
     defaultType: Array<{ name: string, category: any[] }>;
 }
@@ -537,3 +527,29 @@ export const Tables = {
     orderDetails: DEFAULT_FLIPPER_DB_CONFIG.database.name + '.' + TABLES.ORDERDETAILS,
     stockHistory: DEFAULT_FLIPPER_DB_CONFIG.database.name + '.' + TABLES.STOCKHISTORY,
 };
+
+export const PouchConfig = {
+    channel:localStorage.getItem("channel"),
+    bucket:localStorage.getItem("bucket"),
+    syncUrl:localStorage.getItem('syncUrl')+'/'+localStorage.getItem("bucket"),
+    canSync:JSON.parse(localStorage.getItem("canSync")),
+    Tables:{
+    user: TABLES.USER+"_"+localStorage.getItem("channel"),
+    business: TABLES.BUSINESS+"_"+localStorage.getItem("channel"),
+    branches: TABLES.BRANCHES+"_"+localStorage.getItem("channel"),
+    menus: TABLES.MENU,
+    businessTypes:TABLES.TYPES,
+    businessCategories:TABLES.BUSINESSCATEGORY,
+    businessUsers:TABLES.USERBUSINESS+"_"+localStorage.getItem("channel"),
+    taxes: TABLES.TAXES+"_"+localStorage.getItem("channel"),
+    variants:TABLES.VARIANTS+"_"+localStorage.getItem("channel"),
+    products: TABLES.STOCKS+"_"+localStorage.getItem("channel"),
+    branchProducts:TABLES.BRANCHPRODUCTS+"_"+localStorage.getItem("channel"),
+    reasons: TABLES.REASON+"_"+localStorage.getItem("channel"),
+    orders: TABLES.ORDER+"_"+localStorage.getItem("channel"),
+    orderDetails: TABLES.ORDERDETAILS+"_"+localStorage.getItem("channel"),
+    stockHistories:TABLES.STOCKHISTORY+"_"+localStorage.getItem("channel"),
+    subscription:TABLES.SUBSCRIPTION+"_"+localStorage.getItem("channel"),
+    }
+};
+//localStorage.setItem("lastname", "Smith");

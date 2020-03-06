@@ -16,7 +16,7 @@
           Stock Action
         </td>
         <td style="width:60%" colspan="2">
-          <mat-select class="select" placeholder="Select Reason" [disabled]="!stk.canTrackingStock"
+          <mat-select class="select" [(ngModel)]="stk.reason" name="stk.id+'lowStock'" placeholder="Select Reason" [disabled]="!stk.canTrackingStock"
             (selectionChange)="updateReason(stk,$event)" (focus)="focusing(stk.id+'reason')" (focusout)="focusingOut()">
             <mat-option *ngFor="let reason of stock.reasons" [value]="reason.value">
               {{reason.name}}
@@ -43,7 +43,7 @@
         </td>
         <td style="width:30%">
           <input class="input" style="width:100%" type="number" (input)="updateInput()" name="stk.id+'currentStock'"
-            [(ngModel)]="stk.currentStock" (focus)="focusing(stk.id+'current')" [disabled]="!stk.canTrackingStock"
+            [(ngModel)]="stk.currentStock" (focus)="focusing(stk.id+'current')" [disabled]="!stk.canTrackingStock || stk.reason==''"
             (focusout)="focusingOut()" placeholder="{{stk.currentStock}}" />
         </td>
         <td style="width:30%">

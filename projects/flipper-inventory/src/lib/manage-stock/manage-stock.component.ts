@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy,
    ChangeDetectorRef, EventEmitter, Output } from '@angular/core';
-import { Variant, Stock, ArrayRemoveItemPipe } from '@enexus/flipper-components';
+import { Variant, Stock } from '@enexus/flipper-components';
 import { StockService } from '../services/stock.service';
 
 export class StockControl {
@@ -28,9 +28,7 @@ export class ManageStockComponent implements OnInit {
 
   @Output() stockControlEmit = new EventEmitter < StockControl[] > ();
 
-  constructor(public stock: StockService,
-              private cd: ChangeDetectorRef,
-              private removeArrayItem: ArrayRemoveItemPipe) { }
+  constructor(public stock: StockService,private cd: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.stock.init();
@@ -94,7 +92,10 @@ export class ManageStockComponent implements OnInit {
         } else if (draft.reason === 'Re-counted') {
               stock.currentStock = qty;
         } else {
-          stock.currentStock = previously.quantity <= 0 ? 0 : previously.quantity - qty;
+          if(!(qty===null || qty===0)){
+                stock.currentStock = previously.quantity <= 0 ? 0 : previously.quantity - qty;
+          }
+         
         }
         this.stock.update(stock);
       }
@@ -113,6 +114,8 @@ export class ManageStockComponent implements OnInit {
   focusingOut() {
     this.isFocused = '';
   }
+
+  
   toggled(stockControl: StockControl, key: string, bol: boolean) {
     bol = !bol;
     stockControl[key] = bol;

@@ -4,7 +4,7 @@ import { Branch } from './branch';
 import { Menu } from './menu';
 
 export class MenuEntries {
-  id?: number;
+  id?: any;
   businesses: Business[];
   user: User;
   branches: Branch[];

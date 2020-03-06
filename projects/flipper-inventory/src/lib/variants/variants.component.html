@@ -1,5 +1,5 @@
 
-<flipper-regular-variants [product]="product" *ngIf="variant.allVariants.length == 1; else manyVariant"></flipper-regular-variants>
+<flipper-regular-variants [product]="product" *ngIf="didAddNew || variant.allVariants.length == 1; else manyVariant"></flipper-regular-variants>
 <ng-template #manyVariant>
    <flipper-added-variants [product]="product"></flipper-added-variants>
 </ng-template>

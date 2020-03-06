@@ -46,16 +46,47 @@
     <div>
 
       <div class="row" *ngIf="currentOrder">
-        <div class="col-3 totalAmounts">
-          <span class="amount-title">TOTAL TO BE PAID</span>
-          <span class="amount-number">{{currency}} {{currentOrder.subTotal | roundNumber}}</span>
-        </div>
+        <div class="col">
+          <table>
+            <tr *ngIf="currentOrder.subTotal">
+              <td>
+                <span class="amount-title1" style="font-size:11px!important">SUB-TOTAL</span>
+              </td>
+              <td>
+                <span class="amount-number1" style="font-size:11px!important">{{currency}} {{currentOrder.subTotal | roundNumber}}</span>
+              </td>
 
-        <div class="col-3 totalAmounts">
-          <span class="amount-title">CHANGE</span>
-          <span class="amount-number"
-            [ngClass]="currentOrder && currentOrder.customerChangeDue < 0?'colorToRed':'colorToBack'">{{currency}}
-            {{currentOrder.customerChangeDue | roundNumber}}</span>
+            </tr>
+            <tr *ngIf="currentOrder.taxAmount">
+              <td>
+                <span class="amount-title1" style="font-size:11px!important">VAT</span>
+              </td>
+              <td>
+                <span class="amount-number1" style="font-size:11px!important">{{currency}} {{currentOrder.taxAmount | roundNumber}}</span>
+              </td>
+
+            </tr>
+            <tr *ngIf="currentOrder.saleTotal" style="margin-top:1px; border-top: 2px #000 solid!important">
+              <td>
+                <span class="amount-title1">TOTAL TO BE PAID</span>
+              </td>
+              <td>
+                <span class="amount-number1">{{currency}} {{currentOrder.saleTotal | roundNumber}}</span>
+              </td>
+
+            </tr>
+            <tr *ngIf="currentOrder.customerChangeDue">
+              <td>
+                <span class="amount-title1">CHANGE</span>
+              </td>
+              <td>
+                <span class="amount-number1"
+                  [ngClass]="currentOrder && currentOrder.customerChangeDue < 0?'colorToRed':'colorToBack'">{{currency}}
+                  {{currentOrder.customerChangeDue | roundNumber}}
+                </span>
+              </td>
+            </tr>
+          </table>
         </div>
       </div>
       <div class="row" *ngIf="currentOrder">

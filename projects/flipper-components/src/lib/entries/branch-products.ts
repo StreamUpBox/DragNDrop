@@ -1,7 +1,7 @@
 export class BranchProducts {
-  id?: number;
-  branchId?: number;
-  productId?: number;
+  id?: any;
+  branchId?: any;
+  productId?: any;
   syncedOnline?: boolean;
   constructor(params: object = {}) {
     for (const name in params) {

@@ -1,21 +1,21 @@
-<form [formGroup]="product.form" style="height: 100%;">
+<form [formGroup]="product.form" style="height: 100%;"  @addProduct>
   <mat-toolbar class="toolbar" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px"
     fxLayoutGap.xs="0">
-    <div class="mt-3" fxFlex="25">
-      <img [src]="'./assets/icons/chevron-left.svg'" style="cursor: pointer;" (click)="product.openDiscardDialog()" class="icon-toggle">
+    <div class="mt-3" fxFlex="30">
+      <img [src]="'./assets/icons/chevron-left.svg'" style="cursor: pointer;" (click)="openDiscardDialog()" class="icon-toggle">
     </div>
-    <div class="container mt-3" fxFlex="50">
+    <div class="container mt-3" fxFlex="40">
       <h3 class="title align-center-at-medium">Let’s create an item.</h3>
     </div>
-    <div class="mt-2" fxFlex="25">
+    <div class="mt-2" fxFlex="30">
       <div style="float:right" >
         <button *ngIf="product.hasDraftProduct && product.hasDraftProduct.isCurrentUpdate" 
-        (click)="product.deleteProduct()"
+        (click)="deleteProduct()"
         class="mr-1 button-default button--destructive">
           Delete
         </button>
-  
-        <button class="button" (click)="onSubmit()">Save</button>
+        <!-- <button class="button-default mr-1 button--success" (click)="onSubmit('new')">Add New</button> -->
+        <button class="button" (click)="onSubmit('close')">Save & Close</button>
       </div>
      
     </div>
@@ -30,11 +30,9 @@
       <div class="card">
         <div class="card-body">
 
-
-
-          <div class="grid-2-at-medium grid-row-space-line">
-            <div class="col">
-              <h3>Details</h3>
+          <div class="grid-2-at-medium grid-row-space-line" >
+            <div class="col" style="float:left">
+              <h3 style="float:left">Details</h3>
             </div>
             <div class="col-5">
               <table style="width: 100%;">
@@ -97,7 +95,7 @@
                             (selectionChange)="updateItem('taxId',$event)" (focus)="focusing('taxes')"
                             (focusout)="focusingOut()">
                             <mat-option *ngFor="let tax of product.taxes$" [value]="tax.id">
-                              {{tax.name}}
+                              {{tax.name}} ({{tax.percentage}}%)
                             </mat-option>
                           </mat-select>
 
@@ -130,12 +128,12 @@
 
 
 
-          <div class="grid-2-at-medium grid-row-space-line mt-4">
-            <div class="col">
-              <h3>Price and Inventory </h3>
+          <div class="grid-2-at-medium grid-row-space-line mt-4" >
+            <div class="col" style="float:left">
+              <h3 style="float:left">Price and Inventory </h3>
             </div>
             <div class="col-5">
-                <flipper-variants [product]="product.hasDraftProduct" *ngIf="product.hasDraftProduct"></flipper-variants>
+                <flipper-variants [didAddNew]="didAddNew" [product]="product.hasDraftProduct" *ngIf="product.hasDraftProduct"></flipper-variants>
             </div>
 
 

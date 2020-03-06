@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { FlipperMenuComponent } from './flipper-menu.component';
 import { CommonModule } from '@angular/common';
-import { FlipperComponentsModule } from '@enexus/flipper-components';
+import { FlipperComponentsModule, PouchDBService } from '@enexus/flipper-components';
+import { VendorsModule } from '@enexus/flipper-vendors';
 
 
 
@@ -9,8 +10,10 @@ import { FlipperComponentsModule } from '@enexus/flipper-components';
   declarations: [FlipperMenuComponent],
   imports: [
     CommonModule,
+    VendorsModule,
     FlipperComponentsModule
   ],
-  exports: [FlipperMenuComponent]
+  exports: [FlipperMenuComponent],
+  providers: [PouchDBService],
 })
 export class FlipperMenuModule { }

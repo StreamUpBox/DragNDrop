@@ -1,14 +1,14 @@
 export class PriceVariant {
-  id?: number;
-  priceId?: number;
-  variantId?: number;
-  minUnit?: number;
-  maxUnit?: number;
-  retailPrice?: number;
-  supplyPrice?: number;
-  wholeSalePrice?: number;
-  discount?: number;
-  markup?: number;
+  id?: any;
+  priceId?: any;
+  variantId?: any;
+  minUnit?: any;
+  maxUnit?: any;
+  retailPrice?: any;
+  supplyPrice?: any;
+  wholeSalePrice?: any;
+  discount?: any;
+  markup?: any;
   syncedOnline?: boolean;
   createdAt?: any;
   updatedAt?: any;

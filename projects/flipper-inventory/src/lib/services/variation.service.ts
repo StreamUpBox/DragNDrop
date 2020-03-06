@@ -21,7 +21,6 @@ export class VariationService {
   product: Product;
   variantsSubject: BehaviorSubject<Variant[]>;
   private readonly variantsMap = new Map<string, Variant>();
-
   set allVariants(variants: Variant[]) {
     this.myAllVariants = variants;
   }
@@ -34,6 +33,7 @@ export class VariationService {
               private model: MainModelService, private setting: SettingsService,
               private formBuilder: FormBuilder) {
     this.variantsSubject = new BehaviorSubject([]);
+    this.units = this.setting.units();
   }
 
   public loadAllVariants(product: Product): Observable<Variant[]> {
@@ -50,7 +50,7 @@ export class VariationService {
   }
 
   init(product: Product): void {
-    this.units = this.setting.units();
+   
     if (product) {
       this.product = product;
       this.regular(product);
@@ -79,8 +79,8 @@ export class VariationService {
     this.form = this.formBuilder.group({
       name: [!action && variant && variant.name ? variant.name : '', Validators.required],
       SKU: !action && variant && variant.SKU ? variant.SKU : this.generateSKU(this.product.id),
-      retailPrice: !action && variant && this.stock.findStock(variant.id).retailPrice ? this.stock.findStock(variant.id).retailPrice : 0.00,
-      supplyPrice: !action && variant && this.stock.findStock(variant.id).supplyPrice ? this.stock.findStock(variant.id).supplyPrice : 0.00,
+      retailPrice: [!action && variant && this.stock.findStock(variant.id).retailPrice ? this.stock.findStock(variant.id).retailPrice : 0.00,Validators.min(0)],
+      supplyPrice: [!action && variant && this.stock.findStock(variant.id).supplyPrice ? this.stock.findStock(variant.id).supplyPrice : 0.00,Validators.min(0)],
       unit: !action && variant && variant.unit ? variant.unit : '',
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -89,13 +89,18 @@ export class VariationService {
   }
 
   generateSKU(productId: number): string {
-    const variant = this.findFirst(productId);
-    const timestmp = new Date().setFullYear(new Date().getFullYear(), 0, 1);
-    const yearFirstDay = Math.floor(timestmp / 86400000);
-    const today = Math.ceil((new Date().getTime()) / 86400000);
-    const dayOfYear = today - yearFirstDay;
-    return this.d.getFullYear() + '' + dayOfYear + '' +  Math.ceil(variant ? variant.id + 1 : 1 / 12);
+    return this.d.getFullYear() + ''+ this.makeid(4);
   }
+  
+  makeid(length:number) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+       result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+ }
 
   create(variant: Variant): Variant | Variant[] {
     return this.model.create<Variant>(Tables.variants, variant);
@@ -228,16 +233,32 @@ updateStockControl(result: any, variant: Variant) {
         }
           // update Stock
         const stock = this.stock.findStock(res.id);
-        if (res.currentStock > 0) {
+        if (res.reason && res.currentStock > 0) {
 
             if (res.reason === 'Received' || res.reason === 'Restocked') {
-              stock.currentStock = stock.currentStock + res.currentStock;
+             
+              if(!(res.currentStock===0 || res.currentStock===null)){
+                stock.currentStock = stock.currentStock + res.currentStock;
+               }
+               
             } else if (res.reason === 'Re-counted') {
-                  stock.currentStock = res.currentStock;
+                 
+                  if(!(res.currentStock===0 || res.currentStock===null)){
+                    stock.currentStock = res.currentStock;
+                   }
             } else {
-              stock.currentStock = stock.currentStock - res.currentStock;
+              if(!(res.currentStock===0 || res.currentStock===null)){
+                    stock.currentStock = stock.currentStock - res.currentStock;
+              }
+              
             }
 
+          }else{
+            res.currentStock=stock.currentStock;
+          }
+        
+         if(res.currentStock===0 || res.currentStock===null || res.currentStock===''){
+               stock.currentStock=stock.currentStock;
           }
 
         stock.canTrackingStock = res.canTrackingStock;

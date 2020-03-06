@@ -1,7 +1,7 @@
 export class Device {
-  id?: number;
+  id?: any;
   name?: string;
-  branchId?: number;
+  branchId?: any;
   token?: string;
   syncedOnline?: boolean;
   createdAt?: Date;

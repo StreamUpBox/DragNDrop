@@ -3,16 +3,16 @@ import { Stock } from './stocks';
 import { Product } from './product';
 
 export class Variant {
-  id?: number;
+  id?: any;
   SKU: any;
   name: string;
   productName?: string;
   categoryName?: string;
   brandName?: string;
-  productId?: number;
-  supplyPrice?: number;
-  retailPrice?: number;
-  wholeSalePrice?: number;
+  productId?: any;
+  supplyPrice?: any;
+  retailPrice?: any;
+  wholeSalePrice?: any;
   unit?: string;
   isActive?: boolean;
   priceVariant?: PriceVariant;

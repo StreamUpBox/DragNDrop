@@ -39,7 +39,7 @@
 .active-business {
   position: relative;
   top:40px;
-  left: 12.3px;
+  left:16.3px;
   width: 40px;
   height: 40px;
   border-radius: 8px;
@@ -52,21 +52,25 @@
   left: 2px;
   width: 32px;
   height: 32px;
-  opacity: 0.15;
   border-radius: 6px;
-  background-color: #ffffff;
+  color:#fff!important;
+  box-shadow: 0 1px 3px 0 rgba(63,63,68,.15), 0 0 0 1px rgba(63,63,68,.05);
+  background-color: #211a36;
+
 }
 
 .fp-business-icon {
   position: relative;
-  top:48px;
-  left: 17px;
+  
+  left: 18px;
   margin-top: 12px;
   width: 32px;
   height: 32px;
-  opacity: 0.15;
   border-radius: 6px;
-  background-color: #ffffff;
+  color:#211a36!important;
+  border:solid 1px #955be9;
+  box-shadow: 0 1px 3px 0 rgba(63,63,68,.15), 0 0 0 1px rgba(63,63,68,.05);
+  background-color: #fff;
   cursor: pointer;
 }
 
@@ -393,22 +397,30 @@
 .short-name-a{
   font-family: Roboto;
   font-size: 20px;
-  color: red;
+  font-family: Heebo;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.54;
+  letter-spacing: -.05px;
+  color: rgba(255,255,255,.8);
   text-align: center;
   font-weight: bold;
   position: relative;
-  top: 4.5px;
-  left: 7px;
+  left: 9.6px;
 }
 .short-name{
   font-family: Roboto;
   font-size: 20px;
-  color: red;
+  font-family: Heebo;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.54;
+  letter-spacing: -.05px;
+  color:#211a36!important;;
   text-align: center;
   font-weight: bold;
   position: relative;
-  top: 4.5px;
-  left: 7.6px;
+  left: 6.6px;
 }
 
 .icon{

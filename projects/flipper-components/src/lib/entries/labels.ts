@@ -1,6 +1,6 @@
 
   export class Labels {
-    id?: number;
+    id?: any;
     name?: string;
     sku?: string;
 

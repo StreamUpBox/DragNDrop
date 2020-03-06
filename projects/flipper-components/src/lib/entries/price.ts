@@ -1,8 +1,8 @@
 export class Price {
-  id?: number;
+  id?: any;
   name: string;
-  branchId?: number;
-  groupId?: number;
+  branchId?: any;
+  groupId?: any;
   validFrom?: any;
   validTo?: any;
   isDefault?: boolean;

@@ -1,11 +1,12 @@
 import { OrderDetails } from './order-details';
+import { Branch } from './branch';
 
 export class Order {
-    id?: number;
-    userId?: number;
-    branchId: number;
+    id?: any;
+    userId?: any;
+    branchId: any;
     orderNumber: any;
-    customerId?: number;
+    customerId?: any;
     status?: string;
     reference?: string;
     orderType?: string;
@@ -23,10 +24,11 @@ export class Order {
     active?: boolean;
     isDraft?: boolean;
     orderItems: OrderDetails[];
-    paymentId?: number;
+    paymentId?: any;
     orderNote?: string;
     deliverDate?: Date;
     syncedOnline?: boolean;
+    branch?:Branch;
     orderDate?: Date;
     createdAt?: Date;
     updatedAt?: Date;

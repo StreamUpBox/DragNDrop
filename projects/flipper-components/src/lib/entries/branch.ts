@@ -1,11 +1,11 @@
 export class Branch {
-  id?: number;
+  id?: any;
   name?: string;
   active?: boolean;
-  businessId?: number;
+  businessId?: any;
   syncedOnline?: boolean;
-  mapLatitude?: number;
-  mapLongitude?: number;
+  mapLatitude?: any;
+  mapLongitude?: any;
   createdAt?: Date;
   updatedAt?: Date;
 

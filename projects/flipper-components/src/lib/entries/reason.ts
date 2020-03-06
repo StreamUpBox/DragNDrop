@@ -1,5 +1,5 @@
 export class Reason {
-  id?: number;
+  id?: any;
   name?: string;
   operation?: string;
   active?: boolean;

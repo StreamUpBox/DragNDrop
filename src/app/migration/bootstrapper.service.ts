@@ -63,7 +63,7 @@ export class Bootstrapper {
 
                 ///////////////////////////////////// ADD DEFAULT MENUS //////////////////////////
 
-                if (table.name === 'menu') {
+                if (table.name === 'menus') {
                   if (config.defaultMenu.length > 0) {
                     this.insertDefaultData<Menu>(config.defaultMenu as Menu[], myTable);
                   }
@@ -80,18 +80,18 @@ export class Bootstrapper {
 
                 /////////////////////////////////// ADD DEFAULT TAXES
 
-                if (table.name === 'taxes') {
-                  if (config.defaultTaxes.length > 0) {
-                    this.insertDefaultData<Taxes>(config.defaultTaxes as Taxes[], myTable);
-                  }
-                }
+                // if (table.name === 'taxes') {
+                //   if (config.defaultTaxes.length > 0) {
+                //     this.insertDefaultData<Taxes>(config.defaultTaxes as Taxes[], myTable);
+                //   }
+                // }
 
 
                 ///////////////////////////////////// ADD TYPES //////////////////////////
 
-                if (table.name === 'types') {
+                if (table.name === 'businessTypes') {
                   if (config.defaultType.length > 0) {
-                    this.insertDefaultData(config.defaultType, myTable, 'types');
+                    this.insertDefaultData(config.defaultType, myTable, 'businessTypes');
                   }
                 }
 

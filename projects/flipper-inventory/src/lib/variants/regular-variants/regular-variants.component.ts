@@ -13,15 +13,26 @@ import { AddVariantComponent } from '../add-variant/add-variant.component';
 })
 export class RegularVariantsComponent implements OnInit {
   isFocused = '';
-  @Input() product: Product;
+  item: Product;
+
+  @Input('product')
+  set product(item:Product){
+  this.item=item;
+  this.refresh();
+  }
+  get product():Product{
+  return this.item;
+  }
   constructor(private dialog: DialogService, public variant: VariationService,
               public stock: StockService) { }
 
   ngOnInit() {
+    
+  }
+  refresh(){
     if (this.variant.hasRegular) {
       this.variant.request(null, this.variant.hasRegular);
     }
-
   }
   public openAddVariantDialog(product: Product): any {
     return this.dialog.open(AddVariantComponent, DialogSize.SIZE_MD, product).subscribe(result => {
@@ -44,8 +55,30 @@ export class RegularVariantsComponent implements OnInit {
 
   focusing(value) {
     this.isFocused = value;
+
+    if (value === 'retailPrice') {
+      this.variant.form.controls.retailPrice.setValue('');
+    } else if (value === 'supplyPrice') {
+      this.variant.form.controls.supplyPrice.setValue('');
+    } else if (value === 'SKU') {
+      this.variant.form.controls.SKU.setValue('');
+    }
   }
+
   focusingOut() {
+  const stock=this.stock.findStock(this.variant.hasRegular.id);
+    if(this.isFocused==='retailPrice' && (this.variant.form.controls.retailPrice.value===0 || this.variant.form.controls.retailPrice.value==='')){
+    this.variant.form.controls.retailPrice.setValue(stock.retailPrice ? stock.retailPrice:0);
+    }
+    if(this.isFocused==='supplyPrice' && (this.variant.form.controls.supplyPrice.value===0 || this.variant.form.controls.supplyPrice.value==='')){
+      this.variant.form.controls.supplyPrice.setValue(stock.supplyPrice ? stock.supplyPrice:0);
+    }
+
+    if(this.isFocused==='SKU' && (this.variant.form.controls.SKU.value===0 || this.variant.form.controls.SKU.value==='')){
+      this.variant.form.controls.SKU.setValue(this.variant.hasRegular.SKU);
+    }
+    
+
     this.isFocused = '';
   }
 

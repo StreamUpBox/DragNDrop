@@ -2,6 +2,7 @@
 <form [formGroup]="variant.form" (ngSubmit)="onSubmit()" style="height: 100%;">
 
 <div mat-dialog-content>
+
     <table style="width: 100%;" class="mt-4">
 
         <tr class="tr" [class.trIsFocused]="isFocused=='name'" [class.invalid]="submitted && variant.formControl.name.errors" style="border-top: 1px #d5d9dc solid; border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
@@ -12,9 +13,7 @@
               <td style="width:60%">
                 <input class="input" formControlName="name" type="text"
                 (focus)="focusing('name')" (focusout)="focusingOut()" placeholder="Variation Name" />
-                <mat-error *ngIf="submitted && variant.formControl.name.errors">
-                    <div *ngIf="variant.formControl.name.errors.required">Variation name is required</div>
-                </mat-error>
+               
               </td>
          </tr>
 
@@ -44,7 +43,7 @@
            
           </tr>
       
-        <tr class="tr" [class.trIsFocused]="isFocused=='retailPrice'" style=" border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
+        <tr class="tr" [class.trIsFocused]="isFocused=='retailPrice'" [class.invalid]="submitted && variant.formControl.retailPrice.errors" style=" border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
           <td class="td"  [class.tdIsFocused]="isFocused=='retailPrice'">
             Retail Price
           </td>
@@ -53,14 +52,15 @@
 
             <span class="currency">{{variant.activeBusiness().currency}} {{variant.form.value.unit?'/ '+variant.form.value.unit:''}}</span>
             <span class="pinput">
-            <input class="input" formControlName="retailPrice" type="text"
+            <input class="input" formControlName="retailPrice" type="number"
             (focus)="focusing('retailPrice')" (focusout)="focusingOut()" placeholder="retail Price" />
+           
             </span>
            </div>
           </td>
         </tr>
 
-        <tr class="tr" [class.trIsFocused]="isFocused=='supplyPrice'" style=" border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
+        <tr class="tr" [class.trIsFocused]="isFocused=='supplyPrice'" [class.invalid]="submitted && variant.formControl.supplyPrice.errors" style=" border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
           <td class="td" [class.tdIsFocused]="isFocused=='supplyPrice'">
             Supply Price
           </td>
@@ -69,15 +69,27 @@
 
                 <span class="currency">{{variant.activeBusiness().currency}} {{variant.form.value.unit?'/ '+variant.form.value.unit:''}}</span>
                 <span class="pinput">
-                <input class="input" formControlName="supplyPrice" type="text"
+                <input class="input" formControlName="supplyPrice" type="number"
                 (focus)="focusing('supplyPrice')" (focusout)="focusingOut()" placeholder="supply Price" />
+              
                 </span>
                </div>
           </td>
         </tr>
     
       </table>
+      <mat-error *ngIf="submitted && variant.formControl.name.errors">
+        <div *ngIf="variant.formControl.name.errors.required">Variation name is required</div>
+        </mat-error>
+      <mat-error *ngIf="submitted && variant.formControl.supplyPrice.errors">
+        <div *ngIf="variant.formControl.supplyPrice.errors.min">Supply Price - Negative number is not allowed!</div>
+      </mat-error>
+     
+      <mat-error *ngIf="submitted && variant.formControl.retailPrice.errors">
+      <div *ngIf="variant.formControl.retailPrice.errors.min">Retail Price - Negative number is not allowed!</div>
+      </mat-error>
 </div>
+
 
 <div mat-dialog-actions style="float: right;">
     <button mat-button (click)="dialogRef.close()"  cdkFocusInitial>Cancel</button>

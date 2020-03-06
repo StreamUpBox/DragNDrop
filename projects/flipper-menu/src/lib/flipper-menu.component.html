@@ -8,37 +8,47 @@
       <img [src]="'./assets/icons/logo.svg'" class="logo">
     </div>
 
-    <div class="active-business" *ngIf="defaultBusiness">
-      <div class="rectangle"><span class="short-name-a">{{defaultBusiness.name.charAt(0) | uppercase}}</span></div>
+    <div class="active-business" *ngIf="defaultBusiness$">
+      <div class="rectangle" #tooltip="matTooltip"
+        matTooltip="{{defaultBusiness$?defaultBusiness$.name:'business'}} business" matTooltipPosition="right">
+        <span class="short-name-a">
+          {{defaultBusiness$?defaultBusiness$.name.charAt(0):'business' | uppercase}}</span></div>
     </div>
 
-    <div class="fp-business-icon" *ngFor="let business of businesses; let i = index;"
-      (click)="switchBusiness(business)">
-      <span class="short-name">{{business.name.charAt(0) | uppercase}}</span>
+    <div style="margin-top: 48px; margin-left: 1.5px;" *ngIf="business$.length > 0">
+      <div class="fp-business-icon" *ngFor="let bus of business$; let i = index;" (click)="switchBusiness(bus)"
+        #tooltip="matTooltip" matTooltip="{{bus?bus.name:'business'}} business" matTooltipPosition="right">
+        <span class="short-name">{{bus?bus.name.charAt(0):'business' | uppercase}}</span>
+      </div>
+
     </div>
 
-    <div class="logout" *ngIf="loggedUser">
+
+
+    <div class="logout" *ngIf="user$">
       <p>
-        <img [src]="'./assets/icons/bell.svg'" class="icon-logout">
+        <img [src]="'./assets/icons/bell.svg'" #tooltip="matTooltip" matTooltip="Notifications"
+          matTooltipPosition="right" class="icon-logout">
       </p>
-      <img [src]="'./assets/icons/log-out.svg'" class="icon-logout-logout" (click)="logout()">
+      <img [src]="'./assets/icons/log-out.svg'" #tooltip="matTooltip" matTooltip="Logout" matTooltipPosition="right"
+        class="icon-logout-logout" (click)="logout()">
     </div>
   </div>
 
   <div class="fp-secondary-sidebar" [@toggleBox]="isOpen ? 'open' : 'closed'" *ngIf="!isOpen">
     <div class="toggled-button" (click)="toggle()"><img [src]="'./assets/icons/chevron-left.svg'" class="icon-toggle">
     </div>
-    <div class="fp-secondary-sidebar-text" *ngIf="defaultBranch">{{textEllipsis(defaultBranch.name,18)}} <span
-        class="dropdown-branch" (click)="toggleBranches()"><img [src]="'./assets/icons/chevron-down.svg'"
-          class="icon"></span></div>
-    <div class="list-branches" (click)="hideBranchDropDown()" *ngIf="canViewBranches"
-      [@toggleBox]="canViewBranches ? 'open' : 'closed'">
+    <div class="fp-secondary-sidebar-text" *ngIf="defaultBranch$">{{textEllipsis(defaultBranch$.name,18)}}
+      <span class="dropdown-branch" *ngIf="branches$.length > 0" (click)="toggleBranches()"><img
+          [src]="'./assets/icons/chevron-down.svg'" class="icon"></span></div>
+
+    <div class="list-branches" (click)="hideBranchDropDown()" *ngIf="canViewBranches">
       <div class="list-branch-title"><span class="branch-title-text">Branches</span></div>
       <div class="branch-container">
-        <div *ngFor="let branch of branches; let i = index;">
-          <div class="list-branch" *ngIf="!branch.active" (click)="switchBranch(branch)">
+        <div *ngFor="let row of branches$; let i = index;">
+          <div class="list-branch" *ngIf="!row.active" (click)="switchBranch(row)">
             <span class="branch-icon"> <img [src]="'./assets/icons/arrow-up-right.svg'" class="icon-arrow"></span>
-            <span class="branch-text">{{textEllipsis(branch.name,26)}}</span>
+            <span class="branch-text">{{textEllipsis(row.name,26)}}</span>
           </div>
         </div>
 
@@ -52,24 +62,24 @@
     <div class="fp-secondary-sidebar-chevron-down">
 
     </div>
-    <div *ngIf="loggedUser" style="position: relative; top: 5px;">
+    <div *ngIf="user$" style="position: relative; top: 5px;">
       <p class="fp-online-user"></p>
       <p class="user-name">
-        {{textEllipsis(loggedUser.name,26)}}
+        {{textEllipsis(user$.name,26)}}
       </p>
     </div>
     <div class="divider"></div>
-    <div class="fp-menu" *ngFor="let menu of menus; let i = index;">
+    <div class="fp-menu" *ngFor="let row of menu; let i = index;">
 
-      <div [ngClass]="menu.active?'fp-active-menu':'fp-inactive-menu'" (click)="router(menu)">
-        <span class="fp-inactive-menu-icon"><img [src]="'./assets/icons/'+menu.icon" class="icon"></span>
-        <span class="fp-inactive-menu-text" i18n>{{textEllipsis(menu.name,26)}}</span>
+      <div [ngClass]="row.active?'fp-active-menu':'fp-inactive-menu'" (click)="router(row,false)">
+        <span class="fp-inactive-menu-icon"><img [src]="'./assets/icons/'+row.icon" class="icon"></span>
+        <span class="fp-inactive-menu-text" i18n>{{textEllipsis(row.name,26)}}</span>
       </div>
 
     </div>
 
     <div class="setting" *ngIf="settingMenu">
-      <div [ngClass]="settingMenu.active?'fp-active-menu':'fp-inactive-menu'" (click)="router(settingMenu)">
+      <div [ngClass]="settingMenu.active?'fp-active-menu':'fp-inactive-menu'" (click)="router(settingMenu,true)">
         <span class="fp-inactive-menu-icon"><img [src]="'./assets/icons/'+settingMenu.icon" class="icon"></span>
         <span class="fp-inactive-menu-text">{{settingMenu.name}}</span>
       </div>

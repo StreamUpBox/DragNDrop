@@ -11,7 +11,17 @@ import { AddVariantComponent } from '../add-variant/add-variant.component';
   styleUrls: ['../../create-product/create-product.component.css', './added-variants.component.css']
 })
 export class AddedVariantsComponent implements OnInit {
-  @Input() product: Product;
+ item: Product;
+
+  @Input('product')
+set product(item:Product){
+this.item=item;
+this.variant.init(item);
+}
+get product():Product{
+return this.item;
+}
+
   constructor(private dialog: DialogService, public variant: VariationService, public stock: StockService) { }
 
   ngOnInit() {

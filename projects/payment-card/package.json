@@ -1,0 +1,34 @@
+{
+  "name": "@enexus/payment-card",
+  "version": "0.0.2",
+  "peerDependencies": {
+    "@angular/common": "^8.2.9",
+    "@angular/core": "^8.2.9"
+  },
+  "keywords": [
+    "ng",
+    "payment",
+    "credit",
+    "debit",
+    "card",
+    "checkout",
+    "angular",
+    "component",
+    "material"
+  ],
+  "author": "Yegobox Team",
+  "license": "ISC",
+  "main": "bundles/enexus-payment-card.umd.js",
+  "module": "fesm5/enexus-payment-card.js",
+  "es2015": "fesm2015/enexus-payment-card.js",
+  "esm5": "esm5/enexus-payment-card.js",
+  "esm2015": "esm2015/enexus-payment-card.js",
+  "fesm5": "fesm5/enexus-payment-card.js",
+  "fesm2015": "fesm2015/enexus-payment-card.js",
+  "typings": "enexus-payment-card.d.ts",
+  "metadata": "enexus-payment-card.metadata.json",
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
+  }
+}

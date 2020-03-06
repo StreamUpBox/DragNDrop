@@ -1,8 +1,9 @@
 export class UserBusiness {
-  id?: number;
-  userId?: number;
-  businessId?: number;
-  syncedOnline?: boolean;
+  id?: any;
+  userId?: any;
+  businessId?: any;
+  role?:string;
+  permissions?:any
   constructor(params: object = {}) {
     for (const name in params) {
       this[name] = params[name];

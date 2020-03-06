@@ -132,7 +132,7 @@ textarea {
   flex: 1 1 100%;
 }
 .table-cell-header:first-child, .table-cell:first-child, td:first-child, th:first-child {
-  padding-left: 16px;
+  /* padding-left: 16px; */
 }
 .editable-variation-table__header__cell {
   overflow: visible;
@@ -147,8 +147,8 @@ textarea {
   vertical-align: middle;
   text-overflow: ellipsis;
   white-space: nowrap;
-  padding-left: 8px;
-  padding-right: 8px;
+  /* padding-left: 8px;
+  padding-right: 8px; */
   overflow: hidden;
 }
 

@@ -27,10 +27,36 @@ export class EditVariantComponent implements OnInit {
 
   }
 
-  focusing(value: any) {
+  focusing(value) {
     this.isFocused = value;
+
+    if (value === 'retailPrice') {
+      this.variant.form.controls.retailPrice.setValue('');
+    } else if (value === 'supplyPrice') {
+      this.variant.form.controls.supplyPrice.setValue('');
+    } else if (value === 'SKU') {
+      this.variant.form.controls.SKU.setValue('');
+    } else if (value === 'name') {
+      this.variant.form.controls.name.setValue('');
+    }
   }
+
   focusingOut() {
+  const stock=this.stock.findStock(this.variation.id);
+    if(this.isFocused==='retailPrice' && (this.variant.form.controls.retailPrice.value===0 || this.variant.form.controls.retailPrice.value==='')){
+    this.variant.form.controls.retailPrice.setValue(stock.retailPrice ? stock.retailPrice:0);
+    }
+    if(this.isFocused==='supplyPrice' && (this.variant.form.controls.supplyPrice.value===0 || this.variant.form.controls.supplyPrice.value==='')){
+      this.variant.form.controls.supplyPrice.setValue(stock.supplyPrice ? stock.supplyPrice:0);
+    }
+
+    if(this.isFocused==='SKU' && (this.variant.form.controls.SKU.value===0 || this.variant.form.controls.SKU.value==='')){
+      this.variant.form.controls.SKU.setValue(this.variation.SKU);
+    }
+    if(this.isFocused==='name' && (this.variant.form.controls.name.value===0 || this.variant.form.controls.name.value==='')){
+      this.variant.form.controls.name.setValue(this.variation.name);
+    }
+
     this.isFocused = '';
   }
 }

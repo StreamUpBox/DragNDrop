@@ -1,14 +1,15 @@
 export class Business {
-  id?: number;
+  id?: any;
   name?: string;
   active?: boolean;
-  categoryId?: number;
+  categoryId?: any;
   currency?: string;
   country?: string;
   businessUrl?: string;
   timeZone?: string;
   syncedOnline?: boolean;
-  typeId?: number;
+  userId?:any;
+  typeId?: any;
   createdAt?: Date;
   updatedAt?: Date;
 

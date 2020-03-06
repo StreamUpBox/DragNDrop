@@ -1,21 +1,21 @@
 export class Product {
-  id?: number;
+  id?: any;
   name: string;
   description?: string;
   picture?: string;
 
-  branchId?: number;
-  businessId?: number;
-  supplierId?: number;
+  branchId?: any;
+  businessId?: any;
+  supplierId?: any;
   isManufactured?: boolean;
   isBatchTracked?: boolean;
   isStandardProduct?: boolean;
   isProductWithVariants?: boolean;
   isCompositeProduct?: boolean;
   enableTrackingInventory?: boolean;
-  categoryId?: number;
-  brandId?: number;
-  taxId?: number;
+  categoryId?: any;
+  brandId?: any;
+  taxId?: any;
   active?: boolean;
   hasPicture?: boolean;
   isDraft?: boolean;

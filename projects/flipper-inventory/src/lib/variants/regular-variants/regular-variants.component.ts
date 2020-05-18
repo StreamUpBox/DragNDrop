@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { VariationService } from '../../services/variation.service';
 import { StockService } from '../../services/stock.service';
-import {Product } from '@enexus/flipper-components';
+import {Product, CalculateTotalClassPipe } from '@enexus/flipper-components';
 import { DialogService, DialogSize } from '@enexus/flipper-dialog';
 import { AddVariantComponent } from '../add-variant/add-variant.component';
 
@@ -24,7 +24,8 @@ export class RegularVariantsComponent implements OnInit {
   return this.item;
   }
   constructor(private dialog: DialogService, public variant: VariationService,
-              public stock: StockService) { }
+              public stock: StockService,
+              private totalPipe: CalculateTotalClassPipe) { }
 
   ngOnInit() {
 
@@ -65,8 +66,16 @@ export class RegularVariantsComponent implements OnInit {
     }
   }
 
+  getTotalStock(variantId,key:any): number {
+    if (this.stock.variantStocks(variantId).length > 0) {
+          return this.totalPipe.transform(this.stock.variantStocks(variantId), key);
+    } else {
+        return 0;
+    }
+  }
+
   focusingOut() {
-  const stock = this.stock.findStock(this.variant.hasRegular.id);
+  const stock = this.stock.findVariantStock(this.variant.hasRegular.id);
   if (this.isFocused === 'retailPrice' && (this.variant.form.controls.retailPrice.value === 0 ||
     this.variant.form.controls.retailPrice.value === '')) {
     this.variant.form.controls.retailPrice.setValue(stock.retailPrice ? stock.retailPrice : 0);
@@ -84,6 +93,7 @@ export class RegularVariantsComponent implements OnInit {
 
   this.isFocused = '';
   }
+
 
 
 }

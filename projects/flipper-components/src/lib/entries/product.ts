@@ -1,3 +1,5 @@
+import { Variant } from './variant';
+
 export class Product {
   id?: any;
   name: string;
@@ -20,6 +22,7 @@ export class Product {
   hasPicture?: boolean;
   isDraft?: boolean;
   isOnPos?: boolean;
+  color?: string;
   syncedOnline?: boolean;
   isCurrentUpdate?: boolean;
   createdAt?: any;

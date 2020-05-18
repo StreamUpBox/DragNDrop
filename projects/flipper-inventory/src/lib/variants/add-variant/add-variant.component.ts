@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, HostListener } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { VariationService } from '../../services/variation.service';
-import { NotificationService, Variant, Product } from '@enexus/flipper-components';
+import { NotificationService, Variant, Product, PouchDBService } from '@enexus/flipper-components';
 import { StockService } from '../../services/stock.service';
 
 @Component({
@@ -14,6 +14,7 @@ export class AddVariantComponent implements OnInit {
               protected notificationSvc: NotificationService,
               public variant: VariationService,
               public dialogRef: MatDialogRef<AddVariantComponent>,
+              private database:PouchDBService,
               @Inject(MAT_DIALOG_DATA) public product: Product) {
 }
   isFocused = '';
@@ -40,6 +41,7 @@ export class AddVariantComponent implements OnInit {
     }
 
     const formData: Variant = {
+      id:this.database.uid(),
       name: this.variant.form.value.name,
       productName: this.product.name,
       categoryName: '',
@@ -62,7 +64,7 @@ export class AddVariantComponent implements OnInit {
     this.dialogRef.close('done');
   }
 
-  updateStock(variantId: number, formData) {
+  updateStock(variantId: string, formData) {
     const myStock = this.stock.findStock(variantId);
     if (myStock) {
       myStock.supplyPrice = formData.supplyPrice;

@@ -42,7 +42,7 @@ export class EditVariantComponent implements OnInit {
   }
 
   focusingOut() {
-  const stock = this.stock.findStock(this.variation.id);
+  const stock = this.stock.findVariantStock(this.variation.id);
   if (this.isFocused === 'retailPrice' && (this.variant.form.controls.retailPrice.value === 0 ||
      this.variant.form.controls.retailPrice.value === '')) {
     this.variant.form.controls.retailPrice.setValue(stock.retailPrice ? stock.retailPrice : 0);

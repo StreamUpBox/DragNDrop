@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { VariationService } from '../../services/variation.service';
 import { StockService } from '../../services/stock.service';
-import { Product, Variant } from '@enexus/flipper-components';
+import { Product, Variant, CalculateTotalClassPipe } from '@enexus/flipper-components';
 import { DialogService, DialogSize } from '@enexus/flipper-dialog';
 import { AddVariantComponent } from '../add-variant/add-variant.component';
 
@@ -22,10 +22,19 @@ get product(): Product {
 return this.item;
 }
 
-  constructor(private dialog: DialogService, public variant: VariationService, public stock: StockService) { }
+constructor(private dialog: DialogService,
+  private totalPipe: CalculateTotalClassPipe, 
+   public variant: VariationService, public stock: StockService) { }
 
   ngOnInit() {
 
+  }
+  getTotalStock(variantId,key:any): number {
+    if (this.stock.variantStocks(variantId).length > 0) {
+          return this.totalPipe.transform(this.stock.variantStocks(variantId), key);
+    } else {
+        return 0;
+    }
   }
 
   convertInt(num) {

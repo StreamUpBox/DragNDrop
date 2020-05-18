@@ -3,6 +3,7 @@ import { FlipperMenuComponent } from './flipper-menu.component';
 import { CommonModule } from '@angular/common';
 import { FlipperComponentsModule, PouchDBService } from '@enexus/flipper-components';
 import { VendorsModule } from '@enexus/flipper-vendors';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -11,7 +12,8 @@ import { VendorsModule } from '@enexus/flipper-vendors';
   imports: [
     CommonModule,
     VendorsModule,
-    FlipperComponentsModule
+    FlipperComponentsModule,
+    RouterModule
   ],
   exports: [FlipperMenuComponent],
   providers: [PouchDBService],

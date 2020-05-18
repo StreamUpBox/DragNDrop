@@ -37,21 +37,21 @@
     <ng-container matColumnDef="inStock">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>In Stock</th>
       <td mat-cell *matCellDef="let element" >
-        {{stock.findStock(element.id).currentStock}}
+        {{stock.findVariantStock(element.id).currentStock}} {{element.unit}}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="retailprice">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Retail Price</th>
       <td mat-cell *matCellDef="let element">
-        {{variant.activeBusiness().currency}} {{stock.findStock(element.id).retailPrice}}
+        {{variant.activeBusiness().currency}} {{element.unit?'/ '+element.unit:''}} {{stock.findVariantStock(element.id).retailPrice}}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="supplyprice">
         <th  mat-header-cell *matHeaderCellDef mat-sort-header>Supply Price</th>
         <td mat-cell *matCellDef="let element">
-            {{variant.activeBusiness().currency}} {{stock.findStock(element.id).supplyPrice}}
+            {{variant.activeBusiness().currency}} {{element.unit?'/ '+element.unit:''}} {{stock.findVariantStock(element.id).supplyPrice}}
         </td>
       </ng-container>
 

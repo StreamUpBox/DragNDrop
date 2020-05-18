@@ -81,6 +81,7 @@ export class PouchDBService {
         document._id = id;
         document.uid = this.uid();
         document.channel = PouchConfig.channel;
+        document.channels = [PouchConfig.channel];
         return this.get(id).then(result => {
             document._rev = result._rev;
             return this.database.put(document);
@@ -94,8 +95,11 @@ export class PouchDBService {
             }
         });
     }
+    
 
     public sync(remote: string) {
+        const sessionId = PouchConfig.sessionId;
+        document.cookie = sessionId;
         const remoteDatabase = new PouchDB(remote);
         this.database.sync(remoteDatabase, {
             live: true,

@@ -64,13 +64,13 @@
 
       <td style="width:25%">
         <a class="form-link-with-spacing hyperlink"  (click)="variant.openVariantDialog(variant.hasRegular,1)">
-          <span *ngIf="variant.variantStock.length==1 && variant.variantStock.currentStock > 0">
-            {{variant.variantStock.currentStock}}
+          <span *ngIf="stock.variantStocks(variant.hasRegular.id).length==1 && getTotalStock(variant.hasRegular.id,'currentStock') > 0">
+            {{getTotalStock(variant.hasRegular.id,'currentStock')}} {{variant.hasRegular.unit}}
           </span> 
-          <span *ngIf="variant.variantStock.length > 1">
+          <span *ngIf="stock.variantStocks(variant.hasRegular.id).length > 1">
             Edit Per Location
           </span>
-          <span *ngIf="variant.variantStock.length > 0 && variant.variantStock.currentStock == 0">
+          <span *ngIf="stock.variantStocks(variant.hasRegular.id).length > 0 && getTotalStock(variant.hasRegular.id,'currentStock') == 0">
             None
           </span>
         </a>
@@ -81,13 +81,13 @@
       </td>
       <td style="width:25%">
             <a class="form-link-with-spacing hyperlink" (click)="variant.openVariantDialog(variant.hasRegular,1)">
-                <span *ngIf="variant.variantStock.length==1 && variant.variantStock.lowStock > 0" >
-                  {{variant.variantStock.lowStock}}
+                <span *ngIf="stock.variantStocks(variant.hasRegular.id).length==1 && getTotalStock(variant.hasRegular.id,'lowStock') > 0" >
+                  {{getTotalStock(variant.hasRegular.id,'lowStock')}} {{variant.hasRegular.unit}}
                 </span> 
-                <span *ngIf="variant.variantStock.length > 1 ">
+                <span *ngIf="stock.variantStocks(variant.hasRegular.id).length > 1 ">
                   Edit Per Location
                 </span>
-                <span *ngIf="variant.variantStock.length > 0 && variant.variantStock.lowStock == 0" >
+                <span *ngIf="stock.variantStocks(variant.hasRegular.id).length > 0 && getTotalStock(variant.hasRegular.id,'lowStock') == 0" >
                   None
                 </span>
             </a>
@@ -100,6 +100,7 @@
           Add Variation
         </a>
       </td>
+
       <td>
         
         <a class="form-link-with-spacing hyperlink" *ngIf="stock.variantStockHistory(variant.hasRegular.id).length > 0" 
@@ -108,6 +109,7 @@
          </a>
 
       </td>
+
       <td>
         
         <a class="form-link-with-spacing hyperlink"

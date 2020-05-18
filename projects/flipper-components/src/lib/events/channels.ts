@@ -5,4 +5,5 @@ export class CHANNELS {
     public static readonly PRICEVARIANTS = 'priceVariants';
     public static readonly SHOPPINGS = 'shoppings';
     public static readonly VARIANTS = 'variants';
+
 }

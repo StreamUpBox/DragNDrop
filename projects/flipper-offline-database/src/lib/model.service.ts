@@ -12,10 +12,10 @@ export class ModelService extends ExecuteService {
     super();
   }
 
-  raw(query?: string){
+  raw(query?: string) {
     try {
-         this.query=query;
-           return this.execute();
+         this.query = query;
+         return this.execute();
     } catch (e) {
       // TODO: notify any error in plugin to
       throw new Error((`ERROR:${e}`));

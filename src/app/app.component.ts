@@ -3,7 +3,8 @@ import {
 } from '@angular/core';
 import { ModelService } from '@enexus/flipper-offline-database';
 import {Branch, Business, Taxes, PouchConfig,
-   PouchDBService, CurrentBusinessEvent, CurrentBranchEvent, BusinessesEvent, BranchesEvent, DefaultTaxesEvent, TaxesEvent, MigrateService } from '@enexus/flipper-components';
+   PouchDBService, CurrentBusinessEvent, CurrentBranchEvent, BusinessesEvent,
+    BranchesEvent, DefaultTaxesEvent, TaxesEvent, MigrateService } from '@enexus/flipper-components';
 import { FlipperEventBusService } from '@enexus/flipper-event';
 
 @Component({
@@ -13,21 +14,21 @@ import { FlipperEventBusService } from '@enexus/flipper-event';
 })
 export class AppComponent  {
   constructor(private eventBus: FlipperEventBusService,
-              private migrate:MigrateService,
+              private migrate: MigrateService,
               private model: ModelService,
               private database: PouchDBService) {
 this.database.connect(PouchConfig.bucket);
 if (PouchConfig.canSync) {
       this.database.sync(PouchConfig.syncUrl);
     }
-   
-    this.database.getChangeListener().subscribe(data => {
+
+this.database.getChangeListener().subscribe(data => {
       console.log(data);
     });
 
-    this.migrate.products();
-    this.migrate.variants();
-    this.migrate.stocks();
+this.migrate.products();
+this.migrate.variants();
+this.migrate.stocks();
     // this.migrate.stockHistories();
     // this.business();
     // this.taxes();

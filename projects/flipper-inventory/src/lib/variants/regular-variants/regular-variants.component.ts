@@ -66,7 +66,7 @@ export class RegularVariantsComponent implements OnInit {
     }
   }
 
-  getTotalStock(variantId,key:any): number {
+  getTotalStock(variantId, key: any): number {
     if (this.stock.variantStocks(variantId).length > 0) {
           return this.totalPipe.transform(this.stock.variantStocks(variantId), key);
     } else {

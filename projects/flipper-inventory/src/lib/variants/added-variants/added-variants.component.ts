@@ -23,13 +23,13 @@ return this.item;
 }
 
 constructor(private dialog: DialogService,
-  private totalPipe: CalculateTotalClassPipe, 
-   public variant: VariationService, public stock: StockService) { }
+            private totalPipe: CalculateTotalClassPipe,
+            public variant: VariationService, public stock: StockService) { }
 
   ngOnInit() {
 
   }
-  getTotalStock(variantId,key:any): number {
+  getTotalStock(variantId, key: any): number {
     if (this.stock.variantStocks(variantId).length > 0) {
           return this.totalPipe.transform(this.stock.variantStocks(variantId), key);
     } else {

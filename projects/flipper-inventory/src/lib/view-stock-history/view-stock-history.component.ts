@@ -67,9 +67,9 @@ ngOnDestroy() {
 }
 
 updateList() {
-  const arry=[];
+  const arry = [];
   this.variantList.value.forEach(element => {
-    arry.push(`'${element}'`)
+    arry.push(`'${element}'`);
   });
   this.variantList.setValue(arry);
   this.refresh();
@@ -77,7 +77,7 @@ updateList() {
 refresh() {
   this.loading = true;
   if (this.variantList.value) {
-    
+
     this.stockHsSvc.loadAllStockHistory(this.variantList.value).subscribe();
   }
   this.subscription = this.stockHsSvc.variantsSubject.subscribe((loadAllStockHistory) => this.loadAllStockHistory = loadAllStockHistory);

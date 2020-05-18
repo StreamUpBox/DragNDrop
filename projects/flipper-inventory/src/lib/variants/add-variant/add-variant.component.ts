@@ -14,7 +14,7 @@ export class AddVariantComponent implements OnInit {
               protected notificationSvc: NotificationService,
               public variant: VariationService,
               public dialogRef: MatDialogRef<AddVariantComponent>,
-              private database:PouchDBService,
+              private database: PouchDBService,
               @Inject(MAT_DIALOG_DATA) public product: Product) {
 }
   isFocused = '';
@@ -41,7 +41,7 @@ export class AddVariantComponent implements OnInit {
     }
 
     const formData: Variant = {
-      id:this.database.uid(),
+      id: this.database.uid(),
       name: this.variant.form.value.name,
       productName: this.product.name,
       categoryName: '',

@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild, OnDestroy, Input, NgZone } from '@angular/core';
 import { ProductService } from '../services/product.service';
-import { Product, Stock, CalculateTotalClassPipe, Variant, MigrateService, PouchConfig, PouchDBService, Tables, StockHistory } from '@enexus/flipper-components';
+import { Product, Stock, CalculateTotalClassPipe, Variant,
+   MigrateService, PouchConfig, PouchDBService, Tables,
+    StockHistory } from '@enexus/flipper-components';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { VariationService } from '../services/variation.service';
@@ -43,17 +45,17 @@ export class ListProductsComponent implements OnInit, OnDestroy {
   }
 
 
-  constructor(private router: Router, 
+  constructor(private router: Router,
               private totalPipe: CalculateTotalClassPipe,
-               private stock: StockService,
+              private stock: StockService,
               public variant: VariationService,
-               private migrate:MigrateService,
-               private database: PouchDBService,
-               public product: ProductService,
-               private ngZone: NgZone) {
+              private migrate: MigrateService,
+              private database: PouchDBService,
+              public product: ProductService,
+              private ngZone: NgZone) {
     this.database.connect(PouchConfig.bucket);
     this.dataSource = new MatTableDataSource([]);
-   
+
     this.subscription = this.product.productsSubject.
     subscribe((loadAllProducts) => this.loadAllProducts = loadAllProducts);
    }
@@ -62,45 +64,45 @@ export class ListProductsComponent implements OnInit, OnDestroy {
     if (PouchConfig.canSync) {
       this.database.sync(PouchConfig.syncUrl);
     }
-     this.database.getChangeListener().subscribe(data => {
+    this.database.getChangeListener().subscribe(data => {
 
       if (data && data.change && data.change.docs) {
               for (const doc of data.change.docs) {
                 this.ngZone.run(() => {
-                 
-                  if(doc && doc._id === PouchConfig.Tables.products){
-                    doc.products.forEach(row=>{
-                      const form:Product = row as Product;
-                        this.migrate.insertDataIntoAlsql<Product>(Tables.products,form,form.id);
-                     }); 
+
+                  if (doc && doc._id === PouchConfig.Tables.products) {
+                    doc.products.forEach(row => {
+                      const form: Product = row as Product;
+                      this.migrate.insertDataIntoAlsql<Product>(Tables.products, form, form.id);
+                     });
                     this.refresh();
-                   
+
                   }
                   // console.log(doc);
-                  if(doc && doc._id === PouchConfig.Tables.variants){
-                    doc.variants.forEach(row=>{
-                      const form:Variant = row as Variant;
-                        this.migrate.insertDataIntoAlsql<Variant>(Tables.variants,form,form.id);
-                     }); 
+                  if (doc && doc._id === PouchConfig.Tables.variants) {
+                    doc.variants.forEach(row => {
+                      const form: Variant = row as Variant;
+                      this.migrate.insertDataIntoAlsql<Variant>(Tables.variants, form, form.id);
+                     });
                     this.refresh();
-                   
+
                   }
-                  if(doc && doc._id === PouchConfig.Tables.stocks){
-                    doc.stocks.forEach(row=>{
-                      const form:Stock = row as Stock;
-                        this.migrate.insertDataIntoAlsql<Stock>(Tables.stocks,form,form.id);
-                     }); 
+                  if (doc && doc._id === PouchConfig.Tables.stocks) {
+                    doc.stocks.forEach(row => {
+                      const form: Stock = row as Stock;
+                      this.migrate.insertDataIntoAlsql<Stock>(Tables.stocks, form, form.id);
+                     });
                     this.refresh();
                   }
-                  if(doc && doc._id === PouchConfig.Tables.stockHistories){
-                    doc.stockHistory.forEach(row=>{
-                      const form:StockHistory = row as StockHistory;
-                        this.migrate.insertDataIntoAlsql<StockHistory>(Tables.stockHistory,form,form.id);
-                     }); 
+                  if (doc && doc._id === PouchConfig.Tables.stockHistories) {
+                    doc.stockHistory.forEach(row => {
+                      const form: StockHistory = row as StockHistory;
+                      this.migrate.insertDataIntoAlsql<StockHistory>(Tables.stockHistory, form, form.id);
+                     });
                     this.refresh();
                   }
 
-                
+
                 });
               }
             }
@@ -108,7 +110,7 @@ export class ListProductsComponent implements OnInit, OnDestroy {
 
     this.refresh();
   }
- 
+
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
@@ -160,7 +162,7 @@ export class ListProductsComponent implements OnInit, OnDestroy {
     getStock(product: Product): Stock[] {
       const stocks: Stock[] = [];
       const variants = this.variant.allVariant(product);
-          if (variants.length > 0) {
+      if (variants.length > 0) {
                 variants.forEach(variant => {
                   stocks.push(this.stock.findVariantStock(variant.id));
                 });

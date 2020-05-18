@@ -48,7 +48,7 @@ import { MigrationModule } from './migration/migration.module';
     AppRoutingModule
   ],
   entryComponents: [],
-  providers:[PouchDBService],
+  providers: [PouchDBService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

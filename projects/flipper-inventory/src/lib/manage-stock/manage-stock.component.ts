@@ -76,7 +76,7 @@ export class ManageStockComponent implements OnInit {
   }
 
 
- 
+
   updateStockControl(stockControl: StockControl) {
     const stockControls = this.stockControl;
     const arr: StockControl[] = [];

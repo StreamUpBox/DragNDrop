@@ -61,8 +61,8 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
   async ngOnInit() {
     this.getLocation();
 
-    this.types$=this.model.loadAll<Types>(Tables.type);
-    this.categories$ =this.model.loadAll<BusinessCategory>(Tables.businessCategory);
+    this.types$ = this.model.loadAll<Types>(Tables.type);
+    this.categories$ = this.model.loadAll<BusinessCategory>(Tables.businessCategory);
 
     if (PouchConfig.canSync) {
       this.database.sync(PouchConfig.syncUrl);

@@ -31,9 +31,9 @@ export class VariationService {
   variantStock = { length: 0, currentStock: 0, lowStock: 0 };
   constructor(private stock: StockService, private dialog: DialogService,
               private model: MainModelService,
-               private setting: SettingsService,
+              private setting: SettingsService,
               private formBuilder: FormBuilder,
-              private database:PouchDBService) {
+              private database: PouchDBService) {
     this.variantsSubject = new BehaviorSubject([]);
     this.units = this.setting.units();
   }
@@ -82,12 +82,12 @@ export class VariationService {
   }
 
   request(action = null, variant = null): void {
-    const stock:Stock=this.stock.findVariantStock(variant.id);
+    const stock: Stock = this.stock.findVariantStock(variant.id);
     this.form = this.formBuilder.group({
       name: [!action && variant && variant.name ? variant.name : '', Validators.required],
       SKU: !action && variant && variant.SKU ? variant.SKU : this.generateSKU(this.product.id),
-      retailPrice: [!action && variant && stock ?stock.retailPrice : 0.00, Validators.min(0)],
-      supplyPrice: [!action && variant && stock ?stock.supplyPrice : 0.00, Validators.min(0)],
+      retailPrice: [!action && variant && stock ? stock.retailPrice : 0.00, Validators.min(0)],
+      supplyPrice: [!action && variant && stock ? stock.supplyPrice : 0.00, Validators.min(0)],
       unit: !action && variant && variant.unit ? variant.unit : '',
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -116,7 +116,7 @@ export class VariationService {
   createRegular(product: Product): void {
     if (!this.hasRegular) {
       this.create({
-        id:this.database.uid(),
+        id: this.database.uid(),
         name: 'Regular',
         SKU: this.generateSKU(product.id),
         productId: product.id,
@@ -221,10 +221,10 @@ updateStockControl(result: any, variant: Variant) {
       result.forEach(res => {
         if (res.reason && res.currentStock > 0) {
           this.stock.createHistory({
-            id:this.database.uid(),
+            id: this.database.uid(),
             orderId: 0,
             variantId: variant.id,
-            productId:this.findVariant(variant.id).productId,
+            productId: this.findVariant(variant.id).productId,
             stockId: res.id,
             reason: res.reason,
             quantity: res.currentStock,
@@ -336,8 +336,8 @@ updateStockControl(result: any, variant: Variant) {
       const stock = this.stock.variantStocks(this.hasRegular.id);
       this.variantStock = {
         length: stock.length,
-        lowStock: stock.length > 0?stock[0].lowStock:0,
-        currentStock: stock.length > 0?stock[0].currentStock:0
+        lowStock: stock.length > 0 ? stock[0].lowStock : 0,
+        currentStock: stock.length > 0 ? stock[0].currentStock : 0
       };
     }
   }

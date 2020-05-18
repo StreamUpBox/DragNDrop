@@ -95,7 +95,7 @@ export class PouchDBService {
             }
         });
     }
-    
+
 
     public sync(remote: string) {
         const sessionId = PouchConfig.sessionId;

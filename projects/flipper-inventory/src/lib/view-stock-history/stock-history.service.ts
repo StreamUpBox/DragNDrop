@@ -10,8 +10,8 @@ export class StockHistoryService {
   variantsSubject: BehaviorSubject<StockHistory[]>;
   private readonly variantsMap = new Map<string, StockHistory>();
   constructor(private stockSvc: StockService,
-    private database:PouchDBService,
-    private model: MainModelService) {
+              private database: PouchDBService,
+              private model: MainModelService) {
     this.variantsSubject = new BehaviorSubject([]);
   }
 

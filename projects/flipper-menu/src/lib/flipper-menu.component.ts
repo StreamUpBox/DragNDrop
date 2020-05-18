@@ -71,10 +71,10 @@ export class FlipperMenuComponent implements OnInit {
 
   user$: User = null;
 
-  constructor(private database: PouchDBService, 
-    private model: MainModelService, 
-    private route: Router,
-    private ref: ChangeDetectorRef,
+  constructor(private database: PouchDBService,
+              private model: MainModelService,
+              private route: Router,
+              private ref: ChangeDetectorRef,
               private ngZone: NgZone) {
     this.database.connect(PouchConfig.bucket);
   }

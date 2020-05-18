@@ -9,7 +9,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 export class VariantsDialogModelComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<VariantsDialogModelComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
-               
+
 }
   stockControls: any = null;
 

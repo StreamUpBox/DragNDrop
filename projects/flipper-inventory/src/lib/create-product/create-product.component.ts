@@ -88,9 +88,9 @@ checkNewItem() {
       return;
     }
     await this.product.saveProduct();
-   
-      this.goToProduct();
-    
+
+    this.goToProduct();
+
   }
 goToProduct() {
   return this.router.navigate(['/admin/inventory']);

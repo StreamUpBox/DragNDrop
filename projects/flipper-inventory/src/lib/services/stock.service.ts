@@ -9,15 +9,15 @@ import { ModelService } from '@enexus/flipper-offline-database';
 export class StockService {
   reasons = [];
   constructor(private query: ModelService,
-     private model: MainModelService,
-      private setting: SettingsService,
-      private database:PouchDBService) { }
+              private model: MainModelService,
+              private setting: SettingsService,
+              private database: PouchDBService) { }
 
   init() {
     this.reasons = this.setting.reasons();
   }
   findVariantStock(variantId: any) {
-    return this.model.findByFirst<Stock>(Tables.stocks,'variantId', variantId);
+    return this.model.findByFirst<Stock>(Tables.stocks, 'variantId', variantId);
   }
 
   findBranch(id: string): Branch {
@@ -61,10 +61,10 @@ export class StockService {
       branches.forEach(branch => {
 
         this.create({
-          id:this.database.uid(),
+          id: this.database.uid(),
           branchId: branch.id,
           productId: this.findVariant(variantId).productId,
-          variantId:variantId,
+          variantId,
           reasonId: 0,
           currentStock: 0,
           supplyPrice: 0,
@@ -106,7 +106,7 @@ export class StockService {
     const stockVariant: StockHistory[] = this.variantStockHistory(variantId);
     if (stockVariant.length > 0) {
         stockVariant.forEach(vs => {
-       
+
           this.updateHistory(vs);
         });
       }
@@ -128,7 +128,7 @@ export class StockService {
       });
     }
   }
-  
+
   deleteStocksHistory(variation: Variant): void {
     const stocks: StockHistory[] = this.model.filters<StockHistory>(Tables.stockHistory, 'variantId', variation.id);
     if (stocks.length > 0) {

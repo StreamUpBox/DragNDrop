@@ -265,7 +265,7 @@ updateStockControl(result: any, variant: Variant) {
 
         stock.canTrackingStock = res.canTrackingStock;
         stock.lowStock = res.lowStock;
-        stock.showlowStockAlert = res.showlowStockAlert;
+        stock.showLowStockAlert = res.showlowStockAlert;
 
 
         this.stock.update(stock);

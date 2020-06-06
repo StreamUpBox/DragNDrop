@@ -64,7 +64,7 @@ export class StockService {
           inStock: 0,
           syncedOnline: false,
           canTrackingStock: false,
-          showlowStockAlert: false
+          showLowStockAlert: false
         });
       });
     }

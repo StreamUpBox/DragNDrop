@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { Business, Branch, ILatLng, Types, User, BusinessCategory,
-  NotificationService, SettingsService, Taxes, PouchDBService, PouchConfig} from '@enexus/flipper-components';
+  NotificationService, SettingsService, Taxes, PouchDBService,
+   PouchConfig, Tables, MainModelService} from '@enexus/flipper-components';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -33,6 +34,7 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
               private router: Router,
               protected notificationSvc: NotificationService,
               private formBuilder: FormBuilder,
+              private model: MainModelService,
               private ref: ChangeDetectorRef) {
                this.getLocation();
                this.database.connect(PouchConfig.bucket);
@@ -58,6 +60,9 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
   }
   async ngOnInit() {
     this.getLocation();
+
+    this.types$ = this.model.loadAll<Types>(Tables.type);
+    this.categories$ = this.model.loadAll<BusinessCategory>(Tables.businessCategory);
 
     if (PouchConfig.canSync) {
       this.database.sync(PouchConfig.syncUrl);
@@ -102,22 +107,23 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
       console.error(error);
     });
 
-    this.database.get(PouchConfig.Tables.businessTypes).then(result => {
-      if (result) {
-        this.types$ = result.businessTypes;
-      }
-    }, error => {
-      console.error(error);
-    });
+    // this.database.get(PouchConfig.Tables.businessTypes).then(result => {
+    //   if (result) {
+    //     this.types$ = result.businessTypes;
+    //   }
+    // }, error => {
+    //   console.error(error);
+    // });
 
 
-    this.database.get(PouchConfig.Tables.businessCategories).then(result => {
-      if (result) {
-        this.categories$ = result.businessCategories;
-      }
-    }, error => {
-      console.error(error);
-    });
+    // this.database.get(PouchConfig.Tables.businessCategories).then(result => {
+    //   if (result) {
+    //     this.categories$ = result.businessCategories;
+    //   }
+    // }, error => {
+    //   console.error(error);
+    // });
+
     this.database.get(PouchConfig.Tables.taxes).then(result => {
       if (result) {
         this.taxes$ = result.taxes;

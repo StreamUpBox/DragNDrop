@@ -704,5 +704,8 @@
       }
     }
   },
-  "defaultProject": "flipper-plugins"
+  "defaultProject": "flipper-plugins",
+  "cli": {
+    "analytics": "8e66853d-f88b-4567-aa85-f4dc48310297"
+  }
 }

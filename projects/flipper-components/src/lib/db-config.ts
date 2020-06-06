@@ -53,13 +53,12 @@ export type TABLE =
 
 
 
-export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
-
+  const DEFAULT_FLIPPER_DB_CONFIG = {
     database: { name: 'flipper', engine: 'LOCALSTORAGE' },
     tables: [
         {
             name: TABLES.USER,
-            query: `id int(11) NOT NULL AUTO_INCREMENT,
+            query: `id STRING,
                     name STRING,
                     email STRING,
                     active BOOL,
@@ -71,16 +70,16 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
         },
         {
             name: TABLES.BUSINESSCATEGORY,
-            query: `id int(11) NOT NULL AUTO_INCREMENT,
+            query: `id STRING,
                     name STRING,
-                    typeId int(11) NOT NULL,
+                    typeId STRING,
                     syncedOnline BOOL,
                     PRIMARY KEY (id)
                 `,
         },
         {
             name: TABLES.REASON,
-            query: `id int(11) NOT NULL AUTO_INCREMENT,
+            query: `id STRING,
                     name STRING,
                     operation STRING,
                     active BOOL,
@@ -91,13 +90,12 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
         },
         {
             name: TABLES.TYPES,
-            query: `id int(11) NOT NULL AUTO_INCREMENT,
+            query: `id STRING,
                     name STRING,
                     syncedOnline BOOL,
                     PRIMARY KEY (id)
             `
         },
-
         {
             name: TABLES.MENU,
             query: `id int(11) NOT NULL AUTO_INCREMENT,
@@ -111,18 +109,16 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
         {
             name: TABLES.BUSINESS,
             query: `
-                id int(11) NOT NULL AUTO_INCREMENT,
+                id STRING,
                 name STRING,
                 country STRING,
                 currency STRING,
                 businessUrl STRING,
                 timeZone STRING,
                 active BOOL,
-                userId int(11) NOT NULL,
-                typeId int(11) NOT NULL,
-                categoryId int(11) NOT NULL,
-                taxRate int(11) NOT NULL,
-                syncedOnline BOOL,
+                userId STRING,
+                typeId STRING,
+                categoryId STRING,
                 createdAt DATETIME,
                 updatedAt DATETIME,
                 PRIMARY KEY (id)
@@ -131,11 +127,10 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
         {
             name: TABLES.BRANCHES,
             query: `
-                id int(11) NOT NULL AUTO_INCREMENT,
+                id STRING,
                 name STRING,
                 active BOOL,
-                businessId int(11) NOT NULL,
-                syncedOnline BOOL,
+                businessId STRING,
                 mapLatitude STRING NULL,
                 mapLongitude STRING NULL,
                 createdAt DATETIME,
@@ -145,22 +140,21 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
         },
         {
             name: TABLES.USERBUSINESS,
-            query: `id int(11) NOT NULL AUTO_INCREMENT,
-                    userId int(11) NOT NULL,
-                    businessId int(11) NOT NULL,
-                    syncedOnline BOOL,
+            query: `id STRING,
+                    userId STRING,
+                    businessId STRING,
                     PRIMARY KEY (id)
                     `
         },
         {
             name: TABLES.TAXES,
-            query: `id int(11) NOT NULL AUTO_INCREMENT,
+            query: `id STRING,
                     name STRING,
                     percentage int(11),
                     active BOOL,
                     isDefault BOOL,
-                    businessId int(11) NOT NULL,
-                    syncedOnline BOOL,
+                    businessId STRING,
+                    channel STRING,
                     createdAt DATETIME,
                     updatedAt DATETIME,
                     PRIMARY KEY (id)
@@ -168,7 +162,7 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
         },
         {
             name: TABLES.PRODUCTS,
-            query: `id int(11) NOT NULL AUTO_INCREMENT,
+            query: `id STRING,
                     name STRING,
                     categoryId int(11) NULL,
                     description STRING NULL,
@@ -178,9 +172,9 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
                     hasPicture BOOL,
                     isDraft BOOL,
                     isCurrentUpdate BOOL,
-                    businessId int(11) NOT NULL,
-                    supplierId int(11) NULL,
-                    syncedOnline BOOL,
+                    businessId STRING,
+                    supplierId STRING NULL,
+                    channel STRING,
                     createdAt DATETIME,
                     updatedAt DATETIME,
                     PRIMARY KEY (id)
@@ -188,26 +182,21 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
         },
         {
             name: TABLES.BRANCHPRODUCTS,
-            query: `id int(11) NOT NULL AUTO_INCREMENT,
-                    productId int(11) NOT NULL,
-                    branchId int(11) NOT NULL,
-                    syncedOnline BOOL,
+            query: `id STRING,
+                    productId STRING,
+                    branchId STRING,
+                    channel STRING,
                     PRIMARY KEY (id)
                 `
         },
         {
             name: TABLES.VARIANTS,
-            query: `id int(11) NOT NULL AUTO_INCREMENT,
+            query: `id STRING,
                     name STRING,
-                    productName STRING,
                     SKU STRING,
-                    categoryName STRING NULL,
-                    brandName  STRING NULL,
-                    productId int(11) NOT NULL,
+                    productId STRING,
                     unit STRING NULL,
-                    isActive BOOL,
-                    isDraft BOOL,
-                    syncedOnline BOOL,
+                    channel STRING,
                     createdAt DATETIME,
                     updatedAt DATETIME,
                     PRIMARY KEY (id)
@@ -215,20 +204,17 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
         },
         {
             name: TABLES.STOCKS,
-            query: ` id int(11) NOT NULL AUTO_INCREMENT,
-                    branchId int(11) NOT NULL,
-                    variantId int(11) NOT NULL,
-                    lowStock int(11) NOT NULL,
-                    currentStock int(11) NOT NULL,
+            query: ` id STRING,
+                    branchId STRING,
+                    variantId STRING,
+                    productId STRING,
+                    lowStock STRING,
+                    currentStock STRING,
                     supplyPrice int(11) NULL,
                     retailPrice int(11) NULL,
-                    wholeSalePrice int(11) NULL,
-                    active BOOL,
-                    isDraft BOOL,
-                    syncedOnline BOOL,
                     canTrackingStock BOOL,
-                    showlowStockAlert BOOL,
-                    syncedOnline BOOL,
+                    showLowStockAlert BOOL,
+                    channel STRING,
                     createdAt DATETIME,
                     updatedAt DATETIME,
                     PRIMARY KEY (id)
@@ -236,15 +222,15 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
         },
         {
             name: TABLES.ORDER,
-            query: `id int(11) NOT NULL AUTO_INCREMENT,
-                    branchId int(11) NOT NULL,
-                    userId int(11) NOT NULL,
+            query: `id STRING,
+                    branchId STRING NOT NULL,
+                    deviceId STRING NULL,
                     orderNumber STRING NOT NULL,
-                    customerId int(11) NULL,
+                    customerId STRING NULL,
                     status STRING NOT NULL,
                     reference STRING NULL,
                     orderType STRING NOT NULL,
-                    supplierId int(11) NULL,
+                    supplierId STRING NULL,
                     subTotal int(11) NULL,
                     supplierInvoiceNumber STRING NULL,
                     taxRate int(11) NULL,
@@ -254,12 +240,11 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
                     cashReceived int(11) NULL,
                     customerChangeDue int(11) NULL,
                     saleTotal int(11) NULL,
-                    customerSaving int(11) NULL,
-                    paymentId int(11) NULL,
+                    paymentId STRING NULL,
                     orderNote STRING NULL,
                     active BOOL,
                     isDraft BOOL,
-                    syncedOnline BOOL,
+                    channel STRING,
                     deliverDate DATETIME,
                     orderDate DATETIME,
                     createdAt DATETIME,
@@ -269,9 +254,9 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
         },
         {
             name: TABLES.ORDERDETAILS,
-            query: ` id int(11) NOT NULL AUTO_INCREMENT,
-                    orderId int(11) NOT NULL,
-                    variantId int(11) NOT NULL,
+            query: ` id STRING NOT NULL,
+                    orderId STRING NOT NULL,
+                    variantId STRING NOT NULL,
                     variantName STRING NOT NULL,
                     price int(11) NULL,
                     quantity int(11) NOT NULL,
@@ -281,10 +266,8 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
                     discountAmount int(11) NULL,
                     discountRate int(11) NULL,
                     subTotal int(11) NULL,
-                    discountRate int(11) NULL,
-                    discountAmount int(11) NULL,
                     note STRING NULL,
-                    syncedOnline BOOL,
+                    channel STRING,
                     createdAt DATETIME,
                     updatedAt DATETIME,
                     PRIMARY KEY (id)
@@ -292,16 +275,14 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
         },
         {
             name: TABLES.STOCKHISTORY,
-            query: `id int(11) NOT NULL AUTO_INCREMENT,
-                    variantId int(11) NOT NULL,
-                    variantName STRING NOT NULL,
-                    stockId int(11) NOT NULL,
+            query: `id STRING,
+                    variantId STRING,
+                    stockId STRING,
+                    productId STRING,
                     quantity int(11) NOT NULL,
                     reason STRING NULL,
                     note STRING NULL,
-                    isPreviously BOOL,
-                    isDraft BOOL,
-                    syncedOnline BOOL,
+                    channel STRING,
                     createdAt DATETIME,
                     updatedAt DATETIME,
                     PRIMARY KEY (id)
@@ -313,7 +294,7 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
                     branchId int(11) NOT NULL,
                     name int(11) NOT NULL,
                     token STRING NOT NULL,
-                    syncedOnline BOOL,
+                    channel STRING,
                     createdAt DATETIME,
                     updatedAt DATETIME,
                     PRIMARY KEY (id)
@@ -334,7 +315,7 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
                     customerText STRING  NULL,
                     returnPolicy STRING  NULL,
                     showItemNote BOOL  NULL,
-                    syncedOnline BOOL,
+                    channel STRING,
                     createdAt DATETIME,
                     updatedAt DATETIME,
                     PRIMARY KEY (id)
@@ -345,33 +326,39 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
         email: 'admin@admin.com',
         password: 'admin',
     },
-
     defaultMenu: [
         {
             name: 'Analytics',
             icon: 'analytics.svg',
-            route: 'admin/analytics',
+            route: '',
             active: true,
             isSetting: false,
         },
         {
             name: 'POS',
             icon: 'pos.svg',
-            route: 'admin/pos',
+            route: 'pos',
             active: false,
             isSetting: false,
         },
         {
             name: 'Inventory',
             icon: 'inventory.svg',
-            route: 'admin/inventory',
+            route: 'inventory',
+            active: false,
+            isSetting: false,
+        },
+        {
+            name: 'Transactions',
+            icon: 'transaction',
+            route: 'transactions',
             active: false,
             isSetting: false,
         },
         {
             name: 'Settings',
             icon: 'settings.svg',
-            route: 'admin/settings',
+            route: 'settings',
             active: false,
             isSetting: true,
         }
@@ -448,8 +435,6 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
                 {
                     name: 'Tattoo/Piercing'
                 }
-
-
             ]
         },
         {
@@ -491,8 +476,6 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
                 {
                     name: 'Flowers and Gifts'
                 }
-
-
             ]
         }
     ]
@@ -528,28 +511,30 @@ export const Tables = {
     stockHistory: DEFAULT_FLIPPER_DB_CONFIG.database.name + '.' + TABLES.STOCKHISTORY,
 };
 
-export const PouchConfig = {
+const PouchConfig = {
     channel: localStorage.getItem('channel'),
+    sessionId: localStorage.getItem('sessionId'),
     bucket: localStorage.getItem('bucket'),
     syncUrl: localStorage.getItem('syncUrl') + '/' + localStorage.getItem('bucket'),
     canSync: JSON.parse(localStorage.getItem('canSync')),
     Tables: {
-    user: TABLES.USER + '_' + localStorage.getItem('channel'),
-    business: TABLES.BUSINESS + '_' + localStorage.getItem('channel'),
-    branches: TABLES.BRANCHES + '_' + localStorage.getItem('channel'),
-    menus: TABLES.MENU,
-    businessTypes: TABLES.TYPES,
-    businessCategories: TABLES.BUSINESSCATEGORY,
-    businessUsers: TABLES.USERBUSINESS + '_' + localStorage.getItem('channel'),
-    taxes: TABLES.TAXES + '_' + localStorage.getItem('channel'),
-    variants: TABLES.VARIANTS + '_' + localStorage.getItem('channel'),
-    products: TABLES.STOCKS + '_' + localStorage.getItem('channel'),
-    branchProducts: TABLES.BRANCHPRODUCTS + '_' + localStorage.getItem('channel'),
-    reasons: TABLES.REASON + '_' + localStorage.getItem('channel'),
-    orders: TABLES.ORDER + '_' + localStorage.getItem('channel'),
-    orderDetails: TABLES.ORDERDETAILS + '_' + localStorage.getItem('channel'),
-    stockHistories: TABLES.STOCKHISTORY + '_' + localStorage.getItem('channel'),
-    subscription: TABLES.SUBSCRIPTION + '_' + localStorage.getItem('channel'),
+        user: TABLES.USER + '_' + localStorage.getItem('channel'),
+        business: TABLES.BUSINESS + '_' + localStorage.getItem('channel'),
+        branches: TABLES.BRANCHES + '_' + localStorage.getItem('channel'),
+        menus: TABLES.MENU,
+        businessTypes: TABLES.TYPES,
+        businessCategories: TABLES.BUSINESSCATEGORY,
+        businessUsers: TABLES.USERBUSINESS + '_' + localStorage.getItem('channel'),
+        taxes: TABLES.TAXES + '_' + localStorage.getItem('channel'),
+        variants: TABLES.VARIANTS + '_' + localStorage.getItem('channel'),
+        products: TABLES.PRODUCTS + '_' + localStorage.getItem('channel'),
+        branchProducts: TABLES.BRANCHPRODUCTS + '_' + localStorage.getItem('channel'),
+        reasons: TABLES.REASON + '_' + localStorage.getItem('channel'),
+        orders: TABLES.ORDER + '_' + localStorage.getItem('channel'),
+        orderDetails: TABLES.ORDERDETAILS + '_' + localStorage.getItem('channel'),
+        stockHistories: TABLES.STOCKHISTORY + '_' + localStorage.getItem('channel'),
+        subscription: TABLES.SUBSCRIPTION + '_' + localStorage.getItem('channel'),
+        stocks: TABLES.STOCKS + '_' + localStorage.getItem('channel'),
     }
 };
 // localStorage.setItem("lastname", "Smith");

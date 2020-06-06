@@ -254,9 +254,9 @@ export class PaymentCardComponent implements OnInit {
    * Callback function that emits payment card details after user clicks submit, or press enter
    */
   public emitSavedCard(): void {
-    this.cardInvalid=false;
+    this.cardInvalid = false;
     if (this.ccForm.invalid) {
-      this.cardInvalid=true;
+      this.cardInvalid = true;
       return;
     }
     const cardDetails: ICardDetails = this.ccForm.value as CardDetails;

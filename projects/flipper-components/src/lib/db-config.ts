@@ -53,7 +53,7 @@ export type TABLE =
 
 
 
-  const DEFAULT_FLIPPER_DB_CONFIG = {
+const DEFAULT_FLIPPER_DB_CONFIG = {
     database: { name: 'flipper', engine: 'LOCALSTORAGE' },
     tables: [
         {

@@ -1,25 +1,22 @@
 
-export type ORDER= 'DESC' | 'ASC';
+export type ORDER = 'DESC' | 'ASC';
 
 export class QueryService {
 
   protected query: string = null;
   protected extra: any = null;
-  protected callback: any = () => {};
-  constructor() {}
+  protected callback: any = () => { };
+  constructor() { }
 
 
-////////////////////////////// MODEL //////////////////////////////////////////////////////////////////////////
+  ////////////////////////////// MODEL //////////////////////////////////////////////////////////////////////////
 
-public select<T>(TABLE: T, COLUMNS?: string) {
+  public select<T>(TABLE: T, COLUMNS?: string) {
     this.query = `SELECT ${COLUMNS ? COLUMNS : '*'} FROM ${TABLE}`;
     return this;
   }
 
-
-
-
-  public where(key: string, value: any, sign= '=') {
+  public where(key: string, value: any, sign = '=') {
     let val = '';
     if (typeof value === 'string' || value instanceof String) {
       val = '\'' + value + '\'';
@@ -31,7 +28,7 @@ public select<T>(TABLE: T, COLUMNS?: string) {
     return this;
   }
 
-  public andWhere(key: string, value: any, sign= '=') {
+  public andWhere(key: string, value: any, sign = '=') {
     let val = '';
     if (typeof value === 'string' || value instanceof String) {
       val = '\'' + value + '\'';
@@ -42,7 +39,7 @@ public select<T>(TABLE: T, COLUMNS?: string) {
     return this;
   }
 
-  public orWhere(key: string, value: any, sign= '=') {
+  public orWhere(key: string, value: any, sign = '=') {
     let val = '';
     if (typeof value === 'string' || value instanceof String) {
       val = '\'' + value + '\'';
@@ -57,7 +54,7 @@ public select<T>(TABLE: T, COLUMNS?: string) {
     return this;
   }
 
-  protected insert< T >(TABLE: string, ROW: T) {
+  protected insert<T>(TABLE: string, ROW: T) {
     this.extra = [];
     this.extra = [ROW];
     this.query = `INSERT INTO ${TABLE} VALUES ?`;
@@ -65,16 +62,16 @@ public select<T>(TABLE: T, COLUMNS?: string) {
   }
 
 
-  protected updateRow< T >(TABLE: string, ROW: T, id: number) {
+  protected updateRow<T>(TABLE: string, ROW: T, id: number) {
     this.extra = [];
     const value = Object.values(ROW);
     value.push(id);
     this.extra = value;
     this.query = `UPDATE ${TABLE} SET ${Object.keys(ROW).join('=?, ') + '=?'} WHERE id=?`;
     return this;
-}
+  }
 
-public orderBy(by: string, order: ORDER= 'DESC') {
+  public orderBy(by: string, order: ORDER = 'DESC') {
     this.query = this.query + `  ORDER BY ${by} ${order}`;
     return this;
   }
@@ -90,7 +87,7 @@ public orderBy(by: string, order: ORDER= 'DESC') {
 
 
 
-  protected groupBy() {}
+  protected groupBy() { }
 
 
 
@@ -152,7 +149,4 @@ public orderBy(by: string, order: ORDER= 'DESC') {
     this.query = `ALTER TABLE ${OLDTABLE} RENAME TO ${NEWTABLE}`;
     return this;
   }
-
-
-
 }

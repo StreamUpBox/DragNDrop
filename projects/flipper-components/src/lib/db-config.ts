@@ -1,6 +1,6 @@
 import { InjectionToken } from '@angular/core';
 import { Menu } from './entries';
-import { Taxes } from './entries/taxes';
+// import { Taxes } from './entries/taxes';
 import { Reason } from './entries/reason';
 
 
@@ -53,7 +53,7 @@ export type TABLE =
 
 
 
-const DEFAULT_FLIPPER_DB_CONFIG = {
+export const DEFAULT_FLIPPER_DB_CONFIG = {
     database: { name: 'flipper', engine: 'LOCALSTORAGE' },
     tables: [
         {
@@ -511,7 +511,7 @@ export const Tables = {
     stockHistory: DEFAULT_FLIPPER_DB_CONFIG.database.name + '.' + TABLES.STOCKHISTORY,
 };
 
-const PouchConfig = {
+export const PouchConfig = {
     channel: localStorage.getItem('channel'),
     sessionId: localStorage.getItem('sessionId'),
     bucket: localStorage.getItem('bucket'),

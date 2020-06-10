@@ -13,9 +13,11 @@ export class ModelService extends ExecuteService {
   }
 
 
+
   get<T>(Table?: string): T[] {
     try {
       if (Table) {
+        //TODO: this is returning can not parse json from localStorage.
         return this.select(Table).execute();
       } else {
         return this.execute();
@@ -93,7 +95,7 @@ export class ModelService extends ExecuteService {
     }
   }
 
-  filter<T>(TABLE: string, COLUMNS: any,  VALUE: any): T[] {
+  filter<T>(TABLE: string, COLUMNS: any, VALUE: any): T[] {
     try {
       let condition = '';
       if (Array.isArray(COLUMNS)) {
@@ -182,7 +184,7 @@ export class ModelService extends ExecuteService {
       throw new Error((`ERROR:${e}`));
     }
   }
-  findByFirst<T>(Table: string, key= 'id', val: any): T {
+  findByFirst<T>(Table: string, key = 'id', val: any): T {
     try {
       return this.select(Table).where(key, val).first<T>();
     } catch (e) {
@@ -190,7 +192,7 @@ export class ModelService extends ExecuteService {
     }
   }
 
-  findByLast<T>(Table: string, key= 'id', val: any): T {
+  findByLast<T>(Table: string, key = 'id', val: any): T {
     try {
       return this.select(Table).where(key, val).last<T>();
     } catch (e) {

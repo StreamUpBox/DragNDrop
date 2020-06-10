@@ -13,7 +13,10 @@ Run `ng build flipperDashboard` to build the project. The build artifacts will b
 
 ## Publishing
 
-After building your library with `ng build flipperDashboard`, go to the dist folder `cd dist/flipper-dashboard` and run `npm publish`.
+
+After building your library with `ng build  flipperDashboard`, go to the dist folder `cd dist/flipper-dashboard` and run `npm publish --access public`.
+
+- more can be found here: https://docs.npmjs.com/creating-and-publishing-an-org-scoped-package
 
 ## Running unit tests
 

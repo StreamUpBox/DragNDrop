@@ -83,6 +83,7 @@ export class FlipperMenuComponent implements OnInit {
     this.menu = this.model.loadAll<Menu>(Tables.menu).filter(m => m.isSetting === false);
     this.settingMenu = this.model.loadAll<Menu>(Tables.menu).find(m => m.isSetting === true);
   }
+  
 
   async ngOnInit() {
     this.loadMenu();

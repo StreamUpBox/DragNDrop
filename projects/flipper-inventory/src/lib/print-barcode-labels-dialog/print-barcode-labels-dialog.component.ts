@@ -50,9 +50,10 @@ printOut() {
     frameDoc.document.write('</body></html>');
     frameDoc.document.close();
     setTimeout( () => {
-        window.frames.frame3.focus();
-        window.frames.frame3.print();
-        document.body.removeChild(frame1);
+      const key = 'frame3';
+      window.frames[key].focus();
+      window.frames[key].print();
+      document.body.removeChild(frame1);
     }, 500);
     return false;
   }

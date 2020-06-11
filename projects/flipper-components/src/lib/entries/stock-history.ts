@@ -3,6 +3,7 @@ export class StockHistory {
   orderId?: any;
   variantId?: any;
   variantName?: string;
+  productId?: any;
   stockId?: any;
   reason?: string;
   quantity: any;

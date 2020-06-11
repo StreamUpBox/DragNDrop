@@ -71,7 +71,9 @@ export class FlipperMenuComponent implements OnInit {
 
   user$: User = null;
 
-  constructor(private database: PouchDBService, private model: MainModelService, private route: Router,
+  constructor(private database: PouchDBService,
+              private model: MainModelService,
+              private route: Router,
               private ref: ChangeDetectorRef,
               private ngZone: NgZone) {
     this.database.connect(PouchConfig.bucket);
@@ -273,7 +275,7 @@ export class FlipperMenuComponent implements OnInit {
 
     }
     this.menu = menuPusher;
-    this.route.navigate([menu.route]);
+   // this.route.navigate([menu.route]);
   }
 
   hideBranchDropDown() {

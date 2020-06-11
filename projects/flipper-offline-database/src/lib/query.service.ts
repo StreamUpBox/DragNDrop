@@ -62,7 +62,7 @@ export class QueryService {
   }
 
 
-  protected updateRow<T>(TABLE: string, ROW: T, id: number) {
+  protected updateRow< T >(TABLE: string, ROW: T, id: any) {
     this.extra = [];
     const value = Object.values(ROW);
     value.push(id);
@@ -76,7 +76,7 @@ export class QueryService {
     return this;
   }
 
-  protected deleteRow<T>(TABLE: T, id: number) {
+  protected deleteRow<T>(TABLE: T, id: any) {
     this.query = `DELETE FROM ${TABLE} WHERE id=${id}`;
     return this;
   }

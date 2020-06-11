@@ -65,19 +65,19 @@
         </td>
       </tr>
 
-      <tr class="tr" [class.trIsFocused]="isFocused==stk.id+'low' && stk.showlowStockAlert"
+      <tr class="tr" [class.trIsFocused]="isFocused==stk.id+'low' && stk.showLowStockAlert"
         style=" border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
 
-        <td class="td" [class.tdIsFocused]="isFocused==stk.id+'low' && stk.showlowStockAlert">
+        <td class="td" [class.tdIsFocused]="isFocused==stk.id+'low' && stk.showLowStockAlert">
           Low Stock Alert
         </td>
         <td style="width:30%">
           <input class="input" style="width:100%" type="number" (input)="updateInput()" [(ngModel)]="stk.lowStock" name="stk.id+'lowStock'"
-            (focus)="focusing(stk.id+'low')" [disabled]="!stk.showlowStockAlert" (focusout)="focusingOut()"
+            (focus)="focusing(stk.id+'low')" [disabled]="!stk.showLowStockAlert" (focusout)="focusingOut()"
             placeholder="{{stk.lowStock}}" />
         </td>
         <td style="width:30%">
-          <mat-slide-toggle [(ngModel)]="stk.showlowStockAlert" (input)="updateInput()" name="stk.id+'low'"
+          <mat-slide-toggle [(ngModel)]="stk.showLowStockAlert" (input)="updateInput()" name="stk.id+'low'"
             style="float:right; margin-top: 12px;margin-left: 10px;">Alerts</mat-slide-toggle>
         </td>
       </tr>

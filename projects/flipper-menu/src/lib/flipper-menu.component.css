@@ -6,20 +6,25 @@
   --purple-2: #211a36;
   --purple-3: #130f1f;
 }
+a{
+  text-decoration: none;
+}
 .sidebar{
   margin: 0;
   position: fixed;
   top:0;
   left:0;
   bottom: 0;
+ 
 }
 .fp-main-sidebar{
   position: fixed;
-  top:0;
+
   left:0;
   bottom: 0;
   width: 69px;
-  height: 100vh;
+  height: calc(100vh - 30px);
+  top:30px;
   background-color: #130f1f; 
   /* background-color: var(--purple-bg);  */
 }
@@ -91,11 +96,11 @@
 }
 .fp-secondary-sidebar{
   position: fixed;
-  top:0;
+  height: calc(100vh - 30px);
+  top:30px;
   bottom: 0;
   left:69.2px;
   width: 210px;
-  height: 100vh;
   box-shadow: 0 1px 3px 0 rgba(63, 63, 68, 0.15), 0 0 0 1px rgba(63, 63, 68, 0.05);
   /* background-color: var(--purple-2); */
   background-color: #211a36; 
@@ -103,7 +108,7 @@
 
 .fp-secondary-sidebar-text {
   position: relative;
-  top: 20px;
+  top: 25px;
   left: 17px;
   width: 150px;
   height: 19px;
@@ -140,7 +145,7 @@
 }
 .fp-online-user {
   position: relative;
-  top: 20px;
+  top: 30px;
   left: 16px;
   width: 8px;
   height: 8px;
@@ -150,7 +155,7 @@
 
 .user-name{
   position: relative;
-  top: 5px;
+  top: 0px;
   left: 30px;
   width: 200px;
   height: 20px;
@@ -188,7 +193,7 @@
 }
 .fp-inactive-menu-icon{
   position: relative;
-  top: 17px;
+  top: 13px;
   margin-left: 11.6px;
   margin-right: 15.6px;
   margin-bottom: 16.3px;
@@ -430,7 +435,7 @@
 }
 .icon-toggle{
   position: relative;
-  top: 6px;
+  top: 2px;
   left: 5px;
   width: 18.8px;
   height: 17.5px;

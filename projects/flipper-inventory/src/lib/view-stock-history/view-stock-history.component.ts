@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { StockHistory, Variant } from '@enexus/flipper-components';
 import { StockHistoryService } from './stock-history.service';
 import { FormControl } from '@angular/forms';
+import { VariationService } from '../services/variation.service';
 
 @Component({
   selector: 'flipper-view-stock-history',
@@ -13,16 +14,16 @@ import { FormControl } from '@angular/forms';
 export class ViewStockHistoryComponent implements OnInit, OnDestroy {
   constructor(public dialogRef: MatDialogRef<ViewStockHistoryComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
-              private stockHsSvc: StockHistoryService) {
+              public stockHsSvc: StockHistoryService) {
       this.dataSource = new MatTableDataSource([]);
       if (data.isArray) {
        this.data.variant.forEach(v => {
-              this.variantIds.push(v.id);
+              this.variantIds.push(`'${v.id}'`);
               this.variants.push(v as Variant);
             });
         } else {
           this.variants.push(this.data.variant);
-          this.variantIds.push(this.data.variant.id);
+          this.variantIds.push(`'${this.data.variant.id}'`);
       }
       this.variantList.setValue(this.variantIds);
 }
@@ -44,7 +45,7 @@ set loadAllStockHistory(variants: StockHistory[]) {
   loading = true;
   dataSource: MatTableDataSource<StockHistory>;
   variantList = new FormControl();
-  variantIds: number[] = [];
+  variantIds: string[] = [];
   variants: Variant[] = [];
 
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
@@ -66,11 +67,17 @@ ngOnDestroy() {
 }
 
 updateList() {
+  const arry = [];
+  this.variantList.value.forEach(element => {
+    arry.push(`'${element}'`);
+  });
+  this.variantList.setValue(arry);
   this.refresh();
 }
 refresh() {
   this.loading = true;
   if (this.variantList.value) {
+
     this.stockHsSvc.loadAllStockHistory(this.variantList.value).subscribe();
   }
   this.subscription = this.stockHsSvc.variantsSubject.subscribe((loadAllStockHistory) => this.loadAllStockHistory = loadAllStockHistory);

@@ -71,18 +71,30 @@
     <div class="divider"></div>
     <div class="fp-menu" *ngFor="let row of menu; let i = index;">
 
-      <div [ngClass]="row.active?'fp-active-menu':'fp-inactive-menu'" (click)="router(row,false)">
-        <span class="fp-inactive-menu-icon"><img [src]="'./assets/icons/'+row.icon" class="icon"></span>
-        <span class="fp-inactive-menu-text" i18n>{{textEllipsis(row.name,26)}}</span>
-      </div>
+      <a  [routerLink]="row.route" routerLinkActive  #rla="routerLinkActive" (click)="router(row,false)">
+          <div [ngClass]="rla.isActive?'fp-active-menu':'fp-inactive-menu'">
+              <span class="fp-inactive-menu-icon"><img [src]="'./assets/icons/'+row.icon" class="icon"></span>
+            <span class="fp-inactive-menu-text" i18n>{{textEllipsis(row.name,26)}}</span>
+          </div>
+       
+        </a>
 
     </div>
 
     <div class="setting" *ngIf="settingMenu">
-      <div [ngClass]="settingMenu.active?'fp-active-menu':'fp-inactive-menu'" (click)="router(settingMenu,true)">
+
+      <a [routerLink]="settingMenu.route" routerLinkActive  #rla="routerLinkActive" (click)="router(settingMenu,false)">
+        <div [ngClass]="rla.isActive?'fp-active-menu':'fp-inactive-menu'">
+          <span class="fp-inactive-menu-icon"><img [src]="'./assets/icons/'+settingMenu.icon" class="icon"></span>
+          <span class="fp-inactive-menu-text" i18n>{{textEllipsis(settingMenu.name,26)}}</span>
+        </div>
+     
+      </a>
+
+      <!-- <div [ngClass]="settingMenu.active?'fp-active-menu':'fp-inactive-menu'" (click)="router(settingMenu,true)">
         <span class="fp-inactive-menu-icon"><img [src]="'./assets/icons/'+settingMenu.icon" class="icon"></span>
         <span class="fp-inactive-menu-text">{{settingMenu.name}}</span>
-      </div>
+      </div> -->
     </div>
 
   </div>

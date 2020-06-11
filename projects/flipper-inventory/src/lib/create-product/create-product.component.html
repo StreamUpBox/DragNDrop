@@ -1,152 +1,155 @@
-<form [formGroup]="product.form" style="height: 100%;"  @addProduct>
-  <mat-toolbar class="toolbar" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px"
-    fxLayoutGap.xs="0">
-    <div class="mt-3" fxFlex="30">
-      <img [src]="'./assets/icons/chevron-left.svg'" style="cursor: pointer;" (click)="openDiscardDialog()" class="icon-toggle">
-    </div>
-    <div class="container mt-3" fxFlex="40">
-      <h3 class="title align-center-at-medium">Let’s create an item.</h3>
-    </div>
-    <div class="mt-2" fxFlex="30">
-      <div style="float:right" >
-        <button *ngIf="product.hasDraftProduct && product.hasDraftProduct.isCurrentUpdate" 
-        (click)="deleteProduct()"
-        class="mr-1 button-default button--destructive">
-          Delete
-        </button>
-        <!-- <button class="button-default mr-1 button--success" (click)="onSubmit('new')">Add New</button> -->
-        <button class="button" (click)="onSubmit('close')">Save & Close</button>
+<div class="container1">
+  <form [formGroup]="product.form"  @addProduct>
+    <mat-toolbar class="toolbar" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px"
+      fxLayoutGap.xs="0">
+      <div class="mt-3" fxFlex="30">
+        <img [src]="'./assets/icons/chevron-left.svg'" style="cursor: pointer;" (click)="openDiscardDialog()" class="icon-toggle">
       </div>
-     
-    </div>
-  </mat-toolbar>
-
-
-  <div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="0"
-    style="background: #fff;height:100vh;overflow: auto;">
-    <div class="" fxFlex="15"></div>
-    <div class="container  mt-5" fxFlex="70">
-
-      <div class="card">
-        <div class="card-body">
-
-          <div class="grid-2-at-medium grid-row-space-line" >
-            <div class="col" style="float:left">
-              <h3 style="float:left">Details</h3>
+      <div class="container mt-3" fxFlex="40">
+        <h3 class="title align-center-at-medium">Let’s create an item.</h3>
+      </div>
+      <div class="mt-2" fxFlex="30">
+        <div style="float:right" >
+          <button *ngIf="product.hasDraftProduct && product.hasDraftProduct.isCurrentUpdate" 
+          (click)="deleteProduct()"
+          class="mr-1 button-default button--destructive">
+            Delete
+          </button>
+          <!-- <button class="button-default mr-1 button--success" (click)="onSubmit('new')">Add New</button> -->
+          <button class="button" (click)="onSubmit('close')">Save & Close</button>
+        </div>
+       
+      </div>
+    </mat-toolbar>
+  
+  
+    <div class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px" fxLayoutGap.xs="0"
+      style="background: #fff;height:100vh;overflow: auto;">
+      <div class="" fxFlex="15"></div>
+      <div class="container  mt-5" fxFlex="70">
+  
+        <div class="card">
+          <div class="card-body">
+  
+            <div class="grid-2-at-medium grid-row-space-line" >
+              <div class="col" style="float:left">
+                <h3 style="float:left">Details</h3>
+              </div>
+              <div class="col-5">
+                <table style="width: 100%;">
+                  <tr>
+                    <td style="width: 75%;">
+                      <table style="width: 100%;">
+                        <tr class="tr" style="border-top: 1px #d5d9dc solid; border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;" [class.trIsFocused]="isFocused=='name'"
+                          [class.invalid]="submitted && product.formControl.name.errors">
+                          <td class="td" [class.tdIsFocused]="isFocused=='name' || (submitted && product.formControl.name.errors) ">
+                            <label>Name</label>
+                          </td>
+                          <td style="width: 60%;">
+  
+  
+                            <input class="input" formControlName="name" type="text" (input)="updateItem('name',$event)"
+                              (focus)="focusing('name')" (focusout)="focusingOut()" placeholder="Item Name" />
+  
+                            <mat-error *ngIf="submitted && product.formControl.name.errors">
+                              <div *ngIf="product.formControl.name.errors.required">Item name is required</div>
+                            </mat-error>
+  
+  
+                          </td>
+                        </tr>
+                        <tr style=" border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;" class="tr" [class.trIsFocused]="isFocused=='category'">
+                          <td class="td" [class.tdIsFocused]="isFocused=='category'">
+                            <label>Description</label>
+                          </td>
+                          <td style="width: 60%;">
+                            <textarea class="textarea" formControlName="description"
+                              (input)="updateItem('description',$event)" (focus)="focusing('category')"
+                              (focusout)="focusingOut()"
+                              placeholder="Enter a description of this item. Describe details like features, options, and measurements."
+                              maxlength="4096"></textarea>
+  
+                          </td>
+                        </tr>
+  
+                        <tr style=" border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;" class="tr" [class.trIsFocused]="isFocused=='location'">
+                          <td class="td" [class.tdIsFocused]="isFocused=='location'">
+                            <label>Locations</label>
+                          </td>
+                          <td style="width: 60%;">
+  
+                            <mat-select class="select" [formControl]="product.branchList" placeholder="Choose Location" (selectionChange)="product.updateBranch()" (focus)="focusing('location')" (focusout)="focusingOut()"  multiple>
+                              <mat-option *ngFor="let branch of product.branches$ ; let i = index;" [value]="branch.id">
+                                {{branch.name}}</mat-option>
+                            </mat-select>
+  
+                          </td>
+                        </tr>
+  
+                        <tr style=" border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;" class="tr" [class.trIsFocused]="isFocused=='taxes'">
+                          <td class="td" [class.tdIsFocused]="isFocused=='taxes'">
+                            <label>Tax</label>
+                          </td>
+                          <td style="width: 60%;">
+  
+                            <mat-select class="select" formControlName="taxId" placeholder="Choose Tax"
+                              (selectionChange)="updateItem('taxId',$event)" (focus)="focusing('taxes')"
+                              (focusout)="focusingOut()">
+                              <mat-option *ngFor="let tax of product.taxes$" [value]="tax.id">
+                                {{tax.name}} ({{tax.percentage}}%)
+                              </mat-option>
+                            </mat-select>
+  
+  
+                            <mat-error *ngIf="submitted && product.formControl.taxId.errors">
+                              <div *ngIf="product.formControl.taxId.errors.required">Tax is required</div>
+                            </mat-error>
+  
+  
+                          </td>
+                        </tr>
+  
+  
+                      </table>
+  
+                    </td>
+                    <td style="width: 35%">
+                      <flipper-file-upload style="position: relative; left: 10px;" [baseImage]="product.hasDraftProduct && product.hasDraftProduct.picture?product.hasDraftProduct.picture:'assets/icons/add-image-placeholder.png'"
+                        (imageUploaded)="viewImageUploaded($event)" baseImage="assets/icons/add-image-placeholder.png"
+                        baseTitle="Add Image" baseWidth="150" baseHeight="150" [activeColor]="'orangered'"
+                        [baseColor]="'lightgray'"></flipper-file-upload>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+  
+  
             </div>
-            <div class="col-5">
-              <table style="width: 100%;">
-                <tr>
-                  <td style="width: 75%;">
-                    <table style="width: 100%;">
-                      <tr class="tr" style="border-top: 1px #d5d9dc solid; border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;" [class.trIsFocused]="isFocused=='name'"
-                        [class.invalid]="submitted && product.formControl.name.errors">
-                        <td class="td" [class.tdIsFocused]="isFocused=='name' || (submitted && product.formControl.name.errors) ">
-                          <label>Name</label>
-                        </td>
-                        <td style="width: 60%;">
-
-
-                          <input class="input" formControlName="name" type="text" (input)="updateItem('name',$event)"
-                            (focus)="focusing('name')" (focusout)="focusingOut()" placeholder="Item Name" />
-
-                          <mat-error *ngIf="submitted && product.formControl.name.errors">
-                            <div *ngIf="product.formControl.name.errors.required">Item name is required</div>
-                          </mat-error>
-
-
-                        </td>
-                      </tr>
-                      <tr style=" border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;" class="tr" [class.trIsFocused]="isFocused=='category'">
-                        <td class="td" [class.tdIsFocused]="isFocused=='category'">
-                          <label>Description</label>
-                        </td>
-                        <td style="width: 60%;">
-                          <textarea class="textarea" formControlName="description"
-                            (input)="updateItem('description',$event)" (focus)="focusing('category')"
-                            (focusout)="focusingOut()"
-                            placeholder="Enter a description of this item. Describe details like features, options, and measurements."
-                            maxlength="4096"></textarea>
-
-                        </td>
-                      </tr>
-
-                      <tr style=" border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;" class="tr" [class.trIsFocused]="isFocused=='location'">
-                        <td class="td" [class.tdIsFocused]="isFocused=='location'">
-                          <label>Locations</label>
-                        </td>
-                        <td style="width: 60%;">
-
-                          <mat-select class="select" [formControl]="product.branchList" placeholder="Choose Location" (selectionChange)="product.updateBranch()" (focus)="focusing('location')" (focusout)="focusingOut()"  multiple>
-                            <mat-option *ngFor="let branch of product.branches$ ; let i = index;" [value]="branch.id">
-                              {{branch.name}}</mat-option>
-                          </mat-select>
-
-                        </td>
-                      </tr>
-
-                      <tr style=" border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;" class="tr" [class.trIsFocused]="isFocused=='taxes'">
-                        <td class="td" [class.tdIsFocused]="isFocused=='taxes'">
-                          <label>Tax</label>
-                        </td>
-                        <td style="width: 60%;">
-
-                          <mat-select class="select" formControlName="taxId" placeholder="Choose Tax"
-                            (selectionChange)="updateItem('taxId',$event)" (focus)="focusing('taxes')"
-                            (focusout)="focusingOut()">
-                            <mat-option *ngFor="let tax of product.taxes$" [value]="tax.id">
-                              {{tax.name}} ({{tax.percentage}}%)
-                            </mat-option>
-                          </mat-select>
-
-
-                          <mat-error *ngIf="submitted && product.formControl.taxId.errors">
-                            <div *ngIf="product.formControl.taxId.errors.required">Tax is required</div>
-                          </mat-error>
-
-
-                        </td>
-                      </tr>
-
-
-                    </table>
-
-                  </td>
-                  <td style="width: 35%">
-                    <flipper-file-upload style="position: relative; left: 10px;" [baseImage]="product.hasDraftProduct.picture"
-                      (imageUploaded)="viewImageUploaded($event)" baseImage="assets/icons/add-image-placeholder.png"
-                      baseTitle="Add Image" baseWidth="150" baseHeight="150" [activeColor]="'orangered'"
-                      [baseColor]="'lightgray'"></flipper-file-upload>
-                  </td>
-                </tr>
-              </table>
+  
+  
+  
+  
+            <div class="grid-2-at-medium grid-row-space-line mt-4" >
+              <div class="col" style="float:left">
+                <h3 style="float:left">Price and Inventory </h3>
+              </div>
+              <div class="col-5">
+                  <flipper-variants [didAddNew]="didAddNew" [product]="product.hasDraftProduct" *ngIf="product.hasDraftProduct"></flipper-variants>
+              </div>
+  
+  
             </div>
-
-
+  
+  
+  
           </div>
-
-
-
-
-          <div class="grid-2-at-medium grid-row-space-line mt-4" >
-            <div class="col" style="float:left">
-              <h3 style="float:left">Price and Inventory </h3>
-            </div>
-            <div class="col-5">
-                <flipper-variants [didAddNew]="didAddNew" [product]="product.hasDraftProduct" *ngIf="product.hasDraftProduct"></flipper-variants>
-            </div>
-
-
-          </div>
-
-
-
         </div>
       </div>
+  
+      <div class="item item-3" fxFlex="15">
+  
+      </div>
     </div>
+  </form>
 
-    <div class="item item-3" fxFlex="15">
-
-    </div>
-  </div>
-</form>
+</div>

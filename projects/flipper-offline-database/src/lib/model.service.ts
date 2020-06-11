@@ -11,7 +11,15 @@ export class ModelService extends ExecuteService {
   constructor() {
     super();
   }
-
+  raw(query?: string) {
+    try {
+         this.query = query;
+         return this.execute();
+    } catch (e) {
+      // TODO: notify any error in plugin to
+      throw new Error((`ERROR:${e}`));
+    }
+  }
 
 
   get<T>(Table?: string): T[] {
@@ -145,7 +153,7 @@ export class ModelService extends ExecuteService {
     }
   }
 
-  update<T>(TABLE: string, ROW: T, id: number): T {
+  update<T>(TABLE: string, ROW: T, id: any): T {
     try {
 
       this.updateRow<T>(TABLE, ROW, id).execute();
@@ -167,7 +175,7 @@ export class ModelService extends ExecuteService {
     }
   }
 
-  delete<T>(TABLE: T, id: number): void {
+  delete<T>(TABLE: T, id: any): void {
     try {
       return this.deleteRow<T>(TABLE, id).execute();
 
@@ -177,7 +185,7 @@ export class ModelService extends ExecuteService {
   }
 
 
-  find<T>(Table: string, id: number): T {
+  find<T>(Table: string, id: any): T {
     try {
       return this.select(Table).where('id', id).first<T>();
     } catch (e) {

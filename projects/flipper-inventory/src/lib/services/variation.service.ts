@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { MainModelService, Tables, Variant, SettingsService, Business,
-         Branch, Product, StockHistory, Labels } from '@enexus/flipper-components';
+         Branch, Product, StockHistory, Labels, PouchDBService, Stock } from '@enexus/flipper-components';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { VariantsDialogModelComponent } from '../variants/variants-dialog-model/variants-dialog-model.component';
-import { DialogService, DialogSize } from '@enexus/flipper-dialog';
+import { DialogService,  } from '@enexus/flipper-dialog';
 import { StockService } from './stock.service';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { ViewStockHistoryComponent } from '../view-stock-history/view-stock-history.component';
 import { PrintBarcodeLabelsDialogComponent } from '../print-barcode-labels-dialog/print-barcode-labels-dialog.component';
+import { DialogSize } from '@enexus/flipper-dialog/lib/dialog-size';
 @Injectable({
   providedIn: 'root'
 })
@@ -30,8 +31,10 @@ export class VariationService {
 
   variantStock = { length: 0, currentStock: 0, lowStock: 0 };
   constructor(private stock: StockService, private dialog: DialogService,
-              private model: MainModelService, private setting: SettingsService,
-              private formBuilder: FormBuilder) {
+              private model: MainModelService,
+              private setting: SettingsService,
+              private formBuilder: FormBuilder,
+              private database: PouchDBService) {
     this.variantsSubject = new BehaviorSubject([]);
     this.units = this.setting.units();
   }
@@ -65,24 +68,27 @@ export class VariationService {
   public activeBusiness(): Business {
     return this.model.active<Business>(Tables.business);
   }
-  updateDefaultUnit(variation: Variant, key: string, id: number): void {
+  updateDefaultUnit(variation: Variant, key: string, id: string): void {
     this.updateRegularVariant(variation, key, id);
 
 
   }
 
-  findFirst(productId: number): Variant {
+  findVariant(variantId: string) {
+    return this.model.find<Variant>(Tables.variants, variantId);
+  }
+
+  findFirst(productId: string): Variant {
     return this.model.findByFirst<Variant>(Tables.variants, 'productId', productId);
   }
 
   request(action = null, variant = null): void {
+    const stock: Stock = this.stock.findVariantStock(variant.id);
     this.form = this.formBuilder.group({
       name: [!action && variant && variant.name ? variant.name : '', Validators.required],
       SKU: !action && variant && variant.SKU ? variant.SKU : this.generateSKU(this.product.id),
-      retailPrice: [!action && variant && this.stock.findStock(variant.id).retailPrice ?
-         this.stock.findStock(variant.id).retailPrice : 0.00, Validators.min(0)],
-      supplyPrice: [!action && variant && this.stock.findStock(variant.id).supplyPrice ?
-         this.stock.findStock(variant.id).supplyPrice : 0.00, Validators.min(0)],
+      retailPrice: [!action && variant && stock ? stock.retailPrice : 0.00, Validators.min(0)],
+      supplyPrice: [!action && variant && stock ? stock.supplyPrice : 0.00, Validators.min(0)],
       unit: !action && variant && variant.unit ? variant.unit : '',
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -90,7 +96,7 @@ export class VariationService {
     });
   }
 
-  generateSKU(productId: number): string {
+  generateSKU(productId: string): string {
     return this.d.getFullYear() + '' + this.makeid(4);
   }
 
@@ -111,13 +117,10 @@ export class VariationService {
   createRegular(product: Product): void {
     if (!this.hasRegular) {
       this.create({
+        id: this.database.uid(),
         name: 'Regular',
-        productName: product.name,
         SKU: this.generateSKU(product.id),
         productId: product.id,
-        supplyPrice: 0,
-        retailPrice: 0,
-        wholeSalePrice: 0,
         unit: '',
         isActive: false,
         createdAt: new Date(),
@@ -138,7 +141,7 @@ export class VariationService {
     }
   }
 
-  createVariantStock(variantId: number) {
+  createVariantStock(variantId: string) {
     this.stock.createStocks(variantId,
       this.model.filters<Branch>(Tables.branch, 'businessId',
         this.model.active<Business>(Tables.business).id)
@@ -152,9 +155,9 @@ export class VariationService {
   }
 
   productStockHistory(product: Product): StockHistory[] {
-    const variantIds: number[] = [];
+    const variantIds: string[] = [];
     this.allVariant(product).forEach(sh => {
-      variantIds.push(sh.id);
+      variantIds.push(`'${sh.id}'`);
     });
     return this.stock.productStockHistory(variantIds);
   }
@@ -180,7 +183,7 @@ export class VariationService {
 
       variation[key] = val;
     }
-    variation.productName = this.model.draft<Product>(Tables.products, 'isDraft').name;
+    // variation.productName = this.model.draft<Product>(Tables.products, 'isDraft').name;
     this.update(variation);
   }
 
@@ -219,15 +222,13 @@ updateStockControl(result: any, variant: Variant) {
       result.forEach(res => {
         if (res.reason && res.currentStock > 0) {
           this.stock.createHistory({
+            id: this.database.uid(),
             orderId: 0,
             variantId: variant.id,
-            variantName: variant.name,
+            productId: this.findVariant(variant.id).productId,
             stockId: res.id,
             reason: res.reason,
             quantity: res.currentStock,
-            isDraft: false,
-            isPreviously: false,
-            syncedOnline: false,
             note: res.reason,
             createdAt: new Date(),
             updatedAt: new Date(),
@@ -265,7 +266,7 @@ updateStockControl(result: any, variant: Variant) {
 
         stock.canTrackingStock = res.canTrackingStock;
         stock.lowStock = res.lowStock;
-        stock.showLowStockAlert = res.showlowStockAlert;
+        stock.showLowStockAlert = res.showLowStockAlert;
 
 
         this.stock.update(stock);
@@ -297,7 +298,7 @@ updateStockControl(result: any, variant: Variant) {
         variations.forEach(variation => {
           this.stock.deleteStocks(variation);
           this.stock.deleteStocksHistory(variation);
-          this.model.delete(Tables.variants, variation.id);
+          this.model.delete(Tables.variants, '"' + variation.id + '"');
         });
       }
     }
@@ -311,7 +312,7 @@ updateStockControl(result: any, variant: Variant) {
       variations.forEach(variation => {
         this.stock.deleteStocks(variation);
         this.stock.deleteStocksHistory(variation);
-        this.model.delete(Tables.variants, variation.id);
+        this.model.delete(Tables.variants, '"' + variation.id + '"');
       });
     }
   }
@@ -321,7 +322,7 @@ updateStockControl(result: any, variant: Variant) {
       this.dialog.delete('Variant', [`Variant: ${variant.name}`]).subscribe(confirm => {
         this.stock.deleteStocks(variant);
         this.stock.deleteStocksHistory(variant);
-        this.model.delete(Tables.variants, variant.id);
+        this.model.delete(Tables.variants, `'${variant.id}'`);
         this.init(product);
       });
 
@@ -336,8 +337,8 @@ updateStockControl(result: any, variant: Variant) {
       const stock = this.stock.variantStocks(this.hasRegular.id);
       this.variantStock = {
         length: stock.length,
-        lowStock: stock[0].lowStock,
-        currentStock: stock[0].currentStock
+        lowStock: stock.length > 0 ? stock[0].lowStock : 0,
+        currentStock: stock.length > 0 ? stock[0].currentStock : 0
       };
     }
   }
@@ -346,7 +347,7 @@ updateStockControl(result: any, variant: Variant) {
     const val = key === 'unit' ? event.value : event.target.value;
 
     if (key === 'retailPrice' || key === 'supplyPrice') {
-      const myStock = this.stock.findStock(variant.id);
+      const myStock = this.stock.findVariantStock(variant.id);
       myStock[key] = parseInt(val, 10);
       this.stock.update(myStock);
     } else {
@@ -359,7 +360,6 @@ updateStockControl(result: any, variant: Variant) {
     if (variants.length > 0) {
       variants.forEach(variant => {
         this.stock.updateStockHistoryAction(variant.id);
-        variant.productName = product.name;
         variant.isActive = true;
         this.update(variant);
       });

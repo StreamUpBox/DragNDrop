@@ -8,16 +8,16 @@ import { CreateUpdateBusinessComponent } from '@enexus/flipper-settings';
 
 const routes: Routes = [
   {path: '', component: AppComponent},
-  // {path: 'settings', component: AppComponent},
-  // {path: 'analytics', component: AppComponent},
-  // {path: 'inventory-count', component: AppComponent},
-  // {path: 'admin/inventory', component: ProductsComponent},
-  // {
-  //   path: 'add/product', component: CreateProductComponent
-  // },
-  // {
-  //   path: 'setup/business/new', component: CreateUpdateBusinessComponent
-  // },
+  {path: 'admin/pos', component: AppComponent},
+   {path: 'admin/analytics', component: AppComponent},
+  {path: 'admin/settings', component: AppComponent},
+  {path: 'admin/inventory', component: ProductsComponent},
+  {
+    path: 'add/product', component: CreateProductComponent
+  },
+  {
+    path: 'setup/business/new', component: CreateUpdateBusinessComponent
+  }
 ];
 
 @NgModule({

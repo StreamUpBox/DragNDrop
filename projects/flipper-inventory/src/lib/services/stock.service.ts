@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { MainModelService, Tables, Stock, Branch, SettingsService, StockHistory, Variant } from '@enexus/flipper-components';
+import { MainModelService, Tables, Stock, Branch, SettingsService,
+   StockHistory, Variant, PouchDBService } from '@enexus/flipper-components';
 import { ModelService } from '@enexus/flipper-offline-database';
 
 @Injectable({
@@ -7,53 +8,62 @@ import { ModelService } from '@enexus/flipper-offline-database';
 })
 export class StockService {
   reasons = [];
-  constructor(private query: ModelService, private model: MainModelService, private setting: SettingsService) { }
+  constructor(private query: ModelService,
+              private model: MainModelService,
+              private setting: SettingsService,
+              private database: PouchDBService) { }
 
   init() {
     this.reasons = this.setting.reasons();
   }
-  findBranch(id: number): Branch {
+  findVariantStock(variantId: any) {
+    return this.model.findByFirst<Stock>(Tables.stocks, 'variantId', variantId);
+  }
+
+  findBranch(id: string): Branch {
     return this.model.find<Branch>(Tables.branch, id);
   }
-  variantStocks(variantId: number): Stock[] {
+  variantStocks(variantId: string): Stock[] {
     return this.model.filters<Stock>(Tables.stocks, 'variantId', variantId);
   }
 
-  variantStockHistory(variantId: number): StockHistory[] {
+  variantStockHistory(variantId: string): StockHistory[] {
     return this.model.filters<StockHistory>(Tables.stockHistory, 'variantId', variantId);
   }
 
-  productStockHistory(variantIds: number[], reasons: string[]= []): StockHistory[] {
+  productStockHistory(variantIds: string[], reasons: string[]= []): StockHistory[] {
     const rs = reasons.length > 0 ? `reason IN (${reasons.join()}) AND` : '';
     return this.query.queries(Tables.stockHistory, ` ${rs} variantId IN (${variantIds.join()})`);
   }
 
-  findStock(variantId: number) {
+  findStock(variantId: string) {
     return this.model.find<Stock>(Tables.stocks, variantId);
   }
 
-  findVariant(variantId: number) {
+  findVariant(variantId: string) {
     return this.model.find<Variant>(Tables.variants, variantId);
   }
 
-  findPreviouslyStockHistory(variantId: number) {
+  findPreviouslyStockHistory(variantId: string) {
     return this.query.select(Tables.stockHistory)
       .where('variantId', variantId)
       .andWhere('isPreviously', true).first<StockHistory>();
   }
 
-  findDraftStockHistory(variantId: number) {
+  findDraftStockHistory(variantId: string) {
     return this.query.select(Tables.stockHistory)
       .where('variantId', variantId)
       .andWhere('isDraft', true).first<StockHistory>();
   }
 
-  createStocks(variantId: number, branches: Branch[]): void {
+  createStocks(variantId: string, branches: Branch[]): void {
     if (branches.length > 0) {
       branches.forEach(branch => {
 
         this.create({
+          id: this.database.uid(),
           branchId: branch.id,
+          productId: this.findVariant(variantId).productId,
           variantId,
           reasonId: 0,
           currentStock: 0,
@@ -62,9 +72,10 @@ export class StockService {
           lowStock: 0,
           active: true,
           inStock: 0,
-          syncedOnline: false,
           canTrackingStock: false,
-          showLowStockAlert: false
+          showLowStockAlert: false,
+          createdAt: new Date(),
+          updatedAt: new Date()
         });
       });
     }
@@ -89,14 +100,13 @@ export class StockService {
 
   }
 
-  updateStockHistoryAction(variantId: number) {
+  updateStockHistoryAction(variantId: string) {
     const draft = this.findDraftStockHistory(variantId);
 
     const stockVariant: StockHistory[] = this.variantStockHistory(variantId);
     if (stockVariant.length > 0) {
         stockVariant.forEach(vs => {
-          vs.isPreviously = false;
-          vs.isDraft = false;
+
           this.updateHistory(vs);
         });
       }
@@ -114,15 +124,16 @@ export class StockService {
 
     if (stocks.length > 0) {
       stocks.forEach(stock => {
-        this.model.delete(Tables.stocks, stock.id);
+        this.model.delete(Tables.stocks, '"' + stock.id + '"');
       });
     }
   }
+
   deleteStocksHistory(variation: Variant): void {
     const stocks: StockHistory[] = this.model.filters<StockHistory>(Tables.stockHistory, 'variantId', variation.id);
     if (stocks.length > 0) {
       stocks.forEach(stock => {
-        this.model.delete(Tables.stocks, stock.id);
+        this.model.delete(Tables.stocks, '"' + stock.id + '"');
       });
     }
   }

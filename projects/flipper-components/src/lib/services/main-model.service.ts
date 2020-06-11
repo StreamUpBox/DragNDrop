@@ -24,15 +24,15 @@ export class MainModelService {
     } catch (e) { throw new Error((`ERROR:${e}`)); }
 
   }
-  update<T>(table: string, row: T, id: number): T {
-    this.checkTable(table);
+  update<T>(table: string, row: T, id: any): T {
+    this. checkTable(table);
     try {
       return this.model.update<T>(table, row, id);
     } catch (e) { throw new Error((`ERROR:${e}`)); }
   }
 
-  delete(table: string, id: number) {
-    this.checkTable(table);
+  delete(table: string, id: any) {
+    this. checkTable(table);
     try {
       return this.model.delete(table, id);
     } catch (e) { throw new Error((`ERROR:${e}`)); }
@@ -79,8 +79,8 @@ export class MainModelService {
     } catch (e) { throw new Error((`ERROR:${e}`)); }
   }
 
-  find<T>(table: string, id: number): T {
-    this.checkTable(table);
+  find<T>(table: string, id: any): T {
+    this. checkTable(table);
     try {
       return this.model.find<T>(table, id);
     } catch (e) { throw new Error((`ERROR:${e}`)); }
@@ -106,4 +106,11 @@ export class MainModelService {
       return this.model.filter<T>(table, COLUMNS, VALUE);
     } catch (e) { throw new Error((`ERROR:${e}`)); }
   }
+
+  raw(query: string) {
+    try {
+        return this.model.raw(query);
+       }  catch (e) { throw new Error((`ERROR:${e}`)); }
+  }
+
 }

@@ -80,22 +80,17 @@ checkNewItem() {
 
 
 
-  onSubmit(action) {
+  async onSubmit(action) {
     this.submitted = true;
     this.didAddNew = false;
     if (this.product.form.invalid) {
       this.notificationSvc.error('Create an item', 'Please enter a name for your item.');
       return;
     }
-    this.product.saveProduct();
-    if (action === 'new') {
-      this.checkNewItem();
-      this.didAddNew = true;
-      window.location.reload();
-    } else {
+    await this.product.saveProduct();
 
-      this.goToProduct();
-    }
+    this.goToProduct();
+
   }
 goToProduct() {
   return this.router.navigate(['/admin/inventory']);
@@ -118,6 +113,7 @@ goToProduct() {
     if (this.product.hasDraftProduct && this.product.hasDraftProduct.isCurrentUpdate) {
       this.dialog.delete('Product', [`${this.product.hasDraftProduct.name}`]).subscribe(confirm => {
         this.product.discardProduct();
+        // this.product.updateOnlineDatabase();
         this.goToProduct();
        });
     }
@@ -135,6 +131,7 @@ goToProduct() {
 
         if (result === 'discard') {
           this.product.discardProduct();
+          this.product.updateOnlineDatabase();
           this.goToProduct();
         }
 

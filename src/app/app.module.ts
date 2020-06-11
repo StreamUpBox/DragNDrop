@@ -17,6 +17,7 @@ import { FlipperSettingsModule } from '@enexus/flipper-settings';
 import { FlipperInventoryModule } from '@enexus/flipper-inventory';
 import { FlipperFileUploadModule } from '@enexus/flipper-file-upload';
 import { FlipperPaymentCardModule } from '@enexus/payment-card';
+import { MigrationModule } from './migration/migration.module';
 // import { MigrationModule } from './migration/migration.module';
 
 
@@ -32,21 +33,22 @@ import { FlipperPaymentCardModule } from '@enexus/payment-card';
     // ColorModule,
     // FontModule,
     // FlipperButtonModule,
-    // FlipperSettingsModule,
+    FlipperSettingsModule,
     FlipperMenuModule,
-    FlipperPaymentCardModule,
+    // FlipperPaymentCardModule,
     // FlipperDashboardModule,
     // FlipperEventModule,
     FlipperComponentsModule,
     // FlipperPosModule,
     BrowserAnimationsModule,
     // FlipperOfflineDatabaseModule,
-    // FlipperInventoryModule,
+    FlipperInventoryModule,
     // FlipperFileUploadModule,
-    // MigrationModule.forRoot(),
+    MigrationModule.forRoot(),
     AppRoutingModule
   ],
   entryComponents: [],
+  providers: [PouchDBService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

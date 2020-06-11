@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'flipper-settings',
-  template: `<p>setting control</p>`,
+  template: `<flipper-create-update-business></flipper-create-update-business>`,
   styles: []
 })
 export class FlipperSettingsComponent implements OnInit {

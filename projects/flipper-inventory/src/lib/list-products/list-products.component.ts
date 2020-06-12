@@ -3,12 +3,15 @@ import { ProductService } from '../services/product.service';
 import { Product, Stock, CalculateTotalClassPipe, Variant,
    MigrateService, PouchConfig, PouchDBService, Tables,
     StockHistory } from '@enexus/flipper-components';
-import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
+
 import { Subscription } from 'rxjs';
 import { VariationService } from '../services/variation.service';
 import { StockService } from '../services/stock.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Router } from '@angular/router';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'flipper-list-products',

@@ -80,6 +80,7 @@ export class ProductService {
   }
 
   create(): void {
+    
     const hasDraftProduct = this.model.draft<Product>(Tables.products, 'isDraft');
     if (!hasDraftProduct) {
       this.model.create<Product>(Tables.products, {
@@ -185,10 +186,11 @@ export class ProductService {
   }
 
   discardProduct(): void {
-    this.variant.deleteProductVariations(this.hasDraftProduct);
-    this.deleteAllBranches();
-    this.model.delete(Tables.products, '"' + this.hasDraftProduct.id + '"');
-
+    if(this.hasDraftProduct){
+      this.variant.deleteProductVariations(this.hasDraftProduct);
+      this.deleteAllBranches();
+      this.model.delete(Tables.products, '"' + this.hasDraftProduct.id + '"');
+    }
   }
 
 

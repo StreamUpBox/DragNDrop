@@ -20,7 +20,8 @@ import {
   distinctUntilChanged
 } from 'rxjs/operators';
 import { Variant } from '@enexus/flipper-components';
-import { MatAutocompleteTrigger } from '@angular/material';
+import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
+
 
 @Component({
   selector: 'flipper-search-box',

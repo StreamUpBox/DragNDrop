@@ -1,6 +1,7 @@
 <section class="cc-wrapper">
   <div class="cc-box">
-    <div #ccBoxFlip class="cc-box--flip">
+    <div #ccBoxFlip>
+    <div  *ngIf="showCard"  class="cc-box--flip">
       <span *ngIf="app" style="color: #fff;
       display: flex;
       flex-flow: row nowrap;
@@ -43,6 +44,7 @@
         </div>
       </div>
     </div>
+  </div>
   </div>
   <form class="cc-form" [formGroup]="ccForm" autocomplete="off">
     <div class="cc-form__wrapper--long">
@@ -145,6 +147,10 @@
          *ngIf="validateCCV && ccForm.get('ccv').touched && ccForm.get('ccv').hasError('numbersOnly')">
       {{ccvContainsLettersTxt}}
     </div>
+
+    <div class="cc-form__error" *ngIf="cardInvalid">
+      {{cardInvalidMessage}}
+</div>
     <button type="submit" class="cc-form__button cc-form__button--ripple" aria-label="submit" (click)="emitSavedCard()"
             (keydown.enter)="emitSavedCard()" [disabled]="loading">
             <span *ngIf="loading">Processing ...</span>

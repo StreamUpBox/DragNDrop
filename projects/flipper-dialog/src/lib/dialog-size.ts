@@ -4,3 +4,4 @@ export enum DialogSize {
   SIZE_LG = 'dialog-lg',
   SIZE_FULL = 'dialog-full'
 }
+

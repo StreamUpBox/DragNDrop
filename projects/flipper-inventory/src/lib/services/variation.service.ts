@@ -3,11 +3,13 @@ import { MainModelService, Tables, Variant, SettingsService, Business,
          Branch, Product, StockHistory, Labels, PouchDBService, Stock } from '@enexus/flipper-components';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { VariantsDialogModelComponent } from '../variants/variants-dialog-model/variants-dialog-model.component';
-import { DialogService, DialogSize } from '@enexus/flipper-dialog';
+import { DialogService,  } from '@enexus/flipper-dialog';
 import { StockService } from './stock.service';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { ViewStockHistoryComponent } from '../view-stock-history/view-stock-history.component';
 import { PrintBarcodeLabelsDialogComponent } from '../print-barcode-labels-dialog/print-barcode-labels-dialog.component';
+import { DialogSize } from '@enexus/flipper-dialog';
+
 @Injectable({
   providedIn: 'root'
 })

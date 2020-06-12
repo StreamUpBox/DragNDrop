@@ -5,6 +5,8 @@ import { DialogService, DialogSize } from '@enexus/flipper-dialog';
 import { UpdatePriceDialogComponent } from '../common/update-price-dialog/update-price-dialog.component';
 import { AddCartItemDialogComponent } from '../common/add-cart-item-dialog/add-cart-item-dialog.component';
 
+
+
 @Component({
   selector: 'flipper-basic-pos',
   templateUrl: './flipper-basic-pos.component.html',

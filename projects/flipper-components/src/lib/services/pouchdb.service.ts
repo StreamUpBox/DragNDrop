@@ -16,6 +16,7 @@ export class PouchDBService {
     public listenerLogin: EventEmitter<any> = new EventEmitter();
 
 
+    
     public constructor() {}
 
     public connect(dbName: string) {

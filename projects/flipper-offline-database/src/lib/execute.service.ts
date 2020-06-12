@@ -1,23 +1,17 @@
-import {
-  Table
-} from './table';
 import { QueryService } from './query.service';
-import * as alasql from 'alasql';
-const sql = alasql;
+import alasql from 'alasql';
 
 export class ExecuteService extends QueryService {
 
-
-  constructor() {super(); }
+  constructor() { super(); }
 
   execute() {
     this.callback = (res) => {
       return res;
     };
 
-    return this.extra ? sql(this.query, this.extra, this.callback) : sql(this.query);
-
-
+    return this.extra ? alasql(this.query, this.extra, this.callback) : alasql(this.query);
+   
   }
 
 }

@@ -1,7 +1,8 @@
 import { Component, OnInit, HostListener, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NotificationService } from '@enexus/flipper-components';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'flipper-update-price-dialog',
@@ -10,9 +11,9 @@ import { NotificationService } from '@enexus/flipper-components';
 })
 export class UpdatePriceDialogComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<UpdatePriceDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public price: any, private formBuilder: FormBuilder,
-              protected notificationSvc: NotificationService) {
-}
+    @Inject(MAT_DIALOG_DATA) public price: any, private formBuilder: FormBuilder,
+    protected notificationSvc: NotificationService) {
+  }
 
   get formControl() { return this.form.controls; }
   submitted = false;
@@ -39,7 +40,7 @@ export class UpdatePriceDialogComponent implements OnInit {
       this.notificationSvc.error('Add price', 'We need you to complete all of the required fields before we can continue');
       return;
     } else {
-      this.dialogRef.close({price: this.form.value.price});
+      this.dialogRef.close({ price: this.form.value.price });
     }
 
   }

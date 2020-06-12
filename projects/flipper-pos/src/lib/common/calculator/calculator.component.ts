@@ -43,20 +43,20 @@ export class CalculatorComponent {
   get collectCashCompleted(): object {
     return this.didCollectCashCompleted;
   }
-  @Output() closeModelEmit = new EventEmitter < boolean > ();
+  @Output() closeModelEmit = new EventEmitter<boolean>();
 
   constructor(private totalPipe: CalculateTotalClassPipe,
-              public dialog: DialogService,
-              private randPipe: RoundNumberPipe,
-              private findKeyPipe: FindKeyPipe) {}
+    public dialog: DialogService,
+    private randPipe: RoundNumberPipe,
+    private findKeyPipe: FindKeyPipe) { }
 
   currentNumber = '0';
 
   isNegativeNumber = false;
 
   private isCurrentOrder: Order = null;
-  @Output() saveOrderUpdatedEmit = new EventEmitter < Order > ();
-  @Output() collectCashEmit = new EventEmitter < boolean > ();
+  @Output() saveOrderUpdatedEmit = new EventEmitter<Order>();
+  @Output() collectCashEmit = new EventEmitter<boolean>();
 
   @Input() currency = 'RWF';
 
@@ -76,7 +76,7 @@ export class CalculatorComponent {
   getCollectCashCompleted(inputed) {
     if (inputed && inputed.isCompleted) {
       const changeDue = inputed.collectedOrder.customerChangeDue === 0 ||
-         inputed.collectedOrder.customerChangeDue === '0.00' ? 'No' :
+        inputed.collectedOrder.customerChangeDue === '0.00' ? 'No' :
         this.randPipe.transform(inputed.collectedOrder.customerChangeDue);
       const cahsReceived = this.randPipe.transform(inputed.collectedOrder.cashReceived);
       return this.dialog.message('Success Message', changeDue + ' change out of ' + cahsReceived, 'Success', 'SIZE_MD').subscribe(() => {
@@ -92,10 +92,10 @@ export class CalculatorComponent {
       return;
     }
 
-    if (!(event.target.type === 'search' || event.target.type  === 'number' ||
-     event.target.type  === 'text') && ( event.key === 'Enter' ||  event.key === 'End') ) {
-        this.collectCash();
-      }
+    if (!(event.type === 'search' || event.type === 'number' ||
+      event.type === 'text') && (event.key === 'Enter' || event.key === 'End')) {
+      this.collectCash();
+    }
 
     if ((event.shiftKey && event.key === 'F') || // shift + s
       (event.shiftKey && event.key === 'K') || // shift + k
@@ -110,11 +110,11 @@ export class CalculatorComponent {
       // tslint:enable
 
       if (!(event.key === 'Delete' || // delete key
-          (event.shiftKey && event.key === '+') || // shift + (+)
-          (event.shiftKey && event.key === 'K') ||
-          (event.shiftKey && event.key === 'S') ||
-          (event.shiftKey && event.key === 'F') ||
-          (event.shiftKey && event.key === '-')) // shift + (-)
+        (event.shiftKey && event.key === '+') || // shift + (+)
+        (event.shiftKey && event.key === 'K') ||
+        (event.shiftKey && event.key === 'S') ||
+        (event.shiftKey && event.key === 'F') ||
+        (event.shiftKey && event.key === '-')) // shift + (-)
       ) {
         this.isCalculatorNumOpen = true;
 
@@ -186,7 +186,7 @@ export class CalculatorComponent {
   public makeTotal() {
     if (this.currentOrder) {
 
-      const subTotal = this.totalPipe.transform < OrderDetails > (this.currentOrder.orderItems, 'subTotal');
+      const subTotal = this.totalPipe.transform<OrderDetails>(this.currentOrder.orderItems, 'subTotal');
       if (subTotal <= 0) {
         this.isCalculatorNumOpen = false;
         this.calculatorNums.pop();
@@ -196,16 +196,16 @@ export class CalculatorComponent {
         });
       }
       this.currentOrder.taxAmount = this.totalPipe.
-      transform<OrderDetails>(this.currentOrder.orderItems, 'taxAmount');
+        transform<OrderDetails>(this.currentOrder.orderItems, 'taxAmount');
 
-      this.currentOrder.saleTotal = this.currentOrder.subTotal + this.currentOrder.taxAmount ;
+      this.currentOrder.saleTotal = this.currentOrder.subTotal + this.currentOrder.taxAmount;
       this.currentOrder.cashReceived = this.currentNumber;
 
       this.currentOrder.cashReceived = this.currentOrder.cashReceived ?
-      this.currentOrder.cashReceived : this.currentOrder.saleTotal;
+        this.currentOrder.cashReceived : this.currentOrder.saleTotal;
 
       this.currentOrder.customerChangeDue = this.currentOrder.cashReceived > 0 ?
-       this.currentOrder.cashReceived - this.currentOrder.saleTotal : 0.00;
+        this.currentOrder.cashReceived - this.currentOrder.saleTotal : 0.00;
 
       this.saveOrderUpdatedEmit.emit(this.currentOrder);
     }
@@ -224,10 +224,10 @@ export class CalculatorComponent {
     }
     this.currentOrder.orderItems.forEach(item => {
       if (item.quantity <= 0) {
-              this.dialog.message('Failure Message', 'Negative quantity is not allowed.', 'Failure', 'SIZE_SM').subscribe(() => {
-              });
-            }
+        this.dialog.message('Failure Message', 'Negative quantity is not allowed.', 'Failure', 'SIZE_SM').subscribe(() => {
         });
+      }
+    });
     this.collectCashEmit.emit(false);
     if (this.currentOrder.subTotal <= 0) {
       return this.dialog.message('Failure Message', 'Total to be paid is equal to zero.', 'Failure', 'SIZE_SM').subscribe(() => {

@@ -52,8 +52,7 @@ export type TABLE =
 
 
 
-export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
-
+export const DEFAULT_FLIPPER_DB_CONFIG = {
     database: { name: 'flipper', engine: 'LOCALSTORAGE' },
     tables: [
         {
@@ -96,7 +95,6 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
                     PRIMARY KEY (id)
             `
         },
-
         {
             name: TABLES.MENU,
             query: `id int(11) NOT NULL AUTO_INCREMENT,
@@ -327,7 +325,6 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
         email: 'admin@admin.com',
         password: 'admin',
     },
-
     defaultMenu: [
         {
             name: 'Analytics',
@@ -437,8 +434,6 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
                 {
                     name: 'Tattoo/Piercing'
                 }
-
-
             ]
         },
         {
@@ -480,8 +475,6 @@ export const DEFAULT_FLIPPER_DB_CONFIG: FlipperDBConfig = {
                 {
                     name: 'Flowers and Gifts'
                 }
-
-
             ]
         }
     ]

@@ -8,10 +8,10 @@ import { ExecuteService } from './execute.service';
 })
 export class ModelService extends ExecuteService {
 
+
   constructor() {
     super();
   }
-
   raw(query?: string) {
     try {
          this.query = query;
@@ -25,13 +25,13 @@ export class ModelService extends ExecuteService {
   get<T>(Table?: string): T[] {
     try {
       if (Table) {
-        return this.select(Table).execute();
+        return  this.select(Table).execute();
       } else {
+        
         return this.execute();
       }
-
     } catch (e) {
-      // TODO: notify any error in plugin to
+      
       throw new Error((`ERROR:${e}`));
     }
   }
@@ -102,7 +102,7 @@ export class ModelService extends ExecuteService {
     }
   }
 
-  filter<T>(TABLE: string, COLUMNS: any,  VALUE: any): T[] {
+  filter<T>(TABLE: string, COLUMNS: any, VALUE: any): T[] {
     try {
       let condition = '';
       if (Array.isArray(COLUMNS)) {
@@ -191,7 +191,7 @@ export class ModelService extends ExecuteService {
       throw new Error((`ERROR:${e}`));
     }
   }
-  findByFirst<T>(Table: string, key= 'id', val: any): T {
+  findByFirst<T>(Table: string, key = 'id', val: any): T {
     try {
       return this.select(Table).where(key, val).first<T>();
     } catch (e) {
@@ -199,7 +199,7 @@ export class ModelService extends ExecuteService {
     }
   }
 
-  findByLast<T>(Table: string, key= 'id', val: any): T {
+  findByLast<T>(Table: string, key = 'id', val: any): T {
     try {
       return this.select(Table).where(key, val).last<T>();
     } catch (e) {

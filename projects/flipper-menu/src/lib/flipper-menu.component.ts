@@ -85,6 +85,7 @@ export class FlipperMenuComponent implements OnInit {
     this.menu = this.model.loadAll<Menu>(Tables.menu).filter(m => m.isSetting === false);
     this.settingMenu = this.model.loadAll<Menu>(Tables.menu).find(m => m.isSetting === true);
   }
+  
 
   async ngOnInit() {
     this.loadMenu();
@@ -130,7 +131,7 @@ export class FlipperMenuComponent implements OnInit {
         this.user$ = result;
       }
     }, error => {
-      console.error(error);
+      // console.error(error);
     });
 
     this.database.get(PouchConfig.Tables.business).then(result => {
@@ -139,7 +140,7 @@ export class FlipperMenuComponent implements OnInit {
         this. updateBusiness();
       }
     }, error => {
-      console.error(error);
+      // console.error(error);
     });
 
     this.database.get(PouchConfig.Tables.branches).then(result => {
@@ -149,7 +150,7 @@ export class FlipperMenuComponent implements OnInit {
 
       }
     }, error => {
-      console.error(error);
+      // console.error(error);
     });
 
     await this.getUser();

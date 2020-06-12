@@ -5,7 +5,6 @@ import { CardValidator } from './validator/card-validator';
 import { ICardDetails } from './domain/i-card-details';
 import { CardDetails } from './domain/card-details';
 import { PaymentCardService } from './service/payment-card.service';
-import { NotificationService } from '@enexus/flipper-components';
 
 /**
  * NgPaymentCard without any dependencies other then ReactiveFormsModule
@@ -160,11 +159,19 @@ export class PaymentCardComponent implements OnInit {
   @Input()
   public validateCCV ? = true;
 
+  @Input()
+  public showCard ? = true;
   /**
    * EventEmitter for payment card object
    */
   @Output()
   public formSaved: EventEmitter<ICardDetails> = new EventEmitter<CardDetails>();
+
+  @Input()
+  public cardInvalidMessage ? = 'We need you to complete all of the required fields before we can continue';
+
+  @Input()
+  public cardInvalid ? = false;
 
   public startLoading = false;
 
@@ -176,7 +183,7 @@ export class PaymentCardComponent implements OnInit {
     return this.startLoading;
   }
 
-  constructor( protected notificationSvc: NotificationService, private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder) {}
 
   public ngOnInit(): void {
     this.buildForm();
@@ -247,8 +254,9 @@ export class PaymentCardComponent implements OnInit {
    * Callback function that emits payment card details after user clicks submit, or press enter
    */
   public emitSavedCard(): void {
+    this.cardInvalid = false;
     if (this.ccForm.invalid) {
-      this.notificationSvc.error('Payment', 'We need you to complete all of the required fields before we can continue');
+      this.cardInvalid = true;
       return;
     }
     const cardDetails: ICardDetails = this.ccForm.value as CardDetails;

@@ -1,9 +1,12 @@
 import { Component, OnInit, Input, ViewChild, OnDestroy } from '@angular/core';
 import { Variant, Product } from '@enexus/flipper-components';
-import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
+
 import { Subscription } from 'rxjs';
 import { StockService } from '../../services/stock.service';
 import { VariationService } from '../../services/variation.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'flipper-product-variants',

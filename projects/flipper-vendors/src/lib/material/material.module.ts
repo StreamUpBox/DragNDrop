@@ -97,21 +97,21 @@ import {
 import {
   OverlayModule
 } from '@angular/cdk/overlay';
-import {
-  MatAutocompleteModule,
-  MatChipsModule,
-  MatDatepickerModule,
-  MatGridListModule,
-  MatSliderModule,
-  MatRadioModule,
-  MatBottomSheetModule
-} from '@angular/material';
+
 import {
   ObserversModule
 } from '@angular/cdk/observers';
 import {
   BidiModule
 } from '@angular/cdk/bidi';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatSliderModule} from '@angular/material/slider';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatRadioModule} from '@angular/material/radio';
+import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
+
 
 @NgModule({
   imports: [
@@ -145,6 +145,7 @@ import {
     A11yModule,
     PortalModule,
     OverlayModule,
+    
     MatAutocompleteModule,
     MatChipsModule,
     MatDatepickerModule,
@@ -153,9 +154,7 @@ import {
     MatProgressSpinnerModule,
     MatRippleModule,
     MatSelectModule,
-
     MatSidenavModule,
-
     MatSliderModule,
     MatNativeDateModule,
     MatStepperModule,
@@ -200,21 +199,22 @@ import {
     MatChipsModule,
     MatDatepickerModule,
     MatTableModule,
-    MatGridListModule,
+    
     MatProgressSpinnerModule,
     MatRippleModule,
     MatSelectModule,
 
     MatSidenavModule,
-
     MatSliderModule,
     MatNativeDateModule,
     MatStepperModule,
     MatRadioModule,
+    MatGridListModule,
+    MatBottomSheetModule,
     BidiModule,
     MatCommonModule,
-    ObserversModule,
-    MatBottomSheetModule
+    ObserversModule
+    
   ],
   providers: [
     MatIconRegistry,

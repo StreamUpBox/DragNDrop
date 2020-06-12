@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, HostListener } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { ProductService } from '../../services/product.service';
+import { MatDialogRef } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'flipper-disacrd-dialog-model',

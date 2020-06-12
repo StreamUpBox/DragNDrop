@@ -1,8 +1,9 @@
 import { Component, OnInit, Inject, HostListener } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+
 import { VariationService } from '../../services/variation.service';
 import { NotificationService, Variant, Product, PouchDBService } from '@enexus/flipper-components';
 import { StockService } from '../../services/stock.service';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'flipper-add-variant',
@@ -11,12 +12,12 @@ import { StockService } from '../../services/stock.service';
 })
 export class AddVariantComponent implements OnInit {
   constructor(private stock: StockService,
-              protected notificationSvc: NotificationService,
-              public variant: VariationService,
-              public dialogRef: MatDialogRef<AddVariantComponent>,
-              private database: PouchDBService,
-              @Inject(MAT_DIALOG_DATA) public product: Product) {
-}
+    protected notificationSvc: NotificationService,
+    public variant: VariationService,
+    public dialogRef: MatDialogRef<AddVariantComponent>,
+    private database: PouchDBService,
+    @Inject(MAT_DIALOG_DATA) public product: Product) {
+  }
   isFocused = '';
   submitted = false;
 
@@ -26,7 +27,7 @@ export class AddVariantComponent implements OnInit {
     }
 
     if (event.key === 'Enter') {
-        this.onSubmit();
+      this.onSubmit();
     }
   }
 
@@ -58,8 +59,8 @@ export class AddVariantComponent implements OnInit {
     this.variant.create(formData);
     const lastCreated = this.variant.findFirst(this.product.id);
     if (lastCreated) {
-       this.variant.createVariantStock(lastCreated.id);
-       this.updateStock(lastCreated.id, formData);
+      this.variant.createVariantStock(lastCreated.id);
+      this.updateStock(lastCreated.id, formData);
     }
     this.dialogRef.close('done');
   }
@@ -88,21 +89,21 @@ export class AddVariantComponent implements OnInit {
   }
 
   focusingOut() {
-      if (this.isFocused === 'retailPrice' && (this.variant.form.controls.retailPrice.value === 0 ||
-         this.variant.form.controls.retailPrice.value === '')) {
+    if (this.isFocused === 'retailPrice' && (this.variant.form.controls.retailPrice.value === 0 ||
+      this.variant.form.controls.retailPrice.value === '')) {
       this.variant.form.controls.retailPrice.setValue(0);
-      }
-      if (this.isFocused === 'supplyPrice' && (this.variant.form.controls.supplyPrice.value === 0 ||
-        this.variant.form.controls.supplyPrice.value === '')) {
-        this.variant.form.controls.supplyPrice.setValue(0);
-      }
-
-      if (this.isFocused === 'SKU' && (this.variant.form.controls.SKU.value === 0 || this.variant.form.controls.SKU.value === '')) {
-        this.variant.form.controls.SKU.setValue(this.variant.generateSKU(this.product.id));
-      }
-
-
-      this.isFocused = '';
     }
+    if (this.isFocused === 'supplyPrice' && (this.variant.form.controls.supplyPrice.value === 0 ||
+      this.variant.form.controls.supplyPrice.value === '')) {
+      this.variant.form.controls.supplyPrice.setValue(0);
+    }
+
+    if (this.isFocused === 'SKU' && (this.variant.form.controls.SKU.value === 0 || this.variant.form.controls.SKU.value === '')) {
+      this.variant.form.controls.SKU.setValue(this.variant.generateSKU(this.product.id));
+    }
+
+
+    this.isFocused = '';
+  }
 
 }

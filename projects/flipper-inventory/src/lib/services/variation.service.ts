@@ -8,7 +8,8 @@ import { StockService } from './stock.service';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { ViewStockHistoryComponent } from '../view-stock-history/view-stock-history.component';
 import { PrintBarcodeLabelsDialogComponent } from '../print-barcode-labels-dialog/print-barcode-labels-dialog.component';
-import { DialogSize } from '@enexus/flipper-dialog/lib/dialog-size';
+import { DialogSize } from '@enexus/flipper-dialog';
+
 @Injectable({
   providedIn: 'root'
 })

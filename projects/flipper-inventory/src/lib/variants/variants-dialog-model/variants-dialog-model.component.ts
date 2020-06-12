@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject, HostListener } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'flipper-variants-dialog-model',
@@ -8,9 +9,9 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 })
 export class VariantsDialogModelComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<VariantsDialogModelComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any) {
+    @Inject(MAT_DIALOG_DATA) public data: any) {
 
-}
+  }
   stockControls: any = null;
 
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
@@ -19,7 +20,7 @@ export class VariantsDialogModelComponent implements OnInit {
     }
 
     if (event.key === 'Enter') {
-        this.done();
+      this.done();
     }
   }
 

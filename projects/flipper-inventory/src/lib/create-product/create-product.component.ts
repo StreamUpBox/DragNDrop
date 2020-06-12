@@ -1,10 +1,11 @@
-import { Component, OnInit, HostListener} from '@angular/core';
-import { NotificationService, fadeInAnimation, Product, MainModelService, Tables} from '@enexus/flipper-components';
+import { Component, OnInit, HostListener } from '@angular/core';
+import { NotificationService, fadeInAnimation, Product, MainModelService, Tables } from '@enexus/flipper-components';
 import { ProductService } from '../services/product.service';
 import { Router } from '@angular/router';
 import { trigger, transition, useAnimation } from '@angular/animations';
 import { DialogService, DialogSize } from '@enexus/flipper-dialog';
 import { DisacrdDialogModelComponent } from '../products/disacrd-dialog-model/disacrd-dialog-model.component';
+
 
 @Component({
   selector: 'flipper-create-product',
@@ -18,59 +19,59 @@ import { DisacrdDialogModelComponent } from '../products/disacrd-dialog-model/di
 })
 export class CreateProductComponent implements OnInit {
   isFocused = '';
- addNew = false;
-set didAddNew(bol) {
-this.addNew = bol;
-}
-get didAddNew(): boolean {
-return this.addNew;
-}
+  addNew = false;
+  set didAddNew(bol) {
+    this.addNew = bol;
+  }
+  get didAddNew(): boolean {
+    return this.addNew;
+  }
   submitted = false;
 
   @HostListener('document:keydown', ['$event'])
   onKeydownHandler(event: KeyboardEvent) {
 
     if (event.key === 'Delete') {
-        this.deleteProduct();
-      }
+      this.deleteProduct();
+    }
     if ((event.key === 'Esc' || event.key === 'esc' || event.key === 'ESC')
-    || (event.key === 'tab' || event.key === 'Tab' || event.key === 'TAB')) { // shift + (+)
-        this.openDiscardDialog();
-      }
+      || (event.key === 'tab' || event.key === 'Tab' || event.key === 'TAB')) { // shift + (+)
+      this.openDiscardDialog();
+    }
 
     if (event.ctrlKey && (event.key === 'N' || event.key === 'n')) {// shift + (-)
-        this.onSubmit('new');
-      }
+      this.onSubmit('new');
+    }
 
 
-    if ( event.key === 'Enter') {// shift + k
-    this.onSubmit('close');
+    if (event.key === 'Enter') {// shift + k
+      this.onSubmit('close');
     }
   }
 
   constructor(private dialog: DialogService, private model: MainModelService,
-              private router: Router, public product: ProductService,
-              protected notificationSvc: NotificationService) {}
+    private router: Router, public product: ProductService,
+    protected notificationSvc: NotificationService) { }
 
   ngOnInit() {
     this.checkNewItem();
   }
 
-checkNewItem() {
-  this.didAddNew = false;
-  this.product.init();
-  this.product.request();
-  this.product.hasDraftProduct = this.model.findByFirst<Product>(Tables.products, 'isDraft', true);
+  checkNewItem() {
+    this.didAddNew = false;
+    this.product.init();
+    this.product.request();
+    this.product.hasDraftProduct = this.model.findByFirst<Product>(Tables.products, 'isDraft', true);
 
-}
+  }
 
   updateItem(key, event) {
     let val = '';
     if (key === 'taxId') {
-          val = event.value;
-      } else {
-          val = event.target.value;
-      }
+      val = event.value;
+    } else {
+      val = event.target.value;
+    }
     this.product.updateKeyValue(key, val);
     this.product.update();
   }
@@ -92,9 +93,9 @@ checkNewItem() {
     this.goToProduct();
 
   }
-goToProduct() {
-  return this.router.navigate(['/admin/inventory']);
-}
+  goToProduct() {
+    return this.router.navigate(['/admin/inventory']);
+  }
 
   viewImageUploaded(src) {
     this.product.hasDraftProduct.picture = src;
@@ -115,7 +116,7 @@ goToProduct() {
         this.product.discardProduct();
         // this.product.updateOnlineDatabase();
         this.goToProduct();
-       });
+      });
     }
 
 
@@ -136,11 +137,11 @@ goToProduct() {
         }
 
         if (result === 'save') {
-            this.onSubmit('close');
+          this.onSubmit('close');
         }
       });
     }
 
- }
+  }
 
 }

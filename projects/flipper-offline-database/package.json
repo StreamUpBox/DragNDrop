@@ -1,9 +1,10 @@
 {
   "name": "@enexus/flipper-offline-database",
-  "version": "1.0.3",
+  "version": "1.0.12",
   "peerDependencies": {
     "@angular/common": "^9.1.6",
-    "@angular/core": "^9.1.6"
+    "@angular/core": "^9.1.6",
+    "alasql": "0.6.2"
   },
   "keywords": [
     "CREATE",

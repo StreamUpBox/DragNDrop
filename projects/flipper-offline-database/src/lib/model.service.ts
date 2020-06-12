@@ -8,6 +8,7 @@ import { ExecuteService } from './execute.service';
 })
 export class ModelService extends ExecuteService {
 
+
   constructor() {
     super();
   }
@@ -21,18 +22,16 @@ export class ModelService extends ExecuteService {
     }
   }
 
-
   get<T>(Table?: string): T[] {
     try {
       if (Table) {
-        //TODO: this is returning can not parse json from localStorage.
-        return this.select(Table).execute();
+        return  this.select(Table).execute();
       } else {
+        
         return this.execute();
       }
-
     } catch (e) {
-      // TODO: notify any error in plugin to
+      
       throw new Error((`ERROR:${e}`));
     }
   }

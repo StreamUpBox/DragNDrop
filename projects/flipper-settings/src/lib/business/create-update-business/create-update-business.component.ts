@@ -88,7 +88,7 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
         this.user$ = result;
       }
     }, error => {
-      console.error(error);
+      // console.error(error);
     });
 
     this.database.get(PouchConfig.Tables.business).then(result => {
@@ -96,7 +96,7 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
         this.business$ = result.businesses;
       }
     }, error => {
-      console.error(error);
+      // console.error(error);
     });
 
     this.database.get(PouchConfig.Tables.branches).then(result => {
@@ -104,7 +104,7 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
         this.branches$ = result.branches;
       }
     }, error => {
-      console.error(error);
+      // console.error(error);
     });
 
     // this.database.get(PouchConfig.Tables.businessTypes).then(result => {

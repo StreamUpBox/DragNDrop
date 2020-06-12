@@ -1,5 +1,6 @@
 import { Observable } from 'rxjs';
 import { ModelService, Schema } from '@enexus/flipper-offline-database';
+
 import { Injectable } from '@angular/core';
 import { DEFAULT_FLIPPER_DB_CONFIG } from '../db-config';
 @Injectable({
@@ -45,12 +46,14 @@ export class MainModelService {
   }
 
   
-
   loadAll<T>(table: string): T[] {
     this.checkTable(table);
     try {
       return this.model.get<T>(table);
-    } catch (e) { throw new Error((`ERROR:${e}`)); }
+    } catch (e) { 
+     
+      throw new Error((`ERROR:${e}`));
+     }
   }
 
   getObservable<T>(table: string): Observable<T[]> {

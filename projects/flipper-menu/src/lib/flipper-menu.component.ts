@@ -131,7 +131,7 @@ export class FlipperMenuComponent implements OnInit {
         this.user$ = result;
       }
     }, error => {
-      console.error(error);
+      // console.error(error);
     });
 
     this.database.get(PouchConfig.Tables.business).then(result => {
@@ -140,7 +140,7 @@ export class FlipperMenuComponent implements OnInit {
         this. updateBusiness();
       }
     }, error => {
-      console.error(error);
+      // console.error(error);
     });
 
     this.database.get(PouchConfig.Tables.branches).then(result => {
@@ -150,7 +150,7 @@ export class FlipperMenuComponent implements OnInit {
 
       }
     }, error => {
-      console.error(error);
+      // console.error(error);
     });
 
     await this.getUser();

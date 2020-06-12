@@ -60,6 +60,7 @@ import { PouchDBService } from './services';
     SpinnerComponent,
     MessageComponent,
     LazyIfDirective,
+    
     RoundNumberPipe,
     CalculateTotalClassPipe,
     MergeArryByIdPipe,

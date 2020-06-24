@@ -6,6 +6,7 @@ import { ICardDetails } from './domain/i-card-details';
 import { CardDetails } from './domain/card-details';
 import { PaymentCardService } from './service/payment-card.service';
 
+
 /**
  * NgPaymentCard without any dependencies other then ReactiveFormsModule
  */
@@ -43,11 +44,13 @@ export class PaymentCardComponent implements OnInit {
   @Input()
   public ccNumTooShortTxt ? = 'Card number is too short';
 
+  
   /**
    * Validation message for too long payment card number
    */
   @Input()
   public ccNumTooLongTxt ? = 'Card number is too long';
+
 
   /**
    * Validation message for payment card number that contains characters other than digits
@@ -211,7 +214,7 @@ export class PaymentCardComponent implements OnInit {
             Validators.minLength(12),
             Validators.maxLength(19),
             CardValidator.numbersOnly,
-            CardValidator.checksum,
+            // CardValidator.checksum,
           ]),
         ],
         cardHolder: ['', Validators.compose([Validators.required, Validators.maxLength(22)])],

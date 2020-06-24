@@ -38,6 +38,7 @@ export class CardValidator {
    * Check checksum number in card number using Luhn algorithm
    */
   public static checksum(abstractCtr: AbstractControl): ValidationErrors | null {
+    // FIXME: this method is not working propper now, temporaly disabled in validation.
     const ccNumber: string = abstractCtr.value;
     const luhnArray: Array<number> = [0, 2, 4, 6, 8, 1, 3, 5, 7, 9];
     let length: number = ccNumber ? ccNumber.length : 0;

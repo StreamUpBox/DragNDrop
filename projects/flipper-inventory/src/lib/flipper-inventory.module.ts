@@ -24,6 +24,7 @@ import { PrintBarcodeLabelsDialogComponent } from './print-barcode-labels-dialog
 
 
 
+
 @NgModule({
   declarations: [FlipperInventoryComponent, VariantsComponent,
      ProductsComponent, CreateProductComponent, RegularVariantsComponent,

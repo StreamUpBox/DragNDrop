@@ -1,24 +1,13 @@
 # PaymentCard
+a payment for implemeting ui taking mobile money, card etc...
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.9.
-
-## Code scaffolding
-
-Run `ng generate component component-name --project payment-card` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project payment-card`.
-> Note: Don't forget to add `--project payment-card` or else it will be added to the default project in your `angular.json` file. 
-
-## Build
-
-Run `ng build payment-card` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Publishing
-
-After building your library with `ng build payment-card`, go to the dist folder `cd dist/payment-card` and run `npm publish`.
-
-## Running unit tests
-
-Run `ng test payment-card` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+# How to use the lib
+`do npm i @enexus/payment-card`
+# Import  the module
+`FlipperPaymentCardModule`
+# use the UI
+`<flipper-payment-card app="Flipper" [showCard]="showCard" [currency]="currency" [amount]="flipperPlan"
+                (formSaved)="submitCard($event)" [loading]="(loading | async)"
+                [ccNumMissingTxt]="(ccNumMissingTxt | async)" [cardExpiredTxt]="(cardExpiredTxt | async)">
+              </flipper-payment-card>`
+              

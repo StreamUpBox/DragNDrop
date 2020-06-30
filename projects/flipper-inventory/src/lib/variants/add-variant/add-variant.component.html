@@ -1,11 +1,11 @@
 <h1 mat-dialog-title>Add variation</h1>
-<form [formGroup]="variant.form" (ngSubmit)="onSubmit()" style="height: 100%;">
+<form [formGroup]="form" (ngSubmit)="onSubmit()" style="height: 100%;">
 
 <div mat-dialog-content>
 
     <table style="width: 100%;" class="mt-4">
 
-        <tr class="tr" [class.trIsFocused]="isFocused=='name'" [class.invalid]="submitted && variant.formControl.name.errors" style="border-top: 1px #d5d9dc solid; border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
+        <tr class="tr" [class.trIsFocused]="isFocused=='name'" [class.invalid]="submitted && formControl.name.errors" style="border-top: 1px #d5d9dc solid; border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
             
             <td class="td"  [class.tdIsFocused]="isFocused=='name'" >
                 Variation Name
@@ -43,14 +43,14 @@
            
           </tr>
       
-        <tr class="tr" [class.trIsFocused]="isFocused=='retailPrice'" [class.invalid]="submitted && variant.formControl.retailPrice.errors" style=" border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
+        <tr class="tr" [class.trIsFocused]="isFocused=='retailPrice'" [class.invalid]="submitted && formControl.retailPrice.errors" style=" border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
           <td class="td"  [class.tdIsFocused]="isFocused=='retailPrice'">
             Retail Price
           </td>
           <td style="width:60%">
            <div class="price">
 
-            <span class="currency">{{variant.activeBusiness().currency}} {{variant.form.value.unit?'/ '+variant.form.value.unit:''}}</span>
+            <span class="currency">{{variant.activeBusiness().currency}} {{form.value.unit?'/ '+form.value.unit:''}}</span>
             <span class="pinput">
             <input class="input" formControlName="retailPrice" type="number"
             (focus)="focusing('retailPrice')" (focusout)="focusingOut()" placeholder="retail Price" />
@@ -60,14 +60,14 @@
           </td>
         </tr>
 
-        <tr class="tr" [class.trIsFocused]="isFocused=='supplyPrice'" [class.invalid]="submitted && variant.formControl.supplyPrice.errors" style=" border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
+        <tr class="tr" [class.trIsFocused]="isFocused=='supplyPrice'" [class.invalid]="submitted && formControl.supplyPrice.errors" style=" border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
           <td class="td" [class.tdIsFocused]="isFocused=='supplyPrice'">
             Supply Price
           </td>
           <td style="width:60%">
             <div class="price">
 
-                <span class="currency">{{variant.activeBusiness().currency}} {{variant.form.value.unit?'/ '+variant.form.value.unit:''}}</span>
+                <span class="currency">{{variant.activeBusiness().currency}} {{form.value.unit?'/ '+form.value.unit:''}}</span>
                 <span class="pinput">
                 <input class="input" formControlName="supplyPrice" type="number"
                 (focus)="focusing('supplyPrice')" (focusout)="focusingOut()" placeholder="supply Price" />
@@ -78,15 +78,15 @@
         </tr>
     
       </table>
-      <mat-error *ngIf="submitted && variant.formControl.name.errors">
-        <div *ngIf="variant.formControl.name.errors.required">Variation name is required</div>
+      <mat-error *ngIf="submitted && formControl.name.errors">
+        <div *ngIf="formControl.name.errors.required">Variation name is required</div>
         </mat-error>
-      <mat-error *ngIf="submitted && variant.formControl.supplyPrice.errors">
-        <div *ngIf="variant.formControl.supplyPrice.errors.min">Supply Price - Negative number is not allowed!</div>
+      <mat-error *ngIf="submitted && formControl.supplyPrice.errors">
+        <div *ngIf="formControl.supplyPrice.errors.min">Supply Price - Negative number is not allowed!</div>
       </mat-error>
      
-      <mat-error *ngIf="submitted && variant.formControl.retailPrice.errors">
-      <div *ngIf="variant.formControl.retailPrice.errors.min">Retail Price - Negative number is not allowed!</div>
+      <mat-error *ngIf="submitted && formControl.retailPrice.errors">
+      <div *ngIf="formControl.retailPrice.errors.min">Retail Price - Negative number is not allowed!</div>
       </mat-error>
 </div>
 

@@ -1,6 +1,6 @@
 {
   "name": "@enexus/flipper-dashboard",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "peerDependencies": {
     "@angular/common": "^8.2.9",
     "@angular/core": "^8.2.9",

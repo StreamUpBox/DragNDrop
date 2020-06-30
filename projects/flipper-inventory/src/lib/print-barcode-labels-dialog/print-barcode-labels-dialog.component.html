@@ -1,5 +1,5 @@
 <h1 mat-dialog-title>Print Barcode Labels</h1>
-<div style="height:600px; overflow: auto;" mat-dialog-content>
+<div style="height:600px; overflow: auto;" mat-dialog-content *ngIf="labels.length > 0">
 
   <span class="mr-4">
     <mat-slide-toggle [(ngModel)]="showName" name="show-name">Show Variant Name</mat-slide-toggle>

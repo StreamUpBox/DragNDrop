@@ -10,6 +10,7 @@ import { ViewStockHistoryComponent } from '../view-stock-history/view-stock-hist
 import { PrintBarcodeLabelsDialogComponent } from '../print-barcode-labels-dialog/print-barcode-labels-dialog.component';
 import { DialogSize } from '@enexus/flipper-dialog';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -84,10 +85,11 @@ export class VariationService {
   }
 
   request(action = null, variant = null): void {
-    const stock: Stock = this.stock.findVariantStock(variant.id);
+    // console.log(variant);
+    const stock: Stock = variant?this.stock.findVariantStock(variant?variant.id:null):null;
     this.form = this.formBuilder.group({
       name: [!action && variant && variant.name ? variant.name : '', Validators.required],
-      SKU: !action && variant && variant.SKU ? variant.SKU : this.generateSKU(this.product.id),
+      SKU: !action && variant && variant.SKU ? variant.SKU : this.generateSKU(),
       retailPrice: [!action && variant && stock ? stock.retailPrice : 0.00, Validators.min(0)],
       supplyPrice: [!action && variant && stock ? stock.supplyPrice : 0.00, Validators.min(0)],
       unit: !action && variant && variant.unit ? variant.unit : '',
@@ -97,7 +99,7 @@ export class VariationService {
     });
   }
 
-  generateSKU(productId: string): string {
+  generateSKU(): string {
     return this.d.getFullYear() + '' + this.makeid(4);
   }
 
@@ -116,34 +118,35 @@ export class VariationService {
   }
 
   createRegular(product: Product): void {
+
+  
+
     if (!this.hasRegular) {
-      this.create({
+      const formData={
         id: this.database.uid(),
         name: 'Regular',
-        SKU: this.generateSKU(product.id),
+        productName: product.name,
+        categoryName: '',
         productId: product.id,
-        unit: '',
+        supplyPrice:0.00,
+        retailPrice: 0.00,
+        unit: this.units.length > 0?this.units[0].value:'',
+        SKU: this.generateSKU(),
+        syncedOnline: false,
         isActive: false,
         createdAt: new Date(),
         updatedAt: new Date()
-      });
+      
+      };
+      this.create(formData);
+      this.createVariantStock(formData);
       this.regular(product);
-
-      if (this.units.length > 0) {
-        this.updateDefaultUnit(this.hasRegular, 'unit', this.units[0].value);
-      }
-
-
-      if (this.hasRegular) {
-        this.createVariantStock(this.hasRegular.id);
-      }
-
-
     }
+
   }
 
-  createVariantStock(variantId: string) {
-    this.stock.createStocks(variantId,
+  createVariantStock(formData:any) {
+    this.stock.createStocks(formData,
       this.model.filters<Branch>(Tables.branch, 'businessId',
         this.model.active<Business>(Tables.business).id)
     );
@@ -197,12 +200,14 @@ export class VariationService {
   }
   deleteAllVariantsDialog(product: Product) {
     const variants = [];
-    this.allVariants.forEach((v, i) => {
+    const p  =  this.model.draft<Product>(Tables.products, 'isDraft');
+    const allVariants = this.model.filters<Variant>(Tables.variants, 'productId', p.id);
+    allVariants.forEach((v, i) => {
       variants.push(`${i + 1}. ${v.name}`);
     });
     this.dialog.delete('Variants', variants).subscribe(confirm => {
-      this.deleteProductVariations(product);
-      this.init(product);
+      this.deleteProductVariations(p);
+      this.init(p);
     });
   }
 
@@ -283,7 +288,9 @@ updateStockControl(result: any, variant: Variant) {
 
   public openPrintBarcodeLablesDialog(): any {
     const labels: Labels[] = [];
-    this.allVariants.forEach(v => {
+    const product  =  this.model.draft<Product>(Tables.products, 'isDraft');
+    const allVariants = this.model.filters<Variant>(Tables.variants, 'productId', product.id);
+    allVariants.forEach(v => {
       labels.push({name: v.name, sku: v.SKU});
     });
     return this.dialog.open(PrintBarcodeLabelsDialogComponent, DialogSize.SIZE_LG, labels).subscribe();

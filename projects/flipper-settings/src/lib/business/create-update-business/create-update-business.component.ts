@@ -1,7 +1,9 @@
 import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { Business, Branch, ILatLng, Types, User, BusinessCategory,
+import {
+  Business, Branch, ILatLng, Types, User, BusinessCategory,
   NotificationService, SettingsService, Taxes, PouchDBService,
-   PouchConfig, Tables, MainModelService} from '@enexus/flipper-components';
+  PouchConfig, Tables, MainModelService
+} from '@enexus/flipper-components';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -19,7 +21,7 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
   categories$: BusinessCategory[] = [];
   searchCategoryByTypes$: BusinessCategory[] = [];
   isCategoryFound = false;
-   business$: Business[] = [];
+  business$: Business[] = [];
   branches$: Branch[] = [];
   user$: User = null;
   currencies: any[] = [];
@@ -30,14 +32,14 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
     longitude: 0
   };
   constructor(private database: PouchDBService,
-              private setting: SettingsService,
-              private router: Router,
-              protected notificationSvc: NotificationService,
-              private formBuilder: FormBuilder,
-              private model: MainModelService,
-              private ref: ChangeDetectorRef) {
-               this.getLocation();
-               this.database.connect(PouchConfig.bucket);
+    private setting: SettingsService,
+    private router: Router,
+    protected notificationSvc: NotificationService,
+    private formBuilder: FormBuilder,
+    private model: MainModelService,
+    private ref: ChangeDetectorRef) {
+    this.getLocation();
+    this.database.connect(PouchConfig.bucket);
   }
 
 
@@ -45,7 +47,7 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
   getLocation() {
     if ('geolocation' in navigator) {
       console.log('Location services available');
-      navigator.geolocation.getCurrentPosition( (position) => {
+      navigator.geolocation.getCurrentPosition((position) => {
         this.origin.latitude = position.coords.latitude;
         this.origin.longitude = position.coords.longitude;
       });
@@ -135,8 +137,8 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
     await this.getBusiness();
     await this.getBranches();
     await this.getTypes();
-    await  this.getCategories();
-    await  this.geTaxes();
+    await this.getCategories();
+    await this.geTaxes();
 
 
 
@@ -172,12 +174,12 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
     this.searchCategoryByTypes$ = [];
     await this.categories$.forEach(cat => {
 
-            const catTypeId = typeof cat.typeId === 'string' ? cat.typeId : cat.typeId;
-            const typeId = typeof id === 'string' ? id : id;
-            if (catTypeId === typeId) {
-              this.searchCategoryByTypes$.push(cat);
-            }
-          });
+      const catTypeId = typeof cat.typeId === 'string' ? cat.typeId : cat.typeId;
+      const typeId = typeof id === 'string' ? id : id;
+      if (catTypeId === typeId) {
+        this.searchCategoryByTypes$.push(cat);
+      }
+    });
 
     this.ref.detectChanges();
 
@@ -215,12 +217,12 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
     if (this.business$.length > 0) {
       formBusinessData.active = false;
       this.database.put(PouchConfig.Tables.business, {
-                businesses: [...this.business$, formBusinessData]
-            });
+        businesses: [...this.business$, formBusinessData]
+      });
     } else {
-          this.database.put(PouchConfig.Tables.business, {
-            businesses: [formBusinessData]
-            });
+      this.database.put(PouchConfig.Tables.business, {
+        businesses: [formBusinessData]
+      });
     }
 
 
@@ -239,17 +241,17 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
       formBranchData.active = false;
       this.database.put(PouchConfig.Tables.branches, {
         branches: [...this.branches$, formBranchData]
-        });
-      } else {
-            this.database.put(PouchConfig.Tables.branches, {
-              branches: [formBranchData]
-              });
-      }
+      });
+    } else {
+      this.database.put(PouchConfig.Tables.branches, {
+        branches: [formBranchData]
+      });
+    }
 
 
 
-    const formTaxes = [
-      {
+    const formTaxes1 =
+    {
       id: this.database.uid(),
       name: 'no Tax',
       percentage: 0,
@@ -258,29 +260,35 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
       isDefault: false,
       createdAt: new Date(),
       updatedAt: new Date()
-      },
-      {
-        id: this.database.uid(),
-        name: 'Vat',
-        percentage: 18,
-        businessId: this.registerForm.value.id,
-        active: true,
-        isDefault: true,
-        createdAt: new Date(),
-        updatedAt: new Date()
+    };
+
+    const formTaxes2 = {
+      id: this.database.uid(),
+      name: 'Vat',
+      percentage: 18,
+      businessId: this.registerForm.value.id,
+      active: true,
+      isDefault: true,
+      createdAt: new Date(),
+      updatedAt: new Date()
     }
-];
+
     if (this.taxes$.length > 0) {
-  formTaxes.forEach(tax => {
-        this.database.put(PouchConfig.Tables.taxes, {
-          taxes: [...this.taxes$, tax]
-          });
-  });
-  } else {
-        this.database.put(PouchConfig.Tables.taxes, {
-          taxes: [formTaxes]
+
+      this.database.put(PouchConfig.Tables.taxes, {
+        taxes: [...this.taxes$, formTaxes1,formTaxes2]
       });
-  }
+
+   
+
+    } else {
+      this.database.put(PouchConfig.Tables.taxes, {
+        taxes: [formTaxes1,formTaxes2]
+      });
+    
+    }
+
+
 
     setTimeout(() => {
       this.notificationSvc.success('Create Business', 'Business ' + formBusinessData.name + ' Created successfully!');

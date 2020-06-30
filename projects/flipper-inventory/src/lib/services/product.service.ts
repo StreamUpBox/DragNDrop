@@ -43,7 +43,7 @@ export class ProductService {
   public loadAllProducts(): Observable<Product[]> {
     const data: Product[] = [];
     this.query.queries<Product>(Tables.products, `  isDraft=${false}
-     AND businessId='${this.model.active<Business>(Tables.business).id}' ORDER BY id DESC `).
+     AND businessId='${this.model.active<Business>(Tables.business).id}' ORDER BY createdAt DESC `).
      forEach(d => data.push(d as Product));
     this.productsSubject.next(data);
     this.productsMap.clear();

@@ -1,5 +1,5 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import { NotificationService, fadeInAnimation, Product, MainModelService, Tables } from '@enexus/flipper-components';
+import { NotificationService, fadeInAnimation, Product, MainModelService, Tables, Variant } from '@enexus/flipper-components';
 import { ProductService } from '../services/product.service';
 import { Router } from '@angular/router';
 import { trigger, transition, useAnimation } from '@angular/animations';
@@ -72,11 +72,26 @@ export class CreateProductComponent implements OnInit {
     } else {
       val = event.target.value;
     }
+    
     this.product.updateKeyValue(key, val);
     this.product.update();
+    this.updateVariantProductName();
   }
 
-
+updateVariantProductName(){
+  let  product= this.model.findByFirst<Product>(Tables.products, 'isDraft', true);
+  if(product){
+    const variants=this.model.filters<Variant>(Tables.variants, 'productId', product.id);
+      if(variants.length > 0){
+        variants.forEach(v => {
+          v.productName=product.name;
+          this.model.update<Variant>(Tables.variants, v, v.id);
+        });
+      }
+   
+  }
+ 
+}
 
 
 
@@ -114,7 +129,6 @@ export class CreateProductComponent implements OnInit {
     if (this.product.hasDraftProduct && this.product.hasDraftProduct.isCurrentUpdate) {
       this.dialog.delete('Product', [`${this.product.hasDraftProduct.name}`]).subscribe(confirm => {
         this.product.discardProduct();
-        // this.product.updateOnlineDatabase();
         this.goToProduct();
       });
     }

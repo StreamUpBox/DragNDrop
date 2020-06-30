@@ -329,7 +329,7 @@ export const DEFAULT_FLIPPER_DB_CONFIG = {
         {
             name: 'Analytics',
             icon: 'analytics.svg',
-            route: '',
+            route: 'analytics',
             active: true,
             isSetting: false,
         },
@@ -349,7 +349,7 @@ export const DEFAULT_FLIPPER_DB_CONFIG = {
         },
         {
             name: 'Transactions',
-            icon: 'transaction',
+            icon: 'transaction.svg',
             route: 'transactions',
             active: false,
             isSetting: false,

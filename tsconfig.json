@@ -56,7 +56,6 @@
       "@enexus/flipper-dialog/*": [
         "dist/flipper-dialog/*"
       ],
-      
       "@enexus/flipper-color": [
         "dist/flipper-color"
       ],
@@ -114,9 +113,12 @@
       "@enexus/payment-card": [
         "dist/payment-card"
       ],
-
       "@enexus/payment-card/*": [
         "dist/payment-card"
+      ],
+      "enable-sync": [
+        "dist/enable-sync/enable-sync",
+        "dist/enable-sync"
       ]
     }
   },

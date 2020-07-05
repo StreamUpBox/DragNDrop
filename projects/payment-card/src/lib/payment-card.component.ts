@@ -6,7 +6,6 @@ import { ICardDetails } from './domain/i-card-details';
 import { CardDetails } from './domain/card-details';
 import { PaymentCardService } from './service/payment-card.service';
 
-
 /**
  * NgPaymentCard without any dependencies other then ReactiveFormsModule
  */

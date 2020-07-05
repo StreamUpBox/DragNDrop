@@ -702,6 +702,46 @@
           }
         }
       }
+    },
+    "EnableSync": {
+      "projectType": "library",
+      "root": "projects/enable-sync",
+      "sourceRoot": "projects/enable-sync/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/enable-sync/tsconfig.lib.json",
+            "project": "projects/enable-sync/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/enable-sync/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/enable-sync/src/test.ts",
+            "tsConfig": "projects/enable-sync/tsconfig.spec.json",
+            "karmaConfig": "projects/enable-sync/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/enable-sync/tsconfig.lib.json",
+              "projects/enable-sync/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "flipper-plugins",

@@ -6,7 +6,7 @@ import { PouchConfig } from '../db-config';
 
 @Injectable({
     providedIn: 'root'
-  })
+})
 
 export class PouchDBService {
 
@@ -16,37 +16,45 @@ export class PouchDBService {
     public listenerLogin: EventEmitter<any> = new EventEmitter();
 
 
-    
-    public constructor() {}
 
-    public connect(dbName: string) {
+    public constructor() { }
+
+    public connect(dbName: string,filter:string=null) {
         if (!this.isInstantiated && dbName) {
             this.database = new PouchDB(dbName);
+            if(filter!=null){
+                this.database.changes({
+                    filter: function (doc) {
+                    //make sure we filter only to listen on our document of intrest.
+                      return doc.channel === filter;
+                    }
+                });
+            }
+           
             this.isInstantiated = true;
         }
     }
     public fetch() {
-        return this.database.allDocs({include_docs: true});
+        return this.database.allDocs({ include_docs: true });
     }
 
     public get(id: string) {
         return this.database.get(id);
     }
 
-    public  find(id) {
+    public find(id) {
 
-       return this.get(id).then(result => {
-        return  result;
-    }, error => {
-        if (error.status === '404') {
-             throw new Error((`ERROR:${error}`));
-        } else {
-            return new Promise((resolve, reject) => {
-                reject(error);
-            });
-        }
-    });
-
+        return this.get(id).then(result => {
+            return result;
+        }, error => {
+            if (error.status === '404') {
+                throw new Error((`ERROR:${error}`));
+            } else {
+                return new Promise((resolve, reject) => {
+                    reject(error);
+                });
+            }
+        });
 
 
     }
@@ -68,14 +76,14 @@ export class PouchDBService {
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         const charactersLength = characters.length;
         for (let i = 0; i < length; i++) {
-          result += characters.charAt(Math.floor(Math.random() * charactersLength));
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
         }
         return result;
-      }
+    }
 
-      uid() {
-          return uuidv1();
-      }
+    uid() {
+        return uuidv1();
+    }
 
 
     public put(id: string, document: any) {
@@ -101,16 +109,16 @@ export class PouchDBService {
     public sync(remote: string) {
         const sessionId = PouchConfig.sessionId;
         document.cookie = sessionId;
-        const remoteDatabase = new PouchDB(remote);
-        this.database.sync(remoteDatabase, {
-            live: true,
+        console.log("remove should be the name of db::",remote);
+        
+        this.database.sync(remote, {
+            live: false,
             retry: true
         }).on('change', change => {
             if (change) {
                 this.listener.emit(change);
             }
-        })
-        .on('paused', change => {
+        }).on('paused', change => {
             if (change) {
                 this.listener.emit(change);
             }
@@ -126,42 +134,36 @@ export class PouchDBService {
             if (change) {
                 this.listener.emit(change);
             }
-        })
-        .on('error', error => {
+        }).on('error', error => {
             console.error(JSON.stringify(error));
         });
     }
-
     public getChangeListener() {
         return this.listener;
     }
     public getChangeListenerLogin() {
         return this.listenerLogin;
     }
-
-
-
-    unique(a: Array<any>, key: string= 'name'): Array<any> {
+    unique(a: Array<any>, key: string = 'name'): Array<any> {
         return a.length > 0 ? this.removeDuplicates(a, key) : [];
     }
-
-     contains(array: Array<any>, obj: any, key: string): boolean {
+    contains(array: Array<any>, obj: any, key: string): boolean {
 
         for (const newObj of array) {
-          if (this.isEqual(newObj, obj, key)) { return true; }
-      }
+            if (this.isEqual(newObj, obj, key)) { return true; }
+        }
         return false;
     }
     // comparator
-     isEqual(obj1: any, obj2: any, key: string) {
-      if ((obj1[key] === obj2[key])) { return true; }
-      return false;
+    isEqual(obj1: any, obj2: any, key: string) {
+        if ((obj1[key] === obj2[key])) { return true; }
+        return false;
     }
-     removeDuplicates(ary: Array<any>, key: string) {
-      const arr = [];
-      return ary.filter((x: any) => {
-          return !this.contains(arr, x, key) && arr.push(x);
-      });
+    removeDuplicates(ary: Array<any>, key: string) {
+        const arr = [];
+        return ary.filter((x: any) => {
+            return !this.contains(arr, x, key) && arr.push(x);
+        });
     }
 
 }

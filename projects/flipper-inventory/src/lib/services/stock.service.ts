@@ -56,19 +56,19 @@ export class StockService {
       .andWhere('isDraft', true).first<StockHistory>();
   }
 
-  createStocks(variantId: string, branches: Branch[]): void {
+  createStocks(formData:any , branches: Branch[]): void {
     if (branches.length > 0) {
       branches.forEach(branch => {
 
         this.create({
           id: this.database.uid(),
           branchId: branch.id,
-          productId: this.findVariant(variantId).productId,
-          variantId,
+          productId: formData.productId,
+          variantId:formData.id,
           reasonId: 0,
           currentStock: 0,
-          supplyPrice: 0,
-          retailPrice: 0,
+          supplyPrice: formData.supplyPrice,
+          retailPrice: formData.retailPrice,
           lowStock: 0,
           active: true,
           inStock: 0,

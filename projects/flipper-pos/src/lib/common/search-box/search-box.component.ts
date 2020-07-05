@@ -61,7 +61,7 @@ export class SearchBoxComponent implements OnInit, AfterViewInit {
   @Output() addToCartEmit = new EventEmitter < Variant > ();
 
   public searchControl: FormControl;
-  private debounce = 600;
+  private debounce = 1000;
   public loading = false;
   public event: KeyboardEvent;
   isSearching = false;
@@ -98,26 +98,46 @@ export class SearchBoxComponent implements OnInit, AfterViewInit {
   close() {
     this.autoComplete.closePanel();
   }
+  timer=null;
+  startSearching(event){
+    if (event.target.value === '' || event.target.value === null) {
+      this.foundVariant=[];
+      this. clearSearchBox();
+      return;
+    }
+    clearTimeout(this.timer);
+    this.timer = setTimeout(()=>{
+      this.foundVariant=[];
+      this.searching(event.target.value);
+    }, 1000)
+
+  }
 
 
-
-  ngOnInit() {
-    this.searchControl = new FormControl('');
-
-    this.searchControl.valueChanges
-      .pipe(debounceTime(this.debounce),
-            distinctUntilChanged()
-            )
-          .subscribe(query => {
-            if (query === '' || query === null) {
-              this.isSearching = false;
-              return;
-            }
+  searching(query){
             this.loading = true;
             this.isSearching = true;
             this.searchEmitValue.emit(query);
-      });
   }
+
+  ngOnInit() {
+    // this.searchControl = new FormControl('');
+
+    // this.searchControl.valueChanges
+    //   .pipe(debounceTime(this.debounce),
+    //         distinctUntilChanged()
+    //         )
+    //       .subscribe(query => {
+    //         if (query === '' || query === null) {
+    //           this.isSearching = false;
+    //           return;
+    //         }
+    //         this.loading = true;
+    //         this.isSearching = true;
+    //         this.searchEmitValue.emit(query);
+    //   });
+  }
+
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.searchInputElement.nativeElement.focus();
@@ -129,7 +149,6 @@ export class SearchBoxComponent implements OnInit, AfterViewInit {
     if (variants.length === 1) {
       this.addToCart(variants[0]);
       this.clearSearchBox();
-
     }
   }
 

@@ -1,5 +1,7 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import PouchDB from 'pouchdb';
+
+
 import { v1 as uuidv1 } from 'uuid';
 import { PouchConfig } from '../db-config';
 
@@ -19,18 +21,18 @@ export class PouchDBService {
 
     public constructor() { }
 
-    public connect(dbName: string,filter:string=null) {
+    public connect(dbName: string, filter: string = null) {
         if (!this.isInstantiated && dbName) {
             this.database = new PouchDB(dbName);
-            if(filter!=null){
+            if (filter != null) {
+                console.log("apply channel", filter);
                 this.database.changes({
                     filter: function (doc) {
-                    //make sure we filter only to listen on our document of intrest.
-                      return doc.channel === filter;
+                        //make sure we filter only to listen on our document of intrest.
+                        return doc.channel === filter;
                     }
                 });
             }
-           
             this.isInstantiated = true;
         }
     }
@@ -39,7 +41,8 @@ export class PouchDBService {
     }
 
     public get(id: string) {
-        return this.database.get(id);
+        // enable allowing conflicting document.
+        return this.database.get(id, { conflicts: true });
     }
 
     public find(id) {
@@ -91,6 +94,7 @@ export class PouchDBService {
         document.uid = this.uid();
         document.channel = PouchConfig.channel;
         document.channels = [PouchConfig.channel];
+
         return this.get(id).then(result => {
             document._rev = result._rev;
             return this.database.put(document);
@@ -109,9 +113,8 @@ export class PouchDBService {
     public sync(remote: string) {
         const sessionId = PouchConfig.sessionId;
         document.cookie = sessionId;
-        console.log("remove should be the name of db::",remote);
-        
-        this.database.sync(remote, {
+        //our main = bucket and is constant to all users.
+        PouchDB.sync('main', remote, {
             live: false,
             retry: true
         }).on('change', change => {
@@ -119,22 +122,23 @@ export class PouchDBService {
                 this.listener.emit(change);
             }
         }).on('paused', change => {
+            console.log("sync paused");
             if (change) {
                 this.listener.emit(change);
             }
-        }).on('active', change => {
-            if (change) {
-                this.listener.emit(change);
-            }
+        }).on('active', () => {
         }).on('denied', change => {
+            console.log("sync denied");
             if (change) {
                 this.listener.emit(change);
             }
         }).on('complete', change => {
+            console.log("sync complete");
             if (change) {
                 this.listener.emit(change);
             }
         }).on('error', error => {
+            console.log("sync error");
             console.error(JSON.stringify(error));
         });
     }

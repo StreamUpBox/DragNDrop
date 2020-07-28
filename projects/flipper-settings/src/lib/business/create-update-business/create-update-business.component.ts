@@ -93,79 +93,13 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
       // console.error(error);
     });
 
-    this.database.get(PouchConfig.Tables.business).then(result => {
-      if (result) {
-        this.business$ = result.businesses;
-      }
-    }, error => {
-      // console.error(error);
-    });
-
-    this.database.get(PouchConfig.Tables.branches).then(result => {
-      if (result) {
-        this.branches$ = result.branches;
-      }
-    }, error => {
-      // console.error(error);
-    });
-
-    // this.database.get(PouchConfig.Tables.businessTypes).then(result => {
-    //   if (result) {
-    //     this.types$ = result.businessTypes;
-    //   }
-    // }, error => {
-    //   console.error(error);
-    // });
-
-
-    // this.database.get(PouchConfig.Tables.businessCategories).then(result => {
-    //   if (result) {
-    //     this.categories$ = result.businessCategories;
-    //   }
-    // }, error => {
-    //   console.error(error);
-    // });
-
-    this.database.get(PouchConfig.Tables.taxes).then(result => {
-      if (result) {
-        this.taxes$ = result.taxes;
-      }
-    }, error => {
-      console.error(error);
-    });
-    await this.getUser();
-    await this.getBusiness();
-    await this.getBranches();
-    await this.getTypes();
-    await this.getCategories();
-    await this.geTaxes();
-
+  
 
 
     this.ref.detectChanges();
 
   }
 
-  public async getBusiness() {
-    return await Object.assign({}, this.business$);
-  }
-  public async getUser() {
-    return await Object.assign({}, this.user$);
-  }
-
-  public async getBranches() {
-    return await Object.assign({}, this.branches$);
-  }
-
-  public async getTypes() {
-    return await Object.assign({}, this.types$);
-  }
-  public async getCategories() {
-    return await Object.assign({}, this.categories$);
-  }
-  public async geTaxes() {
-    return await Object.assign({}, this.taxes$);
-  }
 
   get f() { return this.registerForm.controls; }
 
@@ -214,16 +148,8 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
     };
 
     // LET CREATE BUSINESS
-    if (this.business$.length > 0) {
-      formBusinessData.active = false;
-      this.database.put(PouchConfig.Tables.business, {
-        businesses: [...this.business$, formBusinessData]
-      });
-    } else {
-      this.database.put(PouchConfig.Tables.business, {
-        businesses: [formBusinessData]
-      });
-    }
+    formBusinessData.active = false;
+    this.database.put(PouchConfig.Tables.business, formBusinessData);
 
 
 
@@ -237,16 +163,8 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
 
     };
     // LET CREATE BRANCH AFTER BUINSESS CREATED
-    if (this.branches$.length > 0) {
-      formBranchData.active = false;
-      this.database.put(PouchConfig.Tables.branches, {
-        branches: [...this.branches$, formBranchData]
-      });
-    } else {
-      this.database.put(PouchConfig.Tables.branches, {
-        branches: [formBranchData]
-      });
-    }
+    formBranchData.active = false;
+    this.database.put(PouchConfig.Tables.branches, formBranchData);
 
 
 
@@ -273,27 +191,17 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
       updatedAt: new Date()
     }
 
-    if (this.taxes$.length > 0) {
 
-      this.database.put(PouchConfig.Tables.taxes, {
-        taxes: [...this.taxes$, formTaxes1,formTaxes2]
-      });
-
-   
-
-    } else {
-      this.database.put(PouchConfig.Tables.taxes, {
-        taxes: [formTaxes1,formTaxes2]
-      });
+    this.database.put(PouchConfig.Tables.taxes, formTaxes1);
+    this.database.put(PouchConfig.Tables.taxes, formTaxes2);
     
-    }
 
 
 
     setTimeout(() => {
       this.notificationSvc.success('Create Business', 'Business ' + formBusinessData.name + ' Created successfully!');
-      return window.location.href = '/admin';
-    }, 1);
+      this.router.navigate(['/admin']);
+    }, 100);
 
   }
 

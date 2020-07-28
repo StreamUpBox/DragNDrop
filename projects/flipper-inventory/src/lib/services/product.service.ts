@@ -199,7 +199,7 @@ updateOnlineDatabase() {
     this.database.sync(PouchConfig.syncUrl);
   }
   if (!this.hasDraftProduct.isDraft) {
-    this.database.put(PouchConfig.Tables.products, {products: [this.hasDraftProduct]});
+    this.database.put(PouchConfig.Tables.products, {products: this.hasDraftProduct});
     this.database.put(PouchConfig.Tables.variants,
       {variants: this.model.filters<Variant>(Tables.variants, 'productId', this.hasDraftProduct.id)});
     this.database.put(PouchConfig.Tables.stocks,

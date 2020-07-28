@@ -15,6 +15,7 @@ import { FlipperComponentsModule, PouchDBService } from '@enexus/flipper-compone
 import { MigrationModule } from './migration/migration.module';
 import { FlipperInventoryModule } from '@enexus/flipper-inventory';
 import { FlipperPosModule } from '@enexus/flipper-pos';
+import { FlipperSettingsModule } from '@enexus/flipper-settings';
 // import { MigrationModule } from './migration/migration.module';
 
 
@@ -30,7 +31,7 @@ import { FlipperPosModule } from '@enexus/flipper-pos';
     // ColorModule,
     // FontModule,
     // FlipperButtonModule,
-    // FlipperSettingsModule,
+    FlipperSettingsModule,
     FlipperMenuModule,
     // FlipperPaymentCardModule,
     // FlipperDashboardModule,
@@ -42,7 +43,7 @@ import { FlipperPosModule } from '@enexus/flipper-pos';
     FlipperInventoryModule,
     // FlipperFileUploadModule,
     MigrationModule.forRoot(),
-    // AppRoutingModule
+    AppRoutingModule
   ],
   entryComponents: [],
   providers: [PouchDBService],

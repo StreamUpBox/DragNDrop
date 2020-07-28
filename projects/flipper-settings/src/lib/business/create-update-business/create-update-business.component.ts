@@ -39,7 +39,9 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
     private model: MainModelService,
     private ref: ChangeDetectorRef) {
     this.getLocation();
-    this.database.connect(PouchConfig.bucket);
+    
+    //  PouchConfig.bucket hardcoded to be main.
+    this.database.connect(PouchConfig.bucket); //keep the name of the bucket is main for all
   }
 
 

@@ -513,7 +513,8 @@ export const Tables = {
 export const PouchConfig = {
     channel: localStorage.getItem('channel'),
     sessionId: localStorage.getItem('sessionId'),
-    bucket: localStorage.getItem('bucket'),
+    // bucket: localStorage.getItem('bucket'),
+    bucket: 'main',
     syncUrl: localStorage.getItem('syncUrl') + '/' + localStorage.getItem('bucket'),
     canSync: JSON.parse(localStorage.getItem('canSync')),
     Tables: {

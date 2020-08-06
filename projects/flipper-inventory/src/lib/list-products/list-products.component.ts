@@ -54,7 +54,7 @@ export class ListProductsComponent implements OnInit, OnDestroy {
               public variant: VariationService,
               private migrate: MigrateService,
               private database: PouchDBService,
-              public product: ProductService,
+              public product: ProductService, 
               private ngZone: NgZone) {
     this.database.connect(PouchConfig.bucket);
     this.dataSource = new MatTableDataSource([]);
@@ -150,7 +150,7 @@ export class ListProductsComponent implements OnInit, OnDestroy {
   editProduct(product: Product) {
     product.isDraft = true;
     product.isCurrentUpdate = true;
-    this.product.updateProduct(product);
+    this.migrate.insertDataIntoAlsql<Product>(Tables.products, product, product.id);
     this.router.navigate(['/add/product']);
   }
 

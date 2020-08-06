@@ -1,9 +1,11 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import PouchDB from 'pouchdb';
-
+import PouchFind  from 'pouchdb-find';
+PouchDB.plugin(PouchFind);
 
 import { v1 as uuidv1 } from 'uuid';
 import { PouchConfig } from '../db-config';
+import { result } from 'lodash';
 
 
 @Injectable({
@@ -21,6 +23,57 @@ export class PouchDBService {
 
     public constructor() { }
 
+     public activeUser(table='users'){
+       return this.database.createIndex({
+            index: {fields: ['table','active']}
+          }).then(result => {
+              return this.database.find({
+                selector: {
+                  table: {$eq:table},
+                  active:{$eq:true},
+                }
+              });
+          })
+    }
+
+     public query(fields=[],selector={}){
+       return this.database.createIndex({
+            index: {fields: fields}
+          }).then(result => {
+              return this.database.find({
+                selector: selector
+              });
+          })
+    }
+
+
+    public activeBusiness(userId,table='businesses'){
+        return this.database.createIndex({
+            index: {fields: ['table','active','userId']}
+          }).then(result => {
+              return this.database.find({
+                selector: {
+                  table: {$eq:table},
+                  active:{$eq:true},
+                  userId:{$eq:userId}
+                }
+              });
+          })
+    }
+    public activeBranch(businessId,table="branches"){
+        return  this.database.createIndex({
+            index: {fields: ['tables','active','businessId']}
+          }).then(result => {
+              return this.database.find({
+                selector: {
+                  table: {$eq:table},
+                  active:{$eq:true},
+                  businessId:{$eq:businessId}
+                }
+              });
+          })
+    }
+
     public connect(dbName: string, filter: string = null) {
         if (!this.isInstantiated && dbName) {
             this.database = new PouchDB(dbName);
@@ -36,13 +89,23 @@ export class PouchDBService {
             this.isInstantiated = true;
         }
     }
+
     public fetch() {
         return this.database.allDocs({ include_docs: true });
     }
 
     public get(id: string) {
         // enable allowing conflicting document.
-        return this.database.get(id, { conflicts: true });
+        return this.database.get(id, { conflicts: false });
+        // return  this.database.createIndex({
+        //     index: {fields: ['id']}
+        //   }).then(result => {
+        //       return this.database.find({
+        //         selector: {
+        //           id: {$eq:id}
+        //         }
+        //       });
+        //   })
     }
 
     public find(id) {
@@ -88,6 +151,7 @@ export class PouchDBService {
         return uuidv1();
     }
 
+    
 
     public put(id: string, document: any) {
         document._id = id;

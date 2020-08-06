@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/co
 import {
   Business, Branch, ILatLng, Types, User, BusinessCategory,
   NotificationService, SettingsService, Taxes, PouchDBService,
-  PouchConfig, Tables, MainModelService
+  PouchConfig, Tables, MainModelService,ActiveUser, ActiveBusiness, ActiveBranch
 } from '@enexus/flipper-components';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -17,13 +17,13 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
   submitted = false;
   types$: Types[] = [];
   taxes$: Taxes[] = [];
+  user:User=null;
 
   categories$: BusinessCategory[] = [];
   searchCategoryByTypes$: BusinessCategory[] = [];
   isCategoryFound = false;
   business$: Business[] = [];
   branches$: Branch[] = [];
-  user$: User = null;
   currencies: any[] = [];
   countries: any[] = [];
   timezones: any[] = [];
@@ -37,6 +37,9 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
     protected notificationSvc: NotificationService,
     private formBuilder: FormBuilder,
     private model: MainModelService,
+    private activeUser:ActiveUser,
+    private activeBusiness:ActiveBusiness,
+    private activeBranch:ActiveBranch,
     private ref: ChangeDetectorRef) {
     this.getLocation();
     
@@ -64,7 +67,7 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
   }
   async ngOnInit() {
     this.getLocation();
-
+    
     this.types$ = this.model.loadAll<Types>(Tables.type);
     this.categories$ = this.model.loadAll<BusinessCategory>(Tables.businessCategory);
 
@@ -87,18 +90,33 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
       id: this.database.uid()
     });
 
-    this.database.get(PouchConfig.Tables.user).then(result => {
-      if (result) {
-        this.user$ = result;
+
+
+
+await this.database.activeUser().then(res=>{
+ 
+ if(res.docs && res.docs.length > 0){
+    this.activeUser.currentUser = res.docs[0];
+  }
+
+});
+
+if(this.activeUser.currentUser){
+    await this.database.activeBusiness(this.activeUser.currentUser.id).then(res=>{
+    
+    if(res.docs && res.docs.length > 0){
+        this.activeBusiness.currentBusiness = res.docs[0];
       }
-    }, error => {
-      // console.error(error);
+
     });
+}
 
-  
 
+ console.log(this.activeBusiness.currentBusiness);
+ 
 
-    this.ref.detectChanges();
+      
+      this.ref.detectChanges();
 
   }
 
@@ -143,15 +161,21 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
       businessUrl: this.registerForm.value.name + '.flipper.rw',
       typeId: this.registerForm.value.typeId,
       timeZone: this.registerForm.value.timeZone,
-      userId: this.user$ ? this.user$.id : 0,
+      userId: this.activeUser.currentUser ? this.activeUser.currentUser.id : 0,
       active: true,
       createdAt: new Date(),
       updatedAt: new Date(),
+      table:'businesses',
+      docId:PouchConfig.Tables.business
     };
 
-    // LET CREATE BUSINESS
-    formBusinessData.active = false;
-    this.database.put(PouchConfig.Tables.business, formBusinessData);
+    this.database.put(PouchConfig.Tables.business+'_'+formBusinessData.id, formBusinessData);
+
+    if(this.activeBusiness.currentBusiness){
+          this.activeBusiness.currentBusiness.active=false;
+          this.database.put(PouchConfig.Tables.business+'_'+this.activeBusiness.currentBusiness.id, 
+          this.activeBusiness.currentBusiness);
+    }
 
 
 
@@ -161,14 +185,31 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
       active: true,
       mapLatitude: this.origin.latitude,
       mapLongitude: this.origin.longitude,
-      businessId: this.registerForm.value.id
+      businessId: this.registerForm.value.id,
+      table:'branches',
+      docId:PouchConfig.Tables.branches
 
     };
-    // LET CREATE BRANCH AFTER BUINSESS CREATED
-    formBranchData.active = false;
-    this.database.put(PouchConfig.Tables.branches, formBranchData);
+
+    this.database.put(PouchConfig.Tables.branches+'_'+formBranchData.id, formBranchData);
 
 
+    const formTaxes2 = {
+      id: this.database.uid(),
+      name: 'Vat',
+      percentage: 18,
+      businessId: this.registerForm.value.id,
+      active: true,
+      isDefault: true,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      table:'taxes',
+      docId:PouchConfig.Tables.taxes
+    }
+
+
+   
+    this.database.put(PouchConfig.Tables.taxes+'_'+formTaxes2.id, formTaxes2);
 
     const formTaxes1 =
     {
@@ -179,27 +220,14 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
       active: true,
       isDefault: false,
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
+      table:'taxes',
+      docId:PouchConfig.Tables.taxes
     };
+    this.database.put(PouchConfig.Tables.taxes+'_'+formTaxes1.id, formTaxes1);
 
-    const formTaxes2 = {
-      id: this.database.uid(),
-      name: 'Vat',
-      percentage: 18,
-      businessId: this.registerForm.value.id,
-      active: true,
-      isDefault: true,
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }
-
-
-    this.database.put(PouchConfig.Tables.taxes, formTaxes1);
-    this.database.put(PouchConfig.Tables.taxes, formTaxes2);
+   
     
-
-
-
     setTimeout(() => {
       this.notificationSvc.success('Create Business', 'Business ' + formBusinessData.name + ' Created successfully!');
       this.router.navigate(['/admin']);

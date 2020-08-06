@@ -8,6 +8,8 @@ export class Subscription {
   didSubscribed?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
+  table?:string;
+  docId?:string;
   constructor(params: object = {}) {
     for (const name in params) {
       this[name] = params[name];

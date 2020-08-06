@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Product, MainModelService, Tables, Business,
   Branch, Taxes, BranchProducts, PouchDBService,
-  PouchConfig, Variant, Stock, StockHistory } from '@enexus/flipper-components';
+  PouchConfig, Variant, Stock, StockHistory, BranchesEvent, User } from '@enexus/flipper-components';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { VariationService } from './variation.service';
 import { Observable, BehaviorSubject, of } from 'rxjs';
 import { ModelService } from '@enexus/flipper-offline-database';
+import { FlipperEventBusService } from '@enexus/flipper-event';
 @Injectable({
   providedIn: 'root'
 })
@@ -20,22 +21,24 @@ export class ProductService {
 
   public productsSubject: BehaviorSubject<Product[]>;
   private readonly productsMap = new Map<string, Product>();
-
+  defaultBusiness$: Business = null;
+  defaultBranch$: Branch = null;
+  currentUser$:User=null;
+  defaultTaxe$:Taxes=null;
 
   constructor(private query: ModelService,
               private model: MainModelService,
               private variant: VariationService,
               private formBuilder: FormBuilder,
-
+              private eventBus: FlipperEventBusService,
               private database: PouchDBService) {
               this.productsSubject = new BehaviorSubject([]);
 
   }
 
-  init(): void {
+  async init() {
     this.hasDraft();
-    this.branches$ = this.model.filters<Branch>(Tables.branch, 'businessId', this.model.active<Business>(Tables.business).id);
-    this.taxes$ = this.model.filters<Taxes>(Tables.taxes, 'businessId', this.model.active<Business>(Tables.business).id);
+    
     this.create();
     this.loadBranches();
   }
@@ -86,10 +89,10 @@ export class ProductService {
       this.model.create<Product>(Tables.products, {
         id: this.database.uid(),
         name: 'new item',
-        businessId: this.model.active<Business>(Tables.business).id,
+        businessId: this.defaultBusiness$?this.defaultBusiness$.id:0,
         isDraft: true,
         active: false,
-        taxId: this.model.findByFirst<Taxes>(Tables.taxes, 'isDefault', true).id,
+        taxId:this.taxes$.find(tax=>tax.isDefault==true)?this.taxes$.find(tax=>tax.isDefault==true).id:'0', // this.model.findByFirst<Taxes>(Tables.taxes, 'isDefault', true).id,
         description: '',
         hasPicture: false,
         supplierId: 0,
@@ -199,17 +202,41 @@ updateOnlineDatabase() {
     this.database.sync(PouchConfig.syncUrl);
   }
   if (!this.hasDraftProduct.isDraft) {
-    this.database.put(PouchConfig.Tables.products, {products: this.hasDraftProduct});
-    this.database.put(PouchConfig.Tables.variants,
-      {variants: this.model.filters<Variant>(Tables.variants, 'productId', this.hasDraftProduct.id)});
-    this.database.put(PouchConfig.Tables.stocks,
-      {stocks: this.model.filters<Stock>(Tables.stocks, 'productId', this.hasDraftProduct.id)});
-    this.database.put(PouchConfig.Tables.branchProducts,
-       {branchProducts: this.model.filters<BranchProducts>(Tables.branchProducts, 'productId', this.hasDraftProduct.id)});
-    this.database.put(PouchConfig.Tables.stockHistories,
-       {stockHistory: this.model.filters<StockHistory>(Tables.stockHistory, 'productId', this.hasDraftProduct.id)});
+
+    this.database.put(PouchConfig.Tables.products+'_'+this.hasDraftProduct.id, this.hasDraftProduct);
+    
+    let variants=this.model.filters<Variant>(Tables.variants, 'productId', this.hasDraftProduct.id);
+    if(variants.length > 0){
+          variants.forEach(el=>{
+            this.database.put(PouchConfig.Tables.variants+'_'+el.id, el);
+          })
+    }
+    let stocks=this.model.filters<Stock>(Tables.stocks, 'productId', this.hasDraftProduct.id);
+    if(stocks.length > 0){
+          stocks.forEach(el=>{
+            this.database.put(PouchConfig.Tables.stocks+'_'+el.id, el);
+          })
+    }
+    let branchProducts=this.model.filters<BranchProducts>(Tables.branchProducts, 'productId', this.hasDraftProduct.id);
+    if(branchProducts.length > 0){
+      branchProducts.forEach(el=>{
+        this.database.put(PouchConfig.Tables.branchProducts+'_'+el.id, el);
+      });
+    }
+    let stockHistory=this.model.filters<StockHistory>(Tables.stockHistory, 'productId', this.hasDraftProduct.id);
+    if(stockHistory.length > 0){
+      stockHistory.forEach(el=>{
+        this.database.put(PouchConfig.Tables.stockHistories+'_'+el.id, el);
+      });
+    }
 
   }
+
+  this.model.truncate(Tables.products);
+  this.model.truncate(Tables.variants);
+  this.model.truncate(Tables.stocks);
+  this.model.truncate(Tables.branchProducts);
+  this.model.truncate(Tables.stockHistory);
 
 }
 

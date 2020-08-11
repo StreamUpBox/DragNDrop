@@ -13,6 +13,8 @@ export class StockHistory {
   note?: string;
   createdAt?: any;
   updatedAt?: any;
+  table?:string;
+  docId?:string;
 
   constructor(params: object = {}) {
     for (const name in params) {

@@ -1,6 +1,6 @@
 {
   "name": "@enexus/flipper-menu",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "peerDependencies": {
     
     "@angular/common": "^8.2.9",

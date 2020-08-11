@@ -40,6 +40,23 @@ export class AppComponent {
       if (PouchConfig.canSync) {
      this.database.sync(PouchConfig.syncUrl);
    }
+
+   const user = {
+    _id: '',
+    name: 'Ganza',
+    email: 'resp',
+    token: 'dddd',
+    active: true,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    id: this.database.uid(),
+    userId: 1,
+    expiresAt: 10000000,
+    table:'users',
+    docId:PouchConfig.Tables.user
+  };
+
+  // this.database.put(PouchConfig.Tables.user, user);
   }
   defaultBranch: Branch = this.model.active<Branch>(Tables.branch);
   public variants: Variant[] = [];

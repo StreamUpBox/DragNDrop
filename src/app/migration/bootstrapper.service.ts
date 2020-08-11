@@ -32,12 +32,12 @@ export class Bootstrapper {
 
 
   private migrateDataFromCouchbaseToSqldb() {
-    this.migrate.businessTypes();
-    this.migrate.businessCategories();
-    this.migrate.user();
-    this.migrate.businesses();
-    this.migrate.branches();
-    this.migrate.taxes();
+    // this.migrate.businessTypes();
+    // this.migrate.businessCategories();
+    // this.migrate.user();
+    // this.migrate.businesses();
+    // this.migrate.branches();
+    // this.migrate.taxes();
   }
 
 

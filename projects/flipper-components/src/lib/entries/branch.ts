@@ -8,6 +8,8 @@ export class Branch {
   mapLongitude?: any;
   createdAt?: Date;
   updatedAt?: Date;
+  table?:string;
+  docId?:string;
 
   constructor(params: object = {}) {
     for (const name in params) {

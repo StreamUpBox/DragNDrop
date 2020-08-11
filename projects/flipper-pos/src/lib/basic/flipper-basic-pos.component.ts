@@ -197,11 +197,10 @@ export class FlipperBasicPosComponent  {
 
 
 
+
   removeItem(item: OrderDetails) {
    this.updateOrderDetailsEmit.emit({action: 'DELETE', item});
   }
-
-
 
   saveOrderUpdated(event?: Order) {
 
@@ -227,6 +226,7 @@ export class FlipperBasicPosComponent  {
   updateQuantity(item: OrderDetails, action = null) {
     const lastQty = item.quantity;
     this.action = action;
+    this.canSetCartFocused(item);
     if (this.action === '-') {
       item.quantity = item.quantity - 1;
       if (item.quantity <= 0) {

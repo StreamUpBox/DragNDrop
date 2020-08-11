@@ -3,11 +3,13 @@ import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { ProductsComponent } from '@enexus/flipper-inventory';
 import { CreateProductComponent } from '@enexus/flipper-inventory';
+import { CreateUpdateBusinessComponent } from '@enexus/flipper-settings';
 
 
 
 const routes: Routes = [
   {path: '', component: AppComponent},
+  {path: 'admin', component: AppComponent},
   {path: 'admin/pos', component: AppComponent},
    {path: 'admin/analytics', component: AppComponent},
   {path: 'admin/settings', component: AppComponent},
@@ -15,9 +17,9 @@ const routes: Routes = [
   {
     path: 'add/product', component: CreateProductComponent
   },
-  // {
-  //   path: 'setup/business/new', component: CreateUpdateBusinessComponent
-  // }
+  {
+    path: 'setup/business/new', component: CreateUpdateBusinessComponent
+  }
 ];
 
 @NgModule({

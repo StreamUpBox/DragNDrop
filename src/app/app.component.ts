@@ -35,7 +35,7 @@ export class AppComponent {
               private database: PouchDBService,
               private query: ModelService, private totalPipe: CalculateTotalClassPipe) {
       this.branch = this.model.active<Branch>(Tables.branch);
-      this.init();
+      // this.init();
       this.database.connect(PouchConfig.bucket);
       if (PouchConfig.canSync) {
      this.database.sync(PouchConfig.syncUrl);

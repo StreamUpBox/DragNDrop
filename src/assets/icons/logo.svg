@@ -1,1 +1,28 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="rgba(255, 255, 255, 0.8)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-aperture"><circle cx="12" cy="12" r="10"></circle><line x1="14.31" y1="8" x2="20.05" y2="17.94"></line><line x1="9.69" y1="8" x2="21.17" y2="8"></line><line x1="7.38" y1="12" x2="13.12" y2="2.06"></line><line x1="9.69" y1="16" x2="3.95" y2="6.06"></line><line x1="14.31" y1="16" x2="2.83" y2="16"></line><line x1="16.62" y1="12" x2="10.88" y2="21.94"></line></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44">
+  <g id="Group_58" data-name="Group 58" transform="translate(-529 -224)">
+    <g id="Group_57" data-name="Group 57" transform="translate(529 224)">
+      <g id="Group_56" data-name="Group 56">
+        <g id="Group_51" data-name="Group 51">
+          <g id="Group_54" data-name="Group 54" transform="translate(0 0)">
+            <g id="Group_55" data-name="Group 55">
+              <g id="Group_60" data-name="Group 60">
+                <g id="Rectangle_12" data-name="Rectangle 12" fill="#0080ff" stroke="#fff" stroke-width="1">
+                  <rect width="44" height="42" rx="11" stroke="none"/>
+                  <rect x="0.5" y="0.5" width="43" height="41" rx="10.5" fill="none"/>
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+    <g id="Group_59" data-name="Group 59" transform="translate(539 226)">
+      <g id="Group_53" data-name="Group 53">
+        <g id="Group_52" data-name="Group 52">
+          <text id="f" transform="translate(8 25)" fill="#fff" font-size="19" font-family="SegoeScript, Segoe Script" style="mix-blend-mode: hard-light;isolation: isolate"><tspan x="-7.357" y="0">f</tspan></text>
+          <text id="l" transform="translate(21 29)" fill="#fff" font-size="27" font-family="SegoeScript, Segoe Script"><tspan x="-10.797" y="0">l</tspan></text>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

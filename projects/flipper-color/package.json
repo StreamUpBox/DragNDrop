@@ -1,5 +1,5 @@
 {
-  "name": "@enexus/flipper-color",
+  "name": "flipper-color",
   "version": "0.0.4",
   "peerDependencies": {
     "@angular/common": "~8.2.9",

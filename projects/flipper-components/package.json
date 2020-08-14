@@ -1,6 +1,11 @@
 {
+<<<<<<< HEAD
   "name": "@enexus/flipper-components",
   "version": "1.4.20",
+=======
+  "name": "flipper-components",
+  "version": "1.4.15",
+>>>>>>> 06106074b68ed52961ce1b8d6da144d67f308112
   "peerDependencies": {
     "@angular/common": "~10.0.2",
     "@angular/core": "~10.0.2"

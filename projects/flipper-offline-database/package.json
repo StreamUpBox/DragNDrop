@@ -1,5 +1,5 @@
 {
-  "name": "@enexus/flipper-offline-database",
+  "name": "flipper-offline-database",
   "version": "1.0.13",
   "peerDependencies": {
     "@angular/common": "^9.1.6",

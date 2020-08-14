@@ -1,5 +1,5 @@
 {
-  "name": "@enexus/flipper-dialog",
+  "name": "flipper-dialog",
   "version": "1.0.2",
   "peerDependencies": {
     "@angular/common": "^9.1.6",

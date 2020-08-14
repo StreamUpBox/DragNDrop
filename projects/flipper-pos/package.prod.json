@@ -1,0 +1,15 @@
+{
+    "name": "@enexus/flipper-pos",
+    "version": "1.0.7",
+    "peerDependencies": {
+      "@angular/common": "^9.1.6",
+      "@angular/core": "^9.1.6"
+    },
+    "keywords": [
+      "Material",
+      "flexLayout"
+    ],
+    "author": "Yegobox Team",
+    "license": "ISC"
+  }
+  

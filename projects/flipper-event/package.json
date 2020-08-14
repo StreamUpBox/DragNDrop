@@ -1,5 +1,5 @@
 {
-  "name": "@enexus/flipper-event",
+  "name": "flipper-event",
   "version": "0.0.3",
   "peerDependencies": {
     "@angular/common": "^8.2.9",

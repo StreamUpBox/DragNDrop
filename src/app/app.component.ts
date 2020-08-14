@@ -40,7 +40,8 @@ export class AppComponent {
       if (PouchConfig.canSync) {
      this.database.sync(PouchConfig.syncUrl);
    }
-
+let userId=this.database.uid();
+let businessId=this.database.uid();
    const user = {
     _id: '',
     name: 'Ganza',
@@ -49,7 +50,7 @@ export class AppComponent {
     active: true,
     createdAt: new Date(),
     updatedAt: new Date(),
-    id: this.database.uid(),
+    id: userId,
     userId: 1,
     expiresAt: 10000000,
     table:'users',
@@ -59,7 +60,7 @@ export class AppComponent {
   // this.database.put(PouchConfig.Tables.user, user);
 
   const formBusinessData: Business = {
-    id: this.database.uid(),
+    id: businessId,
     name: 'Flipper',
     categoryId: '0',
     currency:'RWF',
@@ -67,7 +68,7 @@ export class AppComponent {
     businessUrl: '.flipper.rw',
     typeId: '0',
     timeZone: '0',
-    userId: user.id,
+    userId: userId,
     active: true,
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -86,7 +87,7 @@ export class AppComponent {
     active: true,
     mapLatitude: -1,
     mapLongitude: 0,
-    businessId: formBusinessData.id,
+    businessId: businessId,
     table:'branches',
     docId:PouchConfig.Tables.branches
 
@@ -99,7 +100,7 @@ export class AppComponent {
     id: this.database.uid(),
     name: 'Vat',
     percentage: 18,
-    businessId: formBusinessData.id,
+    businessId: businessId,
     active: true,
     isDefault: true,
     createdAt: new Date(),

@@ -66,8 +66,8 @@ export class PouchDBService {
        return this.activeUser().then(user=>{
            console.log('user found',user);
             if(user && user.docs.length > 0){
-                console.log('user found 1',user);
-                this.activeBusiness(user.docs[0].id,'businesses').then(business=>{
+                console.log('user found 1',user.docs[0].id);
+                return this.activeBusiness(user.docs[0].id,'businesses').then(business=>{
                     console.log('business found 1',business);
                     if(business && business.docs.length > 0){
                         console.log('business found 1',business.docs);
@@ -84,7 +84,7 @@ export class PouchDBService {
         return this.activeUser().then(user=>{
 
              if(user && user.docs.length > 0){
-                 this.activeBusiness(user.docs[0].id,'businesses').then(business=>{
+                return this.activeBusiness(user.docs[0].id,'businesses').then(business=>{
                      if(business && business.docs.length > 0){
 
                         this.database.query(['table','businessId',"isDefault"],{table: {$eq:'taxes'}, businessId:{$eq:business.docs[0].id},isDefault:{$eq:true}
@@ -108,7 +108,7 @@ export class PouchDBService {
     public listBusinessBranches(){
         return this.activeUser().then(user=>{
             if(user && user.docs.length > 0){
-                this.activeBusiness(user.docs[0].id,'businesses').then(business=>{
+                return this.activeBusiness(user.docs[0].id,'businesses').then(business=>{
                     if(business && business.docs.length > 0){
                        
                         this.database.query(['table','businessId'],{
@@ -135,7 +135,7 @@ export class PouchDBService {
 
             if(user && user.docs.length > 0){
 
-                this.activeBusiness(user.docs[0].id,'businesses').then(business=>{
+                return this.activeBusiness(user.docs[0].id,'businesses').then(business=>{
                     if(business && business.docs.length > 0){
                        
                         this.database.query(['table','businessId'],{

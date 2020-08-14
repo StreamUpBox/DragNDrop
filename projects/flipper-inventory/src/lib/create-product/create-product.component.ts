@@ -88,35 +88,35 @@ export class CreateProductComponent implements OnInit {
 
   if(this.product.currentUser$){
 
-    await this.database.activeBusiness(this.product.currentUser$.id).then(res=>{
-      if(res.docs && res.docs.length > 0){
-          this.eventBus.publish(new CurrentBusinessEvent(res.docs[0]));
-      }
-  });
+  //   await this.database.activeBusiness(this.product.currentUser$.id).then(res=>{
+  //     if(res.docs && res.docs.length > 0){
+  //         this.eventBus.publish(new CurrentBusinessEvent(res.docs[0]));
+  //     }
+  // });
 
       
-    if(this.product.defaultBusiness$){
-            await this.database.query(['table','businessId'],{
-              table: {$eq:'branches'},
-              businessId:{$eq:this.product.defaultBusiness$.id}
-          }).then(res=>{
-          if(res.docs && res.docs.length > 0){
-              this.eventBus.publish(new BranchesEvent(res.docs));
-          }
-        });
+  //   if(this.product.defaultBusiness$){
+  //           await this.database.query(['table','businessId'],{
+  //             table: {$eq:'branches'},
+  //             businessId:{$eq:this.product.defaultBusiness$.id}
+  //         }).then(res=>{
+  //         if(res.docs && res.docs.length > 0){
+  //             this.eventBus.publish(new BranchesEvent(res.docs));
+  //         }
+  //       });
 
-        await this.database.query(['table','businessId'],{
-          table: {$eq:'taxes'},
-          businessId:{$eq:this.product.defaultBusiness$.id}
-      }).then(res=>{
-      if(res.docs && res.docs.length > 0){
-          this.eventBus.publish(new TaxesEvent(res.docs));
-      }
-    });
+  //       await this.database.query(['table','businessId'],{
+  //         table: {$eq:'taxes'},
+  //         businessId:{$eq:this.product.defaultBusiness$.id}
+  //     }).then(res=>{
+  //     if(res.docs && res.docs.length > 0){
+  //         this.eventBus.publish(new TaxesEvent(res.docs));
+  //     }
+  //   });
 
     
 
-    }
+  //   }
   }
  
     await this.checkNewItem();

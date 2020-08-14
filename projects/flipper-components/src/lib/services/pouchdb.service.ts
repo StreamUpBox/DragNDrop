@@ -5,7 +5,7 @@ PouchDB.plugin(PouchFind);
 
 import { v1 as uuidv1 } from 'uuid';
 import { PouchConfig } from '../db-config';
-import { result } from 'lodash';
+
 
 
 @Injectable({
@@ -37,6 +37,7 @@ export class PouchDBService {
     }
 
      public query(fields=[],selector={}){
+
        return this.database.createIndex({
             index: {fields: fields}
           }).then(result => {
@@ -51,7 +52,8 @@ export class PouchDBService {
         return this.database.createIndex({
             index: {fields: ['table','active','userId']}
           }).then(result => {
-              return this.database.find({
+
+               this.database.find({
                 selector: {
                   table: {$eq:table},
                   active:{$eq:true},
@@ -60,6 +62,102 @@ export class PouchDBService {
               });
           })
     }
+    public currentBusiness(){ 
+       return this.activeUser().then(user=>{
+           console.log('user found',user);
+            if(user && user.docs.length > 0){
+                console.log('user found 1',user);
+                this.activeBusiness(user.docs[0].id,'businesses').then(business=>{
+                    console.log('business found 1',business);
+                    if(business && business.docs.length > 0){
+                        console.log('business found 1',business.docs);
+                        return business.docs[0];
+                    }else{
+                        return null;
+                    }
+                })
+            }
+        });
+    }
+
+    public currentTax(){ 
+        return this.activeUser().then(user=>{
+
+             if(user && user.docs.length > 0){
+                 this.activeBusiness(user.docs[0].id,'businesses').then(business=>{
+                     if(business && business.docs.length > 0){
+
+                        this.database.query(['table','businessId',"isDefault"],{table: {$eq:'taxes'}, businessId:{$eq:business.docs[0].id},isDefault:{$eq:true}
+                        }).then(res=>{
+
+                                if(res.docs && res.docs.length > 0){
+                                    return res.docs[0];
+                                }else{
+                                    return [];
+                                }
+
+                             });
+                     }else{
+                         return null;
+                     }
+                 })
+             }
+         });
+     }
+
+    public listBusinessBranches(){
+        return this.activeUser().then(user=>{
+            if(user && user.docs.length > 0){
+                this.activeBusiness(user.docs[0].id,'businesses').then(business=>{
+                    if(business && business.docs.length > 0){
+                       
+                        this.database.query(['table','businessId'],{
+                            table: {$eq:'branches'},
+                            businessId:{$eq:business.docs[0].id}
+                        }).then(res=>{
+                        if(res.docs && res.docs.length > 0){
+                            return res.docs;
+                        }else{
+                            return [];
+                        }
+                      });
+                    }else{
+                        return [];
+                    }
+                })
+            }
+        });
+    }
+
+    public listBusinessTaxes(){
+
+        return this.activeUser().then(user=>{
+
+            if(user && user.docs.length > 0){
+
+                this.activeBusiness(user.docs[0].id,'businesses').then(business=>{
+                    if(business && business.docs.length > 0){
+                       
+                        this.database.query(['table','businessId'],{
+                            table: {$eq:'taxes'},
+                            businessId:{$eq:business.docs[0].id}
+                        }).then(res=>{
+
+                        if(res.docs && res.docs.length > 0){
+                            return res.docs;
+                        }else{
+                            return [];
+                        }
+                      });
+
+                    }else{
+                        return [];
+                    }
+                })
+            }
+        });
+    }
+
     public activeBranch(businessId,table="branches"){
         return  this.database.createIndex({
             index: {fields: ['tables','active','businessId']}

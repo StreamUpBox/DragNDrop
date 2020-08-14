@@ -129,6 +129,9 @@ export class AppComponent {
   // this.database.put(PouchConfig.Tables.taxes+'_'+formTaxes1.id, formTaxes1);
   // this.model.create<Taxes>(Tables.taxes,formTaxes1);
 
+this.database.currentBusiness().then(r=>{
+  console.log(r);
+})
   }
   defaultBranch: Branch = this.model.active<Branch>(Tables.branch);
   public variants: Variant[] = [];

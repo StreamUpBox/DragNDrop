@@ -47,7 +47,7 @@
     "@angular/platform-browser-dynamic": "~9.1.6",
     "@angular/router": "~9.1.6",
     "@enexus/flipper-color": "0.0.2",
-    "@enexus/flipper-components": "^1.4.15",
+    "@enexus/flipper-components": "^1.4.19",
     "@enexus/flipper-dialog": "^1.0.2",
     "@enexus/flipper-event": "0.0.3",
     "@enexus/flipper-file-upload": "^1.0.1",

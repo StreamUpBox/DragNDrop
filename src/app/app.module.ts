@@ -17,7 +17,7 @@ import { FlipperInventoryModule } from '@enexus/flipper-inventory';
 
 import { FlipperPosModule } from '@enexus/flipper-pos';
 import { FlipperSettingsModule } from '@enexus/flipper-settings';
-import { TestlivereloadModule } from '@enexus/testlivereload';
+
 // import { MigrationModule } from './migration/migration.module';
 
 
@@ -45,7 +45,6 @@ import { TestlivereloadModule } from '@enexus/testlivereload';
     FlipperInventoryModule,
     // FlipperFileUploadModule,
     MigrationModule.forRoot(),
-    TestlivereloadModule,
     AppRoutingModule
   ],
   entryComponents: [],

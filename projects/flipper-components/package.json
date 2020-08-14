@@ -2,7 +2,7 @@
   "name": "@enexus/flipper-components",
   "version": "1.4.19",
   "peerDependencies": {
-    "@angular/common": "^9.1.6",
-    "@angular/core": "^9.1.6"
+    "@angular/common": "~10.0.2",
+    "@angular/core": "~10.0.2"
   }
 }

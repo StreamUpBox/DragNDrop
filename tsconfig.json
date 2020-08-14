@@ -101,6 +101,12 @@
       "@enexus/flipper-inventory": [
         "dist/flipper-inventory"
       ],
+      "@enexus/testlivereload/*": [
+        "dist/testlivereload/*"
+      ],
+      "@enexus/testlivereload": [
+        "dist/testlivereload"
+      ],
       "@enexus/flipper-inventory/*": [
         "dist/flipper-inventory/*"
       ],
@@ -119,6 +125,10 @@
       "enable-sync": [
         "dist/enable-sync/enable-sync",
         "dist/enable-sync"
+      ],
+      "testlivereload": [
+        "dist/testlivereload/testlivereload",
+        "dist/testlivereload"
       ]
     }
   },

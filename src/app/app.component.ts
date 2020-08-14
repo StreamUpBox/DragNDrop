@@ -147,6 +147,7 @@ this.database.currentBusiness().then(r=>{
     this.hasDraftOrder();
     this.newOrder();
     this.loadVariants();
+
     if (this.currentOrder) {
       this.getOrderDetails(this.currentOrder.id);
     }
@@ -228,16 +229,16 @@ this.database.currentBusiness().then(r=>{
 
   public loadVariants() {
   const variants=[];
-  const products: Product[]= this.model.raw(`SELECT branchProducts.branchId,branchProducts.productId,products.id,branchProducts.id as branchProductId
-              FROM branchProducts JOIN products ON branchProducts.productId = products.id AND branchProducts.branchId="${this.branch.id}"
-              ORDER BY products.id DESC
-              `) as Product[];
-              products.forEach(product => {
+  // const products: Product[]= this.model.raw(`SELECT branchProducts.branchId,branchProducts.productId,products.id,branchProducts.id as branchProductId
+  //             FROM branchProducts JOIN products ON branchProducts.productId = products.id AND branchProducts.branchId="${this.branch.id}"
+  //             ORDER BY products.id DESC
+  //             `) as Product[];
+  //             products.forEach(product => {
                
-                const variant: Variant = this.query.select(Tables.variants).where('productId', product.id)
-                .first<Variant>();
-                variants.push(variant);
-              });
+  //               const variant: Variant = this.query.select(Tables.variants).where('productId', product.id)
+  //               .first<Variant>();
+  //               variants.push(variant);
+  //             });
 
   if (variants.length > 0) {
       variants.forEach(variant => {

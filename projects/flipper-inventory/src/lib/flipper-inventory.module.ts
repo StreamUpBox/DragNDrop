@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { FlipperInventoryComponent } from './flipper-inventory.component';
 import { ProductsComponent } from './products/products.component';
 import { CreateProductComponent } from './create-product/create-product.component';
 import { CommonModule } from '@angular/common';
@@ -26,12 +25,23 @@ import { PrintBarcodeLabelsDialogComponent } from './print-barcode-labels-dialog
 
 
 @NgModule({
-  declarations: [FlipperInventoryComponent, VariantsComponent,
-     ProductsComponent, CreateProductComponent, RegularVariantsComponent,
-      AddedVariantsComponent, VariantsDialogModelComponent, EditVariantComponent,
-       DisacrdDialogModelComponent, ManageStockComponent, AddVariantComponent,
-       ListProductsComponent, ProductVariantsComponent, ViewStockHistoryComponent, PrintBarcodeLabelsDialogComponent
-      ],
+  declarations: [
+    ProductVariantsComponent, 
+    ListProductsComponent, 
+    VariantsComponent,
+    ProductsComponent, 
+    CreateProductComponent, 
+    RegularVariantsComponent,
+    AddedVariantsComponent, 
+    VariantsDialogModelComponent, 
+    EditVariantComponent,
+    DisacrdDialogModelComponent, 
+    ManageStockComponent, 
+    AddVariantComponent,
+    
+    ViewStockHistoryComponent, 
+    PrintBarcodeLabelsDialogComponent
+    ],
   imports: [
     CommonModule,
     VendorsModule,
@@ -41,13 +51,30 @@ import { PrintBarcodeLabelsDialogComponent } from './print-barcode-labels-dialog
     FlipperOfflineDatabaseModule,
     DialogModule
   ],
-  entryComponents: [VariantsDialogModelComponent, DisacrdDialogModelComponent,
-     AddVariantComponent, ViewStockHistoryComponent,
-     PrintBarcodeLabelsDialogComponent],
-  exports: [FlipperInventoryComponent, VariantsComponent,
-   ProductsComponent, CreateProductComponent, RegularVariantsComponent,
-    AddedVariantsComponent, VariantsDialogModelComponent, EditVariantComponent,
-     DisacrdDialogModelComponent, ManageStockComponent, AddVariantComponent,
-     ListProductsComponent, ProductVariantsComponent, ViewStockHistoryComponent, PrintBarcodeLabelsDialogComponent]
+  entryComponents: [
+      VariantsDialogModelComponent, 
+      DisacrdDialogModelComponent,
+      AddVariantComponent, 
+      
+      ViewStockHistoryComponent,
+      PrintBarcodeLabelsDialogComponent
+    ],
+  exports: [
+    
+    VariantsComponent,
+    ProductsComponent, 
+    CreateProductComponent, 
+    RegularVariantsComponent,
+    AddedVariantsComponent, 
+    VariantsDialogModelComponent, 
+    EditVariantComponent,
+    DisacrdDialogModelComponent, 
+    ManageStockComponent, 
+    AddVariantComponent,
+    ListProductsComponent, 
+    ProductVariantsComponent, 
+    ViewStockHistoryComponent, 
+    PrintBarcodeLabelsDialogComponent
+  ]
 })
 export class FlipperInventoryModule { }

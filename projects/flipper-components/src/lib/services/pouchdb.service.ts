@@ -176,7 +176,6 @@ export class PouchDBService {
         if (!this.isInstantiated && dbName) {
             this.database = new PouchDB(dbName);
             if (filter != null) {
-                console.log("apply channel", filter);
                 this.database.changes({
                     filter: function (doc) {
                         //make sure we filter only to listen on our document of intrest.

@@ -1,5 +1,5 @@
 {
-  "name": "@enexus/flipper-inventory",
+  "name": "flipper-inventory",
   "version": "1.0.5",
   "peerDependencies": {
     "@angular/common": "^9.1.6",

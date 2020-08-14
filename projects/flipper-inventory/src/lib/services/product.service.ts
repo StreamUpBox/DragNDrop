@@ -73,7 +73,7 @@ export class ProductService {
       supplierId: hasDraftProduct && hasDraftProduct.supplierId ? hasDraftProduct.supplierId : 0,
       createdAt: new Date(),
       updatedAt: new Date()
-
+ 
     });
   }
 

@@ -168,7 +168,7 @@
         }
       }
     },
-    "flipperButton": {
+    "flipperbutton": {
       "projectType": "library",
       "root": "projects/flipper-button",
       "sourceRoot": "projects/flipper-button/src",
@@ -203,7 +203,7 @@
         }
       }
     },
-    "flipperMenu": {
+    "flippermenu": {
       "projectType": "library",
       "root": "projects/flipper-menu",
       "sourceRoot": "projects/flipper-menu/src",
@@ -243,7 +243,7 @@
         }
       }
     },
-    "flipperDashboard": {
+    "flipperdashboard": {
       "projectType": "library",
       "root": "projects/flipper-dashboard",
       "sourceRoot": "projects/flipper-dashboard/src",
@@ -283,7 +283,7 @@
         }
       }
     },
-    "flipperVendors": {
+    "flippervendors": {
       "root": "projects/flipper-vendors",
       "sourceRoot": "projects/flipper-vendors/src",
       "projectType": "library",
@@ -318,7 +318,7 @@
         }
       }
     },
-    "flipperColor": {
+    "flippercolor": {
       "root": "projects/flipper-color",
       "sourceRoot": "projects/flipper-color/src",
       "projectType": "library",
@@ -353,7 +353,7 @@
         }
       }
     },
-    "flipperDialog": {
+    "flipperdialog": {
       "root": "projects/flipper-dialog",
       "sourceRoot": "projects/flipper-dialog/src",
       "projectType": "library",
@@ -388,7 +388,7 @@
         }
       }
     },
-    "flipperFont": {
+    "flipperfont": {
       "root": "projects/flipper-font",
       "sourceRoot": "projects/flipper-font/src",
       "projectType": "library",
@@ -423,7 +423,7 @@
         }
       }
     },
-    "flipperEvent": {
+    "flipperevent": {
       "root": "projects/flipper-event",
       "sourceRoot": "projects/flipper-event/src",
       "projectType": "library",
@@ -458,7 +458,7 @@
         }
       }
     },
-    "flipperPos": {
+    "flipperpos": {
       "root": "projects/flipper-pos",
       "sourceRoot": "projects/flipper-pos/src",
       "projectType": "library",
@@ -493,7 +493,7 @@
         }
       }
     },
-    "flipperComponents": {
+    "flippercomponents": {
       "root": "projects/flipper-components",
       "sourceRoot": "projects/flipper-components/src",
       "projectType": "library",
@@ -528,7 +528,7 @@
         }
       }
     },
-    "flipperOfflineDatabase": {
+    "flipperffflinedatabase": {
       "projectType": "library",
       "root": "projects/flipper-offline-database",
       "sourceRoot": "projects/flipper-offline-database/src",
@@ -563,7 +563,7 @@
         }
       }
     },
-    "flipperSettings": {
+    "flippersettings": {
       "projectType": "library",
       "root": "projects/flipper-settings",
       "sourceRoot": "projects/flipper-settings/src",
@@ -598,17 +598,22 @@
         }
       }
     },
-    "flipperInventory": {
+    "flipperinventory": {
       "projectType": "library",
       "root": "projects/flipper-inventory",
       "sourceRoot": "projects/flipper-inventory/src",
-      "prefix": "flipper",
+      "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
             "tsConfig": "projects/flipper-inventory/tsconfig.lib.json",
             "project": "projects/flipper-inventory/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/flipper-inventory/tsconfig.lib.prod.json"
+            }
           }
         },
         "test": {
@@ -633,7 +638,7 @@
         }
       }
     },
-    "flipperFileUpload": {
+    "flipperfileupload": {
       "projectType": "library",
       "root": "projects/flipper-file-upload",
       "sourceRoot": "projects/flipper-file-upload/src",
@@ -668,7 +673,7 @@
         }
       }
     },
-    "paymentCard": {
+    "paymentcard": {
       "projectType": "library",
       "root": "projects/payment-card",
       "sourceRoot": "projects/payment-card/src",
@@ -702,47 +707,8 @@
           }
         }
       }
-    },
-    "EnableSync": {
-      "projectType": "library",
-      "root": "projects/enable-sync",
-      "sourceRoot": "projects/enable-sync/src",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
-          "options": {
-            "tsConfig": "projects/enable-sync/tsconfig.lib.json",
-            "project": "projects/enable-sync/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/enable-sync/tsconfig.lib.prod.json"
-            }
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/enable-sync/src/test.ts",
-            "tsConfig": "projects/enable-sync/tsconfig.spec.json",
-            "karmaConfig": "projects/enable-sync/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/enable-sync/tsconfig.lib.json",
-              "projects/enable-sync/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
     }
+   
   },
   "defaultProject": "flipper-plugins",
   "cli": {

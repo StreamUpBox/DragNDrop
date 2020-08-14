@@ -52,6 +52,7 @@ export class CreateProductComponent implements OnInit {
   }
 
   constructor(private dialog: DialogService, private model: MainModelService,
+
     private router: Router, public product: ProductService,
     private eventBus: FlipperEventBusService,
     private database: PouchDBService,

@@ -19,6 +19,7 @@ export class ProductService {
   branchList = new FormControl();
   products: Product[] = [];
 
+
   public productsSubject: BehaviorSubject<Product[]>;
   private readonly productsMap = new Map<string, Product>();
   defaultBusiness$: Business = null;
@@ -40,7 +41,7 @@ export class ProductService {
     this.hasDraft();
     
     this.create();
-    this.loadBranches();
+    // this.loadBranches();
   }
 
   public loadAllProducts(): Observable<Product[]> {

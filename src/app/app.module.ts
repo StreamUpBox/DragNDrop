@@ -9,14 +9,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 import { VendorsModule } from '@enexus/flipper-vendors';
-import { FlipperMenuModule } from 'flipper-menu';
+// import { FlipperMenuModule } from 'flipper-menu';
 import { FlipperComponentsModule, PouchDBService } from '@enexus/flipper-components';
 
 import { MigrationModule } from './migration/migration.module';
 import { FlipperInventoryModule } from '@enexus/flipper-inventory';
+import { FlipperOfflineDatabaseModule } from '@enexus/flipper-offline-database';
 
-import { FlipperPosModule } from '@enexus/flipper-pos';
-import { FlipperSettingsModule } from '@enexus/flipper-settings';
+// import { FlipperPosModule } from '@enexus/flipper-pos';
+// import { FlipperSettingsModule } from '@enexus/flipper-settings';
 
 // import { MigrationModule } from './migration/migration.module';
 
@@ -33,15 +34,15 @@ import { FlipperSettingsModule } from '@enexus/flipper-settings';
     // ColorModule,
     // FontModule,
     // FlipperButtonModule,
-    FlipperSettingsModule,
-    FlipperMenuModule,
+    // FlipperSettingsModule,
+    // FlipperMenuModule,
     // FlipperPaymentCardModule,
     // FlipperDashboardModule,
     // FlipperEventModule,
     FlipperComponentsModule,
-    FlipperPosModule,
+    // FlipperPosModule,
     BrowserAnimationsModule,
-    // FlipperOfflineDatabaseModule,
+    FlipperOfflineDatabaseModule,
     FlipperInventoryModule,
     // FlipperFileUploadModule,
     MigrationModule.forRoot(),

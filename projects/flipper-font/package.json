@@ -1,31 +1,12 @@
 {
   "name": "flipper-font",
-  "version": "1.0.2",
-  "peerDependencies": {
-    "@angular/common": "^8.2.9",
-    "@angular/core": "^8.2.9"
-  },
-  "metadata": "enexus-flipper-font.metadata.json",
-  "sideEffects": false,
-  "dependencies": {
-    "tslib": "^2.0.0"
-},
-  "description": "it works on font size and font weight",
-  "directories": {
-    "lib": "lib"
-  },
-
-  "keywords": [
-    "sm",
-    "lg",
-    "xs",
-    "bold",
-    "italic",
-    "400+"
-  ],
-  "author": "Ganza respice",
-  "license": "ISC",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "version": "1.2.0",
+    "peerDependencies": {
+      "@angular/common": "~10.0.2",
+      "@angular/core": "~10.0.2"
+    },
+    "dependencies": {
+      "tslib": "^2.0.0"
+    }
   }
-}
+  

@@ -38,6 +38,7 @@
       "flipper-menu/*": [
         "dist/flipper-menu/*"
       ],
+
       "@enexus/flipper-pos": [
         "dist/flipper-pos"
       ],
@@ -55,6 +56,12 @@
       ],
       "@enexus/flipper-dialog/*": [
         "dist/flipper-dialog/*"
+      ],
+      "@enexus/flipper-vendors": [
+        "dist/flipper-vendors"
+      ],
+      "@enexus/flipper-vendors/*": [
+        "dist/flipper-vendors/*"
       ],
       "@enexus/flipper-color": [
         "dist/flipper-color"
@@ -101,15 +108,9 @@
       "@enexus/flipper-inventory": [
         "dist/flipper-inventory"
       ],
-      "@enexus/testlivereload/*": [
-        "dist/testlivereload/*"
-      ],
-      "@enexus/testlivereload": [
-        "dist/testlivereload"
-      ],
       "@enexus/flipper-inventory/*": [
         "dist/flipper-inventory/*"
-      ],
+      ], 
       "@enexus/flipper-file-upload": [
         "dist/flipper-file-upload"
       ],

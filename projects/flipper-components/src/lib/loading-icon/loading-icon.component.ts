@@ -8,4 +8,3 @@ import { Input, Component} from '@angular/core';
 export class LoadingIconComponent {
   @Input() loading: boolean;
 }
-

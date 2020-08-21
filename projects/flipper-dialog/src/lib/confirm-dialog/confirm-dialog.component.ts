@@ -1,10 +1,11 @@
 import {Component, Inject, HostListener} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
-export interface ConfirmDialogData {
+interface ConfirmDialogData {
   title: string;
   message: string;
 }
+
 
 @Component({
   selector: 'lib-confirm-dialog',

@@ -1,6 +1,5 @@
-import { FontModule } from '@enexus/flipper-font';
-
 import { NgModule } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
 import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
 import { WaitDialogComponent } from './wait-dialog/wait-dialog.component';
@@ -11,10 +10,10 @@ import { VendorsModule } from '@enexus/flipper-vendors';
 import { KeyBoardShortCutsComponent } from './key-board-short-cuts/key-board-short-cuts.component';
 import { MessageTypeComponent } from './message-type/message-type.component';
 import { MessageDialogComponent } from './message-dialog/message-dialog.component';
+
 @NgModule({
   imports: [
     CommonModule,
-    FontModule, // TODO:rename the module to FlipperFontModule
     VendorsModule
   ],
   declarations: [

@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import { LazyIfDirective } from './lazy-if.directive';
 import { VendorsModule } from '@enexus/flipper-vendors';
-import { LoadingIconComponent } from './loading-icon/loading-icon.component';
 import { RouterProgressComponent } from './router-progress/router-progress.component';
 import { HeaderComponent } from './header/header.component';
 import { TableOverlayComponent } from './table-overlay/table-overlay.component';
@@ -22,7 +21,7 @@ import { NotificationListComponent } from './notifications/notification.componen
 import { NotificationService } from './notifications/notification.service';
 import { GenerateBarcodeComponent } from './generate-barcode/generate-barcode.component';
 import { NgxBarcodeModule } from 'ngx-barcode';
-import { PouchDBService } from './services';
+import { LoadingIconComponent } from './loading-icon/loading-icon.component';
 @NgModule({
   imports: [
     CommonModule,

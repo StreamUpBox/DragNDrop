@@ -1,12 +1,12 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import { NotificationService, fadeInAnimation, Product, MainModelService, Tables, Variant, BranchesEvent, PouchDBService, CurrentBusinessEvent, UserLoggedEvent, BusinessesEvent, TaxesEvent } from '@enexus/flipper-components';
+import { NotificationService, fadeInAnimation, Product, MainModelService, Tables, Variant } from '@enexus/flipper-components';
 import { ProductService } from '../services/product.service';
 import { Router } from '@angular/router';
 import { trigger, transition, useAnimation } from '@angular/animations';
 import { DialogService, DialogSize } from '@enexus/flipper-dialog';
 import { DisacrdDialogModelComponent } from '../products/disacrd-dialog-model/disacrd-dialog-model.component';
-import { FlipperEventBusService } from '@enexus/flipper-event';
-import { filter } from 'rxjs/operators';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+;
 
 
 @Component({
@@ -50,84 +50,38 @@ export class CreateProductComponent implements OnInit {
       this.onSubmit('close');
     }
   }
-
-  constructor(private dialog: DialogService, private model: MainModelService,
+  form: FormGroup;
+  constructor(private dialog: DialogService, private model: MainModelService, private formBuilder: FormBuilder,
 
     private router: Router, public product: ProductService,
-    private eventBus: FlipperEventBusService,
-    private database: PouchDBService,
-    protected notificationSvc: NotificationService) { 
+    protected notificationSvc: NotificationService) {
       
-      this.eventBus.of < UserLoggedEvent > (UserLoggedEvent.CHANNEL)
-      .pipe(filter(e => e.user && e.user.id !== null ))
-      .subscribe(res =>
-      this.product.currentUser$ = res.user);
-
-      this.eventBus.of < CurrentBusinessEvent > (CurrentBusinessEvent.CHANNEL)
-      .subscribe(res =>
-        this.product.defaultBusiness$ = res.business);
-
-      this.eventBus.of < BranchesEvent > (BranchesEvent.CHANNEL)
-      .pipe(filter(e => e.branches && e.branches.length > 0 ))
-   .subscribe(res =>
-     this.product.branches$ = res.branches);
-
-     this.eventBus.of < TaxesEvent > (TaxesEvent.CHANNEL)
-     .pipe(filter(e => e.taxes && e.taxes.length > 0 ))
-  .subscribe(res =>
-    this.product.taxes$ = res.taxes);
-
-    }
+     }
 
   async ngOnInit() {
-    await this.database.activeUser().then(res=>{
-      if(res.docs && res.docs.length > 0){
-          this.eventBus.publish(new UserLoggedEvent(res.docs[0]));
-      }
-  });
-
-
-  if(this.product.currentUser$){
-
-  //   await this.database.activeBusiness(this.product.currentUser$.id).then(res=>{
-  //     if(res.docs && res.docs.length > 0){
-  //         this.eventBus.publish(new CurrentBusinessEvent(res.docs[0]));
-  //     }
-  // });
-
-      
-  //   if(this.product.defaultBusiness$){
-  //           await this.database.query(['table','businessId'],{
-  //             table: {$eq:'branches'},
-  //             businessId:{$eq:this.product.defaultBusiness$.id}
-  //         }).then(res=>{
-  //         if(res.docs && res.docs.length > 0){
-  //             this.eventBus.publish(new BranchesEvent(res.docs));
-  //         }
-  //       });
-
-  //       await this.database.query(['table','businessId'],{
-  //         table: {$eq:'taxes'},
-  //         businessId:{$eq:this.product.defaultBusiness$.id}
-  //     }).then(res=>{
-  //     if(res.docs && res.docs.length > 0){
-  //         this.eventBus.publish(new TaxesEvent(res.docs));
-  //     }
-  //   });
-
-    
-
-  //   }
-  }
+    await this.product.init();
+    // await this.checkNewItem();
+    const hasDraftProduct = this.product.hasDraftProduct;
+    this.form = await this.formBuilder.group({
+      name: [hasDraftProduct? hasDraftProduct.name:'' , Validators.required],
+      categoryId: hasDraftProduct ? hasDraftProduct.categoryId : 0,
+      description: hasDraftProduct ? hasDraftProduct.description : '',
+      picture: hasDraftProduct ? hasDraftProduct.picture : '',
+      taxId: hasDraftProduct ? hasDraftProduct.taxId : '',
+      supplierId: hasDraftProduct? hasDraftProduct.supplierId : 0,
+      createdAt: new Date(),
+      updatedAt: new Date()
  
-    await this.checkNewItem();
-  }
+    });
+  
 
-  checkNewItem() {
+  }
+  
+  get formControl() { return this.form.controls; }
+  async checkNewItem() {
     this.didAddNew = false;
-    this.product.init();
-    this.product.request();
-    this.product.hasDraftProduct = this.model.findByFirst<Product>(Tables.products, 'isDraft', true);
+   
+    await this.product.request();
 
   }
 

@@ -1,6 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import PouchDB from 'pouchdb';
-import PouchFind  from 'pouchdb-find';
+import PouchFind from 'pouchdb-find';
 PouchDB.plugin(PouchFind);
 
 import { v1 as uuidv1 } from 'uuid';
@@ -23,56 +23,94 @@ export class PouchDBService {
 
     public constructor() { }
 
-     public activeUser(table='users'){
-       return this.database.createIndex({
-            index: {fields: ['table','active']}
-          }).then(result => {
-              return this.database.find({
-                selector: {
-                  table: {$eq:table},
-                  active:{$eq:true},
-                }
-              });
-          })
-    }
-
-     public query(fields=[],selector={}){
-
-       return this.database.createIndex({
-            index: {fields: fields}
-          }).then(result => {
-              return this.database.find({
-                selector: selector
-              });
-          })
-    }
-
-
-    public activeBusiness(userId,table='businesses'){
+    public activeUser(table = 'users') {
         return this.database.createIndex({
-            index: {fields: ['table','active','userId']}
-          }).then(result => {
-
-               this.database.find({
+            index: { fields: ['table', 'active'] }
+        }).then(result => {
+            return this.database.find({
                 selector: {
-                  table: {$eq:table},
-                  active:{$eq:true},
-                  userId:{$eq:userId}
+                    table: { $eq: table },
+                    active: { $eq: true },
                 }
-              });
-          })
+            });
+        })
     }
-    public currentBusiness(){ 
-       return this.activeUser().then(user=>{
-           console.log('user found',user);
-            if(user && user.docs.length > 0){
-                console.log('user found 1',user.docs[0].id);
-                return this.activeBusiness(user.docs[0].id,'businesses').then(business=>{
-                    console.log('business found 1',business);
-                    if(business && business.docs.length > 0){
-                        console.log('business found 1',business.docs);
+
+    public query(fields = [], selector = {}) {
+
+        return this.database.createIndex({
+            index: { fields: fields }
+        }).then(result => {
+            return this.database.find({
+                selector: selector
+            });
+        })
+    }
+
+
+    public activeBusiness(userId, table = 'businesses') {
+        // comment
+        return this.database.createIndex({
+            index: { fields: ['table', 'active', 'userId'] }
+        }).then(result => {
+            return this.database.find({
+                selector: {
+                    table: { $eq: table },
+                    active: { $eq: true },
+                    userId: { $eq: userId }
+                }
+            });
+        })
+    }
+
+    public hasDraftProduct(businessId, table = 'products') {
+        // comment
+        return this.database.createIndex({
+            index: { fields: ['table', 'isDraft', 'businessId'] }
+        }).then(result => {
+            return this.database.find({
+                selector: {
+                    table: { $eq: table },
+                    isDraft: { $eq: true },
+                    businessId: { $eq: businessId }
+                }
+            });
+        })
+    }
+    public currentBusiness() {
+
+        return this.activeUser().then(user => {
+
+            if (user && user.docs.length > 0) {
+                return this.activeBusiness(user.docs[0].id, 'businesses').then(business => {
+
+                    if (business && business.docs.length > 0) {
                         return business.docs[0];
-                    }else{
+                    }
+                })
+            }
+        });
+    }
+
+    public currentTax() {
+        return this.activeUser().then(user => {
+
+            if (user && user.docs.length > 0) {
+                return this.activeBusiness(user.docs[0].id, 'businesses').then(business => {
+                    if (business && business.docs.length > 0) {
+
+                        return this.database.query(['table', 'businessId', "isDefault"], {
+                            table: { $eq: 'taxes' }, businessId: { $eq: business.docs[0].id }, isDefault: { $eq: true }
+                        }).then(res => {
+
+                            if (res.docs && res.docs.length > 0) {
+                                return res.docs[0];
+                            } else {
+                                return [];
+                            }
+
+                        });
+                    } else {
                         return null;
                     }
                 })
@@ -80,96 +118,65 @@ export class PouchDBService {
         });
     }
 
-    public currentTax(){ 
-        return this.activeUser().then(user=>{
+    public listBusinessBranches() {
 
-             if(user && user.docs.length > 0){
-                return this.activeBusiness(user.docs[0].id,'businesses').then(business=>{
-                     if(business && business.docs.length > 0){
+        return this.currentBusiness().then(business => {
 
-                        this.database.query(['table','businessId',"isDefault"],{table: {$eq:'taxes'}, businessId:{$eq:business.docs[0].id},isDefault:{$eq:true}
-                        }).then(res=>{
+            if (business) {
 
-                                if(res.docs && res.docs.length > 0){
-                                    return res.docs[0];
-                                }else{
-                                    return [];
-                                }
-
-                             });
-                     }else{
-                         return null;
-                     }
-                 })
-             }
-         });
-     }
-
-    public listBusinessBranches(){
-        return this.activeUser().then(user=>{
-            if(user && user.docs.length > 0){
-                return this.activeBusiness(user.docs[0].id,'businesses').then(business=>{
-                    if(business && business.docs.length > 0){
-                       
-                        this.database.query(['table','businessId'],{
-                            table: {$eq:'branches'},
-                            businessId:{$eq:business.docs[0].id}
-                        }).then(res=>{
-                        if(res.docs && res.docs.length > 0){
-                            return res.docs;
-                        }else{
-                            return [];
-                        }
-                      });
-                    }else{
+                return this.query(['table', 'businessId'], {
+                    table: { $eq: 'branches' },
+                    businessId: { $eq: business.id }
+                }).then(res => {
+                    if (res.docs && res.docs.length > 0) {
+                        return res.docs;
+                    } else {
                         return [];
                     }
-                })
+                });
+            } else {
+                return [];
             }
         });
     }
 
-    public listBusinessTaxes(){
+    public listBusinessTaxes() {
 
-        return this.activeUser().then(user=>{
+      
+                return this.currentBusiness().then(business => {
+                    if (business) {
 
-            if(user && user.docs.length > 0){
+                       return this.query(['table', 'businessId'], {
+                            table: { $eq: 'taxes' },
+                            businessId: { $eq: business.id }
+                        }).then(res => {
 
-                return this.activeBusiness(user.docs[0].id,'businesses').then(business=>{
-                    if(business && business.docs.length > 0){
-                       
-                        this.database.query(['table','businessId'],{
-                            table: {$eq:'taxes'},
-                            businessId:{$eq:business.docs[0].id}
-                        }).then(res=>{
+                            if (res.docs && res.docs.length > 0) {
+                                return res.docs;
+                            } else {
+                                return [];
+                            }
+                        });
 
-                        if(res.docs && res.docs.length > 0){
-                            return res.docs;
-                        }else{
-                            return [];
-                        }
-                      });
-
-                    }else{
+                    } else {
                         return [];
                     }
-                })
-            }
-        });
+                });
+          
     }
 
-    public activeBranch(businessId,table="branches"){
-        return  this.database.createIndex({
-            index: {fields: ['tables','active','businessId']}
-          }).then(result => {
-              return this.database.find({
+    public activeBranch(businessId, table = "branches") {
+        return this.database.createIndex({
+            index: { fields: ['tables', 'active', 'businessId'] }
+        }).then(result => {
+            return this.database.find({
                 selector: {
-                  table: {$eq:table},
-                  active:{$eq:true},
-                  businessId:{$eq:businessId}
+                    table: { $eq: table },
+                    active: { $eq: true },
+                    businessId: { $eq: businessId }
                 }
-              });
-          })
+            });
+        })
     }
 
     public connect(dbName: string, filter: string = null) {
@@ -248,7 +255,7 @@ export class PouchDBService {
         return uuidv1();
     }
 
-    
+
 
     public put(id: string, document: any) {
         document._id = id;

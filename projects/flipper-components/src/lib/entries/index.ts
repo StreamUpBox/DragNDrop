@@ -21,8 +21,6 @@ export * from './reason';
 export * from './branch-products';
 export * from './stocks';
 export * from './map-geolocation';
-export * from './stock-history';
-export * from './order-details';
 export * from './labels';
 export * from './subscription';
 

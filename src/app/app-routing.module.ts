@@ -8,7 +8,8 @@ import { CreateProductComponent } from '@enexus/flipper-inventory';
 
 
 const routes: Routes = [
-  {path: '', component: AppComponent},
+  {path: 'index', component: AppComponent},
+  { path: '',   redirectTo: '/index', pathMatch: 'full' },
   {path: 'admin', component: AppComponent},
   {path: 'admin/pos', component: AppComponent},
    {path: 'admin/analytics', component: AppComponent},
@@ -17,9 +18,9 @@ const routes: Routes = [
   {
     path: 'add/product', component: CreateProductComponent
   },
-  {
-    // path: 'setup/business/new', component: CreateUpdateBusinessComponent
-  }
+  // {
+  //   path: 'setup/business/new', component: CreateUpdateBusinessComponent
+  // }
 ];
 
 @NgModule({

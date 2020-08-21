@@ -14,21 +14,6 @@ import { ModelService } from '@enexus/flipper-offline-database';
 })
 export class AppComponent {
 
-  get theVariantFiltered(): Variant[] {
-    return this.seTheVariantFiltered;
-  }
-
-  set theVariantFiltered(value: Variant[]) {
-    this.seTheVariantFiltered = value;
-  }
-
-  get currentOrder(): Order {
-    return this.setCurrentOrder;
-  }
-
-  set currentOrder(value: Order) {
-    this.setCurrentOrder = value;
-  }
   public branch: Branch | null;
 
   constructor(private model: MainModelService,
@@ -57,7 +42,7 @@ let businessId=this.database.uid();
     docId:PouchConfig.Tables.user
   };
 
-  this.database.put(PouchConfig.Tables.user, user);
+  // this.database.put(PouchConfig.Tables.user, user);
 
   const formBusinessData: Business = {
     id: businessId,
@@ -76,8 +61,8 @@ let businessId=this.database.uid();
     docId:PouchConfig.Tables.business
   };
 
-  this.database.put(PouchConfig.Tables.business+'_'+formBusinessData.id, formBusinessData);
-  this.model.create<Business>(Tables.business,formBusinessData);
+  // this.database.put(PouchConfig.Tables.business+'_'+formBusinessData.id, formBusinessData);
+  // this.model.create<Business>(Tables.business,formBusinessData);
 
 
 
@@ -93,8 +78,8 @@ let businessId=this.database.uid();
  
   };
 
-  this.database.put(PouchConfig.Tables.branches+'_'+formBranchData.id, formBranchData);
-  this.model.create<Branch>(Tables.branch,formBranchData);
+  // this.database.put(PouchConfig.Tables.branches+'_'+formBranchData.id, formBranchData);
+  // this.model.create<Branch>(Tables.branch,formBranchData);
 
   const formTaxes2 = {
     id: this.database.uid(),
@@ -111,8 +96,8 @@ let businessId=this.database.uid();
 
 
  
-  this.database.put(PouchConfig.Tables.taxes+'_'+formTaxes2.id, formTaxes2);
-  this.model.create<Taxes>(Tables.taxes,formTaxes2);
+  // this.database.put(PouchConfig.Tables.taxes+'_'+formTaxes2.id, formTaxes2);
+  // this.model.create<Taxes>(Tables.taxes,formTaxes2);
 
   const formTaxes1 =
   {
@@ -127,24 +112,11 @@ let businessId=this.database.uid();
     table:'taxes',
     docId:PouchConfig.Tables.taxes
   };
-  this.database.put(PouchConfig.Tables.taxes+'_'+formTaxes1.id, formTaxes1);
-  this.model.create<Taxes>(Tables.taxes,formTaxes1);
+  // this.database.put(PouchConfig.Tables.taxes+'_'+formTaxes1.id, formTaxes1);
+  // this.model.create<Taxes>(Tables.taxes,formTaxes1);
 
-this.database.currentBusiness().then(r=>{
-  console.log('ganza ');
-})
-  }
-  defaultBranch: Branch = this.model.active<Branch>(Tables.branch);
-  public variants: Variant[] = [];
-  private seTheVariantFiltered: Variant[] = [];
-  public collectCashCompleted: object = {};
-
-  public currency = this.model.active<Business>(Tables.business) ? this.model.active<Business>(Tables.business).currency : 'RWF';
-  private setCurrentOrder: Order;
-
-  date = new Date();
-
-
-
+              }
+  
+  
  
 }

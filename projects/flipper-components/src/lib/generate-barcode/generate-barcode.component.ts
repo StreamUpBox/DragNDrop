@@ -8,11 +8,10 @@ import { Labels } from '../entries';
 })
 export class GenerateBarcodeComponent {
 
+
   @Input() labels: Labels[] = [];
   @Input() showName = true;
   @Input() showSku = true;
 
-  constructor() {
-
-  }
+  
 }

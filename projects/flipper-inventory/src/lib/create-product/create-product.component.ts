@@ -58,6 +58,8 @@ export class CreateProductComponent implements OnInit {
       
      }
 
+     
+
   async ngOnInit() {
     await this.product.init();
     // await this.checkNewItem();

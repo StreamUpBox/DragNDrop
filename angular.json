@@ -666,7 +666,6 @@
         }
       }
     },
-    
     "flipperfileupload": {
       "projectType": "library",
       "root": "projects/flipper-file-upload",

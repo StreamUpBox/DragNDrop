@@ -29,6 +29,6 @@
   "metadata": "enexus-payment-card.metadata.json",
   "sideEffects": false,
   "dependencies": {
-    "tslib": "^1.9.0"
-  }
+    "tslib": "^2.0.0"
+}
 }

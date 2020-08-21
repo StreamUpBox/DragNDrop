@@ -6,8 +6,8 @@
     "@angular/core": "^9.1.6"
   },
   "dependencies": {
-    "tslib": "^1.9.0"
-  },
+    "tslib": "^2.0.0"
+},
   "description": "@enexus/flipper-dialog - User Should call  delete, confirm Method  and also user can create they own component dialog.",
   "directories": {
     "lib": "lib"

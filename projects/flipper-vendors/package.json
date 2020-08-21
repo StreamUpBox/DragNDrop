@@ -16,8 +16,8 @@
   "metadata": "flipper-vendors.metadata.json",
   "sideEffects": false,
   "dependencies": {
-    "tslib": "^1.9.0"
-  },
+    "tslib": "^2.0.0"
+},
   "description": "Including all dependancies modules",
   "directories": {
     "lib": "lib"

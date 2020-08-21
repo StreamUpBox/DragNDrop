@@ -8,8 +8,8 @@
   "metadata": "enexus-flipper-font.metadata.json",
   "sideEffects": false,
   "dependencies": {
-    "tslib": "^1.9.0"
-  },
+    "tslib": "^2.0.0"
+},
   "description": "it works on font size and font weight",
   "directories": {
     "lib": "lib"

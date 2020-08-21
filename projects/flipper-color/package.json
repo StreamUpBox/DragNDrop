@@ -7,8 +7,8 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "tslib": "^1.9.0"
-  },
+    "tslib": "^2.0.0"
+},
   "description": "Including different color like primary,error,success,danger",
   "directories": {
     "lib": "lib"

@@ -6,7 +6,7 @@ import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms'
 import { VariationService } from './variation.service';
 import { Observable, BehaviorSubject, of } from 'rxjs';
 import { ModelService } from '@enexus/flipper-offline-database';
-import { ActiveBusiness } from 'projects/flipper-components/src/public_api';
+
 @Injectable({
   providedIn: 'root'
 })

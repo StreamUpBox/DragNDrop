@@ -56,6 +56,7 @@ export class VariationService {
 
   init(product: Product): void {
 
+    //TODO: swap the bellow functions regular,createRegular,variants,stockUpdate to use pouch instead of alasql
     if (product) {
       this.product = product;
       this.regular(product);

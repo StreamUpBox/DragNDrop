@@ -8,6 +8,7 @@ import { ColorToFillClassPipe, Color } from '@enexus/flipper-color';
 })
 export class SpinnerComponent implements OnInit {
 
+  
   @Input() color: Color = 'primary';
   @Input() size = 24;
 

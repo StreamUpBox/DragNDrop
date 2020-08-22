@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Input, Component} from '@angular/core';
 
 @Component({
   selector: 'flipper-loading-icon',

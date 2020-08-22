@@ -6,7 +6,7 @@ import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms'
 import { VariationService } from './variation.service';
 import { Observable, BehaviorSubject, of } from 'rxjs';
 import { ModelService } from '@enexus/flipper-offline-database';
-import { FlipperEventBusService } from '@enexus/flipper-event';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -31,18 +31,48 @@ export class ProductService {
               private model: MainModelService,
               private variant: VariationService,
               private formBuilder: FormBuilder,
-              private eventBus: FlipperEventBusService,
               private database: PouchDBService) {
               this.productsSubject = new BehaviorSubject([]);
+            
+          
 
   }
 
-  async init() {
-    this.hasDraft();
+   async init() {
+     
+    await this.currentBusiness();
+    await this.currentBranches();
+    await this.currentTaxes()
+    await this.hasDraft();
+    await this.create();
     
-    this.create();
-    // this.loadBranches();
+
   }
+  get defaultBusiness():Business{
+    return this.defaultBusiness$;
+  }
+  set defaultBusiness(val:Business){
+    this.defaultBusiness$=val;
+  }
+
+  public currentBusiness() {
+      this.database.currentBusiness().then(business => {
+        console.log('busine',business);
+          this.defaultBusiness=business;
+    });
+}
+currentBranches(){
+      this.database.listBusinessBranches().then(branches=>{
+        this.branches$=branches;
+      });
+}
+
+currentTaxes(){
+    this.database.listBusinessTaxes().then(taxes=>{
+      this.taxes$=taxes;
+    });
+}
+
 
   public loadAllProducts(): Observable<Product[]> {
     const data: Product[] = [];
@@ -60,17 +90,15 @@ export class ProductService {
   }
 
 
-  request(): void {
-    const hasDraftProduct = this.model.draft<Product>(Tables.products, 'isDraft');
-    this.hasDraftProduct = hasDraftProduct;
-    this.form = this.formBuilder.group({
-      name: [hasDraftProduct && hasDraftProduct.name && hasDraftProduct.name === 'new item' ? ''
-       : hasDraftProduct.name, Validators.required],
-      categoryId: hasDraftProduct && hasDraftProduct.categoryId ? hasDraftProduct.categoryId : 0,
-      description: hasDraftProduct && hasDraftProduct.description ? hasDraftProduct.description : '',
-      picture: hasDraftProduct && hasDraftProduct.picture ? hasDraftProduct.picture : '',
-      taxId: hasDraftProduct && hasDraftProduct.taxId ? hasDraftProduct.taxId : '',
-      supplierId: hasDraftProduct && hasDraftProduct.supplierId ? hasDraftProduct.supplierId : 0,
+  async request() {
+    const hasDraftProduct = this.hasDraftProduct;
+    this.form = await this.formBuilder.group({
+      name: [hasDraftProduct? hasDraftProduct.name:'' , Validators.required],
+      categoryId: hasDraftProduct ? hasDraftProduct.categoryId : 0,
+      description: hasDraftProduct ? hasDraftProduct.description : '',
+      picture: hasDraftProduct ? hasDraftProduct.picture : '',
+      taxId: hasDraftProduct ? hasDraftProduct.taxId : '',
+      supplierId: hasDraftProduct? hasDraftProduct.supplierId : 0,
       createdAt: new Date(),
       updatedAt: new Date()
  
@@ -79,15 +107,27 @@ export class ProductService {
 
   get formControl() { return this.form.controls; }
 
-  hasDraft(): void {
-    this.hasDraftProduct = this.model.draft<Product>(Tables.products, 'isDraft');
+  async hasDraft() {
+   console.log('our business',this.defaultBusiness);
+    if(this.defaultBusiness){
+     await this.database.hasDraftProduct(this.defaultBusiness.id).then(draft=>{
+        if(draft){
+            this.hasDraftProduct=draft;
+        }else{
+          this.hasDraftProduct=null;
+        }
+      });
+    }
+   
   }
+  
 
-  create(): void {
-    
-    const hasDraftProduct = this.model.draft<Product>(Tables.products, 'isDraft');
-    if (!hasDraftProduct) {
-      this.model.create<Product>(Tables.products, {
+  async create() {
+    await this.currentBusiness();
+    await this.currentTaxes();
+    await this.hasDraft();
+    if (this.defaultBusiness$ && !this.hasDraftProduct ) {
+      const formProduct= await {
         id: this.database.uid(),
         name: 'new item',
         businessId: this.defaultBusiness$?this.defaultBusiness$.id:0,
@@ -98,12 +138,15 @@ export class ProductService {
         hasPicture: false,
         supplierId: 0,
         categoryId: 0,
+        table:'products',
         color: '#000000',
         picture: '/assets/icons/add-image-placeholder.png',
         isCurrentUpdate: false,
         createdAt: new Date(),
         updatedAt: new Date()
-      });
+      };
+
+      await this.database.put(PouchConfig.Tables.products+'_'+formProduct.id, formProduct);
     }
   }
 

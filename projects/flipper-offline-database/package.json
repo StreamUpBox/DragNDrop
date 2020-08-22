@@ -1,5 +1,5 @@
 {
-  "name": "flipper-offline-database",
+  "name": "flipperofflinedatabase",
   "version": "1.0.13",
   "peerDependencies": {
     "@angular/common": "^9.1.6",
@@ -16,4 +16,8 @@
 
   "author": "Yegobox Team",
   "license": "ISC"
+,
+  "dependencies": {
+    "tslib": "^2.0.0"
+  }
 }

@@ -47,6 +47,7 @@ import { PrintBarcodeLabelsDialogComponent } from './print-barcode-labels-dialog
     VendorsModule,
     FlipperEventModule,
     FlipperComponentsModule,
+    
     FlipperFileUploadModule,
     FlipperOfflineDatabaseModule,
     DialogModule

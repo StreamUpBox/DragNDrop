@@ -1,9 +1,9 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "../../out-tsc/lib",
     "target": "es2015",
-    "declaration": true,
+    "declaration": false,
     "inlineSources": true,
     "types": [],
     "lib": [
@@ -11,9 +11,11 @@
       "es2018"
     ]
   },
+
   "angularCompilerOptions": {
     "skipTemplateCodegen": true,
     "strictMetadataEmit": true,
+    "enableIvy": false,
     "enableResourceInlining": true
   },
   "exclude": [

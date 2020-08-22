@@ -17,8 +17,8 @@
   "metadata": "flipper-menu.metadata.json",
   "sideEffects": false,
   "dependencies": {
-    "tslib": "^1.9.0"
-  },
+    "tslib": "^2.0.0"
+},
   "description": "This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.9.",
   "directories": {
     "lib": "lib"

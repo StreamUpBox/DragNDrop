@@ -7,7 +7,7 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "styleext": "scss"
+          "style": "scss"
         }
       },
       "root": "",
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/flipper-plugins",
+            "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -263,46 +263,7 @@
         }
       }
     },
-    "flippervendors": {
-      "root": "projects/flipper-vendors",
-      "sourceRoot": "projects/flipper-vendors/src",
-      "projectType": "library",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
-          "options": {
-            "tsConfig": "projects/flipper-vendors/tsconfig.lib.json",
-            "project": "projects/flipper-vendors/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/flipper-vendors/tsconfig.lib.prod.json"
-            }
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/flipper-vendors/src/test.ts",
-            "tsConfig": "projects/flipper-vendors/tsconfig.spec.json",
-            "karmaConfig": "projects/flipper-vendors/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/flipper-vendors/tsconfig.lib.json",
-              "projects/flipper-vendors/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
+   
     "flippercolor": {
       "root": "projects/flipper-color",
       "sourceRoot": "projects/flipper-color/src",
@@ -503,11 +464,52 @@
         }
       }
     },
+    "flippervendors": {
+      "root": "projects/flipper-vendors",
+      "sourceRoot": "projects/flipper-vendors/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/flipper-vendors/tsconfig.lib.json",
+            "project": "projects/flipper-vendors/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/flipper-vendors/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/flipper-vendors/src/test.ts",
+            "tsConfig": "projects/flipper-vendors/tsconfig.spec.json",
+            "karmaConfig": "projects/flipper-vendors/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/flipper-vendors/tsconfig.lib.json",
+              "projects/flipper-vendors/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+
     "flippercomponents": {
       "root": "projects/flipper-components",
       "sourceRoot": "projects/flipper-components/src",
       "projectType": "library",
-      "prefix": "flipper",
+      "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
@@ -543,7 +545,7 @@
         }
       }
     },
-    "flipperffflinedatabase": {
+    "flipperofflinedatabase": {
       "projectType": "library",
       "root": "projects/flipper-offline-database",
       "sourceRoot": "projects/flipper-offline-database/src",
@@ -623,6 +625,7 @@
         }
       }
     },
+
     "flipperinventory": {
       "projectType": "library",
       "root": "projects/flipper-inventory",
@@ -633,7 +636,7 @@
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
             "tsConfig": "projects/flipper-inventory/tsconfig.lib.json",
-            "project": "projects/flipper-inventory/ng-package.json",
+            "project": "projects/flipper-inventory/ng-package.json"
           },
           "configurations": {
             "production": {

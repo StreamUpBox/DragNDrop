@@ -6,6 +6,7 @@ import 'providers/auth.dart';
 import 'widgets/custom_button.dart';
 import 'widgets/custom_text.dart';
 
+
 class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
@@ -29,8 +30,9 @@ class _LoginState extends State<Login> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Image.asset(
-                  "images/cell.png",
+                  "assets/cell.png",
                   width: 160,
+                  package: 'flipper_login',
                 ),
               ],
             ),

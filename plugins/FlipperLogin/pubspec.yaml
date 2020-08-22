@@ -1,7 +1,7 @@
 name: flipper_login
 description: 'A login package for flipper app'
 version: 0.0.1
-author: 'yegobox'
+
 homepage: 'https://yegobox.com'
 
 environment:
@@ -29,5 +29,7 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
 
- assets:
-    - images/
+
+  assets:
+    - packages/flipper_login/assets/cell.png
+    - packages/flipper_login/assets/mobile.png

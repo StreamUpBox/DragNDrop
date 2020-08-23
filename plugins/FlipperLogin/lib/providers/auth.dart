@@ -5,14 +5,10 @@ import 'package:flipper_login/helpers/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flipper_login/redux/action_login.dart';
-import 'package:flipper_login/redux/app_state.dart';
-import 'package:flipper_login/redux/actions.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 
-class UserModel{
+StreamController<String> controller = StreamController<String>();
+Stream stream = controller.stream;
 
-}
 enum Status{Uninitialized, Authenticated, Authenticating, Unauthenticated}
 
 class AuthProvider with ChangeNotifier{
@@ -21,7 +17,7 @@ class AuthProvider with ChangeNotifier{
   Status _status = Status.Uninitialized;
   // Firestore _firestore = Firestore.instance;
   UserServices _userServicse = UserServices();
-  UserModel _userModel;
+  
   TextEditingController phoneNo;
   String smsOTP;
   String verificationId;
@@ -35,7 +31,7 @@ class AuthProvider with ChangeNotifier{
 
 
 //  getter
-  UserModel get userModel => _userModel;
+  
   Status get status => _status;
   FirebaseUser get user => _user;
 
@@ -57,17 +53,11 @@ class AuthProvider with ChangeNotifier{
 
   // ! PHONE AUTH
   Future<void> verifyPhone(BuildContext context, String number) async {
+    
     final PhoneCodeSent smsOTPSent = (String verId, [int forceCodeResend]) {
       this.verificationId = verId;
-      StoreProvider.of<AppState>(context).dispatch(
-        LoginAction(
-          loginModel: ActionModelLogin(
-            (ActionModelLoginBuilder a) => a
-              ..username = ''
-              ..password = '',
-          ),
-        ),
-      );
+      //use stream here
+      controller.add(number);
     };
     try {
       print(number.trim());
@@ -108,14 +98,7 @@ class AuthProvider with ChangeNotifier{
      
       logedIn =  true;
       if (user != null) {
-        _userModel = await _userServicse.getUserById(user.user.uid);
-        if(_userModel == null){
-          _createUser(id: user.user.uid, number: user.user.phoneNumber);
-        }else{
-          // if(_userModel.bluetoothAddress != null){
-          //   await prefs.setBool("bluetoothSet", true);
-          // }
-        }
+      //  todo:here
 
         loading = false;
         if(bluetoothSet){
@@ -163,9 +146,9 @@ class AuthProvider with ChangeNotifier{
   }
 
   Future<void> setBluetoothAddress({String id, String bluetoothAddress})async{
-    if(_userModel == null){
-      _createUser(id: _user.uid, number: _user.phoneNumber);
-    }
+    // if(_userModel == null){
+    //   _createUser(id: _user.uid, number: _user.phoneNumber);
+    // }
     updateUser({"id":id, "bluetoothAddress": bluetoothAddress});
    
   }

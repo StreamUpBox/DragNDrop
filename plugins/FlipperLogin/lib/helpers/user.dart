@@ -1,7 +1,5 @@
 
 
-import '../providers/auth.dart';
-
 class UserServices {
   String collection = "users";
 
@@ -14,9 +12,6 @@ class UserServices {
     // _firestore.collection(collection).document(values['id']).updateData(values);
   }
 
-  Future<UserModel> getUserById(String id) {
-    return null;
-  }
   // Future<UserModel> getUserById(String id) => _firestore.collection(collection).document(id).get().then((doc){
   //   if(doc.data == null){
   //     return null;

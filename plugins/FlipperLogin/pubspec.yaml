@@ -18,8 +18,8 @@ dependencies:
   flutter_scan_bluetooth: ^1.1.0
   wifi_info_plugin: ^1.0.6
   flutter_bluetooth_serial: ^0.2.2
-  redux: ^4.0.0
-  flutter_redux: ^0.6.0
+  # redux: ^4.0.0
+  # flutter_redux: ^0.6.0
 
 dev_dependencies:
   flutter_test:

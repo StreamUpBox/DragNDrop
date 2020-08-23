@@ -1,5 +1,6 @@
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flipper_login/providers/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flipper_login/login.dart';
@@ -22,7 +23,21 @@ void main() async {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+@override
+  void initState() {
+    super.initState();
+    stream.listen((event) {
+      print(event);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

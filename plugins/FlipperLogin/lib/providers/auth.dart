@@ -5,6 +5,10 @@ import 'package:flipper_login/helpers/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flipper_login/redux/action_login.dart';
+import 'package:flipper_login/redux/app_state.dart';
+import 'package:flipper_login/redux/actions.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 class UserModel{
 
@@ -55,7 +59,15 @@ class AuthProvider with ChangeNotifier{
   Future<void> verifyPhone(BuildContext context, String number) async {
     final PhoneCodeSent smsOTPSent = (String verId, [int forceCodeResend]) {
       this.verificationId = verId;
-      //TODO: dispatch a need to go to the verification page.
+      StoreProvider.of<AppState>(context).dispatch(
+        LoginAction(
+          loginModel: ActionModelLogin(
+            (ActionModelLoginBuilder a) => a
+              ..username = ''
+              ..password = '',
+          ),
+        ),
+      );
     };
     try {
       print(number.trim());

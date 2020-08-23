@@ -87,6 +87,7 @@ dependencies:
   provider: ^4.0.4
   firebase_core: "^0.5.0"
   firebase_auth: "^0.18.0+1"
+  rxdart: ^0.24.0
   flipper_login:
     path: './plugins/FlipperLogin'
 

@@ -9,7 +9,7 @@ class OtpPage extends StatefulWidget {
   _OtpPageState createState() => _OtpPageState();
 }
 
-class _OtpPageState extends State<OtpPage> {
+class _OtpPageState extends State<OtpPage>  with CodeAutoFill {
   String _code;
   String signature = "{{ app signature }}";
 
@@ -17,12 +17,18 @@ class _OtpPageState extends State<OtpPage> {
   void dispose() {
     SmsAutoFill().unregisterListener();
     super.dispose();
+    cancel();
   }
   @override
   void initState() {
-    super.initState();
-    SmsAutoFill().listenForCode;
+    super.initState(); 
+    listenForCode();
+
+    SmsAutoFill().getAppSignature.then((signature) {
+    });
   }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,5 +57,12 @@ class _OtpPageState extends State<OtpPage> {
           ),
         ),
     );
+  }
+
+  @override
+  void codeUpdated() {
+     setState(() {
+      _code  = code;
+    });
   }
 }

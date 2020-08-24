@@ -1,5 +1,6 @@
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flipper_login/otp.dart';
 import 'package:flipper_login/providers/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,23 +30,26 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  // Stream loginStream = controller.stream;
 
 @override
   void initState() {
     super.initState();
-    stream.listen((event) {
-      print(event);
-    });
+    // loginStream.listen((event) {
+    //   print(event);
+    // });
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       home: Login()
+      // home: OtpPage()
       // home: MyHomePage(title: 'Flutter Contacts'),
     );
   }

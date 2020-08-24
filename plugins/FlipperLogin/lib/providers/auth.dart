@@ -1,23 +1,25 @@
 import 'dart:async';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flipper_login/helpers/user.dart';
+import 'package:flipper_login/otp.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-StreamController<String> controller = StreamController<String>();
-Stream stream = controller.stream;
+// TODO: whatch out if this is not a singleton i.e only working once!
+StreamController<int> controller = StreamController<int>();
+Stream loginStream = controller.stream;
 
-enum Status{Uninitialized, Authenticated, Authenticating, Unauthenticated}
+enum Status { Uninitialized, Authenticated, Authenticating, Unauthenticated }
 
-class AuthProvider with ChangeNotifier{
+class AuthProvider with ChangeNotifier {
   FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseUser _user;
   Status _status = Status.Uninitialized;
   // Firestore _firestore = Firestore.instance;
   UserServices _userServicse = UserServices();
-  
+
   TextEditingController phoneNo;
   String smsOTP;
   String verificationId;
@@ -29,54 +31,54 @@ class AuthProvider with ChangeNotifier{
 
   AuthProvider();
 
-
 //  getter
-  
+
   Status get status => _status;
   FirebaseUser get user => _user;
 
-
   TextEditingController address = TextEditingController();
 
+  AuthProvider.initialize() {}
 
-  AuthProvider.initialize(){
-    
-  }
-
-  Future signOut()async{
+  Future signOut() async {
     _auth.signOut();
     _status = Status.Unauthenticated;
     notifyListeners();
     return Future.delayed(Duration.zero);
   }
 
-
   // ! PHONE AUTH
   Future<void> verifyPhone(BuildContext context, String number) async {
-    
     final PhoneCodeSent smsOTPSent = (String verId, [int forceCodeResend]) {
       this.verificationId = verId;
-      //use stream here
-      controller.add(number);
+      // print(verId);
+      // print(forceCodeResend);
+      // controller.add(forceCodeResend);
     };
     try {
-      print(number.trim());
-      await _auth.verifyPhoneNumber(
-          phoneNumber: number.trim(), // PHONE NUMBER TO SEND OTP
-          codeAutoRetrievalTimeout: (String verId) {
-            //Starts the phone number verification process for the given phone number.
-            //Either sends an SMS with a 6 digit code to the phone number specified, or sign's the user in and [verificationCompleted] is called.
-            this.verificationId = verId;
-          },
-          codeSent:
-          smsOTPSent, // WHEN CODE SENT THEN WE OPEN DIALOG TO ENTER OTP.
-          timeout: const Duration(seconds: 20),
-          verificationCompleted: (AuthCredential phoneAuthCredential) {
-            print(phoneAuthCredential.toString() + "lets make this work");
-          },
-          verificationFailed: (exceptio) {
-            print('${exceptio.message} + something is wrong');
-          });
+      await _auth
+          .verifyPhoneNumber(
+              phoneNumber: number.trim(), // PHONE NUMBER TO SEND OTP
+              codeAutoRetrievalTimeout: (String verId) {
+                //Starts the phone number verification process for the given phone number.
+                //Either sends an SMS with a 6 digit code to the phone number specified, or sign's the user in and [verificationCompleted] is called.
+                this.verificationId = verId;
+              },
+              codeSent:
+                  smsOTPSent, // WHEN CODE SENT THEN WE OPEN DIALOG TO ENTER OTP.
+              timeout: const Duration(seconds: 20),
+              verificationCompleted: (AuthCredential phoneAuthCredential) {
+                print(phoneAuthCredential.toString() + "lets make this work");
+              },
+              verificationFailed: (exceptio) {
+                print('${exceptio.message} + something is wrong');
+              })
+          .then(
+            (value) => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => OtpPage()),
+            ),
+          );
     } catch (e) {
       handleError(e, context);
       errorMessage = e.toString();
@@ -84,26 +86,24 @@ class AuthProvider with ChangeNotifier{
     }
   }
 
-
-
   signIn(BuildContext context) async {
     try {
       final AuthCredential credential = PhoneAuthProvider.getCredential(
         verificationId: verificationId,
         smsCode: smsOTP,
       );
-      final  user = await _auth.signInWithCredential(credential);
+      final user = await _auth.signInWithCredential(credential);
       // final FirebaseUser currentUser = await _auth.currentUser();
       // assert(user.user.uid == currentUser.uid);
-     
-      logedIn =  true;
+
+      logedIn = true;
       if (user != null) {
-      //  todo:here
+        //  todo:here
 
         loading = false;
-        if(bluetoothSet){
+        if (bluetoothSet) {
           // changeScreenReplacement(context, Home());
-        }else{
+        } else {
           // changeScreenReplacement(context, BluetoothAddress());
         }
       }
@@ -112,11 +112,9 @@ class AuthProvider with ChangeNotifier{
       Navigator.of(context).pop();
       // changeScreenReplacement(context, Home());
       notifyListeners();
-
     } catch (e) {
       handleError(e, context);
     }
-
   }
 
   handleError(error, BuildContext context) {
@@ -136,7 +134,7 @@ class AuthProvider with ChangeNotifier{
     notifyListeners();
   }
 
-  void _createUser({String id, String number}){
+  void _createUser({String id, String number}) {
     _userServicse.createUser({
       "id": id,
       "number": number,
@@ -145,15 +143,14 @@ class AuthProvider with ChangeNotifier{
     });
   }
 
-  Future<void> setBluetoothAddress({String id, String bluetoothAddress})async{
+  Future<void> setBluetoothAddress({String id, String bluetoothAddress}) async {
     // if(_userModel == null){
     //   _createUser(id: _user.uid, number: _user.phoneNumber);
     // }
-    updateUser({"id":id, "bluetoothAddress": bluetoothAddress});
-   
+    updateUser({"id": id, "bluetoothAddress": bluetoothAddress});
   }
 
-  void updateUser(Map<String, dynamic> values){
+  void updateUser(Map<String, dynamic> values) {
     _userServicse.updateUserData(values);
   }
 }

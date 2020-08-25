@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Product, MainModelService, Tables, Business,
   Branch, Taxes, BranchProducts, PouchDBService,
-  PouchConfig, Variant, Stock, StockHistory, BranchesEvent, User } from '@enexus/flipper-components';
+  PouchConfig, Variant, Stock, StockHistory, BranchesEvent, User, CacheService } from '@enexus/flipper-components';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { VariationService } from './variation.service';
 import { Observable, BehaviorSubject, of } from 'rxjs';
@@ -28,6 +28,7 @@ export class ProductService {
   defaultTaxe$:Taxes=null;
 
   constructor(private query: ModelService,
+             private cacheService:CacheService,
               private model: MainModelService,
               private variant: VariationService,
               private formBuilder: FormBuilder,
@@ -48,28 +49,22 @@ export class ProductService {
     
 
   }
-  get defaultBusiness():Business{
-    return this.defaultBusiness$;
-  }
-  set defaultBusiness(val:Business){
-    this.defaultBusiness$=val;
-  }
+
 
   public currentBusiness() {
-      this.database.currentBusiness().then(business => {
-        console.log('busine',business);
-          this.defaultBusiness=business;
+     return this.database.currentBusiness().then(business => {
+       this. defaultBusiness$=business;
     });
 }
 currentBranches(){
-      this.database.listBusinessBranches().then(branches=>{
-        this.branches$=branches;
+   return this.database.listBusinessBranches().then(branches=>{
+           this.branches$=branches;
       });
 }
 
 currentTaxes(){
-    this.database.listBusinessTaxes().then(taxes=>{
-      this.taxes$=taxes;
+  return  this.database.listBusinessTaxes().then(taxes=>{
+         this.taxes$=taxes;
     });
 }
 
@@ -92,61 +87,59 @@ currentTaxes(){
 
   async request() {
     const hasDraftProduct = this.hasDraftProduct;
-    this.form = await this.formBuilder.group({
-      name: [hasDraftProduct? hasDraftProduct.name:'' , Validators.required],
-      categoryId: hasDraftProduct ? hasDraftProduct.categoryId : 0,
-      description: hasDraftProduct ? hasDraftProduct.description : '',
-      picture: hasDraftProduct ? hasDraftProduct.picture : '',
-      taxId: hasDraftProduct ? hasDraftProduct.taxId : '',
-      supplierId: hasDraftProduct? hasDraftProduct.supplierId : 0,
-      createdAt: new Date(),
-      updatedAt: new Date()
- 
-    });
+      this.form = await this.formBuilder.group({
+        name: [hasDraftProduct? hasDraftProduct.name:'' , Validators.required],
+        categoryId: hasDraftProduct ? hasDraftProduct.categoryId : 0,
+        description: hasDraftProduct ? hasDraftProduct.description : '',
+        picture: hasDraftProduct ? hasDraftProduct.picture : '',
+        taxId: hasDraftProduct ? hasDraftProduct.taxId : '',
+        supplierId: hasDraftProduct? hasDraftProduct.supplierId : 0,
+        createdAt: new Date(),
+        updatedAt: new Date()
+  
+      });
   }
 
   get formControl() { return this.form.controls; }
 
-  async hasDraft() {
-   console.log('our business',this.defaultBusiness);
-    if(this.defaultBusiness){
-     await this.database.hasDraftProduct(this.defaultBusiness.id).then(draft=>{
-        if(draft){
-            this.hasDraftProduct=draft;
-        }else{
-          this.hasDraftProduct=null;
-        }
+
+   hasDraft() {
+
+      return  this.database.hasDraftProduct(this.defaultBusiness$?this.defaultBusiness$.id:0).then(draft=>{
+        if (draft && draft.docs.length > 0) {
+          this.hasDraftProduct= draft.docs[0];
+      }
       });
-    }
+    
    
   }
   
 
   async create() {
-    await this.currentBusiness();
-    await this.currentTaxes();
-    await this.hasDraft();
-    if (this.defaultBusiness$ && !this.hasDraftProduct ) {
-      const formProduct= await {
-        id: this.database.uid(),
-        name: 'new item',
-        businessId: this.defaultBusiness$?this.defaultBusiness$.id:0,
-        isDraft: true,
-        active: false,
-        taxId:this.taxes$.find(tax=>tax.isDefault==true)?this.taxes$.find(tax=>tax.isDefault==true).id:'0', // this.model.findByFirst<Taxes>(Tables.taxes, 'isDefault', true).id,
-        description: '',
-        hasPicture: false,
-        supplierId: 0,
-        categoryId: 0,
-        table:'products',
-        color: '#000000',
-        picture: '/assets/icons/add-image-placeholder.png',
-        isCurrentUpdate: false,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      };
+ 
+  
+    if (this.defaultBusiness$ && !this.hasDraftProduct) {
 
-      await this.database.put(PouchConfig.Tables.products+'_'+formProduct.id, formProduct);
+      const formProduct = await {
+            id: this.database.uid(),
+            name: 'new item',
+            businessId: this.defaultBusiness$?this.defaultBusiness$.id:0,
+            isDraft: true,
+            active: false,
+            taxId:this.taxes$.find(tax=>tax.isDefault==true)?this.taxes$.find(tax=>tax.isDefault==true).id:'0', // this.model.findByFirst<Taxes>(Tables.taxes, 'isDefault', true).id,
+            description: '',
+            hasPicture: false,
+            supplierId: 0,
+            categoryId: 0,
+            table:'products',
+            color: '#000000',
+            picture: '/assets/icons/add-image-placeholder.png',
+            isCurrentUpdate: false,
+            createdAt: new Date(),
+            updatedAt: new Date()
+          };
+
+          await this.database.put(PouchConfig.Tables.products+'_'+formProduct.id, formProduct);
     }
   }
 
@@ -189,36 +182,24 @@ currentTaxes(){
   }
 
 
-  deleteAllBranches(): void {
-    if (this.hasDraftProduct) {
-      const branches = this.model.filters<BranchProducts>(Tables.branchProducts, 'productId', this.hasDraftProduct.id);
-      if (branches.length > 0) {
-        branches.forEach(branch => {
-            if (branch) {
-              this.model.delete(Tables.branchProducts, '"' + branch.id + '"');
-           }
-        });
-      }
-    }
 
-  }
 
   updateBranch(): void {
-    this.deleteAllBranches();
+  
     if (this.hasDraftProduct && this.branchList.value.length > 0) {
       this.branchList.value.forEach(id => {
-        this.model.create<BranchProducts>(Tables.branchProducts, {
-          id: this.database.uid(),
-          productId: this.hasDraftProduct.id,
-          branchId: id
-        });
+          this.database.put(PouchConfig.Tables.branchProducts+'_'+this.hasDraftProduct.id, {
+            id: this.database.uid(),
+            productId: this.hasDraftProduct.id,
+            branchId: id
+          });
       });
     }
   }
 
   update(): Product {
     if (this.hasDraftProduct) {
-      return this.model.update<Product>(Tables.products, this.hasDraftProduct, this.hasDraftProduct.id);
+      return this.database.put(PouchConfig.Tables.products+'_'+this.hasDraftProduct.id, this.hasDraftProduct);
     }
 
   }
@@ -235,7 +216,7 @@ currentTaxes(){
   discardProduct(): void {
     if(this.hasDraftProduct){
       this.variant.deleteProductVariations(this.hasDraftProduct);
-      this.deleteAllBranches();
+     
       this.model.delete(Tables.products, '"' + this.hasDraftProduct.id + '"');
     }
   }

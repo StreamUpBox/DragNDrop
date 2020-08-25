@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MainModelService, Tables, Stock, Branch, SettingsService,
-   StockHistory, Variant, PouchDBService } from '@enexus/flipper-components';
+   StockHistory, Variant, PouchDBService, PouchConfig } from '@enexus/flipper-components';
 import { ModelService } from '@enexus/flipper-offline-database';
 
 @Injectable({
@@ -8,59 +8,159 @@ import { ModelService } from '@enexus/flipper-offline-database';
 })
 export class StockService {
   reasons = [];
+  branches$: Branch[] = [];
+  stock:Stock=null;
+  stocks:Stock[]=[];
+  variant: Variant;
+  stockHistory: StockHistory;
+  stockHistories: StockHistory[];
   constructor(private query: ModelService,
               private model: MainModelService,
               private setting: SettingsService,
               private database: PouchDBService) { }
 
-  init() {
+  async init() {
+    await this.currentBranches();
     this.reasons = this.setting.reasons();
   }
+
+  currentBranches(){
+    return this.database.listBusinessBranches().then(branches=>{
+            this.branches$=branches;
+       });
+ }
+ 
   findVariantStock(variantId: any) {
-    return this.model.findByFirst<Stock>(Tables.stocks, 'variantId', variantId);
+
+    return this.database.query(['table','variantId'], {
+      table: { $eq: 'stocks' },
+      variantId: { $eq: variantId }
+    }).then(res => {
+
+      if (res.docs && res.docs.length > 0) {
+          this.stock = res.docs[0] as Stock;
+      } else {
+        this.stock = null;
+      }
+  });
+
   }
 
-  findBranch(id: string): Branch {
-    return this.model.find<Branch>(Tables.branch, id);
-  }
+ 
   variantStocks(variantId: string): Stock[] {
-    return this.model.filters<Stock>(Tables.stocks, 'variantId', variantId);
+
+        return this.database.query(['table','variantId'], {
+          table: { $eq: 'stocks' },
+          variantId: { $eq: variantId }
+        }).then(res => {
+          if (res.docs && res.docs.length > 0) {
+            this.stocks = res.docs as Stock[];
+          } else {
+            this.stocks = [] as Stock[];
+          }
+      });
   }
 
   variantStockHistory(variantId: string): StockHistory[] {
-    return this.model.filters<StockHistory>(Tables.stockHistory, 'variantId', variantId);
+   
+      return this.database.query(['table','variantId'], {
+        table: { $eq: 'stockHistories' },
+        variantId: { $eq: variantId }
+      }).then(res => {
+        if (res.docs && res.docs.length > 0) {
+          this.stockHistories= res.docs as StockHistory[];
+        } else {
+          this.stockHistories= [] as StockHistory[];
+        }
+    });
   }
 
-  productStockHistory(variantIds: string[], reasons: string[]= []): StockHistory[] {
+  productStockHistory(variantIds: string[], reasons: string[]= []) {
     const rs = reasons.length > 0 ? `reason IN (${reasons.join()}) AND` : '';
-    return this.query.queries(Tables.stockHistory, ` ${rs} variantId IN (${variantIds.join()})`);
+    return [];
   }
 
-  findStock(variantId: string) {
-    return this.model.find<Stock>(Tables.stocks, variantId);
+  findStock(Id: string) {
+
+        return this.database.query(['table','id'], {
+          table: { $eq: 'stocks' },
+          id: { $eq: Id }
+        }).then(res => {
+
+          if (res.docs && res.docs.length > 0) {
+            this.stock = res.docs[0] as Stock;
+          } else {
+            this.stock = null;
+          }
+      });
+  }
+
+  findBranch(branchId){
+    return this.database.query(['table','branchId'], {
+      table: { $eq: 'branches' },
+      id: { $eq: branchId }
+    }).then(res => {
+
+      if (res.docs && res.docs.length > 0) {
+          return res.docs[0] as Branch;
+      } else {
+          return null;
+      }
+  });
   }
 
   findVariant(variantId: string) {
-    return this.model.find<Variant>(Tables.variants, variantId);
+
+    return this.database.query(['table','variantId'], {
+      table: { $eq: 'variants' },
+      id: { $eq: variantId }
+    }).then(res => {
+
+      if (res.docs && res.docs.length > 0) {
+        this.variant = res.docs[0] as Variant;
+      } else {
+        this.variant= null;
+      }
+  });
+
   }
 
   findPreviouslyStockHistory(variantId: string) {
-    return this.query.select(Tables.stockHistory)
-      .where('variantId', variantId)
-      .andWhere('isPreviously', true).first<StockHistory>();
+    return this.database.query(['table','variantId','isPreviously'], {
+        table: { $eq: 'stockHistories' },
+        variantId: { $eq: variantId },
+        isPreviously:{$eq:true}
+      }).then(res => {
+        if (res.docs && res.docs.length > 0) {
+          this.stockHistory= res.docs[0] as StockHistory;
+        } else {
+          this.stockHistory= null;
+        }
+    });
   }
 
   findDraftStockHistory(variantId: string) {
-    return this.query.select(Tables.stockHistory)
-      .where('variantId', variantId)
-      .andWhere('isDraft', true).first<StockHistory>();
+  
+      return this.database.query(['table','variantId','isDraft'], {
+        table: { $eq: 'stockHistories' },
+        variantId: { $eq: variantId },
+        isDraft:{$eq:true}
+      }).then(res => {
+        if (res.docs && res.docs.length > 0) {
+          this.stockHistory= res.docs[0] as StockHistory;
+        } else {
+          this.stockHistory= null;
+        }
+    });
+
   }
 
-  createStocks(formData:any , branches: Branch[]): void {
-    if (branches.length > 0) {
-      branches.forEach(branch => {
+  async createStocks(formData:any) {
+    await this.currentBranches();
+    if (this.branches$.length > 0) {
+      await this.branches$.forEach(branch => {
 
-        this.create({
+         this.create({
           id: this.database.uid(),
           branchId: branch.id,
           productId: formData.productId,
@@ -75,27 +175,29 @@ export class StockService {
           canTrackingStock: false,
           showLowStockAlert: false,
           createdAt: new Date(),
-          updatedAt: new Date()
+          updatedAt: new Date(),
+          table:'stocks',
         });
+        
       });
     }
   }
 
-  create(stock: Stock): any {
-    return this.model.create<Stock>(Tables.stocks, stock);
+   create(stock: Stock) {
+    return  this.database.put(PouchConfig.Tables.stocks+'_'+stock.id, stock);
   }
 
   createHistory(stock: StockHistory): any {
-    return this.model.create<StockHistory>(Tables.stockHistory, stock);
+    return  this.database.put(PouchConfig.Tables.stockHistories+'_'+stock.id, stock);
   }
   updateHistory(stock: StockHistory): any {
-    return this.model.update<StockHistory>(Tables.stockHistory, stock, stock.id);
+    return  this.database.put(PouchConfig.Tables.stockHistories+'_'+stock.id, stock);
   }
 
 
   update(stock: Stock): Stock {
     if (stock) {
-      return this.model.update<Stock>(Tables.stocks, stock, stock.id);
+      return this.database.put(PouchConfig.Tables.stocks+'_'+stock.id, stock);
     }
 
   }
@@ -120,20 +222,20 @@ export class StockService {
   }
 
   deleteStocks(variation: Variant): void {
-    const stocks: Stock[] = this.model.filters<Stock>(Tables.stocks, 'variantId', variation.id);
+    const stocks: Stock[] = this.variantStocks(variation.id);
 
     if (stocks.length > 0) {
       stocks.forEach(stock => {
-        this.model.delete(Tables.stocks, '"' + stock.id + '"');
+        this.database.remove(stock);;
       });
     }
   }
 
   deleteStocksHistory(variation: Variant): void {
-    const stocks: StockHistory[] = this.model.filters<StockHistory>(Tables.stockHistory, 'variantId', variation.id);
+    const stocks: StockHistory[] = this.variantStockHistory(variation.id);
     if (stocks.length > 0) {
       stocks.forEach(stock => {
-        this.model.delete(Tables.stocks, '"' + stock.id + '"');
+        this.database.remove(stock);
       });
     }
   }

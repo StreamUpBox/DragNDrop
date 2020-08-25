@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MainModelService, Tables, Variant, SettingsService, Business,
-         Branch, Product, StockHistory, Labels, PouchDBService, Stock } from '@enexus/flipper-components';
+         Branch, Product, StockHistory, Labels, PouchDBService, Stock, PouchConfig } from '@enexus/flipper-components';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { VariantsDialogModelComponent } from '../variants/variants-dialog-model/variants-dialog-model.component';
 import { DialogService,  } from '@enexus/flipper-dialog';
@@ -23,7 +23,9 @@ export class VariationService {
   form: FormGroup;
   product: Product;
   variantsSubject: BehaviorSubject<Variant[]>;
+  defaultBusiness:Business=null;
   private readonly variantsMap = new Map<string, Variant>();
+  variant: Variant;
   set allVariants(variants: Variant[]) {
     this.myAllVariants = variants;
   }
@@ -43,7 +45,7 @@ export class VariationService {
 
   public loadAllVariants(product: Product): Observable<Variant[]> {
     const data: Variant[] = [];
-    this.allVariant(product).forEach(d => data.push(d as Variant));
+    // this.allVariant(product).forEach(d => data.push(d as Variant));
     this.variantsSubject.next(data);
     this.variantsMap.clear();
     data.forEach(variant => this.variantsMap.set(variant.id as any, variant));
@@ -59,6 +61,7 @@ export class VariationService {
     //TODO: swap the bellow functions regular,createRegular,variants,stockUpdate to use pouch instead of alasql
     if (product) {
       this.product = product;
+      this.allVariant(product);
       this.regular(product);
       this.createRegular(product);
       this.variants(product);
@@ -67,10 +70,12 @@ export class VariationService {
 
 
   }
-
-  public activeBusiness(): Business {
-    return this.model.active<Business>(Tables.business);
+  activeBusiness(){
+    return this.database.currentBusiness().then(business => {
+      this.defaultBusiness= business;
+   });
   }
+
   updateDefaultUnit(variation: Variant, key: string, id: string): void {
     this.updateRegularVariant(variation, key, id);
 
@@ -78,17 +83,40 @@ export class VariationService {
   }
 
   findVariant(variantId: string) {
-    return this.model.find<Variant>(Tables.variants, variantId);
+
+    return this.database.query(['table','id'], {
+      table: { $eq: 'variants' },
+      id: { $eq: variantId }
+    }).then(res => {
+
+      if (res.docs && res.docs.length > 0) {
+          this.variant= res.docs[0] as Variant;
+      } else {
+        this.variant= null;
+      }
+  });
+
   }
 
   findFirst(productId: string): Variant {
-    return this.model.findByFirst<Variant>(Tables.variants, 'productId', productId);
+
+    return this.database.query(['table','productId'], {
+      table: { $eq: 'variants' },
+      productId: { $eq: productId }
+    }).then(res => {
+
+      if (res.docs && res.docs.length > 0) {
+        this.variant= res.docs[0] as Variant;
+      } else {
+        this.variant= null;
+      }
+  });
   }
 
-  request(action = null, variant = null): void {
-    // console.log(variant);
-    const stock: Stock = variant?this.stock.findVariantStock(variant?variant.id:null):null;
-    this.form = this.formBuilder.group({
+  async request(action = null, variant = null) {
+    await this.stock.findVariantStock(variant?variant.id:null);
+    const stock: Stock = this.stock.stock?this.stock.stock:null;
+    this.form = await this.formBuilder.group({
       name: [!action && variant && variant.name ? variant.name : '', Validators.required],
       SKU: !action && variant && variant.SKU ? variant.SKU : this.generateSKU(),
       retailPrice: [!action && variant && stock ? stock.retailPrice : 0.00, Validators.min(0)],
@@ -114,16 +142,16 @@ export class VariationService {
     return result;
  }
 
-  create(variant: Variant): Variant | Variant[] {
-    return this.model.create<Variant>(Tables.variants, variant);
+  create(variant: Variant) {
+    return  this.database.put(PouchConfig.Tables.variants+'_'+variant.id, variant);
   }
 
-  createRegular(product: Product): void {
+  async createRegular(product: Product) {
 
   
 
     if (!this.hasRegular) {
-      const formData={
+      const formData= await {
         id: this.database.uid(),
         name: 'Regular',
         productName: product.name,
@@ -136,10 +164,11 @@ export class VariationService {
         syncedOnline: false,
         isActive: false,
         createdAt: new Date(),
-        updatedAt: new Date()
+        updatedAt: new Date(),
+        table:'variants',
       
       };
-      this.create(formData);
+      await this.database.put(PouchConfig.Tables.variants+'_'+formData.id, formData);
       this.createVariantStock(formData);
       this.regular(product);
     }
@@ -147,35 +176,51 @@ export class VariationService {
   }
 
   createVariantStock(formData:any) {
-    this.stock.createStocks(formData,
-      this.model.filters<Branch>(Tables.branch, 'businessId',
-        this.model.active<Business>(Tables.business).id)
-    );
+    this.stock.createStocks(formData);
   }
 
 
-  variants(product: Product): void {
-    this.allVariants = [];
-    this.allVariants = this.model.filters<Variant>(Tables.variants, 'productId', product.id);
+ async variants(product: Product) {
+    return this.allVariant(product);
   }
 
-  productStockHistory(product: Product): StockHistory[] {
+ async productStockHistory(product: Product) {
     const variantIds: string[] = [];
-    this.allVariant(product).forEach(sh => {
+    await this.allVariant(product);
+     this.allVariants.forEach(sh => {
       variantIds.push(`'${sh.id}'`);
     });
     return this.stock.productStockHistory(variantIds);
   }
 
 
-  allVariant(product: Product): Variant[] {
-    return this.model.filters<Variant>(Tables.variants, 'productId', product.id);
+  async allVariant(product: Product) {
+     
+        return this.productVariations(product.id).then(res => {
+           
+          this.allVariants= res as Variant[];
+            
+    });
   }
+  productVariations(productId){
+    return this.database.query(['table', 'productId'], {
+      table: { $eq: 'variants' },
+      productId: { $eq: productId }
+    }).then(res => {
+            if (res.docs && res.docs.length > 0) {
+              return res.docs as Variant[];
+            } else {
+              return [];
+            }
+    });
+  }
+
+  
   get formControl() { return this.form.controls; }
 
-  regular(product: Product): void {
-
-    this.hasRegular = this.model.findByLast<Variant>(Tables.variants, 'productId', product.id);
+  async regular(product: Product) {
+    await this.allVariant(product);
+    this.hasRegular = this.allVariants.length > 0?this.allVariants[0]:null;   
   }
 
 
@@ -195,20 +240,20 @@ export class VariationService {
 
   update(variation: Variant): void {
     if (variation) {
-      this.model.update<Variant>(Tables.variants, variation, variation.id);
+      return this.database.put(PouchConfig.Tables.variants+'_'+variation.id, variation);
     }
 
   }
-  deleteAllVariantsDialog(product: Product) {
+  async deleteAllVariantsDialog(product: Product) {
     const variants = [];
-    const p  =  this.model.draft<Product>(Tables.products, 'isDraft');
-    const allVariants = this.model.filters<Variant>(Tables.variants, 'productId', p.id);
-    allVariants.forEach((v, i) => {
+    await this.allVariant(product);
+
+    this.allVariants.forEach((v, i) => {
       variants.push(`${i + 1}. ${v.name}`);
     });
     this.dialog.delete('Variants', variants).subscribe(confirm => {
-      this.deleteProductVariations(p);
-      this.init(p);
+      this.deleteProductVariations(product);
+      this.init(product);
     });
   }
 
@@ -237,6 +282,7 @@ updateStockControl(result: any, variant: Variant) {
             reason: res.reason,
             quantity: res.currentStock,
             note: res.reason,
+            table:'stockHistories',
             createdAt: new Date(),
             updatedAt: new Date(),
           });
@@ -299,15 +345,14 @@ updateStockControl(result: any, variant: Variant) {
 
 
 
-  deleteProductVariations(product: Product): void {
+  async deleteProductVariations(product: Product) {
     if (product) {
-
-      const variations: Variant[] = this.model.filters<Variant>(Tables.variants, 'productId', product.id);
-      if (variations.length > 0) {
-        variations.forEach(variation => {
+      await this.allVariant(product);
+      if (this.allVariants.length > 0) {
+        this.allVariants.forEach(variation => {
           this.stock.deleteStocks(variation);
           this.stock.deleteStocksHistory(variation);
-          this.model.delete(Tables.variants, '"' + variation.id + '"');
+          this.database.remove(variation);
         });
       }
     }
@@ -316,12 +361,12 @@ updateStockControl(result: any, variant: Variant) {
 
 
   deleteVariations(): void {
-    const variations: Variant[] = this.model.loadAll<Variant>(Tables.variants);
+    const variations: Variant[] = this.allVariants;
     if (variations.length > 0) {
       variations.forEach(variation => {
         this.stock.deleteStocks(variation);
         this.stock.deleteStocksHistory(variation);
-        this.model.delete(Tables.variants, '"' + variation.id + '"');
+        this.database.remove(variation);
       });
     }
   }
@@ -331,7 +376,7 @@ updateStockControl(result: any, variant: Variant) {
       this.dialog.delete('Variant', [`Variant: ${variant.name}`]).subscribe(confirm => {
         this.stock.deleteStocks(variant);
         this.stock.deleteStocksHistory(variant);
-        this.model.delete(Tables.variants, `'${variant.id}'`);
+        this.database.remove(variant);
         this.init(product);
       });
 
@@ -341,9 +386,10 @@ updateStockControl(result: any, variant: Variant) {
 
 
 
-  stockUpdates(): void {
+  async stockUpdates() {
     if (this.hasRegular) {
-      const stock = this.stock.variantStocks(this.hasRegular.id);
+      await this.stock.variantStocks(this.hasRegular.id);
+      const stock = this.stock.stocks;
       this.variantStock = {
         length: stock.length,
         lowStock: stock.length > 0 ? stock[0].lowStock : 0,
@@ -352,26 +398,27 @@ updateStockControl(result: any, variant: Variant) {
     }
   }
 
-  updateVariant(key: any, variant: Variant, event: any) {
+  async updateVariant(key: any, variant: Variant, event: any) {
     const val = key === 'unit' ? event.value : event.target.value;
 
     if (key === 'retailPrice' || key === 'supplyPrice') {
-      const myStock = this.stock.findVariantStock(variant.id);
+      await this.stock.findVariantStock(variant?variant.id:null);
+      const myStock = this.stock.stock;
       myStock[key] = parseInt(val, 10);
       this.stock.update(myStock);
     } else {
       this.updateRegularVariant(variant, key, val);
     }
-  }
+  } 
 
-  updateVariantAction(product: Product) {
-    const variants: Variant[] = this.model.filters<Variant>(Tables.variants, 'productId', product.id);
-    if (variants.length > 0) {
-      variants.forEach(variant => {
-        this.stock.updateStockHistoryAction(variant.id);
-        variant.isActive = true;
-        this.update(variant);
-      });
+  async updateVariantAction(product: Product) {
+    await this.allVariant(product);
+    if (this.allVariants.length > 0) {
+          this.allVariants.forEach(variant => {
+            this.stock.updateStockHistoryAction(variant.id);
+            variant.isActive = true;
+            this.update(variant);
+          });
     }
   }
 

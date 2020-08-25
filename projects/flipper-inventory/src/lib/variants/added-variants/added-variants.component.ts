@@ -27,11 +27,14 @@ constructor(private dialog: DialogService,
             public variant: VariationService, public stock: StockService) { }
 
   ngOnInit() {
-
+    this.variant.activeBusiness();
   }
-  getTotalStock(variantId, key: any): number {
-    if (this.stock.variantStocks(variantId).length > 0) {
-          return this.totalPipe.transform(this.stock.variantStocks(variantId), key);
+
+   getTotalStock(variantId, key: any):number {
+     this.stock.variantStocks(variantId);
+    console.log(this.stock.stocks);
+    if (this.stock.stocks.length > 0) {
+          return this.totalPipe.transform(this.stock.stocks, key);
     } else {
         return 0;
     }
@@ -57,6 +60,20 @@ constructor(private dialog: DialogService,
       this.variant.init(this.product);
     }
 
+  }
+
+  allVariant(product: Product){
+    const variants: Variant[] = [];
+
+        this.variant.allVariant(product);
+        if (this.variant.allVariants.length > 0) {
+          this.variant.allVariants.forEach( variant => {
+    
+                   variants.push(variant);
+                   
+                });
+              }
+        return variants;
   }
 
   deleteVariation(variant: Variant) {

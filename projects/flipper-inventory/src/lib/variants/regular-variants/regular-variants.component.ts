@@ -28,7 +28,8 @@ export class RegularVariantsComponent implements OnInit {
               private totalPipe: CalculateTotalClassPipe) { }
 
   ngOnInit() {
-
+this.variant.activeBusiness();
+this.stock.variantStocks(this.variant.hasRegular.id);
   }
   refresh() {
     if (this.variant.hasRegular) {
@@ -66,32 +67,37 @@ export class RegularVariantsComponent implements OnInit {
     }
   }
 
-  getTotalStock(variantId, key: any): number {
-    if (this.stock.variantStocks(variantId).length > 0) {
-          return this.totalPipe.transform(this.stock.variantStocks(variantId), key);
+   getTotalStock(variantId, key: any):number {
+     this.stock.variantStocks(variantId);
+    if (this.stock.stocks.length > 0) {
+          return this.totalPipe.transform(this.stock.stocks, key);
     } else {
         return 0;
     }
   }
 
-  focusingOut() {
-  const stock = this.stock.findVariantStock(this.variant.hasRegular.id);
-  if (this.isFocused === 'retailPrice' && (this.variant.form.controls.retailPrice.value === 0 ||
-    this.variant.form.controls.retailPrice.value === '')) {
-    this.variant.form.controls.retailPrice.setValue(stock.retailPrice ? stock.retailPrice : 0);
-    }
-  if (this.isFocused === 'supplyPrice' && (this.variant.form.controls.supplyPrice.value === 0 ||
-    this.variant.form.controls.supplyPrice.value === '')) {
-      this.variant.form.controls.supplyPrice.setValue(stock.supplyPrice ? stock.supplyPrice : 0);
-    }
+  async focusingOut() {
 
-  if (this.isFocused === 'SKU' && (this.variant.form.controls.SKU.value === 0 ||
-    this.variant.form.controls.SKU.value === '')) {
-      this.variant.form.controls.SKU.setValue(this.variant.hasRegular.SKU);
-    }
+    await this.stock.findVariantStock(this.variant.hasRegular.id);
+    const stock = this.stock.stock;
+
+      if (this.isFocused === 'retailPrice' && (this.variant.form.controls.retailPrice.value === 0 ||
+        this.variant.form.controls.retailPrice.value === '')) {
+        this.variant.form.controls.retailPrice.setValue(stock.retailPrice ? stock.retailPrice : 0);
+        }
+      if (this.isFocused === 'supplyPrice' && (this.variant.form.controls.supplyPrice.value === 0 ||
+        this.variant.form.controls.supplyPrice.value === '')) {
+          this.variant.form.controls.supplyPrice.setValue(stock.supplyPrice ? stock.supplyPrice : 0);
+        }
+
+      if (this.isFocused === 'SKU' && (this.variant.form.controls.SKU.value === 0 ||
+        this.variant.form.controls.SKU.value === '')) {
+          this.variant.form.controls.SKU.setValue(this.variant.hasRegular.SKU);
+        }
 
 
-  this.isFocused = '';
+       this.isFocused = '';
+
   }
 
 

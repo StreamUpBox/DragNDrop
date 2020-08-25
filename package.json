@@ -10,7 +10,6 @@
     "build-color": "ng build flippercolor --watch",
     "build-dialog": "ng build flipperdialog --watch",
     "build-font": "ng build flipperfont --watch",
-  
     "build-pos": "ng build flipperpos --watch ",
     "build-event": "ng build flipperevent --watch",
     "build-db": "ng build flipperofflinedatabase --watch",

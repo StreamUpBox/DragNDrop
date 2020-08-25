@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Variant } from '@enexus/flipper-components';
+import { Variant, Business } from '@enexus/flipper-components';
 import { VariationService } from '../../services/variation.service';
 import { StockService } from '../../services/stock.service';
 
@@ -11,9 +11,11 @@ import { StockService } from '../../services/stock.service';
 export class EditVariantComponent implements OnInit {
   @Input() variation: Variant;
   isFocused = '';
+  defaultBusiness:Business;
   constructor(public variant: VariationService, private stock: StockService) { }
 
   ngOnInit() {
+    this.variant.activeBusiness();
     if (this.variation) {
       this.variant.request(null, this.variation);
     }
@@ -41,26 +43,29 @@ export class EditVariantComponent implements OnInit {
     }
   }
 
-  focusingOut() {
-  const stock = this.stock.findVariantStock(this.variation.id);
-  if (this.isFocused === 'retailPrice' && (this.variant.form.controls.retailPrice.value === 0 ||
-     this.variant.form.controls.retailPrice.value === '')) {
-    this.variant.form.controls.retailPrice.setValue(stock.retailPrice ? stock.retailPrice : 0);
-    }
-  if (this.isFocused === 'supplyPrice' && (this.variant.form.controls.supplyPrice.value === 0 ||
-    this.variant.form.controls.supplyPrice.value === '')) {
-      this.variant.form.controls.supplyPrice.setValue(stock.supplyPrice ? stock.supplyPrice : 0);
-    }
+      async focusingOut() {
+        await this.stock.findVariantStock(this.variation.id);
 
-  if (this.isFocused === 'SKU' && (this.variant.form.controls.SKU.value === 0 ||
-     this.variant.form.controls.SKU.value === '')) {
-      this.variant.form.controls.SKU.setValue(this.variation.SKU);
-    }
-  if (this.isFocused === 'name' && (this.variant.form.controls.name.value === 0 ||
-    this.variant.form.controls.name.value === '')) {
-      this.variant.form.controls.name.setValue(this.variation.name);
-    }
+         const stock = this.stock.stock; 
 
-  this.isFocused = '';
-  }
+          if (this.isFocused === 'retailPrice' && (this.variant.form.controls.retailPrice.value === 0 ||
+            this.variant.form.controls.retailPrice.value === '')) {
+            this.variant.form.controls.retailPrice.setValue(stock.retailPrice ? stock.retailPrice : 0);
+            }
+          if (this.isFocused === 'supplyPrice' && (this.variant.form.controls.supplyPrice.value === 0 ||
+            this.variant.form.controls.supplyPrice.value === '')) {
+              this.variant.form.controls.supplyPrice.setValue(stock.supplyPrice ? stock.supplyPrice : 0);
+            }
+
+          if (this.isFocused === 'SKU' && (this.variant.form.controls.SKU.value === 0 ||
+            this.variant.form.controls.SKU.value === '')) {
+              this.variant.form.controls.SKU.setValue(this.variation.SKU);
+            }
+          if (this.isFocused === 'name' && (this.variant.form.controls.name.value === 0 ||
+            this.variant.form.controls.name.value === '')) {
+              this.variant.form.controls.name.setValue(this.variation.name);
+            }
+
+          this.isFocused = '';
+      }
 }

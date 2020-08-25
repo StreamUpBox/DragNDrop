@@ -34,6 +34,7 @@ export class AddVariantComponent implements OnInit {
   }
   get formControl() { return this.form.controls; }
   ngOnInit() {
+    this.variant.activeBusiness();
     this.form = this.formBuilder.group({
       name: [ '', Validators.required],
       SKU: this.variant.generateSKU(),

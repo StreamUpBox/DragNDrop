@@ -33,7 +33,7 @@
       <td style="width:25%" [class.trIsFocused]="isFocused=='retailPrice'">
         <div class="price">
 
-          <span class="currency">{{variant.activeBusiness().currency}}
+          <span class="currency">{{variant.defaultBusiness.currency}}
             {{variant.hasRegular.unit?'/ '+variant.hasRegular.unit:''}}</span>
           <span class="pinput">
             <input class="input" formControlName="retailPrice" type="number" (input)="updateVariant('retailPrice',$event)"
@@ -47,7 +47,7 @@
       <td style="width:25%" [class.trIsFocused]="isFocused=='supplyPrice'">
         <div class="price">
 
-          <span class="currency">{{variant.activeBusiness().currency}}
+          <span class="currency">{{variant.defaultBusiness.currency}}
             {{variant.hasRegular.unit?'/ '+variant.hasRegular.unit:''}}</span>
           <span class="pinput">
             <input class="input" formControlName="supplyPrice" type="number" (input)="updateVariant('supplyPrice',$event)"
@@ -64,13 +64,13 @@
 
       <td style="width:25%">
         <a class="form-link-with-spacing hyperlink"  (click)="variant.openVariantDialog(variant.hasRegular,1)">
-          <span *ngIf="stock.variantStocks(variant.hasRegular.id).length==1 && getTotalStock(variant.hasRegular.id,'currentStock') > 0">
+          <span *ngIf="this.stock.stocks.length==1 && getTotalStock(variant.hasRegular.id,'currentStock') > 0">
             {{getTotalStock(variant.hasRegular.id,'currentStock')}} {{variant.hasRegular.unit}}
           </span> 
-          <span *ngIf="stock.variantStocks(variant.hasRegular.id).length > 1">
+          <span *ngIf="this.stock.stocks.length > 1">
             Edit Per Location
           </span>
-          <span *ngIf="stock.variantStocks(variant.hasRegular.id).length > 0 && getTotalStock(variant.hasRegular.id,'currentStock') == 0">
+          <span *ngIf="this.stock.stocks.length > 0 && getTotalStock(variant.hasRegular.id,'currentStock') == 0">
             None
           </span>
         </a>
@@ -81,13 +81,13 @@
       </td>
       <td style="width:25%">
             <a class="form-link-with-spacing hyperlink" (click)="variant.openVariantDialog(variant.hasRegular,1)">
-                <span *ngIf="stock.variantStocks(variant.hasRegular.id).length==1 && getTotalStock(variant.hasRegular.id,'lowStock') > 0" >
+                <span *ngIf="this.stock.stocks.length==1 && getTotalStock(variant.hasRegular.id,'lowStock') > 0" >
                   {{getTotalStock(variant.hasRegular.id,'lowStock')}} {{variant.hasRegular.unit}}
                 </span> 
-                <span *ngIf="stock.variantStocks(variant.hasRegular.id).length > 1 ">
+                <span *ngIf="this.stock.stocks.length > 1 ">
                   Edit Per Location
                 </span>
-                <span *ngIf="stock.variantStocks(variant.hasRegular.id).length > 0 && getTotalStock(variant.hasRegular.id,'lowStock') == 0" >
+                <span *ngIf="this.stock.stocks.length > 0 && getTotalStock(variant.hasRegular.id,'lowStock') == 0" >
                   None
                 </span>
             </a>

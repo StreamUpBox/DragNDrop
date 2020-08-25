@@ -142,7 +142,6 @@ export class PouchDBService {
 
     public listBusinessTaxes() {
 
-      
                 return this.currentBusiness().then(business => {
                     if (business) {
 
@@ -210,6 +209,14 @@ export class PouchDBService {
         //         }
         //       });
         //   })
+    }
+
+    public remove(document: any) {
+        try{
+        return this.database.remove(document);
+        }catch(e){
+            console.log('did not removed',e);
+        }
     }
 
     public find(id) {

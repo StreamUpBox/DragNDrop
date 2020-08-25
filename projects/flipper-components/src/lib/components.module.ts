@@ -78,5 +78,4 @@ import { LoadingIconComponent } from './loading-icon/loading-icon.component';
     FindKeyPipe,
   ]
 })
-export class FlipperComponentsModule {
-}
+export class FlipperComponentsModule {}

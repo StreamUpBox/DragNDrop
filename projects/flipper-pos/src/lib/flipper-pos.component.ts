@@ -15,11 +15,11 @@ const sql = alasql;
 export class FlipperPosComponent implements OnInit {
 
   constructor() {
-   
+
   }
 
   ngOnInit() {
-  
+
   }
 
 }

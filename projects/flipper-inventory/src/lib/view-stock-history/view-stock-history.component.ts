@@ -17,8 +17,8 @@ import { MatPaginator } from '@angular/material/paginator';
 })
 export class ViewStockHistoryComponent implements OnInit, OnDestroy {
   constructor(public dialogRef: MatDialogRef<ViewStockHistoryComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    public stockHsSvc: StockHistoryService) {
+              @Inject(MAT_DIALOG_DATA) public data: any,
+              public stockHsSvc: StockHistoryService) {
     this.dataSource = new MatTableDataSource([]);
     if (data.isArray) {
       this.data.variant.forEach(v => {

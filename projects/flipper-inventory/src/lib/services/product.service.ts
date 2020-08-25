@@ -22,8 +22,8 @@ export class ProductService {
   private readonly productsMap = new Map<string, Product>();
   defaultBusiness$: Business = null;
   defaultBranch$: Branch = null;
-  currentUser$:User=null;
-  defaultTaxe$:Taxes=null;
+  currentUser$: User = null;
+  defaultTaxe$: Taxes = null;
 
   constructor(private query: ModelService,
               private model: MainModelService,
@@ -31,43 +31,43 @@ export class ProductService {
               private formBuilder: FormBuilder,
               private database: PouchDBService) {
               this.productsSubject = new BehaviorSubject([]);
-            
-          
+
+
 
   }
 
    async init() {
-     
+
     await this.currentBusiness();
     await this.currentBranches();
-    await this.currentTaxes()
+    await this.currentTaxes();
     await this.hasDraft();
     await this.create();
-    
+
 
   }
-  get defaultBusiness():Business{
+  get defaultBusiness(): Business{
     return this.defaultBusiness$;
   }
-  set defaultBusiness(val:Business){
-    this.defaultBusiness$=val;
+  set defaultBusiness(val: Business){
+    this.defaultBusiness$ = val;
   }
 
   public currentBusiness() {
       this.database.currentBusiness().then(business => {
-        console.log('busine',business);
-          this.defaultBusiness=business;
+        console.log('busine', business);
+        this.defaultBusiness = business;
     });
 }
 currentBranches(){
-      this.database.listBusinessBranches().then(branches=>{
-        this.branches$=branches;
+      this.database.listBusinessBranches().then(branches => {
+        this.branches$ = branches;
       });
 }
 
 currentTaxes(){
-    this.database.listBusinessTaxes().then(taxes=>{
-      this.taxes$=taxes;
+    this.database.listBusinessTaxes().then(taxes => {
+      this.taxes$ = taxes;
     });
 }
 
@@ -91,52 +91,53 @@ currentTaxes(){
   async request() {
     const hasDraftProduct = this.hasDraftProduct;
     this.form = await this.formBuilder.group({
-      name: [hasDraftProduct? hasDraftProduct.name:'' , Validators.required],
+      name: [hasDraftProduct ? hasDraftProduct.name : '' , Validators.required],
       categoryId: hasDraftProduct ? hasDraftProduct.categoryId : 0,
       description: hasDraftProduct ? hasDraftProduct.description : '',
       picture: hasDraftProduct ? hasDraftProduct.picture : '',
       taxId: hasDraftProduct ? hasDraftProduct.taxId : '',
-      supplierId: hasDraftProduct? hasDraftProduct.supplierId : 0,
+      supplierId: hasDraftProduct ? hasDraftProduct.supplierId : 0,
       createdAt: new Date(),
       updatedAt: new Date()
- 
+
     });
   }
 
   get formControl() { return this.form.controls; }
 
   async hasDraft() {
-   console.log('our business',this.defaultBusiness);
-    if(this.defaultBusiness){
-     await this.database.hasDraftProduct(this.defaultBusiness.id).then(draft=>{
-        if(draft){
-            this.hasDraftProduct=draft;
+   console.log('our business', this.defaultBusiness);
+   if (this.defaultBusiness){
+     await this.database.hasDraftProduct(this.defaultBusiness.id).then(draft => {
+        if (draft){
+            this.hasDraftProduct = draft;
         }else{
-          this.hasDraftProduct=null;
+          this.hasDraftProduct = null;
         }
       });
     }
-   
+
   }
-  
+
 
   async create() {
     await this.currentBusiness();
     await this.currentTaxes();
     await this.hasDraft();
     if (this.defaultBusiness$ && !this.hasDraftProduct ) {
-      const formProduct= await {
+      const formProduct = await {
         id: this.database.uid(),
         name: 'new item',
-        businessId: this.defaultBusiness$?this.defaultBusiness$.id:0,
+        businessId: this.defaultBusiness$ ? this.defaultBusiness$.id : 0,
         isDraft: true,
         active: false,
-        taxId:this.taxes$.find(tax=>tax.isDefault==true)?this.taxes$.find(tax=>tax.isDefault==true).id:'0', // this.model.findByFirst<Taxes>(Tables.taxes, 'isDefault', true).id,
+        taxId: this.taxes$.find(tax => tax.isDefault === true)
+        ? this.taxes$.find(tax => tax.isDefault === true).id : '0', // this.model.findByFirst<Taxes>(Tables.taxes, 'isDefault', true).id,
         description: '',
         hasPicture: false,
         supplierId: 0,
         categoryId: 0,
-        table:'products',
+        table: 'products',
         color: '#000000',
         picture: '/assets/icons/add-image-placeholder.png',
         isCurrentUpdate: false,
@@ -144,7 +145,7 @@ currentTaxes(){
         updatedAt: new Date()
       };
 
-      await this.database.put(PouchConfig.Tables.products+'_'+formProduct.id, formProduct);
+      await this.database.put(PouchConfig.Tables.products + '_' + formProduct.id, formProduct);
     }
   }
 
@@ -231,7 +232,7 @@ currentTaxes(){
   }
 
   discardProduct(): void {
-    if(this.hasDraftProduct){
+    if (this.hasDraftProduct){
       this.variant.deleteProductVariations(this.hasDraftProduct);
       this.deleteAllBranches();
       this.model.delete(Tables.products, '"' + this.hasDraftProduct.id + '"');
@@ -245,30 +246,30 @@ updateOnlineDatabase() {
   }
   if (!this.hasDraftProduct.isDraft) {
 
-    this.database.put(PouchConfig.Tables.products+'_'+this.hasDraftProduct.id, this.hasDraftProduct);
-    
-    let variants=this.model.filters<Variant>(Tables.variants, 'productId', this.hasDraftProduct.id);
-    if(variants.length > 0){
-          variants.forEach(el=>{
-            this.database.put(PouchConfig.Tables.variants+'_'+el.id, el);
-          })
+    this.database.put(PouchConfig.Tables.products + '_' + this.hasDraftProduct.id, this.hasDraftProduct);
+
+    const variants = this.model.filters<Variant>(Tables.variants, 'productId', this.hasDraftProduct.id);
+    if (variants.length > 0){
+          variants.forEach(el => {
+            this.database.put(PouchConfig.Tables.variants + '_' + el.id, el);
+          });
     }
-    let stocks=this.model.filters<Stock>(Tables.stocks, 'productId', this.hasDraftProduct.id);
-    if(stocks.length > 0){
-          stocks.forEach(el=>{
-            this.database.put(PouchConfig.Tables.stocks+'_'+el.id, el);
-          })
+    const stocks = this.model.filters<Stock>(Tables.stocks, 'productId', this.hasDraftProduct.id);
+    if (stocks.length > 0){
+          stocks.forEach(el => {
+            this.database.put(PouchConfig.Tables.stocks + '_' + el.id, el);
+          });
     }
-    let branchProducts=this.model.filters<BranchProducts>(Tables.branchProducts, 'productId', this.hasDraftProduct.id);
-    if(branchProducts.length > 0){
-      branchProducts.forEach(el=>{
-        this.database.put(PouchConfig.Tables.branchProducts+'_'+el.id, el);
+    const branchProducts = this.model.filters<BranchProducts>(Tables.branchProducts, 'productId', this.hasDraftProduct.id);
+    if (branchProducts.length > 0){
+      branchProducts.forEach(el => {
+        this.database.put(PouchConfig.Tables.branchProducts + '_' + el.id, el);
       });
     }
-    let stockHistory=this.model.filters<StockHistory>(Tables.stockHistory, 'productId', this.hasDraftProduct.id);
-    if(stockHistory.length > 0){
-      stockHistory.forEach(el=>{
-        this.database.put(PouchConfig.Tables.stockHistories+'_'+el.id, el);
+    const stockHistory = this.model.filters<StockHistory>(Tables.stockHistory, 'productId', this.hasDraftProduct.id);
+    if (stockHistory.length > 0){
+      stockHistory.forEach(el => {
+        this.database.put(PouchConfig.Tables.stockHistories + '_' + el.id, el);
       });
     }
 

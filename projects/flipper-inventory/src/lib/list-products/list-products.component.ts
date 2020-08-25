@@ -4,7 +4,7 @@ import { Product, Stock, CalculateTotalClassPipe, Variant,
    MigrateService, PouchConfig, PouchDBService, Tables,
     StockHistory } from '@enexus/flipper-components';
 
-    
+
 import { Subscription } from 'rxjs';
 import { VariationService } from '../services/variation.service';
 import { StockService } from '../services/stock.service';
@@ -54,7 +54,7 @@ export class ListProductsComponent implements OnInit, OnDestroy {
               public variant: VariationService,
               private migrate: MigrateService,
               private database: PouchDBService,
-              public product: ProductService, 
+              public product: ProductService,
               private ngZone: NgZone) {
     this.database.connect(PouchConfig.bucket);
     this.dataSource = new MatTableDataSource([]);

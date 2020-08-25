@@ -13,8 +13,8 @@ export class AddCartItemDialogComponent implements OnInit {
   taxes$: Taxes[] = [];
   units: any[] = [];
   constructor(private model: MainModelService, public dialogRef: MatDialogRef<AddCartItemDialogComponent>,
-    private formBuilder: FormBuilder,
-    protected notificationSvc: NotificationService, private setting: SettingsService) {
+              private formBuilder: FormBuilder,
+              protected notificationSvc: NotificationService, private setting: SettingsService) {
     this.units = this.setting.units();
     this.taxes$ = this.model.filters<Taxes>(Tables.taxes, 'businessId',
       this.model.active<Business>(Tables.business).id);

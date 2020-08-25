@@ -56,7 +56,7 @@ export class StockService {
       .andWhere('isDraft', true).first<StockHistory>();
   }
 
-  createStocks(formData:any , branches: Branch[]): void {
+  createStocks(formData: any , branches: Branch[]): void {
     if (branches.length > 0) {
       branches.forEach(branch => {
 
@@ -64,7 +64,7 @@ export class StockService {
           id: this.database.uid(),
           branchId: branch.id,
           productId: formData.productId,
-          variantId:formData.id,
+          variantId: formData.id,
           reasonId: 0,
           currentStock: 0,
           supplyPrice: formData.supplyPrice,

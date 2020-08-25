@@ -4,7 +4,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'paymentCardNumber',
 })
 export class PaymentCardNumberPipe implements PipeTransform {
-  
+
   /**
    * Transform card number to card format for known numbers
    */

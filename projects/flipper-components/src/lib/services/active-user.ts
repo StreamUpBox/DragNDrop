@@ -12,19 +12,19 @@ import { UserLoggedEvent } from '../events';
   providedIn: 'root'
 })
 export class ActiveUser {
-currentUser: User=null;
+currentUser: User = null;
 
-  constructor(private eventBus: FlipperEventBusService,private database: PouchDBService) {
+  constructor(private eventBus: FlipperEventBusService, private database: PouchDBService) {
     this.database.connect(PouchConfig.bucket);
-       this.init();
-       
+    this.init();
+
   }
 public init(){
-  
+
   this.user();
 
   this.eventBus.of < UserLoggedEvent > (UserLoggedEvent.CHANNEL)
-  .pipe(filter(e => e.user && (e.user.id !== null ||  e.user.id !==undefined)))
+  .pipe(filter(e => e.user && (e.user.id !== null ||  e.user.id !== undefined)))
   .subscribe(res =>
     this.currentUser = res.user);
 }
@@ -38,14 +38,14 @@ public init(){
   }
 
 
-  public async user(table=null) {
+  public async user(table= null) {
 
-   await this.database.activeUser().then(res=>{
-      if(res.docs && res.docs.length > 0){
+   await this.database.activeUser().then(res => {
+      if (res.docs && res.docs.length > 0){
           this.eventBus.publish(new UserLoggedEvent(res.docs[0]));
       }
-  },error=> {
-      if(error.error && error.status==='404' ||  error.status===404) {
+  }, error => {
+      if (error.error && error.status === '404' ||  error.status === 404) {
         this.eventBus.publish(new UserLoggedEvent(null));
       }
   });

@@ -56,7 +56,7 @@ export class VariationService {
 
   init(product: Product): void {
 
-    //TODO: swap the bellow functions regular,createRegular,variants,stockUpdate to use pouch instead of alasql
+    // TODO: swap the bellow functions regular,createRegular,variants,stockUpdate to use pouch instead of alasql
     if (product) {
       this.product = product;
       this.regular(product);
@@ -87,7 +87,7 @@ export class VariationService {
 
   request(action = null, variant = null): void {
     // console.log(variant);
-    const stock: Stock = variant?this.stock.findVariantStock(variant?variant.id:null):null;
+    const stock: Stock = variant ? this.stock.findVariantStock(variant ? variant.id : null) : null;
     this.form = this.formBuilder.group({
       name: [!action && variant && variant.name ? variant.name : '', Validators.required],
       SKU: !action && variant && variant.SKU ? variant.SKU : this.generateSKU(),
@@ -120,24 +120,24 @@ export class VariationService {
 
   createRegular(product: Product): void {
 
-  
+
 
     if (!this.hasRegular) {
-      const formData={
+      const formData = {
         id: this.database.uid(),
         name: 'Regular',
         productName: product.name,
         categoryName: '',
         productId: product.id,
-        supplyPrice:0.00,
+        supplyPrice: 0.00,
         retailPrice: 0.00,
-        unit: this.units.length > 0?this.units[0].value:'',
+        unit: this.units.length > 0 ? this.units[0].value : '',
         SKU: this.generateSKU(),
         syncedOnline: false,
         isActive: false,
         createdAt: new Date(),
         updatedAt: new Date()
-      
+
       };
       this.create(formData);
       this.createVariantStock(formData);
@@ -146,7 +146,7 @@ export class VariationService {
 
   }
 
-  createVariantStock(formData:any) {
+  createVariantStock(formData: any) {
     this.stock.createStocks(formData,
       this.model.filters<Branch>(Tables.branch, 'businessId',
         this.model.active<Business>(Tables.business).id)

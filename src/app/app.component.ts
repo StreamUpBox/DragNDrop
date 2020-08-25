@@ -25,9 +25,9 @@ export class AppComponent {
       if (PouchConfig.canSync) {
      this.database.sync(PouchConfig.syncUrl);
    }
-let userId=this.database.uid();
-let businessId=this.database.uid();
-   const user = {
+      const userId = this.database.uid();
+      const businessId = this.database.uid();
+      const user = {
     _id: '',
     name: 'Ganza',
     email: 'resp',
@@ -38,27 +38,27 @@ let businessId=this.database.uid();
     id: userId,
     userId: 1,
     expiresAt: 10000000,
-    table:'users',
-    docId:PouchConfig.Tables.user
+    table: 'users',
+    docId: PouchConfig.Tables.user
   };
 
   // this.database.put(PouchConfig.Tables.user, user);
 
-  const formBusinessData: Business = {
+      const formBusinessData: Business = {
     id: businessId,
     name: 'Flipper',
     categoryId: '0',
-    currency:'RWF',
+    currency: 'RWF',
     country: 'Rwanda',
     businessUrl: '.flipper.rw',
     typeId: '0',
     timeZone: '0',
-    userId: userId,
+    userId,
     active: true,
     createdAt: new Date(),
     updatedAt: new Date(),
-    table:'businesses',
-    docId:PouchConfig.Tables.business
+    table: 'businesses',
+    docId: PouchConfig.Tables.business
   };
 
   // this.database.put(PouchConfig.Tables.business+'_'+formBusinessData.id, formBusinessData);
@@ -66,40 +66,39 @@ let businessId=this.database.uid();
 
 
 
-  const formBranchData: Branch = {
+      const formBranchData: Branch = {
     id: this.database.uid(),
     name: 'My Business',
     active: true,
     mapLatitude: -1,
     mapLongitude: 0,
-    businessId: businessId,
-    table:'branches',
-    docId:PouchConfig.Tables.branches
- 
+    businessId,
+    table: 'branches',
+    docId: PouchConfig.Tables.branches
+
   };
 
   // this.database.put(PouchConfig.Tables.branches+'_'+formBranchData.id, formBranchData);
   // this.model.create<Branch>(Tables.branch,formBranchData);
 
-  const formTaxes2 = {
+      const formTaxes2 = {
     id: this.database.uid(),
     name: 'Vat',
     percentage: 18,
-    businessId: businessId,
+    businessId,
     active: true,
     isDefault: true,
     createdAt: new Date(),
     updatedAt: new Date(),
-    table:'taxes',
-    docId:PouchConfig.Tables.taxes
-  }
+    table: 'taxes',
+    docId: PouchConfig.Tables.taxes
+  };
 
 
- 
   // this.database.put(PouchConfig.Tables.taxes+'_'+formTaxes2.id, formTaxes2);
   // this.model.create<Taxes>(Tables.taxes,formTaxes2);
 
-  const formTaxes1 =
+      const formTaxes1 =
   {
     id: this.database.uid(),
     name: 'no Tax',
@@ -109,14 +108,14 @@ let businessId=this.database.uid();
     isDefault: false,
     createdAt: new Date(),
     updatedAt: new Date(),
-    table:'taxes',
-    docId:PouchConfig.Tables.taxes
+    table: 'taxes',
+    docId: PouchConfig.Tables.taxes
   };
   // this.database.put(PouchConfig.Tables.taxes+'_'+formTaxes1.id, formTaxes1);
   // this.model.create<Taxes>(Tables.taxes,formTaxes1);
 
               }
-  
-  
- 
+
+
+
 }

@@ -59,7 +59,7 @@ import { LoadingIconComponent } from './loading-icon/loading-icon.component';
     SpinnerComponent,
     MessageComponent,
     LazyIfDirective,
-    
+
     RoundNumberPipe,
     CalculateTotalClassPipe,
     MergeArryByIdPipe,

@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/co
 import {
   Business, Branch, ILatLng, Types, User, BusinessCategory,
   NotificationService, SettingsService, Taxes, PouchDBService,
-  PouchConfig, Tables, MainModelService,ActiveUser, ActiveBusiness, ActiveBranch
+  PouchConfig, Tables, MainModelService, ActiveUser, ActiveBusiness, ActiveBranch
 } from '@enexus/flipper-components';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -17,7 +17,7 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
   submitted = false;
   types$: Types[] = [];
   taxes$: Taxes[] = [];
-  user:User=null;
+  user: User = null;
 
   categories$: BusinessCategory[] = [];
   searchCategoryByTypes$: BusinessCategory[] = [];
@@ -32,19 +32,19 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
     longitude: 0
   };
   constructor(private database: PouchDBService,
-    private setting: SettingsService,
-    private router: Router,
-    protected notificationSvc: NotificationService,
-    private formBuilder: FormBuilder,
-    private model: MainModelService,
-    private activeUser:ActiveUser,
-    private activeBusiness:ActiveBusiness,
-    private activeBranch:ActiveBranch,
-    private ref: ChangeDetectorRef) {
+              private setting: SettingsService,
+              private router: Router,
+              protected notificationSvc: NotificationService,
+              private formBuilder: FormBuilder,
+              private model: MainModelService,
+              private activeUser: ActiveUser,
+              private activeBusiness: ActiveBusiness,
+              private activeBranch: ActiveBranch,
+              private ref: ChangeDetectorRef) {
     this.getLocation();
-    
+
     //  PouchConfig.bucket hardcoded to be main.
-    this.database.connect(PouchConfig.bucket); //keep the name of the bucket is main for all
+    this.database.connect(PouchConfig.bucket); // keep the name of the bucket is main for all
   }
 
 
@@ -67,7 +67,7 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
   }
   async ngOnInit() {
     this.getLocation();
-    
+
     this.types$ = this.model.loadAll<Types>(Tables.type);
     this.categories$ = this.model.loadAll<BusinessCategory>(Tables.businessCategory);
 
@@ -93,18 +93,18 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
 
 
 
-await this.database.activeUser().then(res=>{
- 
- if(res.docs && res.docs.length > 0){
+    await this.database.activeUser().then(res => {
+
+ if (res.docs && res.docs.length > 0){
     this.activeUser.currentUser = res.docs[0];
   }
 
 });
 
-if(this.activeUser.currentUser){
-    await this.database.activeBusiness(this.activeUser.currentUser.id).then(res=>{
-    
-    if(res.docs && res.docs.length > 0){
+    if (this.activeUser.currentUser){
+    await this.database.activeBusiness(this.activeUser.currentUser.id).then(res => {
+
+    if (res.docs && res.docs.length > 0){
         this.activeBusiness.currentBusiness = res.docs[0];
       }
 
@@ -112,11 +112,11 @@ if(this.activeUser.currentUser){
 }
 
 
- console.log(this.activeBusiness.currentBusiness);
- 
+    console.log(this.activeBusiness.currentBusiness);
 
-      
-      this.ref.detectChanges();
+
+
+    this.ref.detectChanges();
 
   }
 
@@ -165,15 +165,15 @@ if(this.activeUser.currentUser){
       active: true,
       createdAt: new Date(),
       updatedAt: new Date(),
-      table:'businesses',
-      docId:PouchConfig.Tables.business
+      table: 'businesses',
+      docId: PouchConfig.Tables.business
     };
 
-    this.database.put(PouchConfig.Tables.business+'_'+formBusinessData.id, formBusinessData);
+    this.database.put(PouchConfig.Tables.business + '_' + formBusinessData.id, formBusinessData);
 
-    if(this.activeBusiness.currentBusiness){
-          this.activeBusiness.currentBusiness.active=false;
-          this.database.put(PouchConfig.Tables.business+'_'+this.activeBusiness.currentBusiness.id, 
+    if (this.activeBusiness.currentBusiness){
+          this.activeBusiness.currentBusiness.active = false;
+          this.database.put(PouchConfig.Tables.business + '_' + this.activeBusiness.currentBusiness.id,
           this.activeBusiness.currentBusiness);
     }
 
@@ -186,12 +186,12 @@ if(this.activeUser.currentUser){
       mapLatitude: this.origin.latitude,
       mapLongitude: this.origin.longitude,
       businessId: this.registerForm.value.id,
-      table:'branches',
-      docId:PouchConfig.Tables.branches
+      table: 'branches',
+      docId: PouchConfig.Tables.branches
 
     };
 
-    this.database.put(PouchConfig.Tables.branches+'_'+formBranchData.id, formBranchData);
+    this.database.put(PouchConfig.Tables.branches + '_' + formBranchData.id, formBranchData);
 
 
     const formTaxes2 = {
@@ -203,13 +203,13 @@ if(this.activeUser.currentUser){
       isDefault: true,
       createdAt: new Date(),
       updatedAt: new Date(),
-      table:'taxes',
-      docId:PouchConfig.Tables.taxes
-    }
+      table: 'taxes',
+      docId: PouchConfig.Tables.taxes
+    };
 
 
-   
-    this.database.put(PouchConfig.Tables.taxes+'_'+formTaxes2.id, formTaxes2);
+
+    this.database.put(PouchConfig.Tables.taxes + '_' + formTaxes2.id, formTaxes2);
 
     const formTaxes1 =
     {
@@ -221,13 +221,13 @@ if(this.activeUser.currentUser){
       isDefault: false,
       createdAt: new Date(),
       updatedAt: new Date(),
-      table:'taxes',
-      docId:PouchConfig.Tables.taxes
+      table: 'taxes',
+      docId: PouchConfig.Tables.taxes
     };
-    this.database.put(PouchConfig.Tables.taxes+'_'+formTaxes1.id, formTaxes1);
+    this.database.put(PouchConfig.Tables.taxes + '_' + formTaxes1.id, formTaxes1);
 
-   
-    
+
+
     setTimeout(() => {
       this.notificationSvc.success('Create Business', 'Business ' + formBusinessData.name + ' Created successfully!');
       this.router.navigate(['/admin']);

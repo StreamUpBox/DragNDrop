@@ -13,5 +13,5 @@ export class GenerateBarcodeComponent {
   @Input() showName = true;
   @Input() showSku = true;
 
-  
+
 }

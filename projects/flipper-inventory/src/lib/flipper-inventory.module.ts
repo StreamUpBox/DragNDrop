@@ -26,20 +26,20 @@ import { PrintBarcodeLabelsDialogComponent } from './print-barcode-labels-dialog
 
 @NgModule({
   declarations: [
-    ProductVariantsComponent, 
-    ListProductsComponent, 
+    ProductVariantsComponent,
+    ListProductsComponent,
     VariantsComponent,
-    ProductsComponent, 
-    CreateProductComponent, 
+    ProductsComponent,
+    CreateProductComponent,
     RegularVariantsComponent,
-    AddedVariantsComponent, 
-    VariantsDialogModelComponent, 
+    AddedVariantsComponent,
+    VariantsDialogModelComponent,
     EditVariantComponent,
-    DisacrdDialogModelComponent, 
-    ManageStockComponent, 
+    DisacrdDialogModelComponent,
+    ManageStockComponent,
     AddVariantComponent,
-    
-    ViewStockHistoryComponent, 
+
+    ViewStockHistoryComponent,
     PrintBarcodeLabelsDialogComponent
     ],
   imports: [
@@ -47,34 +47,34 @@ import { PrintBarcodeLabelsDialogComponent } from './print-barcode-labels-dialog
     VendorsModule,
     FlipperEventModule,
     FlipperComponentsModule,
-    
+
     FlipperFileUploadModule,
     FlipperOfflineDatabaseModule,
     DialogModule
   ],
   entryComponents: [
-      VariantsDialogModelComponent, 
+      VariantsDialogModelComponent,
       DisacrdDialogModelComponent,
-      AddVariantComponent, 
-      
+      AddVariantComponent,
+
       ViewStockHistoryComponent,
       PrintBarcodeLabelsDialogComponent
     ],
   exports: [
-    
+
     VariantsComponent,
-    ProductsComponent, 
-    CreateProductComponent, 
+    ProductsComponent,
+    CreateProductComponent,
     RegularVariantsComponent,
-    AddedVariantsComponent, 
-    VariantsDialogModelComponent, 
+    AddedVariantsComponent,
+    VariantsDialogModelComponent,
     EditVariantComponent,
-    DisacrdDialogModelComponent, 
-    ManageStockComponent, 
+    DisacrdDialogModelComponent,
+    ManageStockComponent,
     AddVariantComponent,
-    ListProductsComponent, 
-    ProductVariantsComponent, 
-    ViewStockHistoryComponent, 
+    ListProductsComponent,
+    ProductVariantsComponent,
+    ViewStockHistoryComponent,
     PrintBarcodeLabelsDialogComponent
   ]
 })

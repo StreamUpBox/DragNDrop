@@ -20,7 +20,7 @@ export class MessageDialogComponent implements OnInit {
     }
   }
   constructor(public dialogRef: MatDialogRef<MessageDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: ConfirmDialogData) {
+              @Inject(MAT_DIALOG_DATA) public data: ConfirmDialogData) {
   }
 
   ngOnInit() {

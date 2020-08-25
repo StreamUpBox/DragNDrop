@@ -43,7 +43,7 @@ export class PaymentCardComponent implements OnInit {
   @Input()
   public ccNumTooShortTxt ? = 'Card number is too short';
 
-  
+
   /**
    * Validation message for too long payment card number
    */

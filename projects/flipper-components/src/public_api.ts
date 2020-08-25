@@ -14,7 +14,7 @@ export * from './lib/notifications/notification.service';
 export * from './lib/generate-barcode/generate-barcode.component';
 export * from './lib/lazy-if.directive';
 export * from './lib/message/message.component';
-export * from './lib/spinner/spinner.component';    
+export * from './lib/spinner/spinner.component';
 export * from './lib/table-overlay/table-overlay.component';
 export * from './lib/header/header.component';
 export * from './lib/notifications/notification.component';

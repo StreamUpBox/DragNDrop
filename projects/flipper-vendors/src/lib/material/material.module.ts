@@ -145,7 +145,7 @@ import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
     A11yModule,
     PortalModule,
     OverlayModule,
-    
+
     MatAutocompleteModule,
     MatChipsModule,
     MatDatepickerModule,
@@ -199,7 +199,7 @@ import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
     MatChipsModule,
     MatDatepickerModule,
     MatTableModule,
-    
+
     MatProgressSpinnerModule,
     MatRippleModule,
     MatSelectModule,
@@ -214,7 +214,7 @@ import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
     BidiModule,
     MatCommonModule,
     ObserversModule
-    
+
   ],
   providers: [
     MatIconRegistry,

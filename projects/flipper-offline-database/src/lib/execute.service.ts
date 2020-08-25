@@ -11,7 +11,7 @@ export class ExecuteService extends QueryService {
     };
 
     return this.extra ? alasql(this.query, this.extra, this.callback) : alasql(this.query);
-   
+
   }
 
 }

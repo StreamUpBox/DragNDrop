@@ -6,7 +6,7 @@ import { trigger, transition, useAnimation } from '@angular/animations';
 import { DialogService, DialogSize } from '@enexus/flipper-dialog';
 import { DisacrdDialogModelComponent } from '../products/disacrd-dialog-model/disacrd-dialog-model.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-;
+
 
 
 @Component({
@@ -20,15 +20,24 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
   ],
 })
 export class CreateProductComponent implements OnInit {
-  isFocused = '';
-  addNew = false;
   set didAddNew(bol) {
     this.addNew = bol;
   }
   get didAddNew(): boolean {
     return this.addNew;
   }
+  constructor(private dialog: DialogService, private model: MainModelService, private formBuilder: FormBuilder,
+
+              private router: Router, public product: ProductService,
+              protected notificationSvc: NotificationService) {
+
+     }
+
+  get formControl() { return this.form.controls; }
+  isFocused = '';
+  addNew = false;
   submitted = false;
+  form: FormGroup;
 
   @HostListener('document:keydown', ['$event'])
   onKeydownHandler(event: KeyboardEvent) {
@@ -50,39 +59,30 @@ export class CreateProductComponent implements OnInit {
       this.onSubmit('close');
     }
   }
-  form: FormGroup;
-  constructor(private dialog: DialogService, private model: MainModelService, private formBuilder: FormBuilder,
 
-    private router: Router, public product: ProductService,
-    protected notificationSvc: NotificationService) {
-      
-     }
 
-     
 
   async ngOnInit() {
     await this.product.init();
     // await this.checkNewItem();
     const hasDraftProduct = this.product.hasDraftProduct;
     this.form = await this.formBuilder.group({
-      name: [hasDraftProduct? hasDraftProduct.name:'' , Validators.required],
+      name: [hasDraftProduct ? hasDraftProduct.name : '' , Validators.required],
       categoryId: hasDraftProduct ? hasDraftProduct.categoryId : 0,
       description: hasDraftProduct ? hasDraftProduct.description : '',
       picture: hasDraftProduct ? hasDraftProduct.picture : '',
       taxId: hasDraftProduct ? hasDraftProduct.taxId : '',
-      supplierId: hasDraftProduct? hasDraftProduct.supplierId : 0,
+      supplierId: hasDraftProduct ? hasDraftProduct.supplierId : 0,
       createdAt: new Date(),
       updatedAt: new Date()
- 
+
     });
-  
+
 
   }
-  
-  get formControl() { return this.form.controls; }
   async checkNewItem() {
     this.didAddNew = false;
-   
+
     await this.product.request();
 
   }
@@ -94,25 +94,25 @@ export class CreateProductComponent implements OnInit {
     } else {
       val = event.target.value;
     }
-    
+
     this.product.updateKeyValue(key, val);
     this.product.update();
     this.updateVariantProductName();
   }
 
 updateVariantProductName(){
-  let  product= this.model.findByFirst<Product>(Tables.products, 'isDraft', true);
-  if(product){
-    const variants=this.model.filters<Variant>(Tables.variants, 'productId', product.id);
-      if(variants.length > 0){
+  const  product = this.model.findByFirst<Product>(Tables.products, 'isDraft', true);
+  if (product){
+    const variants = this.model.filters<Variant>(Tables.variants, 'productId', product.id);
+    if (variants.length > 0){
         variants.forEach(v => {
-          v.productName=product.name;
+          v.productName = product.name;
           this.model.update<Variant>(Tables.variants, v, v.id);
         });
       }
-   
+
   }
- 
+
 }
 
 

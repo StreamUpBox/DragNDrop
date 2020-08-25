@@ -42,7 +42,6 @@ export class SearchBoxComponent implements OnInit, AfterViewInit {
   get foundVariant(): Variant[] {
     return this.canfoundVariant;
   }
-  private userClosedModel = false;
 
   @Input('didUserCloseModel')
   set didUserCloseModel(bol: boolean) {
@@ -56,6 +55,7 @@ export class SearchBoxComponent implements OnInit, AfterViewInit {
   get didUserCloseModel(): boolean {
     return this.userClosedModel;
   }
+  private userClosedModel = false;
 
   @Output() searchEmitValue = new EventEmitter < string > ();
   @Output() addToCartEmit = new EventEmitter < Variant > ();
@@ -75,6 +75,7 @@ export class SearchBoxComponent implements OnInit, AfterViewInit {
   autoComplete: MatAutocompleteTrigger;
 
   @Input() currency = 'RWF';
+  timer = null;
 
   @HostListener('document:keydown', ['$event'])
       onKeydownHandler(event: KeyboardEvent) {
@@ -98,18 +99,17 @@ export class SearchBoxComponent implements OnInit, AfterViewInit {
   close() {
     this.autoComplete.closePanel();
   }
-  timer=null;
   startSearching(event){
     if (event.target.value === '' || event.target.value === null) {
-      this.foundVariant=[];
+      this.foundVariant = [];
       this. clearSearchBox();
       return;
     }
     clearTimeout(this.timer);
-    this.timer = setTimeout(()=>{
-      this.foundVariant=[];
+    this.timer = setTimeout(() => {
+      this.foundVariant = [];
       this.searching(event.target.value);
-    }, 1000)
+    }, 1000);
 
   }
 

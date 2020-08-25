@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Product, MainModelService, Tables, Business,
   Branch, Taxes, BranchProducts, PouchDBService,
-  PouchConfig, Variant, Stock, StockHistory, BranchesEvent, User } from '@enexus/flipper-components';
+  PouchConfig, Variant, Stock, StockHistory, User } from '@enexus/flipper-components';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { VariationService } from './variation.service';
 import { Observable, BehaviorSubject, of } from 'rxjs';
 import { ModelService } from '@enexus/flipper-offline-database';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -18,7 +17,6 @@ export class ProductService {
   taxes$: Taxes[] = [];
   branchList = new FormControl();
   products: Product[] = [];
-
 
   public productsSubject: BehaviorSubject<Product[]>;
   private readonly productsMap = new Map<string, Product>();

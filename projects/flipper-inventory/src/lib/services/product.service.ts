@@ -36,9 +36,6 @@ export class ProductService {
     private formBuilder: FormBuilder,
     private database: PouchDBService) {
     this.productsSubject = new BehaviorSubject([]);
-
-
-
   }
 
   async init() {
@@ -48,8 +45,6 @@ export class ProductService {
     await this.currentTaxes()
     await this.hasDraft();
     await this.create();
-
-
   }
 
 
@@ -106,16 +101,12 @@ export class ProductService {
 
 
   hasDraft() {
-
     return this.database.hasDraftProduct(this.defaultBusiness$ ? this.defaultBusiness$.id : 0).then(draft => {
       if (draft && draft.docs.length > 0) {
         this.hasDraftProduct = draft.docs[0];
       }
     });
-
-
   }
-
 
   async create() {
     console.log('create item');
@@ -156,8 +147,6 @@ export class ProductService {
     localStorage.setItem('userIsCreatingAnItem', `${bol}`);
   }
 
-
-
   loadBranches(): void {
     let arr = [];
     if (this.hasDraftProduct) {
@@ -173,18 +162,13 @@ export class ProductService {
 
         this.branchList.setValue([branch.id]);
 
-
       } else {
-
         arr.forEach(el => arr.push(el.branchId));
         this.branchList.setValue(arr);
-
       }
     }
 
   }
-
-
 
 
   updateBranch(): void {
@@ -243,20 +227,20 @@ export class ProductService {
     }
 
   }
-    async saveProduct() {
+  async saveProduct() {
 
-      if (this.hasDraftProduct) {
-        this.variant.updateVariantAction(this.hasDraftProduct);
-        this.hasDraftProduct.active = true;
-        this.hasDraftProduct.isDraft = false;
-        this.hasDraftProduct.isCurrentUpdate = false;
-        this.hasDraftProduct.color = '#000000';
-        this.hasDraftProduct.updatedAt = new Date();
-        this.update();
+    if (this.hasDraftProduct) {
+      this.variant.updateVariantAction(this.hasDraftProduct);
+      this.hasDraftProduct.active = true;
+      this.hasDraftProduct.isDraft = false;
+      this.hasDraftProduct.isCurrentUpdate = false;
+      this.hasDraftProduct.color = '#000000';
+      this.hasDraftProduct.updatedAt = new Date();
+      this.update();
 
-
-      }
 
     }
 
   }
+
+}

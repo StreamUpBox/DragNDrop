@@ -226,13 +226,14 @@ export class VariationService {
 
       variation[key] = val;
     }
-    // variation.productName = this.model.draft<Product>(Tables.products, 'isDraft').name;
-    this.update(variation);
+  
+    return this.update(variation);
   }
 
 
   update(variation: Variant): void {
     if (variation) {
+      console.log('need to update variant',variation);
       return this.database.put(PouchConfig.Tables.variants+'_'+variation.id, variation);
     }
 
@@ -398,9 +399,9 @@ updateStockControl(result: any, variant: Variant) {
       await this.stock.findVariantStock(variant?variant.id:null);
       const myStock = this.stock.stock;
       myStock[key] = parseInt(val, 10);
-      this.stock.update(myStock);
+      return this.stock.update(myStock);
     } else {
-      this.updateRegularVariant(variant, key, val);
+     return this.updateRegularVariant(variant, key, val);
     }
   } 
 

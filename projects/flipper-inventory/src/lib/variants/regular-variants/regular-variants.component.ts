@@ -52,7 +52,7 @@ export class RegularVariantsComponent implements OnInit {
    request(action = null, variant = null) {
      this.stock.findVariantStock(variant?variant.id:null);
     const stock: Stock = this.stock.stock?this.stock.stock:null;
-console.log(variant);
+
     this.form =  this.formBuilder.group({
       name: [!action && variant && variant.name ? variant.name : '', Validators.required],
       SKU: !action && variant && variant.SKU ? variant.SKU : this.variant.generateSKU(),
@@ -71,16 +71,16 @@ console.log(variant);
 
        this.variant. updateVariant(key, this.variant.hasRegular, event);
   }
-
+  get formControl() { return this.form.controls; }
   focusing(value) {
     this.isFocused = value;
 
     if (value === 'retailPrice') {
-      this.variant.form.controls.retailPrice.setValue('');
+      this.form.controls.retailPrice.setValue('');
     } else if (value === 'supplyPrice') {
-      this.variant.form.controls.supplyPrice.setValue('');
+      this.form.controls.supplyPrice.setValue('');
     } else if (value === 'SKU') {
-      this.variant.form.controls.SKU.setValue('');
+      this.form.controls.SKU.setValue('');
     }
   }
 
@@ -98,18 +98,18 @@ console.log(variant);
     await this.stock.findVariantStock(this.variant.hasRegular.id);
     const stock = this.stock.stock;
 
-      if (this.isFocused === 'retailPrice' && (this.variant.form.controls.retailPrice.value === 0 ||
-        this.variant.form.controls.retailPrice.value === '')) {
-        this.variant.form.controls.retailPrice.setValue(stock.retailPrice ? stock.retailPrice : 0);
+      if (this.isFocused === 'retailPrice' && (this.form.controls.retailPrice.value === 0 ||
+        this.form.controls.retailPrice.value === '')) {
+        this.form.controls.retailPrice.setValue(stock.retailPrice ? stock.retailPrice : 0);
         }
-      if (this.isFocused === 'supplyPrice' && (this.variant.form.controls.supplyPrice.value === 0 ||
-        this.variant.form.controls.supplyPrice.value === '')) {
-          this.variant.form.controls.supplyPrice.setValue(stock.supplyPrice ? stock.supplyPrice : 0);
+      if (this.isFocused === 'supplyPrice' && (this.form.controls.supplyPrice.value === 0 ||
+        this.form.controls.supplyPrice.value === '')) {
+          this.form.controls.supplyPrice.setValue(stock.supplyPrice ? stock.supplyPrice : 0);
         }
 
-      if (this.isFocused === 'SKU' && (this.variant.form.controls.SKU.value === 0 ||
-        this.variant.form.controls.SKU.value === '')) {
-          this.variant.form.controls.SKU.setValue(this.variant.hasRegular.SKU);
+      if (this.isFocused === 'SKU' && (this.form.controls.SKU.value === 0 ||
+        this.form.controls.SKU.value === '')) {
+          this.form.controls.SKU.setValue(this.variant.hasRegular.SKU);
         }
 
 

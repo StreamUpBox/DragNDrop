@@ -118,9 +118,7 @@ export class ProductService {
 
 
   async create() {
-    console.log('create item');
-    console.log('defaut business', this.defaultBusiness$);
-
+   
     if (this.defaultBusiness$ && !this.hasDraftProduct) {
 
       const formProduct = await {

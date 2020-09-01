@@ -24,14 +24,10 @@ export class VariationService {
   product: Product;
   variantsSubject: BehaviorSubject<Variant[]>;
   defaultBusiness:Business=null;
+  allVariants:Variant[]=[];
   private readonly variantsMap = new Map<string, Variant>();
   variant: Variant;
-  set allVariants(variants: Variant[]) {
-    this.myAllVariants = variants;
-  }
-  get allVariants(): Variant[] {
-      return this.myAllVariants;
-  }
+ 
 
   variantStock = { length: 0, currentStock: 0, lowStock: 0 };
   constructor(private stock: StockService, private dialog: DialogService,
@@ -56,19 +52,17 @@ export class VariationService {
     return this.variantsMap.get(id);
   }
 
-  init(product: Product): void {
+  async init(product: Product) {
 
-    //TODO: swap the bellow functions regular,createRegular,variants,stockUpdate to use pouch instead of alasql
-    if (product) {
+    if(product!=undefined){
+      console.log('should show only once!');
       this.product = product;
-      this.allVariant(product);
-      this.regular(product);
+      await this.allVariant(product);
+      this.regular();
       this.createRegular(product);
-      this.variants(product);
       this.stockUpdates();
+    
     }
-
-
   }
   activeBusiness(){
     return this.database.currentBusiness().then(business => {
@@ -168,7 +162,8 @@ export class VariationService {
       };
       await this.database.put(PouchConfig.Tables.variants+'_'+formData.id, formData);
       this.createVariantStock(formData);
-      this.regular(product);
+      await this.allVariant(product);
+      this.regular();
     }
 
   }
@@ -216,24 +211,9 @@ export class VariationService {
   
   get formControl() { return this.form.controls; }
 
-  async regular(product: Product) {
+   regular() {
    
-    return this.database.query(['table', 'productId'], {
-      table: { $eq: 'variants' },
-      productId: { $eq: product.id }
-    }).then(res => {
-      
-      if (res.docs && res.docs.length > 0) {
-          const regular = res.docs.length > 0?res.docs[0]:null; 
-          console.log('has regular',regular);
-          this.hasRegular =regular;
-
-        }else{
-          this.hasRegular =null;
-        }
-           
-    });
-    
+    this.hasRegular=this.allVariants.length > 0?this.allVariants[0]:null;
   }
 
 
@@ -274,7 +254,7 @@ export class VariationService {
     return this.dialog.open(VariantsDialogModelComponent, DialogSize.SIZE_MD, { variant, selectedIndex }).subscribe(result => {
 
        this.updateStockControl(result, variant);
-       this.regular(this.product);
+       this.regular();
        this.request(null, variant);
        this.variants(this.product);
        this. stockUpdates();

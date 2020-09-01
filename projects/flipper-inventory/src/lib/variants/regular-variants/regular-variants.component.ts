@@ -28,13 +28,7 @@ export class RegularVariantsComponent implements OnInit {
 
   async ngOnInit() {
     this.variant.activeBusiness();
-    if(this.product){
-     await this.variant.init(this.product);
-     await this.refresh();
-    
-    }
-    
-      
+   
   }
   refresh() {
     if (this.variant.hasRegular) {

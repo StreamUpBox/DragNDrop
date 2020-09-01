@@ -42,9 +42,12 @@ export class PouchDBService {
             index: { fields: fields }
         }).then(result => {
             return this.database.find({
+                
                 selector: selector
             });
         })
+
+        
     }
 
 
@@ -138,6 +141,7 @@ export class PouchDBService {
                 return [];
             }
         });
+        
     }
 
     public listBusinessTaxes() {

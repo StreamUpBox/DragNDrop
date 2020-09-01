@@ -68,8 +68,6 @@ export class CreateProductComponent implements OnInit {
     const hasDraftProduct = this.product.hasDraftProduct;
 
 
-    console.log(hasDraftProduct);
-
     this.form = await this.formBuilder.group({
       name: [hasDraftProduct ? hasDraftProduct.name : '', Validators.required],
       categoryId: hasDraftProduct ? hasDraftProduct.categoryId : 0,

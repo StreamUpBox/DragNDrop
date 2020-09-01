@@ -28,7 +28,7 @@ export class AppComponent {
         // this.init();
         this.database.connect(PouchConfig.bucket);
         if (PouchConfig.canSync) {
-          this.database.sync(PouchConfig.syncUrl);
+          // this.database.sync(PouchConfig.syncUrl);
         }
         let userId = this.database.uid();
         let businessId = this.database.uid();
@@ -104,6 +104,7 @@ export class AppComponent {
         this.database.put(PouchConfig.Tables.taxes+'_'+formTaxes2.id, formTaxes2);
         this.model.create<Taxes>(Tables.taxes,formTaxes2);
 
+
         const formTaxes1 =
         {
           id: this.database.uid(),
@@ -123,5 +124,6 @@ export class AppComponent {
         console.log('done initializing data');
       }
 
+  
   }
 }

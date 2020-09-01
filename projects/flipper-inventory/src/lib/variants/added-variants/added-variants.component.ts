@@ -26,10 +26,7 @@ export class AddedVariantsComponent implements OnInit {
     public variant: VariationService, public stock: StockService) { }
 
   ngOnInit() {
-    if (this.product) {
-      this.variant.init(this.product);
-    }
-
+    
     this.variant.activeBusiness();
   }
 

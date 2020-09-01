@@ -1,9 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { VariationService } from '../../services/variation.service';
 import { StockService } from '../../services/stock.service';
-import {Product, CalculateTotalClassPipe } from '@enexus/flipper-components';
+import {Product, CalculateTotalClassPipe, Stock } from '@enexus/flipper-components';
 import { DialogService, DialogSize } from '@enexus/flipper-dialog';
 import { AddVariantComponent } from '../add-variant/add-variant.component';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'flipper-regular-variants',
@@ -14,6 +15,7 @@ import { AddVariantComponent } from '../add-variant/add-variant.component';
 export class RegularVariantsComponent implements OnInit {
   isFocused = '';
   item: Product;
+  form: FormGroup;
 
   @Input('product')
   set product(item: Product) {
@@ -24,18 +26,20 @@ export class RegularVariantsComponent implements OnInit {
   }
   constructor(private dialog: DialogService, public variant: VariationService,
               public stock: StockService,
+              private formBuilder: FormBuilder,
               private totalPipe: CalculateTotalClassPipe) {
-                if (this.variant.hasRegular) {
-                  this.stock.variantStocks(this.variant.hasRegular.id);
-                   this.variant.request(null, this.variant.hasRegular);
-                 }
+           
                }
 
-  async ngOnInit() {
+   ngOnInit() {
     this.variant.activeBusiness();
-   
+    if (this.variant.hasRegular) {
+      this.stock.variantStocks(this.variant.hasRegular.id);
+        this.request(null, this.variant.hasRegular);
+     }
   }
   
+
   public openAddVariantDialog(product: Product): any {
     return this.dialog.open(AddVariantComponent, DialogSize.SIZE_MD, product).subscribe(result => {
       if (result === 'done') {
@@ -44,10 +48,23 @@ export class RegularVariantsComponent implements OnInit {
       this.variant.init(product);
     });
   }
-  onSubmit() {
+ 
+   request(action = null, variant = null) {
+     this.stock.findVariantStock(variant?variant.id:null);
+    const stock: Stock = this.stock.stock?this.stock.stock:null;
+console.log(variant);
+    this.form =  this.formBuilder.group({
+      name: [!action && variant && variant.name ? variant.name : '', Validators.required],
+      SKU: !action && variant && variant.SKU ? variant.SKU : this.variant.generateSKU(),
+      retailPrice: [!action && variant && stock ? stock.retailPrice : 0.00, Validators.min(0)],
+      supplyPrice: [!action && variant && stock ? stock.supplyPrice : 0.00, Validators.min(0)],
+      unit: !action && variant && variant.unit ? variant.unit : '',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+
+    });
 
   }
-
 
 
   updateVariant(key: any, event: any) {

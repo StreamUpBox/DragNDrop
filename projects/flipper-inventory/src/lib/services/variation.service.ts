@@ -110,7 +110,7 @@ export class VariationService {
   async request(action = null, variant = null) {
     await this.stock.findVariantStock(variant?variant.id:null);
     const stock: Stock = this.stock.stock?this.stock.stock:null;
-    console.log('my stock',stock);
+
     this.form =  this.formBuilder.group({
       name: [!action && variant && variant.name ? variant.name : '', Validators.required],
       SKU: !action && variant && variant.SKU ? variant.SKU : this.generateSKU(),

@@ -1,9 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { VariationService } from '../../services/variation.service';
 import { StockService } from '../../services/stock.service';
-import {Product, CalculateTotalClassPipe } from '@enexus/flipper-components';
+import {Product, CalculateTotalClassPipe, Stock } from '@enexus/flipper-components';
 import { DialogService, DialogSize } from '@enexus/flipper-dialog';
 import { AddVariantComponent } from '../add-variant/add-variant.component';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'flipper-regular-variants',
@@ -14,6 +15,7 @@ import { AddVariantComponent } from '../add-variant/add-variant.component';
 export class RegularVariantsComponent implements OnInit {
   isFocused = '';
   item: Product;
+  form: FormGroup;
 
   @Input('product')
   set product(item: Product) {
@@ -24,24 +26,20 @@ export class RegularVariantsComponent implements OnInit {
   }
   constructor(private dialog: DialogService, public variant: VariationService,
               public stock: StockService,
-              private totalPipe: CalculateTotalClassPipe) { }
+              private formBuilder: FormBuilder,
+              private totalPipe: CalculateTotalClassPipe) {
+           
+               }
 
-  async ngOnInit() {
+   ngOnInit() {
     this.variant.activeBusiness();
-    if(this.product){
-     await this.variant.init(this.product);
-     await this.refresh();
-    
-    }
-    
-      
-  }
-  refresh() {
     if (this.variant.hasRegular) {
-     this.stock.variantStocks(this.variant.hasRegular.id);
-      this.variant.request(null, this.variant.hasRegular);
-    }
+      this.stock.variantStocks(this.variant.hasRegular.id);
+        this.request(null, this.variant.hasRegular);
+     }
   }
+  
+
   public openAddVariantDialog(product: Product): any {
     return this.dialog.open(AddVariantComponent, DialogSize.SIZE_MD, product).subscribe(result => {
       if (result === 'done') {
@@ -50,26 +48,39 @@ export class RegularVariantsComponent implements OnInit {
       this.variant.init(product);
     });
   }
-  onSubmit() {
+ 
+   request(action = null, variant = null) {
+     this.stock.findVariantStock(variant?variant.id:null);
+    const stock: Stock = this.stock.stock?this.stock.stock:null;
+
+    this.form =  this.formBuilder.group({
+      name: [!action && variant && variant.name ? variant.name : '', Validators.required],
+      SKU: !action && variant && variant.SKU ? variant.SKU : this.variant.generateSKU(),
+      retailPrice: [!action && variant && stock ? stock.retailPrice : 0.00, Validators.min(0)],
+      supplyPrice: [!action && variant && stock ? stock.supplyPrice : 0.00, Validators.min(0)],
+      unit: !action && variant && variant.unit ? variant.unit : '',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+
+    });
 
   }
-
 
 
   updateVariant(key: any, event: any) {
 
        this.variant. updateVariant(key, this.variant.hasRegular, event);
   }
-
+  get formControl() { return this.form.controls; }
   focusing(value) {
     this.isFocused = value;
 
     if (value === 'retailPrice') {
-      this.variant.form.controls.retailPrice.setValue('');
+      this.form.controls.retailPrice.setValue('');
     } else if (value === 'supplyPrice') {
-      this.variant.form.controls.supplyPrice.setValue('');
+      this.form.controls.supplyPrice.setValue('');
     } else if (value === 'SKU') {
-      this.variant.form.controls.SKU.setValue('');
+      this.form.controls.SKU.setValue('');
     }
   }
 
@@ -87,18 +98,18 @@ export class RegularVariantsComponent implements OnInit {
     await this.stock.findVariantStock(this.variant.hasRegular.id);
     const stock = this.stock.stock;
 
-      if (this.isFocused === 'retailPrice' && (this.variant.form.controls.retailPrice.value === 0 ||
-        this.variant.form.controls.retailPrice.value === '')) {
-        this.variant.form.controls.retailPrice.setValue(stock.retailPrice ? stock.retailPrice : 0);
+      if (this.isFocused === 'retailPrice' && (this.form.controls.retailPrice.value === 0 ||
+        this.form.controls.retailPrice.value === '')) {
+        this.form.controls.retailPrice.setValue(stock.retailPrice ? stock.retailPrice : 0);
         }
-      if (this.isFocused === 'supplyPrice' && (this.variant.form.controls.supplyPrice.value === 0 ||
-        this.variant.form.controls.supplyPrice.value === '')) {
-          this.variant.form.controls.supplyPrice.setValue(stock.supplyPrice ? stock.supplyPrice : 0);
+      if (this.isFocused === 'supplyPrice' && (this.form.controls.supplyPrice.value === 0 ||
+        this.form.controls.supplyPrice.value === '')) {
+          this.form.controls.supplyPrice.setValue(stock.supplyPrice ? stock.supplyPrice : 0);
         }
 
-      if (this.isFocused === 'SKU' && (this.variant.form.controls.SKU.value === 0 ||
-        this.variant.form.controls.SKU.value === '')) {
-          this.variant.form.controls.SKU.setValue(this.variant.hasRegular.SKU);
+      if (this.isFocused === 'SKU' && (this.form.controls.SKU.value === 0 ||
+        this.form.controls.SKU.value === '')) {
+          this.form.controls.SKU.setValue(this.variant.hasRegular.SKU);
         }
 
 

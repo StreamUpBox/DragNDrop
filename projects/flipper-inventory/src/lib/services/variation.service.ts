@@ -24,14 +24,10 @@ export class VariationService {
   product: Product;
   variantsSubject: BehaviorSubject<Variant[]>;
   defaultBusiness:Business=null;
+  allVariants:Variant[]=[];
   private readonly variantsMap = new Map<string, Variant>();
   variant: Variant;
-  set allVariants(variants: Variant[]) {
-    this.myAllVariants = variants;
-  }
-  get allVariants(): Variant[] {
-      return this.myAllVariants;
-  }
+ 
 
   variantStock = { length: 0, currentStock: 0, lowStock: 0 };
   constructor(private stock: StockService, private dialog: DialogService,
@@ -56,19 +52,17 @@ export class VariationService {
     return this.variantsMap.get(id);
   }
 
-  init(product: Product): void {
+  async init(product: Product) {
 
-    //TODO: swap the bellow functions regular,createRegular,variants,stockUpdate to use pouch instead of alasql
-    if (product) {
+    if(product!=undefined){
+      console.log('should show only once!');
       this.product = product;
-      this.allVariant(product);
-      this.regular(product);
+      await this.allVariant(product);
+      this.regular();
       this.createRegular(product);
-      this.variants(product);
       this.stockUpdates();
+    
     }
-
-
   }
   activeBusiness(){
     return this.database.currentBusiness().then(business => {
@@ -116,7 +110,8 @@ export class VariationService {
   async request(action = null, variant = null) {
     await this.stock.findVariantStock(variant?variant.id:null);
     const stock: Stock = this.stock.stock?this.stock.stock:null;
-    this.form = await this.formBuilder.group({
+
+    this.form =  this.formBuilder.group({
       name: [!action && variant && variant.name ? variant.name : '', Validators.required],
       SKU: !action && variant && variant.SKU ? variant.SKU : this.generateSKU(),
       retailPrice: [!action && variant && stock ? stock.retailPrice : 0.00, Validators.min(0)],
@@ -146,8 +141,7 @@ export class VariationService {
     return  this.database.put(PouchConfig.Tables.variants+'_'+variant.id, variant);
   }
 
-  async createRegular(product: Product) {
-    console.log('has regular s',this.hasRegular);
+  async createRegular(product: Product) {;
     if (!this.hasRegular) {
       const formData= await {
         id: this.database.uid(),
@@ -168,7 +162,8 @@ export class VariationService {
       };
       await this.database.put(PouchConfig.Tables.variants+'_'+formData.id, formData);
       this.createVariantStock(formData);
-      this.regular(product);
+      await this.allVariant(product);
+      this.regular();
     }
 
   }
@@ -216,24 +211,9 @@ export class VariationService {
   
   get formControl() { return this.form.controls; }
 
-  async regular(product: Product) {
+   regular() {
    
-    return this.database.query(['table', 'productId'], {
-      table: { $eq: 'variants' },
-      productId: { $eq: product.id }
-    }).then(res => {
-      
-      if (res.docs && res.docs.length > 0) {
-          const regular = res.docs.length > 0?res.docs[0]:null; 
-          console.log('has regular',regular);
-          this.hasRegular =regular;
-
-        }else{
-          this.hasRegular =null;
-        }
-           
-    });
-    
+    this.hasRegular=this.allVariants.length > 0?this.allVariants[0]:null;
   }
 
 
@@ -246,13 +226,14 @@ export class VariationService {
 
       variation[key] = val;
     }
-    // variation.productName = this.model.draft<Product>(Tables.products, 'isDraft').name;
-    this.update(variation);
+  
+    return this.update(variation);
   }
 
 
   update(variation: Variant): void {
     if (variation) {
+      console.log('need to update variant',variation);
       return this.database.put(PouchConfig.Tables.variants+'_'+variation.id, variation);
     }
 
@@ -274,7 +255,7 @@ export class VariationService {
     return this.dialog.open(VariantsDialogModelComponent, DialogSize.SIZE_MD, { variant, selectedIndex }).subscribe(result => {
 
        this.updateStockControl(result, variant);
-       this.regular(this.product);
+       this.regular();
        this.request(null, variant);
        this.variants(this.product);
        this. stockUpdates();
@@ -418,9 +399,9 @@ updateStockControl(result: any, variant: Variant) {
       await this.stock.findVariantStock(variant?variant.id:null);
       const myStock = this.stock.stock;
       myStock[key] = parseInt(val, 10);
-      this.stock.update(myStock);
+      return this.stock.update(myStock);
     } else {
-      this.updateRegularVariant(variant, key, val);
+     return this.updateRegularVariant(variant, key, val);
     }
   } 
 

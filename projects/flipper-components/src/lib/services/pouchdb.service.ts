@@ -42,9 +42,12 @@ export class PouchDBService {
             index: { fields: fields }
         }).then(result => {
             return this.database.find({
+                
                 selector: selector
             });
         })
+
+        
     }
 
 
@@ -138,6 +141,7 @@ export class PouchDBService {
                 return [];
             }
         });
+
     }
 
     public listBusinessTaxes() {
@@ -270,10 +274,14 @@ export class PouchDBService {
         document.channel = PouchConfig.channel;
         document.channels = [PouchConfig.channel];
 
+
         return this.get(id).then(result => {
+            console.log('result',result);
             document._rev = result._rev;
+            console.log('updated doc',document);
             return this.database.put(document);
         }, error => {
+            console.log('error on update',error);
             if (error.status === '404' || error.status === 404) {
                 return this.database.put(document);
             } else {

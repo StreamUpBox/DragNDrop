@@ -33,16 +33,12 @@ return this.addNew;
   constructor(public variant: VariationService) {}
 
   ngOnInit() {
-        if(this.didAddNew){
-              this.refresh();
-        }
+       
+      this.variant.init(this.product);
+      
+        
   }
 
-  refresh() {
-      if (this.product) {
-          this.variant.init(this.product);
-      }
-
-  }
+ 
 
 }

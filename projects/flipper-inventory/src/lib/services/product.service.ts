@@ -109,9 +109,7 @@ export class ProductService {
   }
 
   async create() {
-    console.log('create item');
-    console.log('defaut business', this.defaultBusiness$);
-
+   
     if (this.defaultBusiness$ && !this.hasDraftProduct) {
 
       const formProduct = await {
@@ -190,9 +188,7 @@ export class ProductService {
     }
 
   }
-  updateProduct(product: Product) {
-    return this.model.update<Product>(Tables.products, product, product.id);
-  }
+
 
   updateKeyValue(key: string, val: any) {
     if (this.hasDraftProduct) {

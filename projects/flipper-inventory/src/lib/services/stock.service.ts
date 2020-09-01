@@ -9,6 +9,7 @@ import { ModelService } from '@enexus/flipper-offline-database';
 export class StockService {
   reasons = [];
   branches$: Branch[] = [];
+  branch$: Branch = null;
   stock:Stock=null;
   stocks:Stock[]=[];
   variant: Variant;
@@ -61,6 +62,8 @@ export class StockService {
       });
   }
 
+
+
   variantStockHistory(variantId: string): StockHistory[] {
    
       return this.database.query(['table','variantId'], {
@@ -102,12 +105,13 @@ export class StockService {
     }).then(res => {
 
       if (res.docs && res.docs.length > 0) {
-          return res.docs[0] as Branch;
+          this.branch$= res.docs[0] as Branch;
       } else {
-          return null;
+          this.branch$= null;
       }
   });
   }
+
 
   findVariant(variantId: string) {
 

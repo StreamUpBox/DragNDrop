@@ -3,6 +3,9 @@ import PouchDB from 'pouchdb';
 import PouchFind from 'pouchdb-find';
 PouchDB.plugin(PouchFind);
 
+import debugPouch from "pouchdb-debug";
+
+
 import { v1 as uuidv1 } from 'uuid';
 import { PouchConfig } from '../db-config';
 
@@ -21,7 +24,10 @@ export class PouchDBService {
 
 
 
-    public constructor() { }
+    public constructor() { 
+        console.log('debugging the pouchdb');
+        debugPouch(PouchDB);
+    }
 
     public activeUser(table = 'users') {
         return this.database.createIndex({

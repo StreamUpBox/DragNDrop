@@ -1,4 +1,4 @@
-<div class="table--editable table--flex editable-variation-table__header" style="height: 200px;overflow: auto;">
+<div *ngIf="variant.allVariants.length > 0" class="table--editable table--flex editable-variation-table__header" style="height: 200px;overflow: auto;">
   <div class="table-header">
 
     <div class="table-row">
@@ -61,10 +61,10 @@
       <div class="form-field form-field--no-label ember-view">
         <!---->
         <div class="form-field__content">
-          Supply: {{variant.defaultBusiness.currency}}
+          <!-- Supply: {{variant.defaultBusiness.currency}}
           {{getTotalStock(variantion.id,'supplyPrice')}} {{variantion.unit?'/ '+variantion.unit:''}}<br />
           Retail:{{variant.defaultBusiness.currency}}
-          {{getTotalStock(variantion.id,'retailPrice')}} {{variantion.unit?'/ '+variantion.unit:''}}
+          {{getTotalStock(variantion.id,'retailPrice')}} {{variantion.unit?'/ '+variantion.unit:''}} -->
         </div>
       </div>
     </div>
@@ -75,7 +75,7 @@
         <!---->
         <div class="form-field__content">
           <a class="form-link-with-spacing hyperlink" (click)="variant.openVariantDialog(variantion,1)">
-              {{getTotalStock(variantion.id,'currentStock')}} {{variantion.unit}}
+              <!-- {{getTotalStock(variantion.id,'currentStock')}} {{variantion.unit}} -->
           </a>
         </div>
       </div>
@@ -107,7 +107,7 @@
   </div>
 
 </div>
-<div class="mt-3">
+<div class="mt-3" *ngIf="variant.allVariants.length > 0">
   <button class="button-default button--secondary ml-1" (click)="openAddVariantDialog(product)">
     Add Variation
   </button>

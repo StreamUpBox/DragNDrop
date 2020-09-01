@@ -16,7 +16,6 @@ export class AddedVariantsComponent implements OnInit {
   @Input('product')
   set product(item: Product) {
     this.item = item;
-    this.variant.init(item);
   }
   get product(): Product {
     return this.item;
@@ -27,14 +26,17 @@ export class AddedVariantsComponent implements OnInit {
     public variant: VariationService, public stock: StockService) { }
 
   ngOnInit() {
+    if (this.product) {
+      this.variant.init(this.product);
+    }
+
     this.variant.activeBusiness();
   }
 
-   getTotalStock(variantId, key: any):number {
-     this.stock.variantStocks(variantId);
-    console.log(this.stock.stocks);
+  getTotalStock(variantId, key: any): number {
+    this.stock.variantStocks(variantId);
     if (this.stock.stocks.length > 0) {
-          return this.totalPipe.transform(this.stock.stocks, key);
+      return this.totalPipe.transform(this.stock.stocks, key);
     } else {
       return 0;
     }
@@ -62,18 +64,18 @@ export class AddedVariantsComponent implements OnInit {
 
   }
 
-  allVariant(product: Product){
+  allVariant(product: Product) {
     const variants: Variant[] = [];
 
-        this.variant.allVariant(product);
-        if (this.variant.allVariants.length > 0) {
-          this.variant.allVariants.forEach( variant => {
-    
-                   variants.push(variant);
-                   
-                });
-              }
-        return variants;
+    this.variant.allVariant(product);
+    if (this.variant.allVariants.length > 0) {
+      this.variant.allVariants.forEach(variant => {
+
+        variants.push(variant);
+
+      });
+    }
+    return variants;
   }
 
   deleteVariation(variant: Variant) {

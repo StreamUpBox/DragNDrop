@@ -18,7 +18,6 @@ export class RegularVariantsComponent implements OnInit {
   @Input('product')
   set product(item: Product) {
   this.item = item;
-  this.refresh();
   }
   get product(): Product {
   return this.item;
@@ -27,12 +26,19 @@ export class RegularVariantsComponent implements OnInit {
               public stock: StockService,
               private totalPipe: CalculateTotalClassPipe) { }
 
-  ngOnInit() {
-this.variant.activeBusiness();
-this.stock.variantStocks(this.variant.hasRegular.id);
+  async ngOnInit() {
+    this.variant.activeBusiness();
+    if(this.product){
+     await this.variant.init(this.product);
+     await this.refresh();
+    
+    }
+    
+      
   }
   refresh() {
     if (this.variant.hasRegular) {
+     this.stock.variantStocks(this.variant.hasRegular.id);
       this.variant.request(null, this.variant.hasRegular);
     }
   }

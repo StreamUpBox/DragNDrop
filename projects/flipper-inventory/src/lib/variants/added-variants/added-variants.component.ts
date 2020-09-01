@@ -30,12 +30,11 @@ export class AddedVariantsComponent implements OnInit {
     this.variant.activeBusiness();
   }
 
-
-  getTotalStock(variantId, key: any): number {
-    this.stock.variantStocks(variantId);
+   getTotalStock(variantId, key: any):number {
+     this.stock.variantStocks(variantId);
     console.log(this.stock.stocks);
     if (this.stock.stocks.length > 0) {
-      return this.totalPipe.transform(this.stock.stocks, key);
+          return this.totalPipe.transform(this.stock.stocks, key);
     } else {
       return 0;
     }
@@ -63,18 +62,18 @@ export class AddedVariantsComponent implements OnInit {
 
   }
 
-  allVariant(product: Product) {
+  allVariant(product: Product){
     const variants: Variant[] = [];
 
-    this.variant.allVariant(product);
-    if (this.variant.allVariants.length > 0) {
-      this.variant.allVariants.forEach(variant => {
-
-        variants.push(variant);
-
-      });
-    }
-    return variants;
+        this.variant.allVariant(product);
+        if (this.variant.allVariants.length > 0) {
+          this.variant.allVariants.forEach( variant => {
+    
+                   variants.push(variant);
+                   
+                });
+              }
+        return variants;
   }
 
   deleteVariation(variant: Variant) {

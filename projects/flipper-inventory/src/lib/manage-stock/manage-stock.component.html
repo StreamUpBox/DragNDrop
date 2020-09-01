@@ -41,6 +41,7 @@
             </span>
           </ng-template>
         </td>
+        
         <td style="width:30%">
           <input class="input" style="width:100%" type="number" (input)="updateInput()" name="stk.id+'currentStock'"
             [(ngModel)]="stk.currentStock" (focus)="focusing(stk.id+'current')" [disabled]="!stk.canTrackingStock || stk.reason==''"

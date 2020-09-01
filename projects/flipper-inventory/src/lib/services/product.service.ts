@@ -242,7 +242,7 @@ export class ProductService {
       }
     }
 
-
+  }
     async saveProduct() {
 
       if (this.hasDraftProduct) {

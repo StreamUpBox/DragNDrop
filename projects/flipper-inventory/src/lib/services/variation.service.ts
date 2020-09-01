@@ -218,12 +218,22 @@ export class VariationService {
 
   async regular(product: Product) {
    
-    return await this.productVariations(product.id).then(res => {
-     
-     const regular = res.length > 0?res[0]:null; 
-      console.log('has regular',regular);
-      this.hasRegular =regular;
-    }); 
+    return this.database.query(['table', 'productId'], {
+      table: { $eq: 'variants' },
+      productId: { $eq: product.id }
+    }).then(res => {
+      
+      if (res.docs && res.docs.length > 0) {
+          const regular = res.docs.length > 0?res.docs[0]:null; 
+          console.log('has regular',regular);
+          this.hasRegular =regular;
+
+        }else{
+          this.hasRegular =null;
+        }
+           
+    });
+    
   }
 
 

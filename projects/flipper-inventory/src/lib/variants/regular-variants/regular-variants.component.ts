@@ -24,18 +24,18 @@ export class RegularVariantsComponent implements OnInit {
   }
   constructor(private dialog: DialogService, public variant: VariationService,
               public stock: StockService,
-              private totalPipe: CalculateTotalClassPipe) { }
+              private totalPipe: CalculateTotalClassPipe) {
+                if (this.variant.hasRegular) {
+                  this.stock.variantStocks(this.variant.hasRegular.id);
+                   this.variant.request(null, this.variant.hasRegular);
+                 }
+               }
 
   async ngOnInit() {
     this.variant.activeBusiness();
    
   }
-  refresh() {
-    if (this.variant.hasRegular) {
-     this.stock.variantStocks(this.variant.hasRegular.id);
-      this.variant.request(null, this.variant.hasRegular);
-    }
-  }
+  
   public openAddVariantDialog(product: Product): any {
     return this.dialog.open(AddVariantComponent, DialogSize.SIZE_MD, product).subscribe(result => {
       if (result === 'done') {

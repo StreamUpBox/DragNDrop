@@ -110,7 +110,8 @@ export class VariationService {
   async request(action = null, variant = null) {
     await this.stock.findVariantStock(variant?variant.id:null);
     const stock: Stock = this.stock.stock?this.stock.stock:null;
-    this.form = await this.formBuilder.group({
+    console.log('my stock',stock);
+    this.form =  this.formBuilder.group({
       name: [!action && variant && variant.name ? variant.name : '', Validators.required],
       SKU: !action && variant && variant.SKU ? variant.SKU : this.generateSKU(),
       retailPrice: [!action && variant && stock ? stock.retailPrice : 0.00, Validators.min(0)],
@@ -140,8 +141,7 @@ export class VariationService {
     return  this.database.put(PouchConfig.Tables.variants+'_'+variant.id, variant);
   }
 
-  async createRegular(product: Product) {
-    console.log('has regular s',this.hasRegular);
+  async createRegular(product: Product) {;
     if (!this.hasRegular) {
       const formData= await {
         id: this.database.uid(),

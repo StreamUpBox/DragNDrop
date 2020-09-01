@@ -21,15 +21,16 @@ export class AppComponent {
     private database: PouchDBService,
     private query: ModelService, private totalPipe: CalculateTotalClassPipe) {
     
+      this.database.connect(PouchConfig.bucket);
+      if (PouchConfig.canSync) {
+        this.database.sync(PouchConfig.syncUrl);
+      }
 
       if(environment.initialData){
         console.log('initializing data');
         // this.branch = this.model.active<Branch>(Tables.branch);
         // this.init();
-        this.database.connect(PouchConfig.bucket);
-        if (PouchConfig.canSync) {
-          // this.database.sync(PouchConfig.syncUrl);
-        }
+      
         let userId = this.database.uid();
         let businessId = this.database.uid();
         const user = {

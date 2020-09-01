@@ -60,15 +60,19 @@ export class CreateProductComponent implements OnInit {
 
 
 
-  async ngOnInit() {
+   async ngOnInit() {
 
     await this.product.init();
-    // await this.checkNewItem();
 
     const hasDraftProduct = this.product.hasDraftProduct;
+// console.log(hasDraftProduct);
+    this.request(hasDraftProduct);
+    
 
 
-    this.form = await this.formBuilder.group({
+  }
+   request(hasDraftProduct){
+    this.form =  this.formBuilder.group({
       name: [hasDraftProduct ? hasDraftProduct.name : '', Validators.required],
       categoryId: hasDraftProduct ? hasDraftProduct.categoryId : 0,
       description: hasDraftProduct ? hasDraftProduct.description : '',
@@ -79,8 +83,6 @@ export class CreateProductComponent implements OnInit {
       updatedAt: new Date()
 
     });
-
-
   }
 
   get formControl() { return this.form.controls; }

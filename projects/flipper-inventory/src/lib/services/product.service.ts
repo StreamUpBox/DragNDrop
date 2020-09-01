@@ -204,9 +204,7 @@ export class ProductService {
     }
 
   }
-  updateProduct(product: Product) {
-    return this.model.update<Product>(Tables.products, product, product.id);
-  }
+
 
   updateKeyValue(key: string, val: any) {
     if (this.hasDraftProduct) {

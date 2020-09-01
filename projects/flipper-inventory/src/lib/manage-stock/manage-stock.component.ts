@@ -33,7 +33,7 @@ export class ManageStockComponent implements OnInit {
   ngOnInit() {
     this.stock.init();
     this.loadStocks();
-    this.findBranch(this.variation.id);
+    this.stock.findBranch(this.variation.id);
   }
   async loadStocks() {
     if (this.variation) {

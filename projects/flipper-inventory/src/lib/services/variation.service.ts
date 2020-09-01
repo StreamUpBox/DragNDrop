@@ -217,8 +217,9 @@ export class VariationService {
   get formControl() { return this.form.controls; }
 
   async regular(product: Product) {
+   
     return await this.productVariations(product.id).then(res => {
-       
+     
      const regular = res.length > 0?res[0]:null; 
       console.log('has regular',regular);
       this.hasRegular =regular;

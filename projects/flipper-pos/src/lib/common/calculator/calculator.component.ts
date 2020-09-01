@@ -46,9 +46,9 @@ export class CalculatorComponent {
   @Output() closeModelEmit = new EventEmitter<boolean>();
 
   constructor(private totalPipe: CalculateTotalClassPipe,
-              public dialog: DialogService,
-              private randPipe: RoundNumberPipe,
-              private findKeyPipe: FindKeyPipe) { }
+    public dialog: DialogService,
+    private randPipe: RoundNumberPipe,
+    private findKeyPipe: FindKeyPipe) { }
 
   currentNumber = '0';
 

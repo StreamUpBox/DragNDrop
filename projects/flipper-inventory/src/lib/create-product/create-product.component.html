@@ -65,7 +65,7 @@
                           </td>
                           <td style="width: 60%;">
                             <textarea class="textarea" formControlName="description"
-                              (input)="updateItem(' description',$event)" (focus)="focusing('category')"
+                              (input)="updateItem('description',$event)" (focus)="focusing('category')"
                               (focusout)="focusingOut()"
                               placeholder="Enter a description of this item. Describe details like features, options, and measurements."
                               maxlength="4096"></textarea>
@@ -79,7 +79,8 @@
                           </td>
                           <td style="width: 60%;">
   
-                            <mat-select class="select" [formControl]="product.branchList" placeholder="Choose Location" (selectionChange)="product.updateBranch()" (focus)="focusing('location')" (focusout)="focusingOut()"  multiple>
+                            <mat-select class="select" [formControl]="product.branchList" placeholder="Choose Location"
+                             (selectionChange)="product.updateBranch()" (focus)="focusing('location')" (focusout)="focusingOut()"  multiple>
                               <mat-option *ngFor="let branch of product.branches$ ; let i = index;" [value]="branch.id">
                                 {{branch.name}}</mat-option>
                             </mat-select>
@@ -136,7 +137,7 @@
               </div>
               <div class="col-5">
 
-                  <!-- <flipper-variants [didAddNew]="didAddNew" [product]="product.hasDraftProduct" *ngIf="product.hasDraftProduct"></flipper-variants> -->
+                  <flipper-variants [didAddNew]="didAddNew" [product]="product.hasDraftProduct" *ngIf="product.hasDraftProduct"></flipper-variants>
               </div>
   
   

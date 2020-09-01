@@ -13,17 +13,17 @@ import { CurrentBranchEvent } from '../events';
   providedIn: 'root'
 })
 export class ActiveBranch {
-currentBranch: Branch = null;
+currentBranch: Branch=null;
 
   constructor(private eventBus: FlipperEventBusService,
-              private database: PouchDBService,
-              private currentBusiness: ActiveBusiness) {
+    private database: PouchDBService,
+    private currentBusiness:ActiveBusiness) {
     this.database.connect(PouchConfig.bucket);
     this.eventBus.of < CurrentBranchEvent > (CurrentBranchEvent.CHANNEL)
-    .pipe(filter(e => e.branch && (e.branch.id !== null ||  e.branch.id !== undefined)))
+    .pipe(filter(e => e.branch && (e.branch.id !== null ||  e.branch.id !==undefined)))
     .subscribe(res =>
       this.currentBranch = res.branch);
-    this.branch();
+       this.branch();
   }
 
   public get<K extends keyof Branch>(prop: K): Branch[K] {
@@ -36,16 +36,14 @@ currentBranch: Branch = null;
   }
 
 
-  public async branch(table= 'branches') {
-    if ( this.currentBusiness.get('id') !== 'undefined'
-    || this.currentBusiness.get('id') !== undefined
-    || this.currentBusiness.get('id') !== null){
-       await this.database.activeBranch(this.currentBusiness.get('id'), table).then(res => {
-          if (res.docs && res.docs.length > 0){
+  public async branch(table='branches') {
+    if( this.currentBusiness.get('id')!='undefined' || this.currentBusiness.get('id')!=undefined || this.currentBusiness.get('id')!=null){
+       await this.database.activeBranch(this.currentBusiness.get('id'),table).then(res=>{
+          if(res.docs && res.docs.length > 0){
               this.eventBus.publish(new CurrentBranchEvent(res.docs[0]));
           }
-  }, error => {
-      if (error.error && error.status === '404' ||  error.status === 404) {
+  },error=> {
+      if(error.error && error.status==='404' ||  error.status===404) {
         this.eventBus.publish(new CurrentBranchEvent(null));
       }
   });

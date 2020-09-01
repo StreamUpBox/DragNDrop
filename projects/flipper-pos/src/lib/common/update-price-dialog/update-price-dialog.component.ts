@@ -11,8 +11,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class UpdatePriceDialogComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<UpdatePriceDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public price: any, private formBuilder: FormBuilder,
-              protected notificationSvc: NotificationService) {
+    @Inject(MAT_DIALOG_DATA) public price: any, private formBuilder: FormBuilder,
+    protected notificationSvc: NotificationService) {
   }
 
   get formControl() { return this.form.controls; }

@@ -12,8 +12,8 @@ export class Business {
   typeId?: any;
   createdAt?: Date;
   updatedAt?: Date;
-  table?: string;
-  docId?: string;
+  table?:string;
+  docId?:string;
   constructor(params: object = {}) {
     for (const name in params) {
       this[name] = params[name];

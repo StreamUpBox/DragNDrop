@@ -59,7 +59,7 @@ import { LoadingIconComponent } from './loading-icon/loading-icon.component';
     SpinnerComponent,
     MessageComponent,
     LazyIfDirective,
-
+    
     RoundNumberPipe,
     CalculateTotalClassPipe,
     MergeArryByIdPipe,
@@ -78,5 +78,4 @@ import { LoadingIconComponent } from './loading-icon/loading-icon.component';
     FindKeyPipe,
   ]
 })
-export class FlipperComponentsModule {
-}
+export class FlipperComponentsModule {}

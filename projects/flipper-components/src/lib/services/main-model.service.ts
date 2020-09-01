@@ -45,13 +45,13 @@ export class MainModelService {
     } catch (e) { throw new Error((`ERROR:${e}`)); }
   }
 
-
+  
   loadAll<T>(table: string): T[] {
     this.checkTable(table);
     try {
       return this.model.get<T>(table);
-    } catch (e) {
-
+    } catch (e) { 
+     
       throw new Error((`ERROR:${e}`));
      }
   }

@@ -2,11 +2,6 @@ import { NgModule } from '@angular/core';
 import { ProductsComponent } from './products/products.component';
 import { CreateProductComponent } from './create-product/create-product.component';
 import { CommonModule } from '@angular/common';
-import { VendorsModule } from '@enexus/flipper-vendors';
-import { FlipperEventModule } from '@enexus/flipper-event';
-import { FlipperComponentsModule } from '@enexus/flipper-components';
-import { FlipperFileUploadModule } from '@enexus/flipper-file-upload';
-import { DialogModule } from '@enexus/flipper-dialog';
 import { VariantsComponent } from './variants/variants.component';
 import { RegularVariantsComponent } from './variants/regular-variants/regular-variants.component';
 import { AddedVariantsComponent } from './variants/added-variants/added-variants.component';
@@ -20,26 +15,30 @@ import { ListProductsComponent } from './list-products/list-products.component';
 import { ProductVariantsComponent } from './list-products/product-variants/product-variants.component';
 import { ViewStockHistoryComponent } from './view-stock-history/view-stock-history.component';
 import { PrintBarcodeLabelsDialogComponent } from './print-barcode-labels-dialog/print-barcode-labels-dialog.component';
+import { VendorsModule } from '@enexus/flipper-vendors';
+import { FlipperEventModule } from '@enexus/flipper-event';
+import { FlipperComponentsModule } from '@enexus/flipper-components';
+import { DialogModule } from '@enexus/flipper-dialog';
 
-
+import { FlipperFileUploadModule } from '@enexus/flipper-file-upload';
 
 
 @NgModule({
   declarations: [
-    ProductVariantsComponent,
-    ListProductsComponent,
+    ProductVariantsComponent, 
+    ListProductsComponent, 
     VariantsComponent,
-    ProductsComponent,
-    CreateProductComponent,
+    ProductsComponent, 
+    CreateProductComponent, 
     RegularVariantsComponent,
-    AddedVariantsComponent,
-    VariantsDialogModelComponent,
+    AddedVariantsComponent, 
+    VariantsDialogModelComponent, 
     EditVariantComponent,
-    DisacrdDialogModelComponent,
-    ManageStockComponent,
+    DisacrdDialogModelComponent, 
+    ManageStockComponent, 
     AddVariantComponent,
-
-    ViewStockHistoryComponent,
+    
+    ViewStockHistoryComponent, 
     PrintBarcodeLabelsDialogComponent
     ],
   imports: [
@@ -47,34 +46,34 @@ import { PrintBarcodeLabelsDialogComponent } from './print-barcode-labels-dialog
     VendorsModule,
     FlipperEventModule,
     FlipperComponentsModule,
-
+    
     FlipperFileUploadModule,
     FlipperOfflineDatabaseModule,
     DialogModule
   ],
   entryComponents: [
-      VariantsDialogModelComponent,
+      VariantsDialogModelComponent, 
       DisacrdDialogModelComponent,
-      AddVariantComponent,
-
+      AddVariantComponent, 
+      
       ViewStockHistoryComponent,
       PrintBarcodeLabelsDialogComponent
     ],
   exports: [
-
+    
     VariantsComponent,
-    ProductsComponent,
-    CreateProductComponent,
+    ProductsComponent, 
+    CreateProductComponent, 
     RegularVariantsComponent,
-    AddedVariantsComponent,
-    VariantsDialogModelComponent,
+    AddedVariantsComponent, 
+    VariantsDialogModelComponent, 
     EditVariantComponent,
-    DisacrdDialogModelComponent,
-    ManageStockComponent,
+    DisacrdDialogModelComponent, 
+    ManageStockComponent, 
     AddVariantComponent,
-    ListProductsComponent,
-    ProductVariantsComponent,
-    ViewStockHistoryComponent,
+    ListProductsComponent, 
+    ProductVariantsComponent, 
+    ViewStockHistoryComponent, 
     PrintBarcodeLabelsDialogComponent
   ]
 })

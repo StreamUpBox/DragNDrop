@@ -27,11 +27,11 @@ export class ModelService extends ExecuteService {
       if (Table) {
         return  this.select(Table).execute();
       } else {
-
+        
         return this.execute();
       }
     } catch (e) {
-
+      
       throw new Error((`ERROR:${e}`));
     }
   }

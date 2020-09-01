@@ -12,7 +12,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class PrintBarcodeLabelsDialogComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<PrintBarcodeLabelsDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public labels: Labels[], private ren: Renderer2) { }
+    @Inject(MAT_DIALOG_DATA) public labels: Labels[], private ren: Renderer2) { }
   showName = true;
   showSku = true;
   @ViewChild('barcodeLabels', { static: true }) myDiv: ElementRef;

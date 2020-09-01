@@ -13,12 +13,12 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 })
 export class AddVariantComponent implements OnInit {
   constructor(private stock: StockService,
-              protected notificationSvc: NotificationService,
-              public variant: VariationService,
-              public dialogRef: MatDialogRef<AddVariantComponent>,
-              private database: PouchDBService,
-              private formBuilder: FormBuilder,
-              @Inject(MAT_DIALOG_DATA) public product: Product) {
+    protected notificationSvc: NotificationService,
+    public variant: VariationService,
+    public dialogRef: MatDialogRef<AddVariantComponent>,
+    private database: PouchDBService,
+    private formBuilder: FormBuilder,
+    @Inject(MAT_DIALOG_DATA) public product: Product) {
   }
   isFocused = '';
   submitted = false;
@@ -34,12 +34,13 @@ export class AddVariantComponent implements OnInit {
   }
   get formControl() { return this.form.controls; }
   ngOnInit() {
+    this.variant.activeBusiness();
     this.form = this.formBuilder.group({
       name: [ '', Validators.required],
       SKU: this.variant.generateSKU(),
       retailPrice: [ 0.00, Validators.min(0)],
       supplyPrice: [0.00, Validators.min(0)],
-      unit: '',
+      unit:'',
       createdAt: new Date(),
       updatedAt: new Date(),
 
@@ -69,9 +70,9 @@ export class AddVariantComponent implements OnInit {
       updatedAt: new Date()
     };
     this.variant.create(formData);
-
-    this.variant.createVariantStock(formData);
-
+  
+      this.variant.createVariantStock(formData);
+    
     this.dialogRef.close('done');
   }
 

@@ -33,10 +33,12 @@ export class ManageStockComponent implements OnInit {
   ngOnInit() {
     this.stock.init();
     this.loadStocks();
+    this.stock.findBranch(this.variation.id);
   }
-  loadStocks() {
+  async loadStocks() {
     if (this.variation) {
-      const stockControl: StockControl[] = this.stock.variantStocks(this.variation.id);
+      await this.stock.variantStocks(this.variation.id)
+      const stockControl: StockControl[] = this.stock.stocks;
       if (stockControl.length > 0) {
         stockControl.forEach(stock => {
           const stockCtrl: StockControl = {id: stock.id, reason: '',

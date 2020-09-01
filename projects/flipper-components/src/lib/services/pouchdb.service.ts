@@ -33,18 +33,18 @@ export class PouchDBService {
                     active: { $eq: true },
                 }
             });
-        });
+        })
     }
 
     public query(fields = [], selector = {}) {
 
         return this.database.createIndex({
-            index: { fields }
+            index: { fields: fields }
         }).then(result => {
             return this.database.find({
-                selector
+                selector: selector
             });
-        });
+        })
     }
 
 
@@ -60,7 +60,7 @@ export class PouchDBService {
                     userId: { $eq: userId }
                 }
             });
-        });
+        })
     }
 
     public hasDraftProduct(businessId, table = 'products') {
@@ -75,7 +75,7 @@ export class PouchDBService {
                     businessId: { $eq: businessId }
                 }
             });
-        });
+        })
     }
     public currentBusiness() {
 
@@ -87,7 +87,7 @@ export class PouchDBService {
                     if (business && business.docs.length > 0) {
                         return business.docs[0];
                     }
-                });
+                })
             }
         });
     }
@@ -99,7 +99,7 @@ export class PouchDBService {
                 return this.activeBusiness(user.docs[0].id, 'businesses').then(business => {
                     if (business && business.docs.length > 0) {
 
-                        return this.database.query(['table', 'businessId', 'isDefault'], {
+                        return this.database.query(['table', 'businessId', "isDefault"], {
                             table: { $eq: 'taxes' }, businessId: { $eq: business.docs[0].id }, isDefault: { $eq: true }
                         }).then(res => {
 
@@ -113,7 +113,7 @@ export class PouchDBService {
                     } else {
                         return null;
                     }
-                });
+                })
             }
         });
     }
@@ -142,7 +142,6 @@ export class PouchDBService {
 
     public listBusinessTaxes() {
 
-
                 return this.currentBusiness().then(business => {
                     if (business) {
 
@@ -162,10 +161,10 @@ export class PouchDBService {
                         return [];
                     }
                 });
-
+          
     }
 
-    public activeBranch(businessId, table = 'branches') {
+    public activeBranch(businessId, table = "branches") {
         return this.database.createIndex({
             index: { fields: ['tables', 'active', 'businessId'] }
         }).then(result => {
@@ -176,7 +175,7 @@ export class PouchDBService {
                     businessId: { $eq: businessId }
                 }
             });
-        });
+        })
     }
 
     public connect(dbName: string, filter: string = null) {
@@ -184,8 +183,8 @@ export class PouchDBService {
             this.database = new PouchDB(dbName);
             if (filter != null) {
                 this.database.changes({
-                    filter(doc) {
-                        // make sure we filter only to listen on our document of intrest.
+                    filter: function (doc) {
+                        //make sure we filter only to listen on our document of intrest.
                         return doc.channel === filter;
                     }
                 });
@@ -210,6 +209,14 @@ export class PouchDBService {
         //         }
         //       });
         //   })
+    }
+
+    public remove(document: any) {
+        try{
+        return this.database.remove(document);
+        }catch(e){
+            console.log('did not removed',e);
+        }
     }
 
     public find(id) {
@@ -281,7 +288,7 @@ export class PouchDBService {
     public sync(remote: string) {
         const sessionId = PouchConfig.sessionId;
         document.cookie = sessionId;
-        // our main = bucket and is constant to all users.
+        //our main = bucket and is constant to all users.
         PouchDB.sync('main', remote, {
             live: false,
             retry: true
@@ -290,23 +297,23 @@ export class PouchDBService {
                 this.listener.emit(change);
             }
         }).on('paused', change => {
-            console.log('sync paused');
+            console.log("sync paused");
             if (change) {
                 this.listener.emit(change);
             }
         }).on('active', () => {
         }).on('denied', change => {
-            console.log('sync denied');
+            console.log("sync denied");
             if (change) {
                 this.listener.emit(change);
             }
         }).on('complete', change => {
-            console.log('sync complete');
+            console.log("sync complete");
             if (change) {
                 this.listener.emit(change);
             }
         }).on('error', error => {
-            console.log('sync error');
+            console.log("sync error");
             console.error(JSON.stringify(error));
         });
     }

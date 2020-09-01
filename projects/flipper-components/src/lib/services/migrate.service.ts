@@ -193,7 +193,7 @@ export class MigrateService {
           resolve();
         }, error => {
           // TODO: report this error to analytics.
-          // console.error(error); reject();
+          // console.error(error); reject(); 
         });
 
     });

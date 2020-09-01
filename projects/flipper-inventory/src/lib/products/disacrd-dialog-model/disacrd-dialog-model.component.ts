@@ -7,7 +7,7 @@ import { MatDialogRef } from '@angular/material/dialog';
   templateUrl: './disacrd-dialog-model.component.html',
   styleUrls: ['./disacrd-dialog-model.component.css']
 })
-export class DisacrdDialogModelComponent implements OnInit {
+export class DisacrdDialogModelComponent  {
 
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
       if (event.key === 'Esc') {
@@ -22,8 +22,4 @@ export class DisacrdDialogModelComponent implements OnInit {
     }
 
   constructor(public dialogRef: MatDialogRef<DisacrdDialogModelComponent>) {}
-
-  ngOnInit() {
-  }
-
 }

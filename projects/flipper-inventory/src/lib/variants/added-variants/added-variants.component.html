@@ -61,9 +61,9 @@
       <div class="form-field form-field--no-label ember-view">
         <!---->
         <div class="form-field__content">
-          Supply: {{variant.activeBusiness().currency}}
+          Supply: {{variant.defaultBusiness.currency}}
           {{getTotalStock(variantion.id,'supplyPrice')}} {{variantion.unit?'/ '+variantion.unit:''}}<br />
-          Retail:{{variant.activeBusiness().currency}}
+          Retail:{{variant.defaultBusiness.currency}}
           {{getTotalStock(variantion.id,'retailPrice')}} {{variantion.unit?'/ '+variantion.unit:''}}
         </div>
       </div>
@@ -112,9 +112,9 @@
     Add Variation
   </button>
 
-  <button class="button-default button--success ml-1" (click)="variant.openStockHistoryDialog(variant.allVariant(product),true)" *ngIf="variant.productStockHistory(product).length > 0">
+  <!-- <button class="button-default button--success ml-1" (click)="variant.openStockHistoryDialog(allVariant(product),true)" *ngIf="variant.productStockHistory(product).length > 0">
      Vew Stock History
-   </button>
+   </button> -->
 
    <!-- <button class="button-default button--dark ml-1" (click)="variant.openPrintBarcodeLablesDialog()">
      Print Labels

@@ -4,8 +4,8 @@ import { Product, Stock, CalculateTotalClassPipe, Variant,
    MigrateService, PouchConfig, PouchDBService, Tables,
     StockHistory } from '@enexus/flipper-components';
 
-
-import { Subscription } from 'rxjs';
+    
+import { Subscription, async } from 'rxjs';
 import { VariationService } from '../services/variation.service';
 import { StockService } from '../services/stock.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
@@ -54,7 +54,7 @@ export class ListProductsComponent implements OnInit, OnDestroy {
               public variant: VariationService,
               private migrate: MigrateService,
               private database: PouchDBService,
-              public product: ProductService,
+              public product: ProductService, 
               private ngZone: NgZone) {
     this.database.connect(PouchConfig.bucket);
     this.dataSource = new MatTableDataSource([]);
@@ -64,6 +64,7 @@ export class ListProductsComponent implements OnInit, OnDestroy {
    }
 
    ngOnInit() {
+     this.variant.activeBusiness();
     if (PouchConfig.canSync) {
       this.database.sync(PouchConfig.syncUrl);
     }
@@ -162,15 +163,31 @@ export class ListProductsComponent implements OnInit, OnDestroy {
             return 0;
         }
     }
-    getStock(product: Product): Stock[] {
+
+     getStock(product: Product){
       const stocks: Stock[] = [];
-      const variants = this.variant.allVariant(product);
-      if (variants.length > 0) {
-                variants.forEach(variant => {
-                  stocks.push(this.stock.findVariantStock(variant.id));
+       this.variant.allVariant(product);
+      if (this.variant.allVariants.length > 0) {
+        this.variant.allVariants.forEach(async variant => {
+          await this.stock.findVariantStock(variant.id);
+                  stocks.push(this.stock.stock);
                 });
             }
       return stocks;
+    }
+
+    allVariant(product: Product){
+      const variants: Variant[] = [];
+
+          this.variant.allVariant(product);
+          if (this.variant.allVariants.length > 0) {
+            this.variant.allVariants.forEach( variant => {
+      
+                     variants.push(variant);
+                     
+                  });
+                }
+          return variants;
     }
 
 
@@ -180,7 +197,7 @@ export class ListProductsComponent implements OnInit, OnDestroy {
               if (this.getStock(product).length > 1) {
                   return this.getStock(product).length + ' Prices';
               } else {
-                return this.variant.activeBusiness().currency + ' ' + this.getStock(product)[0][type];
+                return this.variant.defaultBusiness.currency + ' ' + this.getStock(product)[0][type];
               }
           } else {
               return 0;

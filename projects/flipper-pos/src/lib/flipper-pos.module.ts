@@ -25,7 +25,7 @@ import { AddCartItemDialogComponent } from './common/add-cart-item-dialog/add-ca
 
   ],
   entryComponents: [UpdatePriceDialogComponent, AddCartItemDialogComponent],
-
+  
   exports: [FlipperBasicPosComponent, SearchBoxComponent,
     AutocompleteComponent, ShoppingListsComponent, BasicShoppingListComponent,
     StandardShoppingListComponent, CalculatorComponent]

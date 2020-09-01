@@ -25,23 +25,23 @@ addNew = false;
 @Input('didAddNew')
 set didAddNew(bol: boolean) {
 this.addNew = bol;
-this.refresh();
 }
+
 get didAddNew(): boolean {
 return this.addNew;
 }
   constructor(public variant: VariationService) {}
 
   ngOnInit() {
-
-   this.refresh();
-
+        if(this.didAddNew){
+              this.refresh();
+        }
   }
 
   refresh() {
-    if (this.product) {
-      this.variant.init(this.product);
-  }
+      if (this.product) {
+          this.variant.init(this.product);
+      }
 
   }
 

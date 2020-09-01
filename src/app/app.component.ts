@@ -21,15 +21,16 @@ export class AppComponent {
     private database: PouchDBService,
     private query: ModelService, private totalPipe: CalculateTotalClassPipe) {
     
+      this.database.connect(PouchConfig.bucket);
+      if (PouchConfig.canSync) {
+        this.database.sync(PouchConfig.syncUrl);
+      }
 
       if(environment.initialData){
         console.log('initializing data');
         // this.branch = this.model.active<Branch>(Tables.branch);
         // this.init();
-        this.database.connect(PouchConfig.bucket);
-        if (PouchConfig.canSync) {
-          this.database.sync(PouchConfig.syncUrl);
-        }
+      
         let userId = this.database.uid();
         let businessId = this.database.uid();
         const user = {
@@ -104,6 +105,7 @@ export class AppComponent {
         this.database.put(PouchConfig.Tables.taxes+'_'+formTaxes2.id, formTaxes2);
         this.model.create<Taxes>(Tables.taxes,formTaxes2);
 
+
         const formTaxes1 =
         {
           id: this.database.uid(),
@@ -123,5 +125,6 @@ export class AppComponent {
         console.log('done initializing data');
       }
 
+  
   }
 }

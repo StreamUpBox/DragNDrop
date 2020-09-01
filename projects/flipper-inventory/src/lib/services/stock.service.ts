@@ -162,8 +162,8 @@ export class StockService {
   async createStocks(formData:any) {
     await this.currentBranches();
     if (this.branches$.length > 0) {
-      await this.branches$.forEach(branch => {
-
+          this.branches$.forEach(branch => {
+   
          this.create({
           id: this.database.uid(),
           branchId: branch.id,

@@ -61,10 +61,12 @@ export class CreateProductComponent implements OnInit {
 
 
   async ngOnInit() {
+
     await this.product.init();
     // await this.checkNewItem();
 
     const hasDraftProduct = this.product.hasDraftProduct;
+
 
     console.log(hasDraftProduct);
 
@@ -171,7 +173,7 @@ export class CreateProductComponent implements OnInit {
 
         if (result === 'discard') {
           this.product.discardProduct();
-         
+
           // this.goToProduct();
         }
 

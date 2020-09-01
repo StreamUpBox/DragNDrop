@@ -147,9 +147,7 @@ export class VariationService {
   }
 
   async createRegular(product: Product) {
-
-  
-
+    console.log('has regular s',this.hasRegular);
     if (!this.hasRegular) {
       const formData= await {
         id: this.database.uid(),
@@ -219,8 +217,12 @@ export class VariationService {
   get formControl() { return this.form.controls; }
 
   async regular(product: Product) {
-    await this.allVariant(product);
-    this.hasRegular = this.allVariants.length > 0?this.allVariants[0]:null;   
+    return await this.productVariations(product.id).then(res => {
+       
+     const regular = res.length > 0?res[0]:null; 
+      console.log('has regular',regular);
+      this.hasRegular =regular;
+    }); 
   }
 
 

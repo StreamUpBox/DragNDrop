@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   Product, MainModelService, Tables, Business,
   Branch, Taxes, BranchProducts, PouchDBService,
-  PouchConfig, User
+  PouchConfig, Variant, Stock, StockHistory, BranchesEvent, User, CacheService
 } from '@enexus/flipper-components';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { VariationService } from './variation.service';
@@ -30,6 +30,7 @@ export class ProductService {
   defaultTaxe$: Taxes = null;
 
   constructor(private query: ModelService,
+    private cacheService: CacheService,
     private model: MainModelService,
     private variant: VariationService,
     private formBuilder: FormBuilder,
@@ -117,7 +118,8 @@ export class ProductService {
 
 
   async create() {
-
+    console.log('create item');
+    console.log('defaut business', this.defaultBusiness$);
 
     if (this.defaultBusiness$ && !this.hasDraftProduct) {
 
@@ -215,32 +217,46 @@ export class ProductService {
   }
 
   discardProduct(): void {
-    console.log('what do we have?::',this.hasDraftProduct);
-    
     if (this.hasDraftProduct) {
-      //TODO: now update this function so it works!.
-      
-      // this.variant.deleteProductVariations(this.hasDraftProduct);
+      this.variant.deleteProductVariations(this.hasDraftProduct);
 
-      // this.model.delete(Tables.products, '"' + this.hasDraftProduct.id + '"');
+      this.model.delete(Tables.products, '"' + this.hasDraftProduct.id + '"');
     }
   }
 
 
-  async saveProduct() {
+  updateOnlineDatabase() {
+    if (PouchConfig.canSync) {
+      this.database.sync(PouchConfig.syncUrl);
+    }
+    if (!this.hasDraftProduct.isDraft) {
 
-    if (this.hasDraftProduct) {
-      this.variant.updateVariantAction(this.hasDraftProduct);
-      this.hasDraftProduct.active = true;
-      this.hasDraftProduct.isDraft = false;
-      this.hasDraftProduct.isCurrentUpdate = false;
-      this.hasDraftProduct.color = '#000000';
-      this.hasDraftProduct.updatedAt = new Date();
-      this.update();
+      this.database.put(PouchConfig.Tables.products + '_' + this.hasDraftProduct.id, this.hasDraftProduct);
 
+      if (this.hasDraftProduct) {
+        //TODO: now update this function so it works!.
+
+        // this.variant.deleteProductVariations(this.hasDraftProduct);
+
+        // this.model.delete(Tables.products, '"' + this.hasDraftProduct.id + '"');
+      }
+    }
+
+
+    async saveProduct() {
+
+      if (this.hasDraftProduct) {
+        this.variant.updateVariantAction(this.hasDraftProduct);
+        this.hasDraftProduct.active = true;
+        this.hasDraftProduct.isDraft = false;
+        this.hasDraftProduct.isCurrentUpdate = false;
+        this.hasDraftProduct.color = '#000000';
+        this.hasDraftProduct.updatedAt = new Date();
+        this.update();
+
+
+      }
 
     }
 
   }
-
-}

@@ -159,8 +159,13 @@ export class StockService {
 
   }
 
-  async createStocks(formData:any) {
-    await this.currentBranches();
+  async createStocks(formData:any,branches=[]) {
+    if(branches.length > 0){
+      this.branches$=branches;
+    }else{
+      await this.currentBranches();
+    }
+   
     if (this.branches$.length > 0) {
           this.branches$.forEach(branch => {
    
@@ -185,6 +190,7 @@ export class StockService {
         
       });
     }
+    return true;
   }
 
    create(stock: Stock) {

@@ -141,7 +141,7 @@ export class VariationService {
     return  this.database.put(PouchConfig.Tables.variants+'_'+variant.id, variant);
   }
 
-  async createRegular(product: Product) {;
+  async createRegular(product: Product,branches=[]) {
     if (!this.hasRegular) {
       const formData= await {
         id: this.database.uid(),
@@ -161,15 +161,15 @@ export class VariationService {
       
       };
       await this.database.put(PouchConfig.Tables.variants+'_'+formData.id, formData);
-      this.createVariantStock(formData);
-      await this.allVariant(product);
+      this.createVariantStock(formData,branches);
+       this.allVariant(product);
       this.regular();
     }
 
   }
 
-  createVariantStock(formData:any) {
-    this.stock.createStocks(formData);
+  createVariantStock(formData:any,branches=[]) {
+    return this.stock.createStocks(formData,branches);
   }
 
 
@@ -233,7 +233,7 @@ export class VariationService {
 
   update(variation: Variant): void {
     if (variation) {
-      console.log('need to update variant',variation);
+      // console.log('need to update variant',variation);
       return this.database.put(PouchConfig.Tables.variants+'_'+variation.id, variation);
     }
 

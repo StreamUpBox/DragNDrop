@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { VariationService } from '../../services/variation.service';
 import { StockService } from '../../services/stock.service';
-import {Product, CalculateTotalClassPipe, Stock } from '@enexus/flipper-components';
+import {Product, CalculateTotalClassPipe, Stock, Variant, Business } from '@enexus/flipper-components';
 import { DialogService, DialogSize } from '@enexus/flipper-dialog';
 import { AddVariantComponent } from '../add-variant/add-variant.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -15,14 +15,31 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class RegularVariantsComponent implements OnInit {
   isFocused = '';
   item: Product;
+  regularVariant: Variant;
   form: FormGroup;
-
+  business:Business;
   @Input('product')
   set product(item: Product) {
   this.item = item;
   }
   get product(): Product {
   return this.item;
+  }
+
+  @Input('regularVariantion')
+  set regularVariantion(item: Variant) {
+  this.regularVariant = item;
+  }
+  get regularVariantion(): Variant {
+  return this.regularVariant;
+  }
+  //defaultBusiness
+  @Input('defaultBusiness')
+  set defaultBusiness(item: Business) {
+  this.business = item;
+  }
+  get defaultBusiness(): Business {
+  return this.business;
   }
   constructor(private dialog: DialogService, public variant: VariationService,
               public stock: StockService,
@@ -32,11 +49,10 @@ export class RegularVariantsComponent implements OnInit {
                }
 
    ngOnInit() {
-    this.variant.activeBusiness();
-    if (this.variant.hasRegular) {
-      this.stock.variantStocks(this.variant.hasRegular.id);
-        this.request(null, this.variant.hasRegular);
-     }
+  
+      // this.stock.variantStocks(this.regularVariantion.id);
+        this.request(null, this.regularVariantion);
+     
   }
   
 
@@ -50,6 +66,10 @@ export class RegularVariantsComponent implements OnInit {
   }
  
    request(action = null, variant = null) {
+
+     if(variant!==null || variant!==undefined){
+
+     
      this.stock.findVariantStock(variant?variant.id:null);
     const stock: Stock = this.stock.stock?this.stock.stock:null;
 
@@ -63,6 +83,8 @@ export class RegularVariantsComponent implements OnInit {
       updatedAt: new Date(),
 
     });
+
+  }
 
   }
 
@@ -86,6 +108,7 @@ export class RegularVariantsComponent implements OnInit {
 
    getTotalStock(variantId, key: any):number {
      this.stock.variantStocks(variantId);
+     console.log(this.stock.stocks);
     if (this.stock.stocks.length > 0) {
           return this.totalPipe.transform(this.stock.stocks, key);
     } else {

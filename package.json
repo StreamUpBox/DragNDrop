@@ -20,7 +20,7 @@
     "build-card": "ng build paymentcard  --watch",
     "build": "ng build  --watch",
     "publish": "npm publish --access public",
-    "test": "ng test",
+    "test": "ng test",  
     "lint": "ng lint --fix=true",
     "buildAll": "ng build flipperComponents && ng build flipperButton && ng build flipperDashboard  && ng build flipperColor  && ng build flipperFont && ng build flipperDialog  && ng build flipperEvent && ng build flipperPos ",
     "e2e": "ng e2e"

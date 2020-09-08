@@ -172,7 +172,9 @@ export class CreateProductComponent implements OnInit {
       return this.dialog.open(DisacrdDialogModelComponent, DialogSize.SIZE_MD).subscribe(result => {
 
         if (result === 'discard') {
-          this.product.discardProduct();
+
+          console.log('we got discarded');
+          // this.product.discardProduct();
 
           // this.goToProduct();
         }

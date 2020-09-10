@@ -87,7 +87,7 @@ dependencies:
   provider: ^4.0.4
   firebase_core: "^0.5.0"
   firebase_auth: "^0.18.0+1"
-  rxdart: ^0.24.0
+  rxdart: ^0.23.0
   flipper_login:
     path: './plugins/FlipperLogin'
 
@@ -103,7 +103,7 @@ dev_dependencies:
   mockito: ^4.1.1
 
   flutter_launcher_icons: ^0.7.4
-  sms_autofill: ^1.2.3
+  bluetooth_print: ^2.0.0
 
 flutter_icons:
   android: true
@@ -120,28 +120,9 @@ flutter:
 
   # assets:
     # - images/
-#   assets:
-#     - assets/
-#     - assets/graphics/
-#     - assets/card_provider/
-#     - assets/graphics/drawer/
-
-#   fonts:
-#     - family: Montserrat
-#       fonts:
-#         - asset: assets/fonts/Montserrat-Regular.ttf
-# flutter_intl:
-#   enabled: true
-
-# 1.5.33
-#  flutter packages pub run build_runner watch --delete-conflicting-outputs  --enable-experiment=non-nullable
-#  rw.flipper
-# app bundle
-# flutter build appbundle --build-name=1.5.78  --build-number=1578
-# app apk
-# flutter build apk --build-name=1.5.78  --build-number=1578
-# Db on device for debugging purpose: This PC\Pixel\Internal shared storage\Android\data\rw.flipper\files\database-development
-
+  assets:
+    - assets/images/bluetooth_print.png
+  
 # icon
 # flutter pub run flutter_launcher_icons:main
 

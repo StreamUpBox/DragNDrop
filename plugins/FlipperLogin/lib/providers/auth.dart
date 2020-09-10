@@ -7,8 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-// TODO: whatch out if this is not a singleton i.e only working once!
-StreamController<int> controller = StreamController<int>();
+StreamController<String> controller = StreamController<String>();
 Stream loginStream = controller.stream;
 
 enum Status { Uninitialized, Authenticated, Authenticating, Unauthenticated }
@@ -51,9 +50,7 @@ class AuthProvider with ChangeNotifier {
   Future<void> verifyPhone(BuildContext context, String number) async {
     final PhoneCodeSent smsOTPSent = (String verId, [int forceCodeResend]) {
       this.verificationId = verId;
-      // print(verId);
-      // print(forceCodeResend);
-      // controller.add(forceCodeResend);
+      controller.add(verificationId);
     };
     try {
       await _auth
@@ -76,7 +73,7 @@ class AuthProvider with ChangeNotifier {
           .then(
             (value) => Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => OtpPage()),
+              MaterialPageRoute(builder: (context) => OtpPage(phone: number,)),
             ),
           );
     } catch (e) {

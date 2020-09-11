@@ -92,6 +92,8 @@ dependencies:
     path: './plugins/FlipperLogin'
 
 dev_dependencies:
+  couchbase_lite:
+    path: ./couchbase_lite/
   moor_generator: ^3.0.0
   flutter_test:
     sdk: flutter

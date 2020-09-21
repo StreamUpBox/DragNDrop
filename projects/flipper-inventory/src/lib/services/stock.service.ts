@@ -45,22 +45,36 @@ export class StockService {
       }
   });
 
+ 
+
   }
 
  
   variantStocks(variantId: string): Stock[] {
 
-        return this.database.query(['table','variantId'], {
-          table: { $eq: 'stocks' },
-          variantId: { $eq: variantId }
-        }).then(res => {
+        return this.database.callbackQuery(['table','variantId'],
+        {table:'stocks',variantId:variantId},(res) =>{
           if (res.docs && res.docs.length > 0) {
-            this.stocks = res.docs as Stock[];
+              return res.docs;
           } else {
-            this.stocks = [] as Stock[];
+              return [];
           }
-      });
+      })
   }
+
+
+
+  variantStocks1(variantId: string): Stock[] {
+
+    return this.database.callbackQuery(['table','variantId'],
+    {table:'stocks',variantId:variantId},(res) =>{
+      if (res.docs && res.docs.length > 0) {
+          return res.docs;
+      } else {
+          return [];
+      }
+  })
+}
 
 
 

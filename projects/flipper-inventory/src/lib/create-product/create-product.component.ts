@@ -30,6 +30,7 @@ export class CreateProductComponent implements OnInit {
   }
   submitted = false;
 
+  
   @HostListener('document:keydown', ['$event'])
   onKeydownHandler(event: KeyboardEvent) {
 

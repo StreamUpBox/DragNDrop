@@ -51,6 +51,7 @@ export class RegularVariantsComponent implements OnInit {
    ngOnInit() {
   
       // this.stock.variantStocks(this.regularVariantion.id);
+      console.log(this.regularVariantion);
         this.request(null, this.regularVariantion);
      
   }
@@ -69,20 +70,21 @@ export class RegularVariantsComponent implements OnInit {
 
      if(variant!==null || variant!==undefined){
 
-     
+     console.log(this.stock.variantStocks1(variant.id));
      this.stock.findVariantStock(variant?variant.id:null);
+     console.log(this.stock.stock);
     const stock: Stock = this.stock.stock?this.stock.stock:null;
 
-    this.form =  this.formBuilder.group({
-      name: [!action && variant && variant.name ? variant.name : '', Validators.required],
-      SKU: !action && variant && variant.SKU ? variant.SKU : this.variant.generateSKU(),
-      retailPrice: [!action && variant && stock ? stock.retailPrice : 0.00, Validators.min(0)],
-      supplyPrice: [!action && variant && stock ? stock.supplyPrice : 0.00, Validators.min(0)],
-      unit: !action && variant && variant.unit ? variant.unit : '',
-      createdAt: new Date(),
-      updatedAt: new Date(),
+    // this.form =  this.formBuilder.group({
+    //   name: [!action && variant && variant.name ? variant.name : '', Validators.required],
+    //   SKU: !action && variant && variant.SKU ? variant.SKU : this.variant.generateSKU(),
+    //   retailPrice: [!action && variant && stock ? stock.retailPrice : 0.00, Validators.min(0)],
+    //   supplyPrice: [!action && variant && stock ? stock.supplyPrice : 0.00, Validators.min(0)],
+    //   unit: !action && variant && variant.unit ? variant.unit : '',
+    //   createdAt: new Date(),
+    //   updatedAt: new Date(),
 
-    });
+    // });
 
   }
 
@@ -90,8 +92,8 @@ export class RegularVariantsComponent implements OnInit {
 
 
   updateVariant(key: any, event: any) {
-
-       this.variant. updateVariant(key, this.variant.hasRegular, event);
+console.table(event,key);
+       this.variant.updateVariant(key, this.variant.hasRegular, event);
   }
   get formControl() { return this.form.controls; }
   focusing(value) {
@@ -107,8 +109,8 @@ export class RegularVariantsComponent implements OnInit {
   }
 
    getTotalStock(variantId, key: any):number {
-     this.stock.variantStocks(variantId);
-     console.log(this.stock.stocks);
+    //  this.stock.variantStocks(variantId);
+    //  console.log(this.stock.stocks);
     if (this.stock.stocks.length > 0) {
           return this.totalPipe.transform(this.stock.stocks, key);
     } else {

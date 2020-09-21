@@ -75,16 +75,16 @@ export class RegularVariantsComponent implements OnInit {
      console.log(this.stock.stock);
     const stock: Stock = this.stock.stock?this.stock.stock:null;
 
-    // this.form =  this.formBuilder.group({
-    //   name: [!action && variant && variant.name ? variant.name : '', Validators.required],
-    //   SKU: !action && variant && variant.SKU ? variant.SKU : this.variant.generateSKU(),
-    //   retailPrice: [!action && variant && stock ? stock.retailPrice : 0.00, Validators.min(0)],
-    //   supplyPrice: [!action && variant && stock ? stock.supplyPrice : 0.00, Validators.min(0)],
-    //   unit: !action && variant && variant.unit ? variant.unit : '',
-    //   createdAt: new Date(),
-    //   updatedAt: new Date(),
+    this.form =  this.formBuilder.group({
+      name: [!action && variant && variant.name ? variant.name : '', Validators.required],
+      SKU: !action && variant && variant.SKU ? variant.SKU : this.variant.generateSKU(),
+      retailPrice: [!action && variant && stock ? stock.retailPrice : 0.00, Validators.min(0)],
+      supplyPrice: [!action && variant && stock ? stock.supplyPrice : 0.00, Validators.min(0)],
+      unit: !action && variant && variant.unit ? variant.unit : '',
+      createdAt: new Date(),
+      updatedAt: new Date(),
 
-    // });
+    });
 
   }
 

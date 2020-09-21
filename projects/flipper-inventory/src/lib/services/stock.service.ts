@@ -50,7 +50,7 @@ export class StockService {
   }
 
  
-  variantStocks(variantId: string): Stock[] {
+  variantStocks(variantId: string) {
 
         return this.database.callbackQuery(['table','variantId'],
         {table:'stocks',variantId:variantId},(res) =>{

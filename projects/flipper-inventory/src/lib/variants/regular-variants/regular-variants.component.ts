@@ -25,6 +25,9 @@ export class RegularVariantsComponent implements OnInit {
   get product(): Product {
   return this.item;
   }
+  stocks:Stock[]=[];
+  currentStock:number=0;
+  lowStock:number=0;
 
   @Input('regularVariantion')
   set regularVariantion(item: Variant) {
@@ -49,9 +52,13 @@ export class RegularVariantsComponent implements OnInit {
                }
 
    ngOnInit() {
-  
-      // this.stock.variantStocks(this.regularVariantion.id);
+ 
+      this.stock.variantStocks(this.regularVariantion.id).then(res=>{
+        this.stocks=res.docs;
+      });
       
+      this.currentStock= this.getTotalStock(this.regularVariantion.id, 'currentStock');
+      this.lowStock=this.getTotalStock(this.regularVariantion.id, 'lowStock');
         this.request(null, this.regularVariantion);
      
   }
@@ -70,10 +77,7 @@ export class RegularVariantsComponent implements OnInit {
 
      if(variant!==null || variant!==undefined){
 
-     console.log(this.stock.variantStocks1(variant.id));
-     this.stock.findVariantStock(variant?variant.id:null);
-     console.log(this.stock.stock);
-    const stock: Stock = this.stock.stock?this.stock.stock:null;
+    const stock: Stock = this.stocks.length > 0?this.stocks[0]:null;
 
     this.form =  this.formBuilder.group({
       name: [!action && variant && variant.name ? variant.name : '', Validators.required],
@@ -109,10 +113,10 @@ export class RegularVariantsComponent implements OnInit {
   }
 
    getTotalStock(variantId, key: any):number {
-    //  this.stock.variantStocks(variantId);
-    //  console.log(this.stock.stocks);
-    if (this.stock.stocks.length > 0) {
-          return this.totalPipe.transform(this.stock.stocks, key);
+
+   console.table(this.stocks);
+    if (this.stocks.length > 0) {
+          return this.totalPipe.transform(this.stocks, key);
     } else {
         return 0;
     }

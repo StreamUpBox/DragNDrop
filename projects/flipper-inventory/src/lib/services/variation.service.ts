@@ -392,18 +392,7 @@ updateStockControl(result: any, variant: Variant) {
     }
   }
 
-  async updateVariant(key: any, variant: Variant, event: any) {
-    const val = key === 'unit' ? event.value : event.target.value;
-
-    if (key === 'retailPrice' || key === 'supplyPrice') {
-      await this.stock.findVariantStock(variant?variant.id:null);
-      const myStock = this.stock.stock;
-      myStock[key] = parseInt(val, 10);
-      return this.stock.update(myStock);
-    } else {
-     return this.updateRegularVariant(variant, key, val);
-    }
-  } 
+ 
 
   async updateVariantAction(product: Product) {
     await this.allVariant(product);

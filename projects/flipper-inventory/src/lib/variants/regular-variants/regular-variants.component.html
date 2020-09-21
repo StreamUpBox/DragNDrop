@@ -68,15 +68,10 @@
   
         <td style="width:25%">
           <a class="form-link-with-spacing hyperlink"  (click)="variant.openVariantDialog(regularVariantion,1)">
-            <span *ngIf="stocks.length==1"> 
+            <span> 
               {{currentStock}} {{regularVariantion.unit}}
           </span> 
-            <span *ngIf="stocks.length > 1">
-              Edit Per Location
-            </span>
-            <span *ngIf="stocks.length > 0">
-              None
-            </span>
+           
           </a>
           
         </td>
@@ -85,15 +80,10 @@
         </td>
         <td style="width:25%">
               <a class="form-link-with-spacing hyperlink" (click)="variant.openVariantDialog(regularVariantion,1)">
-                  <span *ngIf="stocks.length==1" > 
+                  <span> 
                     {{lowStock}} {{regularVariantion.unit}}
                  </span> 
-                  <span *ngIf="stocks.length > 1 ">
-                    Edit Per Location
-                  </span>
-                  <span *ngIf="stocks.length > 0" >
-                    None
-                  </span>
+                
               </a>
                
         </td>

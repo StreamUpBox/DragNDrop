@@ -51,7 +51,7 @@ export class RegularVariantsComponent implements OnInit {
    ngOnInit() {
   
       // this.stock.variantStocks(this.regularVariantion.id);
-      console.log(this.regularVariantion);
+      
         this.request(null, this.regularVariantion);
      
   }
@@ -93,7 +93,7 @@ export class RegularVariantsComponent implements OnInit {
 
   updateVariant(key: any, event: any) {
 console.table(event,key);
-       this.variant.updateVariant(key, this.variant.hasRegular, event);
+       this.variant.updateVariant(key, this.regularVariantion, event);
   }
   get formControl() { return this.form.controls; }
   focusing(value) {
@@ -120,7 +120,7 @@ console.table(event,key);
 
   async focusingOut() {
 
-    await this.stock.findVariantStock(this.variant.hasRegular.id);
+    await this.stock.findVariantStock(this.regularVariantion.id);
     const stock = this.stock.stock;
 
       if (this.isFocused === 'retailPrice' && (this.form.controls.retailPrice.value === 0 ||
@@ -134,7 +134,7 @@ console.table(event,key);
 
       if (this.isFocused === 'SKU' && (this.form.controls.SKU.value === 0 ||
         this.form.controls.SKU.value === '')) {
-          this.form.controls.SKU.setValue(this.variant.hasRegular.SKU);
+          this.form.controls.SKU.setValue(this.regularVariantion.SKU);
         }
 
 

@@ -92,7 +92,7 @@ export class RegularVariantsComponent implements OnInit {
 
 
   updateVariant(key: any, event: any) {
-console.table(event,key);
+
        this.variant.updateVariant(key, this.regularVariantion, event);
   }
   get formControl() { return this.form.controls; }

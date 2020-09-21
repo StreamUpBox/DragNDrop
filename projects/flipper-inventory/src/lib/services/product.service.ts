@@ -28,6 +28,7 @@ export class ProductService {
   defaultBranch$: Branch = null;
   currentUser$: User = null;
   defaultTaxe$: Taxes = null;
+  allVariants: Variant[];
 
   constructor(private query: ModelService,
     private cacheService: CacheService,
@@ -64,6 +65,27 @@ export class ProductService {
       this.taxes$ = taxes;
     });
   }
+  async allVariant(product: Product) {
+     
+    return this.productVariations(product.id).then(res => {
+       
+      this.allVariants= res as Variant[];
+        
+});
+}
+
+productVariations(productId){
+return this.database.query(['table', 'productId'], {
+  table: { $eq: 'variants' },
+  productId: { $eq: productId }
+}).then(res => {
+        if (res.docs && res.docs.length > 0) {
+          return res.docs as Variant[];
+        } else {
+          return [];
+        }
+});
+}
 
 
   public loadAllProducts(): Observable<Product[]> {
@@ -104,6 +126,7 @@ export class ProductService {
     return this.database.hasDraftProduct(this.defaultBusiness$ ? this.defaultBusiness$.id : 0).then(draft => {
       if (draft && draft.docs.length > 0) {
         this.hasDraftProduct = draft.docs[0];
+        this.allVariant(this.hasDraftProduct);
       }
     });
   }
@@ -112,7 +135,7 @@ export class ProductService {
    
     if (this.defaultBusiness$ && !this.hasDraftProduct) {
 
-      const formProduct = await {
+      const formProduct = {
         id: this.database.uid(),
         name: 'new item',
         businessId: this.defaultBusiness$ ? this.defaultBusiness$.id : 0,
@@ -132,6 +155,10 @@ export class ProductService {
       };
 
       await this.database.put(PouchConfig.Tables.products + '_' + formProduct.id, formProduct);
+      if(this.branches$.length > 0){
+        return this.variant.createRegular(formProduct,this.branches$); 
+      }
+     
     }
   }
 
@@ -184,6 +211,7 @@ export class ProductService {
 
   update(): Product {
     if (this.hasDraftProduct) {
+      //console.log(this.hasDraftProduct);
       return this.database.put(PouchConfig.Tables.products + '_' + this.hasDraftProduct.id, this.hasDraftProduct);
     }
 

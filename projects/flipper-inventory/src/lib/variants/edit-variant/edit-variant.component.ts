@@ -25,7 +25,7 @@ export class EditVariantComponent implements OnInit {
   }
   updateVariant(key: any, event: any) {
 
-       this.variant. updateVariant(key, this.variation, event);
+      //  this.updateVariant(key, this.variation, event);
 
   }
 

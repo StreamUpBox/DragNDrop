@@ -45,22 +45,36 @@ export class StockService {
       }
   });
 
+ 
+
   }
 
  
-  variantStocks(variantId: string): Stock[] {
+  variantStocks(variantId: string) {
 
-        return this.database.query(['table','variantId'], {
-          table: { $eq: 'stocks' },
-          variantId: { $eq: variantId }
-        }).then(res => {
+        return this.database.callbackQuery(['table','variantId'],
+        {table:'stocks',variantId:variantId},(res) =>{
           if (res.docs && res.docs.length > 0) {
-            this.stocks = res.docs as Stock[];
+              return res.docs;
           } else {
-            this.stocks = [] as Stock[];
+              return [];
           }
-      });
+      })
   }
+
+
+
+  variantStocks1(variantId: string): Stock[] {
+
+    return this.database.callbackQuery(['table','variantId'],
+    {table:'stocks',variantId:variantId},(res) =>{
+      if (res.docs && res.docs.length > 0) {
+          return res.docs;
+      } else {
+          return [];
+      }
+  })
+}
 
 
 
@@ -159,8 +173,13 @@ export class StockService {
 
   }
 
-  async createStocks(formData:any) {
-    await this.currentBranches();
+  async createStocks(formData:any,branches=[]) {
+    if(branches.length > 0){
+      this.branches$=branches;
+    }else{
+      await this.currentBranches();
+    }
+   
     if (this.branches$.length > 0) {
           this.branches$.forEach(branch => {
    
@@ -185,6 +204,7 @@ export class StockService {
         
       });
     }
+    return true;
   }
 
    create(stock: Stock) {

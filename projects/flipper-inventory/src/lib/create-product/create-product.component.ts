@@ -30,6 +30,7 @@ export class CreateProductComponent implements OnInit {
   }
   submitted = false;
 
+  
   @HostListener('document:keydown', ['$event'])
   onKeydownHandler(event: KeyboardEvent) {
 
@@ -67,10 +68,9 @@ export class CreateProductComponent implements OnInit {
     const hasDraftProduct = this.product.hasDraftProduct;
 // console.log(hasDraftProduct);
     this.request(hasDraftProduct);
-    
-
 
   }
+  
    request(hasDraftProduct){
     this.form =  this.formBuilder.group({
       name: [hasDraftProduct ? hasDraftProduct.name : '', Validators.required],
@@ -103,7 +103,7 @@ export class CreateProductComponent implements OnInit {
 
     this.product.updateKeyValue(key, val);
     this.product.update();
-    this.updateVariantProductName();
+    // this.updateVariantProductName();
   }
 
   updateVariantProductName() {

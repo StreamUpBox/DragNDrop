@@ -251,14 +251,14 @@ export class VariationService {
     });
   }
 
-  public openVariantDialog(variant: Variant, selectedIndex: number): any {
-    return this.dialog.open(VariantsDialogModelComponent, DialogSize.SIZE_MD, { variant, selectedIndex }).subscribe(result => {
+  public openVariantDialog(variant: Variant, selectedIndex: number,stock=null,stocks=[],currency='RWF'): any {
+    return this.dialog.open(VariantsDialogModelComponent, DialogSize.SIZE_MD, { variant, selectedIndex,stock,stocks,currency }).subscribe(result => {
 
-       this.updateStockControl(result, variant);
-       this.regular();
-       this.request(null, variant);
-       this.variants(this.product);
-       this. stockUpdates();
+      //  this.updateStockControl(result, variant);
+      //  this.regular();
+      //  this.request(null, variant);
+      //  this.variants(this.product);
+      //  this. stockUpdates();
     });
   }
 

@@ -72,9 +72,8 @@ export class RegularVariantsComponent implements OnInit {
    });
        
   }
-  updateStockFromRewuest(){
+  
 
-  }
   findVariantStocks(variantId: any) {
 
     return this.database.query(['table','variantId'], {
@@ -102,8 +101,6 @@ export class RegularVariantsComponent implements OnInit {
 
      if(variant!==null || variant!==undefined){
 
-    
-     
     this.form =  this.formBuilder.group({
       name: [!action && variant && variant.name ? variant.name : '', Validators.required],
       SKU: !action && variant && variant.SKU ? variant.SKU : this.variant.generateSKU(),

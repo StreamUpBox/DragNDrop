@@ -53,17 +53,27 @@ export class RegularVariantsComponent implements OnInit {
                }
 
    ngOnInit() {
- 
-   this.init();
+    this.request(null, this.regularVariantion);
+    this.init();
      
   }
-   init(){
-    // await this.findVariantStocks(this.regularVariantion.id);
- 
-    this.currentStock=  this.getTotalStock(this.regularVariantion.id, 'currentStock');
 
-    this.lowStock= this.getTotalStock(this.regularVariantion.id, 'lowStock');
-       this.request(null, this.regularVariantion);
+   async init(){
+
+    await this.findVariantStocks(this.regularVariantion.id);
+ 
+    this.currentStock=  await this.getTotalStock(this.regularVariantion.id, 'currentStock');
+
+    this.lowStock= await this.getTotalStock(this.regularVariantion.id, 'lowStock');
+   
+    await this.form.patchValue({
+      retailPrice: this.stocks.length > 0?this.stocks[0].retailPrice:0.00,
+      supplyPrice: this.stocks.length > 0?this.stocks[0].supplyPrice:0.00,
+   });
+       
+  }
+  updateStockFromRewuest(){
+
   }
   findVariantStocks(variantId: any) {
 
@@ -92,13 +102,13 @@ export class RegularVariantsComponent implements OnInit {
 
      if(variant!==null || variant!==undefined){
 
-    const stock: Stock = this.stocks.length > 0?this.stocks[0]:null;
-      console.log('variant',variant);
+    
+     
     this.form =  this.formBuilder.group({
       name: [!action && variant && variant.name ? variant.name : '', Validators.required],
       SKU: !action && variant && variant.SKU ? variant.SKU : this.variant.generateSKU(),
-      retailPrice: [!action && stock ? stock.retailPrice : 0.00, Validators.min(0)],
-      supplyPrice: [!action &&  stock ? stock.supplyPrice : 0.00, Validators.min(0)],
+      retailPrice: [ 0.00, Validators.min(0)],
+      supplyPrice: [ 0.00, Validators.min(0)],
       unit: !action && variant && variant.unit ? variant.unit : '',
       createdAt: new Date(),
       updatedAt: new Date(),

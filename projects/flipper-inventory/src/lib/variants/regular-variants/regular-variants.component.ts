@@ -52,15 +52,18 @@ export class RegularVariantsComponent implements OnInit {
            
                }
 
-  async ngOnInit() {
+   ngOnInit() {
  
-    await this.findVariantStocks(this.regularVariantion.id);
- 
-      this.currentStock= await this.getTotalStock(this.regularVariantion.id, 'currentStock');
-      console.log(this.currentStock);
-      this.lowStock=await this.getTotalStock(this.regularVariantion.id, 'lowStock');
-        await this.request(null, this.regularVariantion);
+   this.init();
      
+  }
+   init(){
+    // await this.findVariantStocks(this.regularVariantion.id);
+ 
+    this.currentStock=  this.getTotalStock(this.regularVariantion.id, 'currentStock');
+
+    this.lowStock= this.getTotalStock(this.regularVariantion.id, 'lowStock');
+       this.request(null, this.regularVariantion);
   }
   findVariantStocks(variantId: any) {
 
@@ -90,7 +93,7 @@ export class RegularVariantsComponent implements OnInit {
      if(variant!==null || variant!==undefined){
 
     const stock: Stock = this.stocks.length > 0?this.stocks[0]:null;
-
+      console.log('variant',variant);
     this.form =  this.formBuilder.group({
       name: [!action && variant && variant.name ? variant.name : '', Validators.required],
       SKU: !action && variant && variant.SKU ? variant.SKU : this.variant.generateSKU(),

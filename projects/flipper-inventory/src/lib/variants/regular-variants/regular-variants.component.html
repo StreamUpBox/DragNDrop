@@ -67,7 +67,7 @@
         </td>
   
         <td style="width:25%">
-          <a class="form-link-with-spacing hyperlink"  (click)="variant.openVariantDialog(regularVariantion,1)">
+          <a class="form-link-with-spacing hyperlink" *ngIf="stocks.length > 0"  (click)="variant.openVariantDialog(regularVariantion,1,stocks[0],stocks,defaultBusiness.currency)">
             <span> 
               {{currentStock}} {{regularVariantion.unit}}
           </span> 
@@ -79,7 +79,7 @@
           Low Stock Alert
         </td>
         <td style="width:25%">
-              <a class="form-link-with-spacing hyperlink" (click)="variant.openVariantDialog(regularVariantion,1)">
+              <a class="form-link-with-spacing hyperlink" *ngIf="stocks.length > 0"  (click)="variant.openVariantDialog(regularVariantion,1,stocks[0],stocks,defaultBusiness.currency)">
                   <span> 
                     {{lowStock}} {{regularVariantion.unit}}
                  </span> 

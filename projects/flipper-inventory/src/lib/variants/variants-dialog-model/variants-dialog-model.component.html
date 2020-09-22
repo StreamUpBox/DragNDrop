@@ -3,12 +3,12 @@
     <mat-tab-group  color="primary" [(selectedIndex)]=data.selectedIndex>
         <mat-tab label="Details"> 
             <div class="mt-4">
-                <flipper-edit-variant [variation]="data.variant"></flipper-edit-variant>
+                <flipper-edit-variant [variation]="data.variant" [stock]="data.stock" [currency]='data.currency'></flipper-edit-variant>
             </div>
             </mat-tab>
         <mat-tab label="Manage stock"> 
                 <div class="mt-4">
-                    <flipper-manage-stock [variation]="data.variant" (stockControlEmit)="stockControl($event)"></flipper-manage-stock>
+                    <flipper-manage-stock [variation]="data.variant" [stocks]='data.stocks' (stockControlEmit)="stockControl($event)"></flipper-manage-stock>
                 </div>
             </mat-tab>
       </mat-tab-group>

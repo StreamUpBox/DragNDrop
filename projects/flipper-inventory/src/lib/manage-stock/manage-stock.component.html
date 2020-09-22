@@ -4,8 +4,7 @@
 
       <tr class="tr" [class.trIsFocused]="isFocused==stk.id"
         style="border-top: 1px #d5d9dc solid; border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
-        <td style="width:100%;" colspan="3"><span style="font-size: 14px;padding: 12px 16px;font-weight: 500;">Available
-            at {{stock.branch$.name}}</span></td>
+        <td style="width:100%;" colspan="3"><span style="font-size: 14px;padding: 12px 16px;font-weight: 500;">Available</span></td>
       </tr>
 
       <tr class="tr" *ngIf="stk.canTrackingStock"

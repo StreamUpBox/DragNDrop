@@ -21,8 +21,8 @@ export class StockControl {
 })
 export class ManageStockComponent implements OnInit {
   @Input() variation: Variant;
+  @Input() stocks: Stock[]=[];
   isFocused = '';
-  stocks: Stock[] = [];
 
   stockControl: StockControl[] = [];
 
@@ -33,12 +33,10 @@ export class ManageStockComponent implements OnInit {
   ngOnInit() {
     this.stock.init();
     this.loadStocks();
-    this.stock.findBranch(this.variation.id);
   }
   async loadStocks() {
     if (this.variation) {
-      await this.stock.variantStocks(this.variation.id)
-      const stockControl: StockControl[] = this.stock.stocks;
+      const stockControl: StockControl[] = this.stocks;
       if (stockControl.length > 0) {
         stockControl.forEach(stock => {
           const stockCtrl: StockControl = {id: stock.id, reason: '',

@@ -12,6 +12,7 @@ export class StockControl {
   branchId?: number;
   canTrackingStock?: boolean;
   showLowStockAlert?: boolean;
+  stock?:Stock;
 }
 @Component({
   selector: 'flipper-manage-stock',
@@ -44,7 +45,8 @@ export class ManageStockComponent implements OnInit {
           previousStock: stock.currentStock,
           lowStock: stock.lowStock,
           canTrackingStock: stock.canTrackingStock,
-          showLowStockAlert: stock.showLowStockAlert
+          showLowStockAlert: stock.showLowStockAlert,
+          stock:stock
         };
           this.stockControl.push(stockCtrl);
         });

@@ -37,8 +37,8 @@ export class EditVariantComponent implements OnInit {
     }
 
   }
-  onSubmit() {
-  }
+  onSubmit() {}
+  
   updateVariant(key: any, event: any) {
 
     const val = key === 'unit' ? event.value : event.target.value;

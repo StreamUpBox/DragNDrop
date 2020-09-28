@@ -253,16 +253,15 @@ export class VariationService {
 
   public openVariantDialog(variant: Variant, selectedIndex: number,stock=null,stocks=[],currency='RWF'): any {
     return this.dialog.open(VariantsDialogModelComponent, DialogSize.SIZE_MD, { variant, selectedIndex,stock,stocks,currency }).subscribe(result => {
-
-      //  this.updateStockControl(result, variant);
+       this.updateStockControl(result, variant);
       //  this.regular();
       //  this.request(null, variant);
-      //  this.variants(this.product);
+      //  this.varia nts(this.product);
       //  this. stockUpdates();
     });
   }
 
-updateStockControl(result: any, variant: Variant) {
+async updateStockControl(result: any, variant: Variant) {
   if (result) {
     if (result.length > 0) {
       result.forEach(res => {
@@ -271,7 +270,7 @@ updateStockControl(result: any, variant: Variant) {
             id: this.database.uid(),
             orderId: 0,
             variantId: variant.id,
-            productId: this.findVariant(variant.id).productId,
+            productId: variant.productId,
             stockId: res.id,
             reason: res.reason,
             quantity: res.currentStock,
@@ -282,41 +281,42 @@ updateStockControl(result: any, variant: Variant) {
           });
         }
           // update Stock
-        const stock = this.stock.findStock(res.id);
         if (res.reason && res.currentStock > 0) {
 
             if (res.reason === 'Received' || res.reason === 'Restocked') {
 
               if (!(res.currentStock === 0 || res.currentStock === null)) {
-                stock.currentStock = stock.currentStock + res.currentStock;
+                     res.stock.currentStock =res.stock.currentStock + res.currentStock;
                }
 
             } else if (res.reason === 'Re-counted') {
 
-                  if (!(res.currentStock === 0 || res.currentStock === null)) {
-                    stock.currentStock = res.currentStock;
-                   }
-            } else {
-              if (!(res.currentStock === 0 || res.currentStock === null)) {
-                    stock.currentStock = stock.currentStock - res.currentStock;
-              }
+                        if (!(res.currentStock === 0 || res.currentStock === null)) {
+                             res.stock.currentStock = res.currentStock;
+                        }
+            } 
+            else {
+                    if (!(res.currentStock === 0 || res.currentStock === null)) {
+                        res.stock.currentStock = res.stock.currentStock - res.currentStock;
+                    }
 
             }
 
           } else {
-            res.currentStock = stock.currentStock;
+               res.currentStock = res.stock.currentStock;
           }
 
-        if (res.currentStock === 0 || res.currentStock === null || res.currentStock === '') {
-               stock.currentStock = stock.currentStock;
+
+         if (res.currentStock === 0 || res.currentStock === null || res.currentStock === '') {
+               res.stock.currentStock = res.stock.currentStock;
           }
 
-        stock.canTrackingStock = res.canTrackingStock;
-        stock.lowStock = res.lowStock;
-        stock.showLowStockAlert = res.showLowStockAlert;
+          res.stock.canTrackingStock = res.canTrackingStock;
+          res.stock.lowStock = res.lowStock;
+          res.stock.showLowStockAlert = res.showLowStockAlert;
 
 
-        this.stock.update(stock);
+         this.stock.update(res.stock);
 
       });
     }

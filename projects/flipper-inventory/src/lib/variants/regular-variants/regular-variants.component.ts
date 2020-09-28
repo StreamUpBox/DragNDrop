@@ -5,6 +5,7 @@ import {Product, CalculateTotalClassPipe, Stock, Variant, Business, PouchDBServi
 import { DialogService, DialogSize } from '@enexus/flipper-dialog';
 import { AddVariantComponent } from '../add-variant/add-variant.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { VariantsDialogModelComponent } from '../variants-dialog-model/variants-dialog-model.component';
 
 @Component({
   selector: 'flipper-regular-variants',
@@ -71,6 +72,14 @@ export class RegularVariantsComponent implements OnInit {
       supplyPrice: this.stocks.length > 0?this.stocks[0].supplyPrice:0.00,
    });
        
+  }
+
+  public openVariantDialog(variant: Variant, selectedIndex: number,stock=null,stocks=[],currency='RWF'): any {
+    return this.dialog.open(VariantsDialogModelComponent, DialogSize.SIZE_MD, { variant, selectedIndex,stock,stocks,currency }).subscribe(result => {
+
+       this.variant.updateStockControl(result, variant);
+       this.init();
+    });
   }
   
 

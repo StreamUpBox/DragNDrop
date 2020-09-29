@@ -18,7 +18,7 @@ export class AddVariantComponent implements OnInit {
     public dialogRef: MatDialogRef<AddVariantComponent>,
     private database: PouchDBService,
     private formBuilder: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public product: Product) {
+    @Inject(MAT_DIALOG_DATA) public data: any) {
   }
   isFocused = '';
   submitted = false;
@@ -34,8 +34,8 @@ export class AddVariantComponent implements OnInit {
   }
   get formControl() { return this.form.controls; }
   ngOnInit() {
-     this.variant.currentBranches();
-    this.variant.activeBusiness();
+     
+    // this.variant.activeBusiness();
     this.form = this.formBuilder.group({
       name: [ '', Validators.required],
       SKU: this.variant.generateSKU(),
@@ -46,9 +46,10 @@ export class AddVariantComponent implements OnInit {
       updatedAt: new Date(),
 
     });
-    console.log( this.variant.branches$);
+   
   }
-  onSubmit() {
+  async onSubmit() {
+    await this.variant.currentBranches();
     this.submitted = true;
     if (this.form.invalid) {
       this.notificationSvc.error('Create Business', 'We need you to complete all of the required fields before we can continue');
@@ -56,12 +57,13 @@ export class AddVariantComponent implements OnInit {
     }
 
 
+    
     const formData: Variant = {
       id: this.database.uid(),
       name: this.form.value.name,
-      productName: this.product.name,
+      productName: this.data.product.name,
       categoryName: '',
-      productId: this.product.id,
+      productId: this.data.product.id,
       supplyPrice: parseInt(this.form.value.supplyPrice, 10),
       retailPrice: parseInt(this.form.value.retailPrice, 10),
       unit: this.form.value.unit,
@@ -73,9 +75,9 @@ export class AddVariantComponent implements OnInit {
     };
     this.variant.create(formData);
   
-      this.variant.createVariantStock(formData);
+      this.variant.createVariantStock(formData,this.variant.branches$);
     
-    this.dialogRef.close('done');
+   return this.dialogRef.close('done');
   }
 
 

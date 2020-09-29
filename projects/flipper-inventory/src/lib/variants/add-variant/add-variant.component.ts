@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, HostListener } from '@angular/core';
 
 import { VariationService } from '../../services/variation.service';
-import { NotificationService, Variant, Product, PouchDBService } from '@enexus/flipper-components';
+import { NotificationService, Variant, Product, PouchDBService, PouchConfig } from '@enexus/flipper-components';
 import { StockService } from '../../services/stock.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
@@ -58,7 +58,7 @@ export class AddVariantComponent implements OnInit {
 
 
     
-    const formData: Variant = {
+    const formData: Variant = await{
       id: this.database.uid(),
       name: this.form.value.name,
       productName: this.data.product.name,
@@ -71,12 +71,13 @@ export class AddVariantComponent implements OnInit {
       syncedOnline: false,
       isActive: false,
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
+      table:'variants',
     };
-    this.variant.create(formData);
+    await this.database.put(PouchConfig.Tables.variants+'_'+formData.id, formData);
   
       this.variant.createVariantStock(formData,this.variant.branches$);
-    
+      console.log('here ganza',formData);
    return this.dialogRef.close('done');
   }
 

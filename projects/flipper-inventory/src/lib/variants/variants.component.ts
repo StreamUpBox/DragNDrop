@@ -32,9 +32,9 @@ return this.addNew;
 }
   constructor(public variant: VariationService) {}
 
-  ngOnInit() {
+  async ngOnInit() {
        
-      this.variant.init(this.product);
+      await this.variant.init(this.product);
       
         
   }

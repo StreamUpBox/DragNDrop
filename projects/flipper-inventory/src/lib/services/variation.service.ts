@@ -176,7 +176,7 @@ export class VariationService {
   }
 
   createVariantStock(formData:any,branches=[]) {
-    console.log(branches);
+    // console.log(branches);
     return this.stock.createStocks(formData,branches);
   }
 

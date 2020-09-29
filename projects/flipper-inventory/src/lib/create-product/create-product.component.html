@@ -144,9 +144,9 @@
                   </flipper-regular-variants>
                   </div>
 
-                  <!-- <ng-template #manyVariant>
+                  <div *ngIf="product.hasDraftProduct && product.allVariants && product.allVariants.length > 1">
                      <flipper-added-variants [product]="product"></flipper-added-variants>
-                  </ng-template> -->
+                  </div>
               </div>
   
   

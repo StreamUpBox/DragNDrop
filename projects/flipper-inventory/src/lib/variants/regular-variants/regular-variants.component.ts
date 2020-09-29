@@ -100,7 +100,8 @@ export class RegularVariantsComponent implements OnInit {
   public openAddVariantDialog(product: Product): any {
     return this.dialog.open(AddVariantComponent, DialogSize.SIZE_MD, {product:product,currency:this.defaultBusiness.currency}).subscribe(result => {
       if (result === 'done') {
-        
+        this.variant.allVariant(product);
+        this.variant.regular();
       }
 
       console.log(result);

@@ -34,6 +34,7 @@ export class AddVariantComponent implements OnInit {
   }
   get formControl() { return this.form.controls; }
   ngOnInit() {
+     this.variant.currentBranches();
     this.variant.activeBusiness();
     this.form = this.formBuilder.group({
       name: [ '', Validators.required],
@@ -45,6 +46,7 @@ export class AddVariantComponent implements OnInit {
       updatedAt: new Date(),
 
     });
+    console.log( this.variant.branches$);
   }
   onSubmit() {
     this.submitted = true;

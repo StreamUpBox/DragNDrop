@@ -100,9 +100,11 @@ export class RegularVariantsComponent implements OnInit {
   public openAddVariantDialog(product: Product): any {
     return this.dialog.open(AddVariantComponent, DialogSize.SIZE_MD, product).subscribe(result => {
       if (result === 'done') {
-        this.variant.init(product);
+        
       }
-      this.variant.init(product);
+
+      console.log(result);
+      // this.variant.init(product);
     });
   }
  

@@ -38,12 +38,12 @@ export class EditVariantComponent implements OnInit {
 
   }
   onSubmit() {}
-  
+
   updateVariant(key: any, event: any) {
 
     const val = key === 'unit' ? event.value : event.target.value;
 
- if (key === 'retailPrice' || key === 'supplyPrice') {
+ if (key === 'retailPrice' || key === 'supplyPrice') { 
    const myStock = this.stock;
    
    myStock[key] = parseInt(val, 10);

@@ -70,6 +70,12 @@ export class CreateProductComponent implements OnInit {
     this.request(hasDraftProduct);
 
   }
+  async checkIfaddNewVariant(event){
+    console.log(event);
+        if(event){
+          await this.product.init();
+        }
+  }
   
    request(hasDraftProduct){
     this.form =  this.formBuilder.group({

@@ -51,14 +51,15 @@ export class AddVariantComponent implements OnInit {
   async onSubmit() {
     await this.variant.currentBranches();
     this.submitted = true;
+    this.dialogRef.close('done');
     if (this.form.invalid) {
       this.notificationSvc.error('Create Business', 'We need you to complete all of the required fields before we can continue');
       return;
     }
 
-
+    // console.log('here ganza',this.variant.branches$);
     
-    const formData: Variant = await{
+    const formData: Variant ={
       id: this.database.uid(),
       name: this.form.value.name,
       productName: this.data.product.name,
@@ -74,11 +75,12 @@ export class AddVariantComponent implements OnInit {
       updatedAt: new Date(),
       table:'variants',
     };
+    console.log('here ganza',formData);
     await this.database.put(PouchConfig.Tables.variants+'_'+formData.id, formData);
   
       this.variant.createVariantStock(formData,this.variant.branches$);
-      console.log('here ganza',formData);
-   return this.dialogRef.close('done');
+    
+    return this.dialogRef.close('done');
   }
 
 

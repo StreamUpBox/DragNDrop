@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef, EventEmitter, Output } from '@angular/core';
 import { VariationService } from '../../services/variation.service';
 import { StockService } from '../../services/stock.service';
 import {Product, CalculateTotalClassPipe, Stock, Variant, Business, PouchDBService } from '@enexus/flipper-components';
@@ -45,6 +45,8 @@ export class RegularVariantsComponent implements OnInit {
   get defaultBusiness(): Business {
   return this.business;
   }
+
+  @Output() didAddNewVariant = new EventEmitter < boolean > (false);
   constructor(private dialog: DialogService, public variant: VariationService,
               public stock: StockService,
               private formBuilder: FormBuilder,
@@ -98,11 +100,11 @@ export class RegularVariantsComponent implements OnInit {
   }
 
   public openAddVariantDialog(product: Product): any {
-    return this.dialog.open(AddVariantComponent, DialogSize.SIZE_MD, product).subscribe(result => {
+    return this.dialog.open(AddVariantComponent, DialogSize.SIZE_MD, {product:product,currency:this.defaultBusiness.currency}).subscribe(result => {
       if (result === 'done') {
-        this.variant.init(product);
+        this.didAddNewVariant.emit(true);
       }
-      this.variant.init(product);
+
     });
   }
  

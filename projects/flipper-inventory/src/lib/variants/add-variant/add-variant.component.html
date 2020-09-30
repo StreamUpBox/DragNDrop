@@ -50,7 +50,7 @@
           <td style="width:60%">
            <div class="price">
 
-            <span class="currency">{{variant.defaultBusiness.currency}} {{form.value.unit?'/ '+form.value.unit:''}}</span>
+            <span class="currency">{{data.currency}} {{form.value.unit?'/ '+form.value.unit:''}}</span>
             <span class="pinput">
             <input class="input" formControlName="retailPrice" type="number"
             (focus)="focusing('retailPrice')" (focusout)="focusingOut()" placeholder="retail Price" />
@@ -67,7 +67,7 @@
           <td style="width:60%">
             <div class="price">
 
-                <span class="currency">{{variant.defaultBusiness.currency}} {{form.value.unit?'/ '+form.value.unit:''}}</span>
+                <span class="currency">{{data.currency}} {{form.value.unit?'/ '+form.value.unit:''}}</span>
                 <span class="pinput">
                 <input class="input" formControlName="supplyPrice" type="number"
                 (focus)="focusing('supplyPrice')" (focusout)="focusingOut()" placeholder="supply Price" />

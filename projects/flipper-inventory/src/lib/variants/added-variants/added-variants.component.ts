@@ -1,7 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { VariationService } from '../../services/variation.service';
 import { StockService } from '../../services/stock.service';
-import { Product, Variant, CalculateTotalClassPipe } from '@enexus/flipper-components';
+import { Product, Variant, CalculateTotalClassPipe, Business } from '@enexus/flipper-components';
 import { DialogService, DialogSize } from '@enexus/flipper-dialog';
 import { AddVariantComponent } from '../add-variant/add-variant.component';
 
@@ -12,7 +12,8 @@ import { AddVariantComponent } from '../add-variant/add-variant.component';
 })
 export class AddedVariantsComponent implements OnInit {
   item: Product;
-
+  variantion:Variant[];
+  business:Business;
   @Input('product')
   set product(item: Product) {
     this.item = item;
@@ -20,6 +21,23 @@ export class AddedVariantsComponent implements OnInit {
   get product(): Product {
     return this.item;
   }
+
+  @Input('variantions')
+  set variantions(items: Variant[]) {
+  this.variantion = items;
+  }
+  get variantions(): Variant[] {
+  return this.variantion;
+  }
+
+  @Input('defaultBusiness')
+  set defaultBusiness(item: Business) {
+  this.business = item;
+  }
+  get defaultBusiness(): Business {
+  return this.business;
+  }
+  @Output() didAddNewVariant = new EventEmitter < boolean > (false);
 
   constructor(private dialog: DialogService,
     private totalPipe: CalculateTotalClassPipe,
@@ -43,14 +61,16 @@ export class AddedVariantsComponent implements OnInit {
     return parseInt(num, 10);
   }
 
+ 
   public openAddVariantDialog(product: Product): any {
-    return this.dialog.open(AddVariantComponent, DialogSize.SIZE_MD, product).subscribe(result => {
+    return this.dialog.open(AddVariantComponent, DialogSize.SIZE_MD, {product:product,currency:this.defaultBusiness.currency}).subscribe(result => {
       if (result === 'done') {
-        this.variant.init(product);
+        console.log(result);
+        this.didAddNewVariant.emit(true);
       }
+
     });
   }
-
 
   deleteProductVariation() {
 

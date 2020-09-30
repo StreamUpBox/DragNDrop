@@ -144,9 +144,16 @@
                   </flipper-regular-variants>
                   </div>
 
-                  <!-- <ng-template #manyVariant>
-                     <flipper-added-variants [product]="product"></flipper-added-variants>
-                  </ng-template> -->
+                  <div *ngIf="product.hasDraftProduct && product.allVariants && product.allVariants.length > 1">
+                     <flipper-added-variants 
+                     [product]="product.hasDraftProduct" 
+                     [defaultBusiness]='product.defaultBusiness$' 
+                     [variantions]='product.allVariants'
+                     (didAddNewVariant)="checkIfaddNewVariant($event)"
+                     >
+
+                     </flipper-added-variants>
+                  </div>
               </div>
   
   

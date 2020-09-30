@@ -25,6 +25,7 @@ export class VariationService {
   variantsSubject: BehaviorSubject<Variant[]>;
   defaultBusiness:Business=null;
   allVariants:Variant[]=[];
+  branches$: Branch[] = [];
   private readonly variantsMap = new Map<string, Variant>();
   variant: Variant;
  
@@ -50,6 +51,12 @@ export class VariationService {
 
   public host(id: string): Variant | undefined {
     return this.variantsMap.get(id);
+  }
+
+  currentBranches() {
+    return this.database.listBusinessBranches().then(branches => {
+      this.branches$ = branches;
+    });
   }
 
   async init(product: Product) {
@@ -169,6 +176,7 @@ export class VariationService {
   }
 
   createVariantStock(formData:any,branches=[]) {
+    // console.log(branches);
     return this.stock.createStocks(formData,branches);
   }
 

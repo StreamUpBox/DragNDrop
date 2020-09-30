@@ -1,4 +1,4 @@
-<div *ngIf="variant.allVariants.length > 0" class="table--editable table--flex editable-variation-table__header" style="height: 200px;overflow: auto;">
+<div *ngIf="variantions.length > 0" class="table--editable table--flex editable-variation-table__header" style="height: 200px;overflow: auto;">
   <div class="table-header">
 
     <div class="table-row">
@@ -22,7 +22,7 @@
     </div>
     </div>
   </div>
-  <div id="ember556" *ngFor="let variantion of variant.allVariants; let i = index;"
+  <div id="ember556" *ngFor="let variantion of variantions; let i = index;"
     class="table-row editable-variation-table__row draggable-list__row ember-view" style="position: relative;">
 
     <div style="min-width: calc(100% * 1.5 / 5)"
@@ -107,7 +107,7 @@
   </div>
 
 </div>
-<div class="mt-3" *ngIf="variant.allVariants.length > 0">
+<div class="mt-3" *ngIf="variantions.length > 0">
   <button class="button-default button--secondary ml-1" (click)="openAddVariantDialog(product)">
     Add Variation
   </button>

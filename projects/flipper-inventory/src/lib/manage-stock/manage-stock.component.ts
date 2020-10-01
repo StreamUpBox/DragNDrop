@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy,
    ChangeDetectorRef, EventEmitter, Output } from '@angular/core';
-import { Variant, Stock } from '@enexus/flipper-components';
+import { Variant, Stock, SettingsService } from '@enexus/flipper-components';
 import { StockService } from '../services/stock.service';
+import { VariationService } from '../services/variation.service';
 
 export class StockControl {
   id?: string;
@@ -12,6 +13,7 @@ export class StockControl {
   branchId?: number;
   canTrackingStock?: boolean;
   showLowStockAlert?: boolean;
+  stock?:Stock;
 }
 @Component({
   selector: 'flipper-manage-stock',
@@ -21,24 +23,23 @@ export class StockControl {
 })
 export class ManageStockComponent implements OnInit {
   @Input() variation: Variant;
+  @Input() stocks: Stock[]=[];
   isFocused = '';
-  stocks: Stock[] = [];
 
   stockControl: StockControl[] = [];
 
   @Output() stockControlEmit = new EventEmitter < StockControl[] > ();
+  reasons: any[];
 
-  constructor(public stock: StockService, private cd: ChangeDetectorRef) { }
+  constructor(public stock: StockService,private variant:VariationService, private cd: ChangeDetectorRef,private setting: SettingsService) { }
 
   ngOnInit() {
-    this.stock.init();
+    this.reasons = this.setting.reasons();
     this.loadStocks();
-    this.stock.findBranch(this.variation.id);
   }
   async loadStocks() {
     if (this.variation) {
-      await this.stock.variantStocks(this.variation.id)
-      const stockControl: StockControl[] = this.stock.stocks;
+      const stockControl: StockControl[] = this.stocks;
       if (stockControl.length > 0) {
         stockControl.forEach(stock => {
           const stockCtrl: StockControl = {id: stock.id, reason: '',
@@ -46,22 +47,21 @@ export class ManageStockComponent implements OnInit {
           previousStock: stock.currentStock,
           lowStock: stock.lowStock,
           canTrackingStock: stock.canTrackingStock,
-          showLowStockAlert: stock.showLowStockAlert
+          showLowStockAlert: stock.showLowStockAlert,
+          stock:stock
         };
           this.stockControl.push(stockCtrl);
         });
       }
     }
   }
-  onSubmit() {
-  }
-
+ 
 
   updateReason(stockControl: StockControl, event: any) {
 
       stockControl.reason = event.value;
       stockControl.currentStock = 0;
-      this.updateStockControl(stockControl);
+    
       this.stockControlEmit.emit(this.stockControl);
 
   }
@@ -82,10 +82,12 @@ export class ManageStockComponent implements OnInit {
   updateStockControl(stockControl: StockControl) {
     const stockControls = this.stockControl;
     const arr: StockControl[] = [];
+    
     this.stockControl = [];
     stockControls.forEach(sc => {
             if (sc.id === stockControl.id) {
               sc = stockControl;
+             
             }
             arr.push(sc);
           });

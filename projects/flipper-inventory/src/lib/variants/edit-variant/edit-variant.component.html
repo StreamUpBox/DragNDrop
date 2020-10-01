@@ -1,4 +1,4 @@
-<form [formGroup]="variant.form" (ngSubmit)="onSubmit()" style="height: 100%;">
+<form [formGroup]="form" (ngSubmit)="onSubmit()" style="height: 100%;">
     <table style="width: 100%;">
 
         <tr class="tr" [class.trIsFocused]="isFocused=='name'" style="border-top: 1px #d5d9dc solid; border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
@@ -12,6 +12,7 @@
               </td>
          </tr>
 
+         
          <tr class="tr" [class.trIsFocused]="isFocused=='SKU'" style=" border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
             
             <td class="td"  [class.tdIsFocused]="isFocused=='SKU'">
@@ -45,7 +46,7 @@
           <td style="width:60%">
            <div class="price">
 
-            <span class="currency">{{variant.defaultBusiness.currency}} {{variation.unit?'/ '+variation.unit:''}}</span>
+            <span class="currency">{{currency}} {{variation.unit?'/ '+variation.unit:''}}</span>
             <span class="pinput">
             <input class="input" style="width:100%" formControlName="retailPrice" type="number" (input)="updateVariant('retailPrice',$event)"
             (focus)="focusing('retailPrice')" (focusout)="focusingOut()" placeholder="0.00" />
@@ -61,7 +62,7 @@
           <td style="width:60%">
             <div class="price">
 
-                <span class="currency">{{variant.defaultBusiness.currency}} {{variation.unit?'/ '+variation.unit:''}}</span>
+                <span class="currency">{{currency}} {{variation.unit?'/ '+variation.unit:''}}</span>
                 <span class="pinput">
                 <input class="input" style="width:100%" formControlName="supplyPrice" type="number" (input)="updateVariant('supplyPrice',$event)"
                 (focus)="focusing('supplyPrice')" (focusout)="focusingOut()" placeholder="0.00" />

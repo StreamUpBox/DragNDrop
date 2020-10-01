@@ -11,6 +11,14 @@ import { PouchConfig } from '../db-config';
 
 
 
+class Response{
+    res:any
+    docs:any
+}
+
+interface Handler { (result: Response): void}
+
+
 @Injectable({
     providedIn: 'root'
 })
@@ -52,9 +60,43 @@ export class PouchDBService {
                 selector: selector
             });
         })
+    
+    }
+    public async fastQuery(fields = [],selector = {}){
+        try {
+            // Create the Index
+            var result = await this.database.createIndex({
+                index:  { fields: fields }
+            });
+        
+            // Query the Index using find().
+            result = await this.database.find({
+                
+                selector: selector
+            });
+        
+            // Found docs are in result.docs
+            return await result.docs;
+        }
+        catch( err ) {
+            console.log(err);
+        }
+    }
 
+    public callbackQuery(fields = [], selector = {},callback:Handler) {
+
+        return this.database.find({
+            selector: selector,
+            fields: fields      
+          }, function (err, result) {
+            if (err) { return console.log(err); }
+            // handle result
+            return callback(result)
+          });
+  
         
     }
+    
 
 
     public activeBusiness(userId, table = 'businesses') {
@@ -101,6 +143,8 @@ export class PouchDBService {
         });
     }
 
+
+    
     public currentTax() {
         return this.activeUser().then(user => {
 
@@ -174,6 +218,31 @@ export class PouchDBService {
           
     }
 
+
+    
+    public listBusinessTaxes2() {
+
+        return this.currentBusiness().then(business => {
+            if (business) {
+
+               return this.callbackQuery(['table', 'businessId'], {
+                    table: { $eq: 'taxes' },
+                    businessId: { $eq: business.id }
+                },(res) =>{
+
+                    if (res.docs && res.docs.length > 0) {
+                        return res.docs;
+                    } else {
+                        return [];
+                    }
+                });
+
+            } else {
+                return [];
+            }
+        });
+  
+}
     public activeBranch(businessId, table = "branches") {
         return this.database.createIndex({
             index: { fields: ['tables', 'active', 'businessId'] }

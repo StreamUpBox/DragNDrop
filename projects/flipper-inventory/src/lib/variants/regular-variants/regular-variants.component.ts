@@ -1,10 +1,11 @@
-import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef, EventEmitter, Output } from '@angular/core';
 import { VariationService } from '../../services/variation.service';
 import { StockService } from '../../services/stock.service';
-import {Product, CalculateTotalClassPipe, Stock } from '@enexus/flipper-components';
+import {Product, CalculateTotalClassPipe, Stock, Variant, Business, PouchDBService } from '@enexus/flipper-components';
 import { DialogService, DialogSize } from '@enexus/flipper-dialog';
 import { AddVariantComponent } from '../add-variant/add-variant.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { VariantsDialogModelComponent } from '../variants-dialog-model/variants-dialog-model.component';
 
 @Component({
   selector: 'flipper-regular-variants',
@@ -15,8 +16,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class RegularVariantsComponent implements OnInit {
   isFocused = '';
   item: Product;
+  regularVariant: Variant;
   form: FormGroup;
-
+  business:Business;
   @Input('product')
   set product(item: Product) {
   this.item = item;
@@ -24,40 +26,97 @@ export class RegularVariantsComponent implements OnInit {
   get product(): Product {
   return this.item;
   }
+  stocks:Stock[]=[];
+  currentStock:number=0;
+  lowStock:number=0;
+
+  @Input('regularVariantion')
+  set regularVariantion(item: Variant) {
+  this.regularVariant = item;
+  }
+  get regularVariantion(): Variant {
+  return this.regularVariant;
+  }
+  //defaultBusiness
+  @Input('defaultBusiness')
+  set defaultBusiness(item: Business) {
+  this.business = item;
+  }
+  get defaultBusiness(): Business {
+  return this.business;
+  }
+
+  @Output() didAddNewVariant = new EventEmitter < boolean > (false);
   constructor(private dialog: DialogService, public variant: VariationService,
               public stock: StockService,
               private formBuilder: FormBuilder,
+              private database: PouchDBService,
               private totalPipe: CalculateTotalClassPipe) {
            
                }
 
    ngOnInit() {
-    this.variant.activeBusiness();
-    if (this.variant.hasRegular) {
-      this.stock.variantStocks(this.variant.hasRegular.id);
-        this.request(null, this.variant.hasRegular);
-     }
+    this.request(null, this.regularVariantion);
+    this.init();
+     
+  }
+
+   async init(){
+
+    await this.findVariantStocks(this.regularVariantion.id);
+ 
+    this.currentStock=  await this.getTotalStock(this.regularVariantion.id, 'currentStock');
+
+    this.lowStock= await this.getTotalStock(this.regularVariantion.id, 'lowStock');
+   
+    await this.form.patchValue({
+      retailPrice: this.stocks.length > 0?this.stocks[0].retailPrice:0.00,
+      supplyPrice: this.stocks.length > 0?this.stocks[0].supplyPrice:0.00,
+   });
+       
+  }
+
+  public openVariantDialog(variant: Variant, selectedIndex: number,stock=null,stocks=[],currency='RWF'): any {
+    return this.dialog.open(VariantsDialogModelComponent, DialogSize.SIZE_MD, { variant, selectedIndex,stock,stocks,currency }).subscribe(result => {
+
+       this.variant.updateStockControl(result, variant);
+       this.init();
+    });
   }
   
 
+  findVariantStocks(variantId: any) {
+
+    return this.database.query(['table','variantId'], {
+      table: { $eq: 'stocks' },
+      variantId: { $eq: variantId }
+    }).then(res => {
+        this.stocks = res.docs;
+      
+  });
+
+ 
+
+  }
+
   public openAddVariantDialog(product: Product): any {
-    return this.dialog.open(AddVariantComponent, DialogSize.SIZE_MD, product).subscribe(result => {
+    return this.dialog.open(AddVariantComponent, DialogSize.SIZE_MD, {product:product,currency:this.defaultBusiness.currency}).subscribe(result => {
       if (result === 'done') {
-        this.variant.init(product);
+        this.didAddNewVariant.emit(true);
       }
-      this.variant.init(product);
+
     });
   }
  
    request(action = null, variant = null) {
-     this.stock.findVariantStock(variant?variant.id:null);
-    const stock: Stock = this.stock.stock?this.stock.stock:null;
+
+     if(variant!==null || variant!==undefined){
 
     this.form =  this.formBuilder.group({
       name: [!action && variant && variant.name ? variant.name : '', Validators.required],
       SKU: !action && variant && variant.SKU ? variant.SKU : this.variant.generateSKU(),
-      retailPrice: [!action && variant && stock ? stock.retailPrice : 0.00, Validators.min(0)],
-      supplyPrice: [!action && variant && stock ? stock.supplyPrice : 0.00, Validators.min(0)],
+      retailPrice: [ 0.00, Validators.min(0)],
+      supplyPrice: [ 0.00, Validators.min(0)],
       unit: !action && variant && variant.unit ? variant.unit : '',
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -66,11 +125,28 @@ export class RegularVariantsComponent implements OnInit {
 
   }
 
+  }
+
 
   updateVariant(key: any, event: any) {
 
-       this.variant. updateVariant(key, this.variant.hasRegular, event);
+       const val = key === 'unit' ? event.value : event.target.value;
+
+    if (key === 'retailPrice' || key === 'supplyPrice') {
+      const myStock = this.stocks[0];
+      
+      myStock[key] = parseInt(val, 10);
+      
+      if(myStock){
+        
+        return this.stock.update(myStock);
+      }
+          
+        } else {
+        return this.variant.updateRegularVariant(this.regularVariant, key, val);
+        }
   }
+
   get formControl() { return this.form.controls; }
   focusing(value) {
     this.isFocused = value;
@@ -85,9 +161,11 @@ export class RegularVariantsComponent implements OnInit {
   }
 
    getTotalStock(variantId, key: any):number {
-     this.stock.variantStocks(variantId);
-    if (this.stock.stocks.length > 0) {
-          return this.totalPipe.transform(this.stock.stocks, key);
+
+   
+    if (this.stocks.length > 0) {
+      console.table(this.stocks);
+          return this.totalPipe.transform(this.stocks, key);
     } else {
         return 0;
     }
@@ -95,7 +173,7 @@ export class RegularVariantsComponent implements OnInit {
 
   async focusingOut() {
 
-    await this.stock.findVariantStock(this.variant.hasRegular.id);
+    await this.stock.findVariantStock(this.regularVariantion.id);
     const stock = this.stock.stock;
 
       if (this.isFocused === 'retailPrice' && (this.form.controls.retailPrice.value === 0 ||
@@ -109,7 +187,7 @@ export class RegularVariantsComponent implements OnInit {
 
       if (this.isFocused === 'SKU' && (this.form.controls.SKU.value === 0 ||
         this.form.controls.SKU.value === '')) {
-          this.form.controls.SKU.setValue(this.variant.hasRegular.SKU);
+          this.form.controls.SKU.setValue(this.regularVariantion.SKU);
         }
 
 

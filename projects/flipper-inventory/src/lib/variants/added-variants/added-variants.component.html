@@ -1,4 +1,4 @@
-<div *ngIf="variant.allVariants.length > 0" class="table--editable table--flex editable-variation-table__header" style="height: 200px;overflow: auto;">
+<div *ngIf="variantions.length > 0" class="table--editable table--flex editable-variation-table__header" style="height: 200px;overflow: auto;">
   <div class="table-header">
 
     <div class="table-row">
@@ -22,7 +22,7 @@
     </div>
     </div>
   </div>
-  <div id="ember556" *ngFor="let variantion of variant.allVariants; let i = index;"
+  <div id="ember556" *ngFor="let variantion of variantions; let i = index;"
     class="table-row editable-variation-table__row draggable-list__row ember-view" style="position: relative;">
 
     <div style="min-width: calc(100% * 1.5 / 5)"
@@ -34,7 +34,7 @@
         <div class="form-field__content">
           <div class="type-ellipsis">
      
-            <a class="ml-3 form-link-with-spacing hyperlink" (click)="variant.openVariantDialog(variantion,0)">
+            <a class="ml-3 form-link-with-spacing hyperlink" (click)="openVariantDialog(variantion,0)">
               {{variantion.name}}
             </a>
 
@@ -48,7 +48,7 @@
       <div class="form-field form-field--no-label ember-view">
         <!---->
         <div class="form-field__content">
-          <a class="form-link-with-spacing hyperlink" (click)="variant.openVariantDialog(variantion,0)">
+          <a class="form-link-with-spacing hyperlink" (click)="openVariantDialog(variantion,0)">
             {{variantion.SKU}}
           </a>
 
@@ -61,10 +61,10 @@
       <div class="form-field form-field--no-label ember-view">
         <!---->
         <div class="form-field__content">
-          <!-- Supply: {{variant.defaultBusiness.currency}}
+         Supply: {{variant.defaultBusiness?variant.defaultBusiness.currency:''}}
           {{getTotalStock(variantion.id,'supplyPrice')}} {{variantion.unit?'/ '+variantion.unit:''}}<br />
-          Retail:{{variant.defaultBusiness.currency}}
-          {{getTotalStock(variantion.id,'retailPrice')}} {{variantion.unit?'/ '+variantion.unit:''}} -->
+          Retail:{{variant.defaultBusiness?variant.defaultBusiness.currency:''}}
+          {{getTotalStock(variantion.id,'retailPrice')}} {{variantion.unit?'/ '+variantion.unit:''}}
         </div>
       </div>
     </div>
@@ -74,8 +74,8 @@
       <div class="form-field form-field--no-label ember-view">
         <!---->
         <div class="form-field__content">
-          <a class="form-link-with-spacing hyperlink" (click)="variant.openVariantDialog(variantion,1)">
-              <!-- {{getTotalStock(variantion.id,'currentStock')}} {{variantion.unit}} -->
+          <a class="form-link-with-spacing hyperlink" (click)="openVariantDialog(variantion,1)">
+              {{getTotalStock(variantion.id,'currentStock')}} {{variantion.unit}}
           </a>
         </div>
       </div>
@@ -89,10 +89,10 @@
          </button>
 
          <mat-menu #menu="matMenu">
-           <button mat-menu-item *ngIf="stock.variantStockHistory(variantion.id).length > 0" 
+           <!-- <button mat-menu-item *ngIf="stock.variantStockHistory(variantion.id).length > 0" 
              style="color: #2996cc !important;" (click)="variant.openStockHistoryDialog(variantion)">
               View History
-             </button>
+             </button> -->
              <button mat-menu-item style="color:#ad061c!important" (click)="deleteVariation(variantion)">
                 Delete
              </button>
@@ -107,7 +107,7 @@
   </div>
 
 </div>
-<div class="mt-3" *ngIf="variant.allVariants.length > 0">
+<div class="mt-3" *ngIf="variantions.length > 0">
   <button class="button-default button--secondary ml-1" (click)="openAddVariantDialog(product)">
     Add Variation
   </button>
@@ -121,8 +121,8 @@
    </button> -->
 
    
-  <button class="button-default button--destructive  ml-1" (click)="variant.deleteAllVariantsDialog(product)">
+  <!-- <button class="button-default button--destructive  ml-1" (click)="variant.deleteAllVariantsDialog(product)">
     Delete All Variation
-  </button>
+  </button> -->
   
 </div>

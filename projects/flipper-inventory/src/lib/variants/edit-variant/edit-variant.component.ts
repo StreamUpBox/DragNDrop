@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Variant, Business } from '@enexus/flipper-components';
+import { Variant, Business, Stock } from '@enexus/flipper-components';
 import { VariationService } from '../../services/variation.service';
 import { StockService } from '../../services/stock.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'flipper-edit-variant',
@@ -10,24 +11,53 @@ import { StockService } from '../../services/stock.service';
 })
 export class EditVariantComponent implements OnInit {
   @Input() variation: Variant;
+  @Input() stock: Stock;
+  @Input() currency: string='RWF';
   isFocused = '';
   defaultBusiness:Business;
-  constructor(public variant: VariationService, private stock: StockService) { }
+  form: FormGroup;
+
+  constructor(public variant: VariationService,private formBuilder: FormBuilder, private sk:StockService) {
+    // console.log(stock);
+   }
 
   ngOnInit() {
-    this.variant.activeBusiness();
+    // this.variant.activeBusiness();
     if (this.variation) {
-      this.variant.request(null, this.variation);
+      this.form =  this.formBuilder.group({
+        name: [this.variation.name ? this.variation.name : '', Validators.required],
+        SKU: this.variation.SKU ? this.variation.SKU : this.variant.generateSKU(),
+        retailPrice: [ this.stock?this.stock.retailPrice:0.00, Validators.min(0)],
+        supplyPrice: [ this.stock?this.stock.supplyPrice:0.00, Validators.min(0)],
+        unit:  this.variation.unit ? this.variation.unit : '',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+  
+      });
     }
 
   }
-  onSubmit() {
-  }
+  onSubmit() {}
+
   updateVariant(key: any, event: any) {
 
-       this.variant. updateVariant(key, this.variation, event);
+    const val = key === 'unit' ? event.value : event.target.value;
 
-  }
+ if (key === 'retailPrice' || key === 'supplyPrice') { 
+   const myStock = this.stock;
+   
+   myStock[key] = parseInt(val, 10);
+   
+          if(myStock){
+            
+            return this.sk.update(myStock);
+          }
+              
+     }
+     else {
+        return this.variant.updateRegularVariant(this.variation, key, val);
+     }
+}
 
   focusing(value) {
     this.isFocused = value;
@@ -44,17 +74,15 @@ export class EditVariantComponent implements OnInit {
   }
 
       async focusingOut() {
-        await this.stock.findVariantStock(this.variation.id);
-
-         const stock = this.stock.stock; 
+       
 
           if (this.isFocused === 'retailPrice' && (this.variant.form.controls.retailPrice.value === 0 ||
             this.variant.form.controls.retailPrice.value === '')) {
-            this.variant.form.controls.retailPrice.setValue(stock.retailPrice ? stock.retailPrice : 0);
+            this.variant.form.controls.retailPrice.setValue(this.stock.retailPrice ? this.stock.retailPrice : 0);
             }
           if (this.isFocused === 'supplyPrice' && (this.variant.form.controls.supplyPrice.value === 0 ||
             this.variant.form.controls.supplyPrice.value === '')) {
-              this.variant.form.controls.supplyPrice.setValue(stock.supplyPrice ? stock.supplyPrice : 0);
+              this.variant.form.controls.supplyPrice.setValue(this.stock.supplyPrice ? this.stock.supplyPrice : 0);
             }
 
           if (this.isFocused === 'SKU' && (this.variant.form.controls.SKU.value === 0 ||

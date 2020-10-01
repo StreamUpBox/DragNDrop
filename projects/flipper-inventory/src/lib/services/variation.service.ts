@@ -25,6 +25,7 @@ export class VariationService {
   variantsSubject: BehaviorSubject<Variant[]>;
   defaultBusiness:Business=null;
   allVariants:Variant[]=[];
+  branches$: Branch[] = [];
   private readonly variantsMap = new Map<string, Variant>();
   variant: Variant;
  
@@ -50,6 +51,12 @@ export class VariationService {
 
   public host(id: string): Variant | undefined {
     return this.variantsMap.get(id);
+  }
+
+  currentBranches() {
+    return this.database.listBusinessBranches().then(branches => {
+      this.branches$ = branches;
+    });
   }
 
   async init(product: Product) {
@@ -141,7 +148,7 @@ export class VariationService {
     return  this.database.put(PouchConfig.Tables.variants+'_'+variant.id, variant);
   }
 
-  async createRegular(product: Product) {;
+  async createRegular(product: Product,branches=[]) {
     if (!this.hasRegular) {
       const formData= await {
         id: this.database.uid(),
@@ -161,15 +168,16 @@ export class VariationService {
       
       };
       await this.database.put(PouchConfig.Tables.variants+'_'+formData.id, formData);
-      this.createVariantStock(formData);
-      await this.allVariant(product);
+      this.createVariantStock(formData,branches);
+       this.allVariant(product);
       this.regular();
     }
 
   }
 
-  createVariantStock(formData:any) {
-    this.stock.createStocks(formData);
+  createVariantStock(formData:any,branches=[]) {
+    // console.log(branches);
+    return this.stock.createStocks(formData,branches);
   }
 
 
@@ -233,7 +241,7 @@ export class VariationService {
 
   update(variation: Variant): void {
     if (variation) {
-      console.log('need to update variant',variation);
+      // console.log('need to update variant',variation);
       return this.database.put(PouchConfig.Tables.variants+'_'+variation.id, variation);
     }
 
@@ -251,19 +259,19 @@ export class VariationService {
     });
   }
 
-  public openVariantDialog(variant: Variant, selectedIndex: number): any {
-    return this.dialog.open(VariantsDialogModelComponent, DialogSize.SIZE_MD, { variant, selectedIndex }).subscribe(result => {
-
+  public openVariantDialog(variant: Variant, selectedIndex: number,stock=null,stocks=[],currency='RWF'): any {
+    return this.dialog.open(VariantsDialogModelComponent, DialogSize.SIZE_MD, { variant, selectedIndex,stock,stocks,currency }).subscribe(result => {
        this.updateStockControl(result, variant);
-       this.regular();
-       this.request(null, variant);
-       this.variants(this.product);
-       this. stockUpdates();
+      //  this.regular();
+      //  this.request(null, variant);
+      //  this.varia nts(this.product);
+      //  this. stockUpdates();
     });
   }
 
-updateStockControl(result: any, variant: Variant) {
+async updateStockControl(result: any, variant: Variant) {
   if (result) {
+  
     if (result.length > 0) {
       result.forEach(res => {
         if (res.reason && res.currentStock > 0) {
@@ -271,7 +279,7 @@ updateStockControl(result: any, variant: Variant) {
             id: this.database.uid(),
             orderId: 0,
             variantId: variant.id,
-            productId: this.findVariant(variant.id).productId,
+            productId: variant.productId,
             stockId: res.id,
             reason: res.reason,
             quantity: res.currentStock,
@@ -282,41 +290,42 @@ updateStockControl(result: any, variant: Variant) {
           });
         }
           // update Stock
-        const stock = this.stock.findStock(res.id);
         if (res.reason && res.currentStock > 0) {
 
             if (res.reason === 'Received' || res.reason === 'Restocked') {
 
               if (!(res.currentStock === 0 || res.currentStock === null)) {
-                stock.currentStock = stock.currentStock + res.currentStock;
+                     res.stock.currentStock =res.stock.currentStock + res.currentStock;
                }
 
             } else if (res.reason === 'Re-counted') {
 
-                  if (!(res.currentStock === 0 || res.currentStock === null)) {
-                    stock.currentStock = res.currentStock;
-                   }
-            } else {
-              if (!(res.currentStock === 0 || res.currentStock === null)) {
-                    stock.currentStock = stock.currentStock - res.currentStock;
-              }
+                        if (!(res.currentStock === 0 || res.currentStock === null)) {
+                             res.stock.currentStock = res.currentStock;
+                        }
+            } 
+            else {
+                    if (!(res.currentStock === 0 || res.currentStock === null)) {
+                        res.stock.currentStock = res.stock.currentStock - res.currentStock;
+                    }
 
             }
 
           } else {
-            res.currentStock = stock.currentStock;
+               res.currentStock = res.stock.currentStock;
           }
 
-        if (res.currentStock === 0 || res.currentStock === null || res.currentStock === '') {
-               stock.currentStock = stock.currentStock;
+
+         if (res.currentStock === 0 || res.currentStock === null || res.currentStock === '') {
+               res.stock.currentStock = res.stock.currentStock;
           }
 
-        stock.canTrackingStock = res.canTrackingStock;
-        stock.lowStock = res.lowStock;
-        stock.showLowStockAlert = res.showLowStockAlert;
+          res.stock.canTrackingStock = res.canTrackingStock;
+          res.stock.lowStock = res.lowStock;
+          res.stock.showLowStockAlert = res.showLowStockAlert;
 
 
-        this.stock.update(stock);
+         this.stock.update(res.stock);
 
       });
     }
@@ -392,18 +401,7 @@ updateStockControl(result: any, variant: Variant) {
     }
   }
 
-  async updateVariant(key: any, variant: Variant, event: any) {
-    const val = key === 'unit' ? event.value : event.target.value;
-
-    if (key === 'retailPrice' || key === 'supplyPrice') {
-      await this.stock.findVariantStock(variant?variant.id:null);
-      const myStock = this.stock.stock;
-      myStock[key] = parseInt(val, 10);
-      return this.stock.update(myStock);
-    } else {
-     return this.updateRegularVariant(variant, key, val);
-    }
-  } 
+ 
 
   async updateVariantAction(product: Product) {
     await this.allVariant(product);

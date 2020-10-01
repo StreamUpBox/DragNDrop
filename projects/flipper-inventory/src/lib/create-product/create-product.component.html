@@ -51,7 +51,7 @@
                           <td style="width: 60%;">
   
   
-                            <input class="input" formControlName="name" type="text" (input)="updateItem('name',$event)"
+                            <input class="input" formControlName="name" type="text" required (input)="updateItem('name',$event)"
                               (focus)="focusing('name')" (focusout)="focusingOut()" placeholder="Item Name" />
   
                             <mat-error *ngIf="submitted && formControl.name.errors">
@@ -61,13 +61,13 @@
   
                           </td>
                         </tr>
-                        <tr style=" border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;" class="tr" [class.trIsFocused]="isFocused=='category'">
-                          <td class="td" [class.tdIsFocused]="isFocused=='category'">
+                        <tr style=" border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;" class="tr" [class.trIsFocused]="isFocused=='description'">
+                          <td class="td" [class.tdIsFocused]="isFocused=='description'">
                             <label>Description</label>
                           </td>
                           <td style="width: 60%;">
                             <textarea class="textarea" formControlName="description"
-                              (input)="updateItem('description',$event)" (focus)="focusing('category')"
+                              (input)="updateItem('description',$event)" (focus)="focusing('description')"
                               (focusout)="focusingOut()"
                               placeholder="Enter a description of this item. Describe details like features, options, and measurements."
                               maxlength="4096"></textarea>
@@ -137,8 +137,24 @@
                 <h3 style="float:left">Price and Inventory </h3>
               </div>
               <div class="col-5">
+                
+                  <div *ngIf="product.hasDraftProduct && product.allVariants && product.allVariants.length == 1">
+                  <flipper-regular-variants [product]="product.hasDraftProduct" [defaultBusiness]='product.defaultBusiness$' [regularVariantion]='product.allVariants[0]'>
 
-                  <flipper-variants [didAddNew]="didAddNew" [product]="product.hasDraftProduct" *ngIf="product.hasDraftProduct"></flipper-variants>
+                  </flipper-regular-variants>
+                  </div>
+
+                  <div *ngIf="product.hasDraftProduct && product.allVariants && product.allVariants.length > 1">
+                     <flipper-added-variants 
+                     [product]="product.hasDraftProduct" 
+                     [defaultBusiness]='product.defaultBusiness$' 
+                     [variantions]='product.allVariants'
+                     [stocks]="product.stocks"
+                     (didAddNewVariant)="checkIfaddNewVariant($event)"
+                     >
+
+                     </flipper-added-variants>
+                  </div>
               </div>
   
   

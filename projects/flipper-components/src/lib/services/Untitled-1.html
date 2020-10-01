@@ -1,0 +1,130 @@
+<div *ngIf="variant.hasRegular">
+  
+    <form [formGroup]="variant.form" style="height: 100%;">
+      <table style="width: 100%;">
+    
+        <tr class="tr"
+          style="border-top: 1px #d5d9dc solid; border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
+    
+          <td class="td-sm" [class.trIsFocused]="isFocused=='SKU'" [class.tdIsFocused]="isFocused=='SKU'">
+            SKU
+          </td>
+          <td style="width:25%" [class.trIsFocused]="isFocused=='SKU'">
+            <input class="input" formControlName="SKU" type="text" (input)="updateVariant('SKU',$event)"
+              (focus)="focusing('SKU')" (focusout)="focusingOut()" placeholder="SKU" />
+          </td>
+    
+          <td class="td-sm" [class.trIsFocused]="isFocused=='unit'" [class.tdIsFocused]="isFocused=='unit'">
+            Unit Type
+          </td>
+          <td style="width:25%" [class.trIsFocused]="isFocused=='unit'">
+            <mat-select class="select" formControlName="unit" placeholder="Choose Unit Type"
+              (selectionChange)="updateVariant('unit',$event)" (focus)="focusing('unit')" (focusout)="focusingOut()">
+              <mat-option *ngFor="let unit of variant.units" [value]="unit.value">
+                {{unit.name}}
+              </mat-option>
+            </mat-select>
+          </td>
+    
+        </tr>
+    
+        <tr class="tr" style=" border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
+          <td class="td-sm" [class.trIsFocused]="isFocused=='retailPrice'" [class.tdIsFocused]="isFocused=='retailPrice'">
+            Retail Price
+          </td>
+          <td style="width:25%" [class.trIsFocused]="isFocused=='retailPrice'">
+            <div class="price">
+    
+              <span class="currency">{{variant.defaultBusiness.currency}}
+                {{variant.hasRegular.unit?'/ '+variant.hasRegular.unit:''}}</span>
+              <span class="pinput">
+                <input class="input" formControlName="retailPrice" type="number" (input)="updateVariant('retailPrice',$event)"
+                  (focus)="focusing('retailPrice')" (focusout)="focusingOut()" placeholder="retail Price" />
+              </span>
+            </div>
+          </td>
+          <td class="td-sm" [class.trIsFocused]="isFocused=='supplyPrice'" [class.tdIsFocused]="isFocused=='supplyPrice'">
+            Supply Price
+          </td>
+          <td style="width:25%" [class.trIsFocused]="isFocused=='supplyPrice'">
+            <div class="price">
+    
+              <span class="currency">{{variant.defaultBusiness.currency}}
+                {{variant.hasRegular.unit?'/ '+variant.hasRegular.unit:''}}</span>
+              <span class="pinput">
+                <input class="input" formControlName="supplyPrice" type="number" (input)="updateVariant('supplyPrice',$event)"
+                  (focus)="focusing('supplyPrice')" (focusout)="focusingOut()" placeholder="supply Price" />
+              </span>
+            </div>
+          </td>
+        </tr>
+    
+        <tr class="tr" style=" border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
+          <td class="td-sm">
+            Stock
+          </td>
+    
+          <td style="width:25%">
+            <a class="form-link-with-spacing hyperlink"  (click)="variant.openVariantDialog(variant.hasRegular,1)">
+              <span *ngIf="this.stock.stocks.length==1 && getTotalStock(variant.hasRegular.id,'currentStock') > 0">
+                {{getTotalStock(variant.hasRegular.id,'currentStock')}} {{variant.hasRegular.unit}}
+              </span> 
+              <span *ngIf="this.stock.stocks.length > 1">
+                Edit Per Location
+              </span>
+              <span *ngIf="this.stock.stocks.length > 0 && getTotalStock(variant.hasRegular.id,'currentStock') == 0">
+                None
+              </span>
+            </a>
+            
+          </td>
+          <td class="td-sm">
+            Low Stock Alert
+          </td>
+          <td style="width:25%">
+                <a class="form-link-with-spacing hyperlink" (click)="variant.openVariantDialog(variant.hasRegular,1)">
+                    <span *ngIf="this.stock.stocks.length==1 && getTotalStock(variant.hasRegular.id,'lowStock') > 0" >
+                      {{getTotalStock(variant.hasRegular.id,'lowStock')}} {{variant.hasRegular.unit}}
+                    </span> 
+                    <span *ngIf="this.stock.stocks.length > 1 ">
+                      Edit Per Location
+                    </span>
+                    <span *ngIf="this.stock.stocks.length > 0 && getTotalStock(variant.hasRegular.id,'lowStock') == 0" >
+                      None
+                    </span>
+                </a>
+                 
+          </td>
+        </tr>
+        <tr class="tr"  style="border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
+          <td>
+            <a class="form-link-with-spacing hyperlink" (click)="openAddVariantDialog(product)">
+              Add Variation
+            </a>
+          </td>
+    
+          <td>
+            
+            <a class="form-link-with-spacing hyperlink" *ngIf="stock.variantStockHistory(variant.hasRegular.id).length > 0" 
+              (click)="variant.openStockHistoryDialog(variant.hasRegular)">
+               View Stock History
+             </a>
+    
+          </td>
+    
+          <td>
+    <!--         
+            <a class="form-link-with-spacing hyperlink"
+            (click)="variant.openPrintBarcodeLablesDialog()">
+               Print Label
+            </a> -->
+    
+          </td>
+        
+        </tr>
+      </table>
+      
+    
+    </form>
+    </div>
+    

@@ -4,6 +4,7 @@ import { StockService } from '../../services/stock.service';
 import { Product, Variant, CalculateTotalClassPipe, Business } from '@enexus/flipper-components';
 import { DialogService, DialogSize } from '@enexus/flipper-dialog';
 import { AddVariantComponent } from '../add-variant/add-variant.component';
+import { VariantsDialogModelComponent } from '../variants-dialog-model/variants-dialog-model.component';
 
 @Component({
   selector: 'flipper-added-variants',
@@ -72,6 +73,19 @@ export class AddedVariantsComponent implements OnInit {
     });
   }
 
+
+  public async openVariantDialog(variant: Variant, selectedIndex: number,stock=null,stocks=[],currency='RWF') {
+    await this.stock.variantStocks(variant.id);
+    stocks=this.stock.stocks;
+    currency=this.defaultBusiness.currency;
+    stock=stocks[0];
+    console.log(stocks);
+    return await this.dialog.open(VariantsDialogModelComponent, DialogSize.SIZE_MD, { variant, selectedIndex,stock,currency }).subscribe(result => {
+
+      //  this.variant.updateStockControl(result, variant);
+      //  this.init();
+    });
+  }
   deleteProductVariation() {
 
     if (this.product) {

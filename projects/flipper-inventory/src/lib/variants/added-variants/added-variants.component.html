@@ -34,7 +34,7 @@
         <div class="form-field__content">
           <div class="type-ellipsis">
      
-            <a class="ml-3 form-link-with-spacing hyperlink" (click)="variant.openVariantDialog(variantion,0)">
+            <a class="ml-3 form-link-with-spacing hyperlink" (click)="openVariantDialog(variantion,0)">
               {{variantion.name}}
             </a>
 
@@ -48,7 +48,7 @@
       <div class="form-field form-field--no-label ember-view">
         <!---->
         <div class="form-field__content">
-          <a class="form-link-with-spacing hyperlink" (click)="variant.openVariantDialog(variantion,0)">
+          <a class="form-link-with-spacing hyperlink" (click)="openVariantDialog(variantion,0)">
             {{variantion.SKU}}
           </a>
 
@@ -74,7 +74,7 @@
       <div class="form-field form-field--no-label ember-view">
         <!---->
         <div class="form-field__content">
-          <a class="form-link-with-spacing hyperlink" (click)="variant.openVariantDialog(variantion,1)">
+          <a class="form-link-with-spacing hyperlink" (click)="openVariantDialog(variantion,1)">
               <!-- {{getTotalStock(variantion.id,'currentStock')}} {{variantion.unit}} -->
           </a>
         </div>
@@ -121,8 +121,8 @@
    </button> -->
 
    
-  <button class="button-default button--destructive  ml-1" (click)="variant.deleteAllVariantsDialog(product)">
+  <!-- <button class="button-default button--destructive  ml-1" (click)="variant.deleteAllVariantsDialog(product)">
     Delete All Variation
-  </button>
+  </button> -->
   
 </div>

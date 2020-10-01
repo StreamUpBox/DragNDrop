@@ -149,6 +149,7 @@
                      [product]="product.hasDraftProduct" 
                      [defaultBusiness]='product.defaultBusiness$' 
                      [variantions]='product.allVariants'
+                     [stocks]="product.stocks"
                      (didAddNewVariant)="checkIfaddNewVariant($event)"
                      >
 

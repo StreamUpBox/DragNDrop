@@ -29,7 +29,8 @@ export class ProductService {
   currentUser$: User = null;
   defaultTaxe$: Taxes = null;
   allVariants: Variant[];
-
+  stocks:Stock[]=[];
+  
   constructor(private query: ModelService,
     private cacheService: CacheService,
     private model: MainModelService,
@@ -71,6 +72,22 @@ export class ProductService {
        
       this.allVariants= res as Variant[];
         
+});
+}
+
+ //stocks
+ getProductStocks(productId: any) {
+
+  return this.database.query(['table','productId'], {
+    table: { $eq: 'stocks' },
+    productId: { $eq: productId }
+  }).then(res => {
+
+    if (res.docs && res.docs.length > 0) {
+        this.stocks = res.docs ;
+    } else {
+      this.stocks = null;
+    }
 });
 }
 
@@ -127,6 +144,7 @@ return this.database.query(['table', 'productId'], {
       if (draft && draft.docs.length > 0) {
         this.hasDraftProduct = draft.docs[0];
         this.allVariant(this.hasDraftProduct);
+        this.getProductStocks(this.hasDraftProduct.id);
       }
     });
   }

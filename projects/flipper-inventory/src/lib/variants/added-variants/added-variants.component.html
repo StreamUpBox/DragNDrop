@@ -61,10 +61,10 @@
       <div class="form-field form-field--no-label ember-view">
         <!---->
         <div class="form-field__content">
-          <!-- Supply: {{variant.defaultBusiness.currency}}
+         Supply: {{variant.defaultBusiness?variant.defaultBusiness.currency:''}}
           {{getTotalStock(variantion.id,'supplyPrice')}} {{variantion.unit?'/ '+variantion.unit:''}}<br />
-          Retail:{{variant.defaultBusiness.currency}}
-          {{getTotalStock(variantion.id,'retailPrice')}} {{variantion.unit?'/ '+variantion.unit:''}} -->
+          Retail:{{variant.defaultBusiness?variant.defaultBusiness.currency:''}}
+          {{getTotalStock(variantion.id,'retailPrice')}} {{variantion.unit?'/ '+variantion.unit:''}}
         </div>
       </div>
     </div>
@@ -75,7 +75,7 @@
         <!---->
         <div class="form-field__content">
           <a class="form-link-with-spacing hyperlink" (click)="openVariantDialog(variantion,1)">
-              <!-- {{getTotalStock(variantion.id,'currentStock')}} {{variantion.unit}} -->
+              {{getTotalStock(variantion.id,'currentStock')}} {{variantion.unit}}
           </a>
         </div>
       </div>
@@ -89,10 +89,10 @@
          </button>
 
          <mat-menu #menu="matMenu">
-           <button mat-menu-item *ngIf="stock.variantStockHistory(variantion.id).length > 0" 
+           <!-- <button mat-menu-item *ngIf="stock.variantStockHistory(variantion.id).length > 0" 
              style="color: #2996cc !important;" (click)="variant.openStockHistoryDialog(variantion)">
               View History
-             </button>
+             </button> -->
              <button mat-menu-item style="color:#ad061c!important" (click)="deleteVariation(variantion)">
                 Delete
              </button>

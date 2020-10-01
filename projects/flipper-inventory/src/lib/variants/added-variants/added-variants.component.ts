@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { VariationService } from '../../services/variation.service';
 import { StockService } from '../../services/stock.service';
-import { Product, Variant, CalculateTotalClassPipe, Business } from '@enexus/flipper-components';
+import { Product, Variant, CalculateTotalClassPipe, Business, Stock } from '@enexus/flipper-components';
 import { DialogService, DialogSize } from '@enexus/flipper-dialog';
 import { AddVariantComponent } from '../add-variant/add-variant.component';
 import { VariantsDialogModelComponent } from '../variants-dialog-model/variants-dialog-model.component';
@@ -15,6 +15,7 @@ export class AddedVariantsComponent implements OnInit {
   item: Product;
   variantion:Variant[];
   business:Business;
+  pstocks:Stock[];
   @Input('product')
   set product(item: Product) {
     this.item = item;
@@ -30,6 +31,14 @@ export class AddedVariantsComponent implements OnInit {
   get variantions(): Variant[] {
   return this.variantion;
   }
+  @Input('stocks')
+  set stocks(items: Stock[]) {
+  this.pstocks = items;
+  }
+  get stocks(): Stock[] {
+  return this.pstocks;
+  }
+  
 
   @Input('defaultBusiness')
   set defaultBusiness(item: Business) {
@@ -45,19 +54,23 @@ export class AddedVariantsComponent implements OnInit {
     public variant: VariationService, public stock: StockService) { }
 
   ngOnInit() {
-    
+    console.log(this.stocks);
     this.variant.activeBusiness();
+    
   }
 
   getTotalStock(variantId, key: any): number {
-    this.stock.variantStocks(variantId);
-    if (this.stock.stocks.length > 0) {
-      return this.totalPipe.transform(this.stock.stocks, key);
+   
+    const stocks=this.stocks.filter(stock=>stock.variantId==variantId);
+    if (stocks.length > 0) {
+      return this.totalPipe.transform(stocks, key);
     } else {
       return 0;
     }
+
   }
 
+  
   convertInt(num) {
     return parseInt(num, 10);
   }
@@ -66,7 +79,7 @@ export class AddedVariantsComponent implements OnInit {
   public openAddVariantDialog(product: Product): any {
     return this.dialog.open(AddVariantComponent, DialogSize.SIZE_MD, {product:product,currency:this.defaultBusiness.currency}).subscribe(result => {
       if (result === 'done') {
-        console.log(result);
+      
         this.didAddNewVariant.emit(true);
       }
 
@@ -75,15 +88,17 @@ export class AddedVariantsComponent implements OnInit {
 
 
   public async openVariantDialog(variant: Variant, selectedIndex: number,stock=null,stocks=[],currency='RWF') {
-    await this.stock.variantStocks(variant.id);
+    await this.stock.findVariantStocks(variant.id);
     stocks=this.stock.stocks;
     currency=this.defaultBusiness.currency;
     stock=stocks[0];
-    console.log(stocks);
-    return await this.dialog.open(VariantsDialogModelComponent, DialogSize.SIZE_MD, { variant, selectedIndex,stock,currency }).subscribe(result => {
 
-      //  this.variant.updateStockControl(result, variant);
-      //  this.init();
+    return await this.dialog.open(VariantsDialogModelComponent, DialogSize.SIZE_MD, { variant, selectedIndex,stock,stocks,currency }).subscribe(result => {
+    
+      if(result){
+        this.variant.updateStockControl(result, variant);
+      }
+      this.didAddNewVariant.emit(true);
     });
   }
   deleteProductVariation() {

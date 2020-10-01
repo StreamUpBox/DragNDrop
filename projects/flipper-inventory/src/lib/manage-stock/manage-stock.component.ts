@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy,
    ChangeDetectorRef, EventEmitter, Output } from '@angular/core';
-import { Variant, Stock } from '@enexus/flipper-components';
+import { Variant, Stock, SettingsService } from '@enexus/flipper-components';
 import { StockService } from '../services/stock.service';
+import { VariationService } from '../services/variation.service';
 
 export class StockControl {
   id?: string;
@@ -28,11 +29,12 @@ export class ManageStockComponent implements OnInit {
   stockControl: StockControl[] = [];
 
   @Output() stockControlEmit = new EventEmitter < StockControl[] > ();
+  reasons: any[];
 
-  constructor(public stock: StockService, private cd: ChangeDetectorRef) { }
+  constructor(public stock: StockService,private variant:VariationService, private cd: ChangeDetectorRef,private setting: SettingsService) { }
 
   ngOnInit() {
-    this.stock.init();
+    this.reasons = this.setting.reasons();
     this.loadStocks();
   }
   async loadStocks() {
@@ -53,15 +55,13 @@ export class ManageStockComponent implements OnInit {
       }
     }
   }
-  onSubmit() {
-  }
-
+ 
 
   updateReason(stockControl: StockControl, event: any) {
 
       stockControl.reason = event.value;
       stockControl.currentStock = 0;
-      this.updateStockControl(stockControl);
+    
       this.stockControlEmit.emit(this.stockControl);
 
   }
@@ -82,10 +82,12 @@ export class ManageStockComponent implements OnInit {
   updateStockControl(stockControl: StockControl) {
     const stockControls = this.stockControl;
     const arr: StockControl[] = [];
+    
     this.stockControl = [];
     stockControls.forEach(sc => {
             if (sc.id === stockControl.id) {
               sc = stockControl;
+             
             }
             arr.push(sc);
           });

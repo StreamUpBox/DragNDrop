@@ -17,7 +17,7 @@
         <td style="width:60%" colspan="2">
           <mat-select class="select" [(ngModel)]="stk.reason" name="stk.id+'lowStock'" placeholder="Select Reason" [disabled]="!stk.canTrackingStock"
             (selectionChange)="updateReason(stk,$event)" (focus)="focusing(stk.id+'reason')" (focusout)="focusingOut()">
-            <mat-option *ngFor="let reason of stock.reasons" [value]="reason.value">
+            <mat-option *ngFor="let reason of reasons" [value]="reason.value">
               {{reason.name}}
             </mat-option>
           </mat-select>

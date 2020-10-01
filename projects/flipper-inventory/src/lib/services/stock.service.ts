@@ -15,6 +15,8 @@ export class StockService {
   variant: Variant;
   stockHistory: StockHistory;
   stockHistories: StockHistory[];
+  
+
   constructor(private query: ModelService,
               private model: MainModelService,
               private setting: SettingsService,
@@ -44,6 +46,23 @@ export class StockService {
         this.stock = null;
       }
   });
+ }
+
+
+
+  findVariantStocks(variantId: any) {
+
+    return this.database.query(['table','variantId'], {
+      table: { $eq: 'stocks' },
+      variantId: { $eq: variantId }
+    }).then(res => {
+
+      if (res.docs && res.docs.length > 0) {
+          this.stocks = res.docs;
+      } else {
+        this.stocks = [];
+      }
+  });
 
  
 
@@ -61,7 +80,10 @@ export class StockService {
           }
       })
   }
+  variantStocksV2(variantId: string) {
 
+    return this.database.fastQuery(['table','variantId'],{table:'stocks',variantId:variantId});
+}
 
 
   variantStocks1(variantId: string): Stock[] {

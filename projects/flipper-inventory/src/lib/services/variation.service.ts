@@ -271,6 +271,7 @@ export class VariationService {
 
 async updateStockControl(result: any, variant: Variant) {
   if (result) {
+  
     if (result.length > 0) {
       result.forEach(res => {
         if (res.reason && res.currentStock > 0) {

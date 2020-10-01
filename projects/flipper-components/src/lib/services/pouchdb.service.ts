@@ -62,6 +62,26 @@ export class PouchDBService {
         })
     
     }
+    public async fastQuery(fields = [],selector = {}){
+        try {
+            // Create the Index
+            var result = await this.database.createIndex({
+                index:  { fields: fields }
+            });
+        
+            // Query the Index using find().
+            result = await this.database.find({
+                
+                selector: selector
+            });
+        
+            // Found docs are in result.docs
+            return await result.docs;
+        }
+        catch( err ) {
+            console.log(err);
+        }
+    }
 
     public callbackQuery(fields = [], selector = {},callback:Handler) {
 

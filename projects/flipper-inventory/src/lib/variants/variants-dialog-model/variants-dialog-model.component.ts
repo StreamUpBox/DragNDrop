@@ -30,6 +30,7 @@ export class VariantsDialogModelComponent implements OnInit {
   }
 
   stockControl(event) {
+   
     this.stockControls = event;
   }
 

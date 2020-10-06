@@ -147,8 +147,15 @@ export class VariationService {
   create(variant: Variant) {
     return  this.database.put(PouchConfig.Tables.variants+'_'+variant.id, variant);
   }
+  delete(variant: Variant) {
+    return  this.database.remove(variant);
+  }
 
   async createRegular(product: Product,branches=[]) {
+    if(branches.length == 0){
+      await this.currentBranches();
+      branches=this.branches$
+    }
     if (!this.hasRegular) {
       const formData= await {
         id: this.database.uid(),
@@ -161,23 +168,23 @@ export class VariationService {
         unit: this.units.length > 0?this.units[0].value:'',
         SKU: this.generateSKU(),
         syncedOnline: false,
-        isActive: false,
+        isActive: true,
         createdAt: new Date(),
         updatedAt: new Date(),
         table:'variants',
       
       };
       await this.database.put(PouchConfig.Tables.variants+'_'+formData.id, formData);
-      this.createVariantStock(formData,branches);
+       this.createVariantStock(formData,branches);
        this.allVariant(product);
       this.regular();
     }
 
   }
 
-  createVariantStock(formData:any,branches=[]) {
+  async createVariantStock(formData:any,branches=[]) {
     // console.log(branches);
-    return this.stock.createStocks(formData,branches);
+    return await this.stock.createStocks(formData,branches);
   }
 
 
@@ -246,18 +253,7 @@ export class VariationService {
     }
 
   }
-  async deleteAllVariantsDialog(product: Product) {
-    const variants = [];
-    await this.allVariant(product);
-
-    this.allVariants.forEach((v, i) => {
-      variants.push(`${i + 1}. ${v.name}`);
-    });
-    this.dialog.delete('Variants', variants).subscribe(confirm => {
-      this.deleteProductVariations(product);
-      this.init(product);
-    });
-  }
+ 
 
   public openVariantDialog(variant: Variant, selectedIndex: number,stock=null,stocks=[],currency='RWF'): any {
     return this.dialog.open(VariantsDialogModelComponent, DialogSize.SIZE_MD, { variant, selectedIndex,stock,stocks,currency }).subscribe(result => {
@@ -336,10 +332,8 @@ async updateStockControl(result: any, variant: Variant) {
     return this.dialog.open(ViewStockHistoryComponent, DialogSize.SIZE_LG, {variant, isArray}).subscribe();
   }
 
-  public openPrintBarcodeLablesDialog(): any {
+  public openPrintBarcodeLablesDialog(product,allVariants): any {
     const labels: Labels[] = [];
-    const product  =  this.model.draft<Product>(Tables.products, 'isDraft');
-    const allVariants = this.model.filters<Variant>(Tables.variants, 'productId', product.id);
     allVariants.forEach(v => {
       labels.push({name: v.name, sku: v.SKU});
     });
@@ -355,7 +349,7 @@ async updateStockControl(result: any, variant: Variant) {
         this.allVariants.forEach(variation => {
           this.stock.deleteStocks(variation);
           this.stock.deleteStocksHistory(variation);
-          this.database.remove(variation);
+          this.delete(variation);
         });
       }
     }
@@ -379,8 +373,7 @@ async updateStockControl(result: any, variant: Variant) {
       this.dialog.delete('Variant', [`Variant: ${variant.name}`]).subscribe(confirm => {
         this.stock.deleteStocks(variant);
         this.stock.deleteStocksHistory(variant);
-        this.database.remove(variant);
-        this.init(product);
+        return this.database.remove(variant);
       });
 
 

@@ -139,7 +139,8 @@
               <div class="col-5">
                 
                   <div *ngIf="product.hasDraftProduct && product.allVariants && product.allVariants.length == 1">
-                  <flipper-regular-variants [product]="product.hasDraftProduct" [defaultBusiness]='product.defaultBusiness$' [regularVariantion]='product.allVariants[0]'>
+                  <flipper-regular-variants [product]="product.hasDraftProduct" [defaultBusiness]='product.defaultBusiness$' [regularVariantion]='product.allVariants[0]'
+                  (didAddNewVariant)="checkIfaddNewVariant($event)">
 
                   </flipper-regular-variants>
                   </div>

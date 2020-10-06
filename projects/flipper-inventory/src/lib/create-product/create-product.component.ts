@@ -62,18 +62,20 @@ export class CreateProductComponent implements OnInit {
 
 
    async ngOnInit() {
+    this.product.hasDraftProduct=null;
+    this.product.allVariants=[];
+    this.product.stocks=[];
 
     await this.product.init();
 
     const hasDraftProduct = this.product.hasDraftProduct;
-// console.log(hasDraftProduct);
+
     this.request(hasDraftProduct);
 
   }
   async checkIfaddNewVariant(event){
-    console.log(event);
         if(event){
-          await this.product.init();
+          await this.product.hasDraft();;
         }
   }
   
@@ -133,13 +135,12 @@ export class CreateProductComponent implements OnInit {
   async onSubmit(action) {
     this.submitted = true;
     this.didAddNew = false;
-    if (this.product.form.invalid) {
+    if (this.form.invalid) {
       this.notificationSvc.error('Create an item', 'Please enter a name for your item.');
       return;
     }
     await this.product.saveProduct();
-
-    this.goToProduct();
+    await this.goToProduct();
 
   }
   goToProduct() {
@@ -153,9 +154,19 @@ export class CreateProductComponent implements OnInit {
 
   focusing(value) {
     this.isFocused = value;
+
+    if (value === 'name') {
+      this.form.controls.name.setValue('');
+    } else if (value === 'description') {
+      this.form.controls.description.setValue('');
+    }
   }
   focusingOut() {
-    this.isFocused = '';
+    if ( this.isFocused === 'name') {
+      this.form.controls.name.setValue(this.product.hasDraftProduct.name);
+    } else if (this.isFocused === 'description') {
+      this.form.controls.description.setValue(this.product.hasDraftProduct.description);
+    }
   }
 
   deleteProduct() {
@@ -179,10 +190,9 @@ export class CreateProductComponent implements OnInit {
 
         if (result === 'discard') {
 
-          console.log('we got discarded');
-          // this.product.discardProduct();
+          this.product.discardProduct();
 
-          // this.goToProduct();
+          this.goToProduct();
         }
 
         if (result === 'save') {

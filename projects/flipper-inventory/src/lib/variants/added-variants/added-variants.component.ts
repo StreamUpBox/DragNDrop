@@ -54,7 +54,6 @@ export class AddedVariantsComponent implements OnInit {
     public variant: VariationService, public stock: StockService) { }
 
   ngOnInit() {
-    console.log(this.stocks);
     this.variant.activeBusiness();
     
   }
@@ -124,9 +123,42 @@ export class AddedVariantsComponent implements OnInit {
     return variants;
   }
 
-  deleteVariation(variant: Variant) {
-    if (this.product) {
-      this.variant.deleteVariation(variant, this.product);
+
+  deleteVariation(variant: Variant): void {
+    if (variant) {
+      this.dialog.delete('Variant', [`Variant: ${variant.name}`]).subscribe(confirm => {
+        this.stock.deleteStocks(variant);
+        this.stock.deleteStocksHistory(variant);
+          this.variant.delete(variant);
+         this.didAddNewVariant.emit(true);
+      });
+
+
     }
+  }
+
+  async deleteAllVariantsDialog(product: Product) {
+    const variants = [];
+    await this.allVariant(product);
+
+    this.variant.allVariants.forEach((v, i) => {
+      variants.push(`${i + 1}. ${v.name}`);
+    });
+    this.dialog.delete('Variants', variants).subscribe(async confirm => {
+ 
+          if (this.variant.allVariants.length > 0) {
+            this.variant.allVariants.forEach(variation => {
+              this.stock.deleteStocks(variation);
+              this.stock.deleteStocksHistory(variation);
+              this.variant.delete(variation);
+            });
+           
+            await this.variant.createRegular(product);
+            this.didAddNewVariant.emit(true);
+          }
+     
+      
+      
+    });
   }
 }

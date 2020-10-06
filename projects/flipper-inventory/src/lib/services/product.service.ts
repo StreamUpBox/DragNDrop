@@ -174,10 +174,11 @@ return this.database.query(['table', 'productId'], {
 
       await this.database.put(PouchConfig.Tables.products + '_' + formProduct.id, formProduct);
       if(this.branches$.length > 0){
-        return this.variant.createRegular(formProduct,this.branches$); 
+         this.variant.createRegular(formProduct,this.branches$); 
       }
      
     }
+    await this.hasDraft();
   }
 
 
@@ -227,10 +228,9 @@ return this.database.query(['table', 'productId'], {
     }
   }
 
-  update(): Product {
+  async update() {
     if (this.hasDraftProduct) {
-      //console.log(this.hasDraftProduct);
-      return this.database.put(PouchConfig.Tables.products + '_' + this.hasDraftProduct.id, this.hasDraftProduct);
+      return await this.database.put(PouchConfig.Tables.products + '_' + this.hasDraftProduct.id, this.hasDraftProduct);
     }
 
   }
@@ -242,11 +242,12 @@ return this.database.query(['table', 'productId'], {
     }
   }
 
-  discardProduct(): void {
+  async discardProduct() {
+    // console.log('need discard');
     if (this.hasDraftProduct) {
-      this.variant.deleteProductVariations(this.hasDraftProduct);
+      await this.variant.deleteProductVariations(this.hasDraftProduct);
 
-      this.model.delete(Tables.products, '"' + this.hasDraftProduct.id + '"');
+      await  this.database.remove(this.hasDraftProduct);
     }
   }
 
@@ -272,7 +273,6 @@ return this.database.query(['table', 'productId'], {
   async saveProduct() {
 
     if (this.hasDraftProduct) {
-      this.variant.updateVariantAction(this.hasDraftProduct);
       this.hasDraftProduct.active = true;
       this.hasDraftProduct.isDraft = false;
       this.hasDraftProduct.isCurrentUpdate = false;

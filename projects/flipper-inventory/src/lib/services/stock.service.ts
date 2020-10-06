@@ -267,20 +267,21 @@ export class StockService {
 
   }
 
-  deleteStocks(variation: Variant): void {
-    const stocks: Stock[] = this.variantStocks(variation.id);
+  async deleteStocks(variation: Variant) {
+    await this.findVariantStocks(variation.id); 
 
-    if (stocks.length > 0) {
-      stocks.forEach(stock => {
+    if (this.stocks.length > 0) {
+      this.stocks.forEach(stock => {
         this.database.remove(stock);;
       });
     }
   }
 
-  deleteStocksHistory(variation: Variant): void {
-    const stocks: StockHistory[] = this.variantStockHistory(variation.id);
-    if (stocks.length > 0) {
-      stocks.forEach(stock => {
+  async deleteStocksHistory(variation: Variant) {
+     await this.variantStockHistory(variation.id);
+   
+    if (this.stockHistories.length > 0) {
+      this.stockHistories.forEach(stock => {
         this.database.remove(stock);
       });
     }

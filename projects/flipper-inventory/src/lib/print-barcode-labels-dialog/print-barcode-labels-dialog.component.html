@@ -9,12 +9,12 @@
   </span>
 
   <hr />
-  <div class="mt-5" #barcodeLabels>
+  <div class="mt-5" id="barcodeLabels">
     <flipper-generate-barcode [labels]="labels" [showName]="showName" [showSku]="showSku"></flipper-generate-barcode>
   </div>
 
 </div>
 <div mat-dialog-actions style="float: right;">
   <button mat-button (click)="close() " cdkFocusInitial>Cancel</button>&nbsp;&nbsp;
-  <button mat-button color="primary" (click)="printOut()" cdkFocusInitial>Print</button>
+  <!-- <button mat-button color="primary" (click)="printOut()" cdkFocusInitial>Print</button> -->
 </div>

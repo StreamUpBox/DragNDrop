@@ -164,7 +164,6 @@ export class RegularVariantsComponent implements OnInit {
 
    
     if (this.stocks.length > 0) {
-      console.table(this.stocks);
           return this.totalPipe.transform(this.stocks, key);
     } else {
         return 0;
@@ -194,7 +193,9 @@ export class RegularVariantsComponent implements OnInit {
        this.isFocused = '';
 
   }
-
+  openPrintBarcodeLablesDialog(){
+    this.variant.openPrintBarcodeLablesDialog(this.product,[this.regularVariantion]);
+  }
 
 
 }

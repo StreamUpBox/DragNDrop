@@ -105,15 +105,23 @@ return this.database.query(['table', 'productId'], {
 }
 
 
-  public loadAllProducts(): Observable<Product[]> {
-    const data: Product[] = [];
-    this.query.queries<Product>(Tables.products, `  isDraft=${false}
-     AND businessId='${this.model.active<Business>(Tables.business).id}' ORDER BY createdAt DESC `).
-      forEach(d => data.push(d as Product));
-    this.productsSubject.next(data);
-    this.productsMap.clear();
-    data.forEach(product => this.productsMap.set(product.id as any, product));
-    return of(data);
+  public  async loadAllProducts(businessId){
+    
+   await  this.productsList(businessId);
+     
+  
+  }
+  public async productsList(businessId){
+    return await this.database.query(['table','businessId'], {
+      table: { $eq: 'products' },
+      businessId: { $eq: businessId }
+    }).then(res => {
+      if (res.docs && res.docs.length > 0) {
+          this.products= res.docs as Product[];
+      } else {
+        this.products= [] as Product[];
+      }
+  });
   }
 
   public host(id: string): Product | undefined {

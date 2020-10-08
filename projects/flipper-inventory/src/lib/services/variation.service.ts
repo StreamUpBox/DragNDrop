@@ -222,7 +222,17 @@ export class VariationService {
             }
     });
   }
-
+  variations(){
+    return this.database.query(['table'], {
+      table: { $eq: 'variants' }
+    }).then(res => {
+            if (res.docs && res.docs.length > 0) {
+              this.allVariants= res.docs as Variant[];
+            } else {
+              this.allVariants= [];
+            }
+    });
+  }
   
   get formControl() { return this.form.controls; }
 

@@ -15,9 +15,13 @@ class BlueThoothManager {
   Future connectToanyBlueThoothAvailable() async {
    
    bluetoothPrint.scanResults.listen((List<BluetoothDevice> devices)async {
-     if(devices[0].connected){
+    
+     try{
+       if(devices[0].connected){
+       print(devices[0]);
        await bluetoothPrint.connect(devices[0]);
      }
+     }catch (e) {}
    });
 
     blueConnected?.listen((conncted) {

@@ -72,11 +72,13 @@ packages:
     source: hosted
     version: "0.3.2"
   bluetooth_print:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
-      name: bluetooth_print
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "."
+      ref: HEAD
+      resolved-ref: a2222fbcad085d94159ba529e273e8a658f6de05
+      url: "https://github.com/yegobox/bluetooth_print.git"
+    source: git
     version: "2.0.0"
   boolean_selector:
     dependency: transitive
@@ -308,21 +310,21 @@ packages:
       name: firebase_auth
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.18.0+1"
+    version: "0.18.1"
   firebase_auth_platform_interface:
     dependency: transitive
     description:
       name: firebase_auth_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.1"
+    version: "2.1.0"
   firebase_auth_web:
     dependency: transitive
     description:
       name: firebase_auth_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.0+1"
+    version: "0.3.1"
   firebase_core:
     dependency: "direct main"
     description:
@@ -757,7 +759,7 @@ packages:
       name: plugin_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.2"
+    version: "1.0.3"
   pool:
     dependency: transitive
     description:
@@ -827,7 +829,7 @@ packages:
       name: rxdart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.23.1"
+    version: "0.24.1"
   shared_preferences:
     dependency: "direct main"
     description:
@@ -916,7 +918,7 @@ packages:
       name: sqlite3
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.5"
+    version: "0.1.6"
   sqlite3_flutter_libs:
     dependency: "direct main"
     description:

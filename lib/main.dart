@@ -1,23 +1,34 @@
 
-import 'package:aurore/bluethooth_manager.dart';
+
+import 'package:aurore/couchbase.dart';
+import 'package:aurore/services/database_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+import 'locator.dart';
 
 
-void main() => runApp(MyApp());
+Future<void> main() async {
+  await DotEnv().load('.env');
+   setupLocator();
+  runApp(MyApp());
+}
+
 
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
 }
 
+
 class _MyAppState extends State<MyApp> {
   
+  final DatabaseService _service  = locator<DatabaseService>();
+
   @override
   void initState() {
     super.initState();
-
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => blueThoothManager.initBluetooth());
+    AppDatabase.instance.login();
   }
   @override
   Widget build(BuildContext context) {
@@ -26,7 +37,8 @@ class _MyAppState extends State<MyApp> {
         child: OutlineButton(
           child: Text('print'),
           onPressed: () async {
-            blueThoothManager.printReceipt();
+            // blueThoothManager.printReceipt();
+            _service.openCloseBusiness(businessId: '1',userId: '1');
           },
         ),
       )),

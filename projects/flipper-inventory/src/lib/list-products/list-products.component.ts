@@ -48,7 +48,7 @@ export class ListProductsComponent implements OnInit, OnDestroy {
     return this.searching;
   }
 
-  constructor(private router: Router,
+   constructor(private router: Router,
               private totalPipe: CalculateTotalClassPipe,
               private stock: StockService,
               public variant: VariationService,
@@ -58,61 +58,22 @@ export class ListProductsComponent implements OnInit, OnDestroy {
               private ngZone: NgZone) {
     this.database.connect(PouchConfig.bucket);
     this.dataSource = new MatTableDataSource([]);
-
+ 
     this.subscription = this.product.productsSubject.
     subscribe((loadAllProducts) => this.loadAllProducts = loadAllProducts);
    }
 
-   ngOnInit() {
-     this.variant.activeBusiness();
+   async ngOnInit() {
+     
     if (PouchConfig.canSync) {
       this.database.sync(PouchConfig.syncUrl);
     }
-    this.database.getChangeListener().subscribe(data => {
-
-      if (data && data.change && data.change.docs) {
-              for (const doc of data.change.docs) {
-                this.ngZone.run(() => {
-
-                  if (doc && doc._id === PouchConfig.Tables.products) {
-                    doc.products.forEach(row => {
-                      const form: Product = row as Product;
-                      this.migrate.insertDataIntoAlsql<Product>(Tables.products, form, form.id);
-                     });
-                    this.refresh();
-
-                  }
-                  // console.log(doc);
-                  if (doc && doc._id === PouchConfig.Tables.variants) {
-                    doc.variants.forEach(row => {
-                      const form: Variant = row as Variant;
-                      this.migrate.insertDataIntoAlsql<Variant>(Tables.variants, form, form.id);
-                     });
-                    this.refresh();
-
-                  }
-                  if (doc && doc._id === PouchConfig.Tables.stocks) {
-                    doc.stocks.forEach(row => {
-                      const form: Stock = row as Stock;
-                      this.migrate.insertDataIntoAlsql<Stock>(Tables.stocks, form, form.id);
-                     });
-                    this.refresh();
-                  }
-                  if (doc && doc._id === PouchConfig.Tables.stockHistories) {
-                    doc.stockHistory.forEach(row => {
-                      const form: StockHistory = row as StockHistory;
-                      this.migrate.insertDataIntoAlsql<StockHistory>(Tables.stockHistory, form, form.id);
-                     });
-                    this.refresh();
-                  }
-
-
-                });
-              }
-            }
-        });
-
-    this.refresh();
+    await this.variant.activeBusiness();
+    await this. variant.variations();
+    if(this.variant.defaultBusiness){
+      await this.refresh();
+    }
+   
   }
 
 
@@ -120,9 +81,11 @@ export class ListProductsComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  refresh() {
+  async refresh() {
     this.loading = true;
-    this.product.loadAllProducts().subscribe();
+ 
+    await this.product.loadAllProducts(this.variant.defaultBusiness.id);
+    this.loadAllProducts= await this.product.products;
   }
 
   applyFilter(filterValue: string) {
@@ -133,7 +96,7 @@ export class ListProductsComponent implements OnInit, OnDestroy {
         this.dataSource.paginator.firstPage();
       }
     } else {
-      this.refresh();
+      this.loadAllProducts=  this.product.products;
     }
 
   }
@@ -142,6 +105,16 @@ export class ListProductsComponent implements OnInit, OnDestroy {
 
 
   set loadAllProducts(hosts: Product[]) {
+ const data=[];
+ let products=[];
+  if(hosts.length > 0){
+    hosts.forEach(product=>{
+      data['product']=product;
+      data['allVariant']=this.variant.allVariants.filter(res=>res.productId==product.id);
+      products.push(data);
+    });
+  }
+  console.log(products);
     this.dataSource = new MatTableDataSource(hosts);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;

@@ -3,8 +3,11 @@ import 'package:aurore/services/database_service.dart';
 import 'package:aurore/services/mail_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:stacked/stacked.dart';
 
+import 'couchbase.dart';
 import 'locator.dart';
+import 'manager_view_model.dart';
 import 'services/bluethooth_service.dart';
 
 Future<void> main() async {
@@ -22,11 +25,11 @@ class _MyAppState extends State<MyApp> {
   final DatabaseService _service = locator<DatabaseService>();
   final BlueToothService _blue = locator<BlueToothService>();
   final MailService _mail = locator<MailService>();
-  
+
   @override
   void initState() {
     super.initState();
-    // AppDatabase.instance.login();
+    AppDatabase.instance.login();
     WidgetsBinding.instance.addPostFrameCallback((_) => _blue.initBluetooth());
   }
 
@@ -36,11 +39,17 @@ class _MyAppState extends State<MyApp> {
       home: Scaffold(
           body: Center(
         child: OutlineButton(
-          child: Text('print'),
+          child: ViewModelBuilder<MainViewModel>.reactive(
+            viewModelBuilder: () => MainViewModel(),
+            onModelReady: (model) => model.listenData(),
+            builder: (context, model, child) {
+              return Container(child: Text('got it'));
+            },
+          ),
           onPressed: () async {
             // blueThoothManager.printReceipt();
-            // _service.openCloseBusiness(businessId: '1',userId: '1');
-            _blue.printReceipt(items: {'Beans':23.0,'Avocado':10.2});
+            _service.openCloseBusiness(businessId: '1', userId: '1');
+            // _blue.printReceipt(items: {'Beans':23.0,'Avocado':10.2});
             // _mail.sendEmail();
           },
         ),

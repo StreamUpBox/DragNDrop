@@ -18,20 +18,21 @@
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
       <td mat-cell *matCellDef="let product">
-      <span class="toggle-collapse" *ngIf="allVariant(product).length > 1"
-      (click)="expandedElement = expandedElement === product ? null : product">
+      <span class="toggle-collapse" *ngIf="product.allVariant.length > 1"
+      (click)="expandedElement = expandedElement === product.product ? null : product.product">
         <img [src]="'./assets/icons/item-chevron-right.svg'" *ngIf="!expandedElement">
         <img [src]="'./assets/icons/item-chevron-down.svg'" *ngIf="expandedElement">
-      </span> <span class="ml-3 product-name" (click)="editProduct(product)"> {{product.name}}
+      </span>
+       <span class="ml-3 product-name" (click)="editProduct(product.product)"> {{product.product.name}}
       
       </span> 
       </td>
     </ng-container>
     <ng-container matColumnDef="sku">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>SKU</th>
-        <td mat-cell *matCellDef="let product" (click)="editProduct(product)">
-        <span *ngIf="allVariant(product).length > 0">
-            {{allVariant(product).length > 1?allVariant(product).length+' Variants':allVariant(product)[0].SKU}}
+        <td mat-cell *matCellDef="let product" (click)="editProduct(product.product)">
+        <span *ngIf="product.allVariant.length > 0">
+            {{product.allVariant.length > 1?product.allVariant.length+' Variants':product.allVariant[0].SKU}}
         </span> 
         </td>
       </ng-container>
@@ -39,15 +40,15 @@
 
     <ng-container matColumnDef="soldby">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Sold By</th>
-      <td mat-cell *matCellDef="let product" (click)="editProduct(product)">
-        <span *ngIf="allVariant(product).length > 0">
-           <span *ngIf="allVariant(product).length > 1; else oneVariant">
-                <b *ngFor="let vrmt of allVariant(product); let i = index;">
+      <td mat-cell *matCellDef="let product" (click)="editProduct(product.product)">
+        <span *ngIf="product.allVariant.length > 0">
+           <span *ngIf="product.allVariant.length > 1; else oneVariant">
+                <b *ngFor="let vrmt of product.allVariant; let i = index;">
                     {{vrmt.unit?vrmt.unit+',':''}}
                 </b>
            </span>
            <ng-template #oneVariant>
-            {{allVariant(product)[0].unit}}
+            {{product.allVariant[0].unit}}
            </ng-template>
         </span> 
       </td>
@@ -55,29 +56,29 @@
 
     <ng-container matColumnDef="inStock">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>In Stock</th>
-      <td mat-cell *matCellDef="let product" (click)="editProduct(product)">
-        {{getTotalStock(product)}}
+      <td mat-cell *matCellDef="let product" (click)="editProduct(product.product)">
+        {{getTotalStock(product.stocks)}}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="retailprice">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Retail Price</th>
-      <td mat-cell *matCellDef="let product" (click)="editProduct(product)">
-        {{getStockPrice(product,'retailPrice')}}
+      <td mat-cell *matCellDef="let product" (click)="editProduct(product.product)">
+        {{getStockPrice(product.stocks,'retailPrice')}}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="supplyprice">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Supply Price</th>
-        <td mat-cell *matCellDef="let product"  (click)="editProduct(product)">
-            {{getStockPrice(product,'supplyPrice')}}
+        <td mat-cell *matCellDef="let product"  (click)="editProduct(product.product)">
+            {{getStockPrice(product.stocks,'supplyPrice')}}
         </td>
       </ng-container>
 
         <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
   <ng-container matColumnDef="expandedDetail">
     <td mat-cell *matCellDef="let product" [attr.colspan]="displayedColumns.length">
-      <div class="mt-3" [@detailExpand]="product == expandedElement ? 'expanded' : 'collapsed'">
+      <div class="mt-3" [@detailExpand]="product.product == expandedElement ? 'expanded' : 'collapsed'">
            <!-- <flipper-product-variants *ngIf="expandedElement && allVariant(product).length > 1" [displayedColumns]="displayedColumns" [product]="expandedElement">
 
            </flipper-product-variants>    -->

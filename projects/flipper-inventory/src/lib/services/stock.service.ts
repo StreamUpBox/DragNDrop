@@ -33,6 +33,17 @@ export class StockService {
        });
  }
  
+ allStocks(){
+  return this.database.query(['table'], {
+    table: { $eq: 'stocks' }
+  }).then(res => {
+          if (res.docs && res.docs.length > 0) {
+            this.stocks= res.docs as Stock[];
+          } else {
+            this.stocks= [];
+          }
+  });
+}
   findVariantStock(variantId: any) {
 
     return this.database.query(['table','variantId'], {

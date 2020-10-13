@@ -70,6 +70,7 @@ export class ListProductsComponent implements OnInit, OnDestroy {
     }
     await this.variant.activeBusiness();
     await this. variant.variations();
+    await this.stock. allStocks();
     if(this.variant.defaultBusiness){
       await this.refresh();
     }
@@ -111,27 +112,29 @@ export class ListProductsComponent implements OnInit, OnDestroy {
     hosts.forEach(product=>{
       data['product']=product;
       data['allVariant']=this.variant.allVariants.filter(res=>res.productId==product.id);
+      data['stocks']=this.stock.stocks.filter(res=>res.productId==product.id);
       products.push(data);
     });
   }
-  console.log(products);
-    this.dataSource = new MatTableDataSource(hosts);
+  
+    this.dataSource = new MatTableDataSource(products);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.loading = false;
   }
 
-  editProduct(product: Product) {
+  async editProduct(product: Product) {
     product.isDraft = true;
     product.isCurrentUpdate = true;
-    this.migrate.insertDataIntoAlsql<Product>(Tables.products, product, product.id);
-    this.router.navigate(['/add/product']);
+    this.product.hasDraftProduct=product;
+   await  this.product.update();
+    await this.router.navigate(['/add/product']);
   }
 
 
-  getTotalStock(product: Product): number {
-        if (this.getStock(product).length > 0) {
-          return this.totalPipe.transform(this.getStock(product), 'currentStock');
+  getTotalStock(stocks:Stock[]): number {
+        if (stocks.length > 0) {
+          return this.totalPipe.transform(stocks, 'currentStock');
         } else {
             return 0;
         }
@@ -165,12 +168,12 @@ export class ListProductsComponent implements OnInit, OnDestroy {
 
 
 
-    getStockPrice(product: Product, type: string): any {
-        if (this.getStock(product).length > 0) {
-              if (this.getStock(product).length > 1) {
-                  return this.getStock(product).length + ' Prices';
+    getStockPrice(stocks, type: string): any {
+        if (stocks.length > 0) {
+              if (stocks.length > 1) {
+                  return stocks.length + ' Prices';
               } else {
-                return this.variant.defaultBusiness.currency + ' ' + this.getStock(product)[0][type];
+                return this.variant.defaultBusiness.currency + ' ' + stocks[0][type];
               }
           } else {
               return 0;

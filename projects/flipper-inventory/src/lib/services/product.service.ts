@@ -250,7 +250,7 @@ return this.database.query(['table', 'productId'], {
     }
   }
 
-  async discardProduct() {
+  async  discardProduct() {
     // console.log('need discard');
     if (this.hasDraftProduct) {
       await this.variant.deleteProductVariations(this.hasDraftProduct);

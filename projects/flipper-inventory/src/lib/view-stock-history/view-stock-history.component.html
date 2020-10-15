@@ -4,10 +4,10 @@
     <table>
         <tr>
             <td>
-                 <mat-select class="select" [formControl]="variantList" placeholder="Choose Variation" (selectionChange)="updateList()" multiple>
+                 <!-- <mat-select class="select" [formControl]="variantList" placeholder="Choose Variation" (selectionChange)="updateList()" multiple>
                             <mat-option *ngFor="let variant of variants ; let i = index;" [value]="variant.id">
                               {{variant.name}}</mat-option>
-                          </mat-select>
+                          </mat-select> -->
             </td>
         </tr>
     </table>
@@ -35,7 +35,7 @@
     <ng-container matColumnDef="variation">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Variation</th>
         <td mat-cell *matCellDef="let element">
-            {{stockHsSvc.findVariant(element.variantId).name}}
+            {{data.variant.name}}
         </td>
       </ng-container>
   

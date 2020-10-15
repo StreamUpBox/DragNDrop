@@ -14,10 +14,20 @@ import { MatPaginator } from '@angular/material/paginator';
   styleUrls: ['./product-variants.component.css']
 })
 export class ProductVariantsComponent implements OnInit, OnDestroy {
-  @Input() product: Product;
+  
   @Input() displayedColumns = [];
   @Input() showPagination = false;
   @Input()  showColums = false;
+
+  @Input('allVariant')
+  set allVariant(allVariant: Variant[]) {
+
+    this.loading = true;
+    this.loadAllVariants=allVariant;
+  }
+
+ 
+
   dataSource: MatTableDataSource<Variant>;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -30,10 +40,8 @@ export class ProductVariantsComponent implements OnInit, OnDestroy {
    }
 
    ngOnInit() {
-    this.refresh();
-    if (this.product) {
-      this.subscription = this.variant.variantsSubject.subscribe((loadAllVariants) => this.loadAllVariants = loadAllVariants);
-   }
+    // this.refresh();
+  
 
   }
 
@@ -41,12 +49,9 @@ export class ProductVariantsComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  refresh() {
+  async refresh() {
     this.loading = true;
-
-    if (this.product) {
-      this.variant.loadAllVariants(this.product).subscribe();
-    }
+    this.loadAllVariants=await this.allVariant;
   }
 
   set loadAllVariants(variants: Variant[]) {

@@ -20,19 +20,11 @@ export class ViewStockHistoryComponent implements OnInit, OnDestroy {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public stockHsSvc: StockHistoryService) {
     this.dataSource = new MatTableDataSource([]);
-    if (data.isArray) {
-      this.data.variant.forEach(v => {
-        this.variantIds.push(`'${v.id}'`);
-        this.variants.push(v as Variant);
-      });
-    } else {
-      this.variants.push(this.data.variant);
-      this.variantIds.push(`'${this.data.variant.id}'`);
-    }
-    this.variantList.setValue(this.variantIds);
+
   }
 
   set loadAllStockHistory(variants: StockHistory[]) {
+  
     this.dataSource = new MatTableDataSource(variants);
     this.dataSource.sort = this.sort;
 
@@ -49,8 +41,7 @@ export class ViewStockHistoryComponent implements OnInit, OnDestroy {
   loading = true;
   dataSource: MatTableDataSource<StockHistory>;
   variantList = new FormControl();
-  variantIds: string[] = [];
-  variants: Variant[] = [];
+  
 
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
     if (event.key === 'Esc') {
@@ -70,22 +61,15 @@ export class ViewStockHistoryComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  updateList() {
-    const arry = [];
-    this.variantList.value.forEach(element => {
-      arry.push(`'${element}'`);
-    });
-    this.variantList.setValue(arry);
-    this.refresh();
-  }
-  refresh() {
+
+  async refresh() {
     this.loading = true;
-    if (this.variantList.value) {
+    if (this.data.variant.id) {
 
-      this.stockHsSvc.loadAllStockHistory(this.variantList.value).subscribe();
+      await this.stockHsSvc.loadAllStockHistories(this.data.variant.id);
+      this.loadAllStockHistory= await this.stockHsSvc.stockHistories;
     }
-    this.subscription = this.stockHsSvc.variantsSubject.subscribe((loadAllStockHistory) => this.loadAllStockHistory = loadAllStockHistory);
-
+    
   }
 
 }

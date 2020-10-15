@@ -8,6 +8,7 @@ import { StockService } from '../services/stock.service';
 })
 export class StockHistoryService {
   variantsSubject: BehaviorSubject<StockHistory[]>;
+  stockHistories:StockHistory[]=[];
   private readonly variantsMap = new Map<string, StockHistory>();
   constructor(private stockSvc: StockService,
               private database: PouchDBService,
@@ -16,14 +17,26 @@ export class StockHistoryService {
   }
 
 
-  public loadAllStockHistory(variantIds: string[]): Observable<StockHistory[]> {
-    const data: StockHistory[] = [];
-    this.stockSvc.productStockHistory(variantIds).forEach(d => data.push(d as StockHistory));
-    this.variantsSubject.next(this.database.unique(data, 'createdAt'));
-    this.variantsMap.clear();
-    data.forEach(variant => this.variantsMap.set(variant.id as any, variant));
-    return of(data);
-  }
+ 
+
+  public  async loadAllStockHistories(variantIds){
+    
+    await  this.stockHistoriesList(variantIds);
+      
+   
+   }
+   public async stockHistoriesList(variantIds){
+     return await this.database.query(['table','variantId'], {
+       table: { $eq: 'stockHistories' },
+       variantId: { $eq: variantIds }
+     }).then(res => {
+       if (res.docs && res.docs.length > 0) {
+           this.stockHistories= res.docs as StockHistory[];
+       } else {
+         this.stockHistories= [] as StockHistory[];
+       }
+   });
+   }
 
   public host(id: string): StockHistory | undefined {
     return this.variantsMap.get(id);

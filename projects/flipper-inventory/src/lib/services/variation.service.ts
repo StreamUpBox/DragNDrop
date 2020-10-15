@@ -339,7 +339,7 @@ async updateStockControl(result: any, variant: Variant) {
 }
 
   public openStockHistoryDialog(variant: any= null, isArray= false): any {
-    return this.dialog.open(ViewStockHistoryComponent, DialogSize.SIZE_LG, {variant, isArray}).subscribe();
+    return this.dialog.open(ViewStockHistoryComponent, DialogSize.SIZE_LG, {variant, isArray});
   }
 
   public openPrintBarcodeLablesDialog(product,allVariants): any {

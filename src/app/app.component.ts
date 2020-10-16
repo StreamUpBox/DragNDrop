@@ -34,34 +34,52 @@ export class AppComponent {
     this.setCurrentOrder = value;
   }
   public branch: Branch | null;
-
+  defaultBusiness$: Business = null;
+  public defaultBranch:Branch=null;
+ 
+  public currency=null;
   constructor(private model: MainModelService,
               private database: PouchDBService,
               private query: ModelService, private totalPipe: CalculateTotalClassPipe) {
       this.branch = this.model.active<Branch>(Tables.branch);
       this.database.connect(PouchConfig.bucket);
+      if (PouchConfig.canSync) {
+        this.database.sync(PouchConfig.syncUrl);
+      }
       this.init();
   }
-  defaultBranch: Branch = this.model.active<Branch>(Tables.branch);
+
   public variants: Variant[] = [];
   private seTheVariantFiltered: Variant[] = [];
   public collectCashCompleted: object = {};
 
-  public currency = this.model.active<Business>(Tables.business) ? this.model.active<Business>(Tables.business).currency : 'RWF';
+ 
   private setCurrentOrder: Order;
 
   date = new Date();
 
-  init() {
+  async init() {
+    await this.currentBusiness();
+    await this.currentBranches();
     this.hasDraftOrder();
     this.newOrder();
     // this.loadVariants();
     if (this.currentOrder) {
       this.getOrderDetails(this.currentOrder.id);
     }
-    if (PouchConfig.canSync) {
-      this.database.sync(PouchConfig.syncUrl);
-    }
+   
+     this.currency = await this.defaultBusiness$  ? this.defaultBusiness$ .currency : 'RWF';
+  }
+  
+  public currentBusiness() {
+    return this.database.currentBusiness().then(business => {
+      this.defaultBusiness$ = business;
+    });
+  }
+  currentBranches() {
+    return this.database.listBusinessBranches().then(branches => {
+      this.defaultBranch = branches.length > 0?branches[0]:0;
+    });
   }
 
   makeid(length: number) {
@@ -78,10 +96,9 @@ export class AppComponent {
     return this.makeid(5);
   }
 
-  public newOrder() {
+  public async newOrder() {
     if (!this.setCurrentOrder) {
-
-      this.model.create<Order>(Tables.order, {
+      const formOrder:Order={
         id: this.database.uid(),
         reference: 'SO' + this.generateCode(),
         orderNumber: 'SO' + this.generateCode(),
@@ -94,22 +111,39 @@ export class AppComponent {
         subTotal: 0.00,
         cashReceived: 0.00,
         customerChangeDue: 0.00,
+        table: 'orders',
         createdAt: this.date,
         updatedAt: this.date
-      });
+      };
+
+      await this.database.put(PouchConfig.Tables.orders + '_' + formOrder.id, formOrder);
       this.hasDraftOrder();
 
     }
   }
 
-  hasDraftOrder(): void {
-    this.setCurrentOrder = this.model.draft<Order>(Tables.order, 'isDraft');
-    if (this.setCurrentOrder) {
+  async hasDraftOrder() {
+    await this.draftOrder(this.defaultBranch ? this.defaultBranch.id : 0) ;
+    if  (await this.setCurrentOrder) {
       const orderDetails: OrderDetails[] = this.getOrderDetails(this.setCurrentOrder.id);
       this.setCurrentOrder.orderItems = orderDetails;
     }
   }
-
+  public async draftOrder(branchId) {
+    // comment
+   
+    return await this.database.query(['table','isDraft','branchId'], {
+      table: { $eq: 'orders' },
+      isDraft:{ $eq: true },
+      branchId: { $eq: branchId }
+    }).then(res => {
+      if (res.docs && res.docs.length > 0) {
+        this.setCurrentOrder = res.docs[0] as Order;
+      } else {
+        this.setCurrentOrder=null;
+      }
+  });
+}
   getOrderDetails(orderId: number): OrderDetails[] {
     const orderDetails: OrderDetails[] = [];
     this.model.filters<OrderDetails>(Tables.orderDetails, 'orderId', orderId)

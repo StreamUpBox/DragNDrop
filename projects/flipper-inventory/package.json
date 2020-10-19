@@ -2,10 +2,9 @@
   "name": "flipper-inventory",
   "version": "1.0.5",
   "peerDependencies": {
-    "@angular/common": "^9.1.6",
-    "@angular/core": "^9.1.6"
-  }
-,
+    "@angular/common": "~10.0.11",
+    "@angular/core": "~10.0.11"
+  },
   "dependencies": {
     "tslib": "^2.0.0"
   }

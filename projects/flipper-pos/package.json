@@ -2,15 +2,16 @@
 "name": "flipper-pos",
   "version": "1.0.7",
   "peerDependencies": {
-    "@angular/common": "^9.1.6",
-    "@angular/core": "^9.1.6"
+    "@angular/common": "~10.0.11",
+    "@angular/core": "~10.0.11"
   },
   "keywords": [
     "Material",
     "flexLayout"
   ],
   "author": "Yegobox Team",
-  "license": "ISC",
+  "license": "ISC"
+,
   "dependencies": {
     "tslib": "^2.0.0"
   }

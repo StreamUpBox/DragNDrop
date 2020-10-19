@@ -2,9 +2,8 @@
   "name": "@enexus/flipper-menu",
   "version": "0.0.23",
   "peerDependencies": {
-    
-    "@angular/common": "^8.2.9",
-    "@angular/core": "^8.2.9"
+    "@angular/common": "~10.0.11",
+    "@angular/core": "~10.0.11"
   },
   "main": "bundles/flipper-menu.umd.js",
   "module": "fesm5/flipper-menu.js",

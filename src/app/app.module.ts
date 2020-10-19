@@ -16,7 +16,7 @@ import { MigrationModule } from './migration/migration.module';
 import { FlipperInventoryModule } from '@enexus/flipper-inventory';
 import { FlipperOfflineDatabaseModule } from '@enexus/flipper-offline-database';
 
-// import { FlipperPosModule } from '@enexus/flipper-pos';
+import { FlipperPosModule } from '@enexus/flipper-pos';
 // import { FlipperSettingsModule } from '@enexus/flipper-settings';
 
 // import { MigrationModule } from './migration/migration.module';
@@ -40,7 +40,7 @@ import { FlipperOfflineDatabaseModule } from '@enexus/flipper-offline-database';
     // FlipperDashboardModule,
     // FlipperEventModule,
     FlipperComponentsModule,
-    // FlipperPosModule,
+    FlipperPosModule,
     BrowserAnimationsModule,
     FlipperOfflineDatabaseModule,
     FlipperInventoryModule,

@@ -1,4 +1,18 @@
 
+<div @insertPos>
+  <flipper-basic-pos
+  [currentOrder]="currentOrder"
+  [collectCashCompleted]="collectCashCompleted"
+  [currency]="currency"
+  (addToCartEmit)="addToCart($event)"
+  [foundVariant]="theVariantFiltered"
+  (searchEmitValue)="iWantToSearchVariant($event)"
+  (saveOrderUpdatedEmit)="saveOrderUpdated($event)"
+  (updateOrderDetailsEmit)="updateOrderDetails($event)"
+  (didCollectCashEmit)="didCollectCash($event)">
+  </flipper-basic-pos>
+
+</div>
 
 <!-- <div >
   <flipper-basic-pos
@@ -27,7 +41,7 @@
   </section> -->
 
    
-   <router-outlet #outlet="outlet">
+   <!-- <router-outlet #outlet="outlet"> -->
     <!-- <flipper-products></flipper-products> -->
    <!-- </router-outlet> -->
   <!-- <flipper-products></flipper-products> -->

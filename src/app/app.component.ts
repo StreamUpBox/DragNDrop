@@ -61,14 +61,15 @@ export class AppComponent {
   async init() {
     await this.currentBusiness();
     await this.currentBranches();
-    this.hasDraftOrder();
-    this.newOrder();
+    await this.hasDraftOrder();
+    await this.newOrder();
     // this.loadVariants();
     if (this.currentOrder) {
-      this.getOrderDetails(this.currentOrder.id);
+     await  this.getOrderDetails(this.currentOrder.id);
     }
    
      this.currency = await this.defaultBusiness$  ? this.defaultBusiness$ .currency : 'RWF';
+ 
   }
   
   public currentBusiness() {
@@ -168,7 +169,9 @@ export class AppComponent {
 
         orderDetails.unshift(details);
       });
+
     return orderDetails;
+    
   }
 
 

@@ -10,3 +10,4 @@ export * from './lib/common/autocomplete/autocomplete.component';
 export * from './lib/common/shopping-lists/shopping-lists.component';
 export * from './lib/common/basic-shopping-list/basic-shopping-list.component';
 export * from './lib/common/calculator/calculator.component';
+export * from './lib/common/search-box/search-box.component';

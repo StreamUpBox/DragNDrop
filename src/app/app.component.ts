@@ -532,5 +532,3 @@ let variantsArray:Variant[]=[];
   }
 
 }
-
-

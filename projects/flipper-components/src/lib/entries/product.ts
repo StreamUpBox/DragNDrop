@@ -5,7 +5,7 @@ export class Product {
   name: string;
   description?: string;
   picture?: string;
-
+  // FIXME(ganza): each model or document should have channels[userId] to authenticate the data
   branchId?: any;
   businessId?: any;
   supplierId?: any;

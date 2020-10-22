@@ -8,6 +8,7 @@ export class Receipt {
   color?: string;
   address1?: string;
   address2?: string;
+  // FIXME(ganza): each model or document should have channels[userId] to authenticate the data
   showItemNote?: boolean;
   city?: string;
   customerText?: string;

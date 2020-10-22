@@ -17,7 +17,8 @@ export class Variant {
   isActive?: boolean;
   priceVariant?: PriceVariant;
   stock?: Stock;
-  product?: Product;
+  // FIXME(ganza): each model or document should have channels[userId] to authenticate the data
+  product?: Product; 
   markup?: any;
   syncedOnline?: boolean;
   createdAt?: any;

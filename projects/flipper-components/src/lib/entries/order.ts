@@ -9,6 +9,7 @@ export class Order {
     customerId?: any;
     status?: string;
     reference?: string;
+    // FIXME(ganza): each model or document should have channels[userId] to authenticate the data
     orderType?: string;
     supplierId?: string;
     subTotal?: any;

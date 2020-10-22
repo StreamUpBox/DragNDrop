@@ -162,9 +162,11 @@ export class AppComponent {
 }
 
 public async productTax(taxId) {
-  // comment
+  
  
   return await this.database.query(['table','id'], {
+    // refer to the official database structure here: https://docs.google.com/document/d/1iRxyZMV5obi95z9eN51AJT6aWd0FJRZMGq74Ps7Pj_E/edit?usp=sharing
+    // TODO(ganza): table should be 'taxes_'; //+businessId (append the business id) this will help us to not mix the data
     table: { $eq: 'taxes' },
     id: { $eq: taxId }
   }).then(res => {
@@ -177,8 +179,8 @@ public async productTax(taxId) {
 }
 
 public async allOrderDetails(orderId) {
-  // comment
- 
+  // refer to the official database structure here: https://docs.google.com/document/d/1iRxyZMV5obi95z9eN51AJT6aWd0FJRZMGq74Ps7Pj_E/edit?usp=sharing
+ // TODO(ganza): table should be 'orderDetails_'; //+branchId (append the business id) this will help us to not mix the data
   return await this.database.query(['table','orderId'], {
     table: { $eq: 'orderDetails' },
     orderId: { $eq: orderId }
@@ -415,7 +417,7 @@ let variantsArray:Variant[]=[];
       createdAt: this.date,
       updatedAt: this.date
     };
-
+    // FIXME(ganza): order should of branch here it should be PouchConfig.Tables.orderDetails+'_'+branchId so the order can be synced on devices with same branch
     this.database.put(PouchConfig.Tables.orderDetails+'_'+orderDetails.id, orderDetails);
     await this.allOrderDetails(this.currentOrder.id);
     this.setCurrentOrder.orderItems = this.getOrderDetails();

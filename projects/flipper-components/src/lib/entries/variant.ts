@@ -24,6 +24,9 @@ export class Variant {
   updatedAt?: any;
   table?:string;
   docId?:string;
+  chanels?:any;
+  chanel?:any;
+  userId?: any;
   
     constructor(params: object = {}) {
         for (const name in params) {

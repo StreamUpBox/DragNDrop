@@ -3,6 +3,8 @@
     id?: any;
     name?: string;
     sku?: string;
+    chanels?:any;
+    chanel?:any;
 
 
   constructor(params: object = {}) {

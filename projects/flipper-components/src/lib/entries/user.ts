@@ -6,6 +6,7 @@ export class User {
   active?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
+  // FIXME(ganza): each model or document should have channels[userId] to authenticate the data
   table?:string;
   docId?:string;
   

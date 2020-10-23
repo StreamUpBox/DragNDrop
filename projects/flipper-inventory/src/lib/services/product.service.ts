@@ -179,7 +179,7 @@ return this.database.query(['table', 'productId'], {
         createdAt: new Date(),
         updatedAt: new Date(),
         userId: this.defaultBusiness$.userId,
-        chanels:[this.defaultBusiness$.userId],
+        channels:[this.defaultBusiness$.userId],
       };
 
       await this.database.put(PouchConfig.Tables.products + '_' + formProduct.id, formProduct);

@@ -11,8 +11,9 @@ export class Price {
   updatedAt?: any;
   table?:string;
   docId?:string;
-  chanels?:any;
-  chanel?:any;
+  channels:Array<any>;
+  channel?:any;
+
   constructor(params: object = {}) {
     for (const name in params) {
       this[name] = params[name];

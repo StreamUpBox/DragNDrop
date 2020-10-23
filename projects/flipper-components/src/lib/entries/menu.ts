@@ -7,8 +7,8 @@ export class Menu {
   isSetting?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
-  chanels?:any;
-  chanel?:any;
+  channels:Array<any>;
+  channel?:any;
   constructor(params: object = {}) {
     for (const name in params) {
       this[name] = params[name];

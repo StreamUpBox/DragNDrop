@@ -18,8 +18,7 @@ export class AddVariantComponent implements OnInit {
     public dialogRef: MatDialogRef<AddVariantComponent>,
     private database: PouchDBService,
     private formBuilder: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
-  }
+    @Inject(MAT_DIALOG_DATA) public data: any) {}
   isFocused = '';
   submitted = false;
   form: FormGroup;
@@ -73,10 +72,11 @@ export class AddVariantComponent implements OnInit {
       isActive: false,
       createdAt: new Date(),
       updatedAt: new Date(),
-      chanels:[this.data.product.userId],
+      channels:[this.data.product.userId],
       userId: this.data.product.userId,
       table:'variants',
     };
+
     await this.database.put(PouchConfig.Tables.variants+'_'+formData.id, formData);
   
       this.variant.createVariantStock(formData,this.variant.branches$);

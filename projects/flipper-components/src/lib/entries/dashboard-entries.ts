@@ -24,8 +24,8 @@ export class Total {
   since?: string;
   table?:string;
   docId?:string;
-  chanels?:any;
-  chanel?:any;
+  channels:Array<any>;
+  channel:any
 
   constructor(params: object = {}) {
     for (const name in params) {
@@ -43,8 +43,8 @@ export class Items {
   total?: number;
  table?:string;
  docId?:string;
- chanels?:any;
- chanel?:any;
+ channels:Array<any>;
+ channel?:any;
 
   constructor(params: object = {}) {
     for (const name in params) {

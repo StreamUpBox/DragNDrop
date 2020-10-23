@@ -166,6 +166,7 @@ if(this.activeUser.currentUser){
       createdAt: new Date(),
       updatedAt: new Date(),
       table:'businesses',
+      channels:[this.activeUser.currentUser ? this.activeUser.currentUser.id : 0],
       docId:PouchConfig.Tables.business
     };
 
@@ -187,6 +188,7 @@ if(this.activeUser.currentUser){
       mapLongitude: this.origin.longitude,
       businessId: this.registerForm.value.id,
       table:'branches',
+      channels:[this.activeUser.currentUser ? this.activeUser.currentUser.id : 0],
       docId:PouchConfig.Tables.branches
 
     };
@@ -204,6 +206,7 @@ if(this.activeUser.currentUser){
       createdAt: new Date(),
       updatedAt: new Date(),
       table:'taxes',
+      channels:[this.activeUser.currentUser ? this.activeUser.currentUser.id : 0],
       docId:PouchConfig.Tables.taxes
     }
 
@@ -222,6 +225,7 @@ if(this.activeUser.currentUser){
       createdAt: new Date(),
       updatedAt: new Date(),
       table:'taxes',
+      channels:[this.activeUser.currentUser ? this.activeUser.currentUser.id : 0],
       docId:PouchConfig.Tables.taxes
     };
     this.database.put(PouchConfig.Tables.taxes+'_'+formTaxes1.id, formTaxes1);

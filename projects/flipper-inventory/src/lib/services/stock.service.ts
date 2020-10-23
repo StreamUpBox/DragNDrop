@@ -232,7 +232,7 @@ export class StockService {
           createdAt: new Date(),
           updatedAt: new Date(),
           table:'stocks',
-          chanels:[formData.userId],
+          channels:[formData.userId],
         });
         
       });

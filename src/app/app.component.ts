@@ -131,7 +131,7 @@ export class AppComponent implements OnInit {
                 cashReceived: 0.00,
                 customerChangeDue: 0.00,
                 table: 'orders',
-                chanels:[this.defaultBusiness$.userId],
+                channels:[this.defaultBusiness$.userId],
                 createdAt: this.date,
                 updatedAt: this.date
           };
@@ -287,7 +287,8 @@ let variantsArray:Variant[]=[];
             supplyPrice: stock && stock.supplyPrice ? stock.supplyPrice : 0.00,
             wholeSalePrice: stock && stock.wholeSalePrice ? stock.wholeSalePrice : 0.00,
             discount: 0,
-            markup: 0
+            markup: 0,
+            channels:[variant.userId]
           };
 
           if (stock.canTrackingStock===false) {
@@ -422,7 +423,7 @@ let variantsArray:Variant[]=[];
       table:'orderDetails',
       createdAt: this.date,
       updatedAt: this.date,
-      chanels:[this.defaultBusiness$.userId]
+      channels:[this.defaultBusiness$.userId]
     };
 
     this.database.put(PouchConfig.Tables.orderDetails +'_'+ orderDetails.id, orderDetails);
@@ -466,7 +467,7 @@ let variantsArray:Variant[]=[];
         variantId: details.variantId?details.variantId:'',
         variantName: details.variantName?details.variantName:'Custom',
         note:'',
-        chanels:[this.defaultBusiness$.userId],
+        channels:[this.defaultBusiness$.userId],
       }
        await  this.database.put(PouchConfig.Tables.orderDetails+ '_' +  odetails.id,odetails);
       });

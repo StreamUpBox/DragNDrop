@@ -29,8 +29,8 @@ export class Product {
   updatedAt?: any;
   table?:string;
   docId?:string;
-  chanels?:any;
-  chanel?:any;
+  channels:Array<any>;
+  channel?:any;
   userId?: any;
 
   constructor(params: object = {}) {

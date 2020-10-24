@@ -3,6 +3,7 @@ export class Types {
   name?: string;
   syncedOnline?: boolean;
   table?:string;
+  // FIXME(ganza): each model or document should have channels[userId] to authenticate the data
   docId?:string;
   channels:Array<any>;
   channel?:any;

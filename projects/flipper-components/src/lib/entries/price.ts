@@ -4,6 +4,7 @@ export class Price {
   branchId?: any;
   groupId?: any;
   validFrom?: any;
+  // FIXME(ganza): each model or document should have channels[userId] to authenticate the data
   validTo?: any;
   isDefault?: boolean;
   syncedOnline?: boolean;

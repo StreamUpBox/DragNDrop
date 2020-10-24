@@ -5,6 +5,7 @@ export class Reason {
   active?: boolean;
   syncedOnline?: boolean;
   createdAt?: Date;
+  // FIXME(ganza): each model or document should have channels[userId] to authenticate the data
   updatedAt?: Date;
   table?:string;
   docId?:string;

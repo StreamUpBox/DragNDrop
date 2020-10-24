@@ -25,7 +25,7 @@ export class Variant {
   updatedAt?: any;
   table?:string;
   docId?:string;
-  channels:Array<any>;
+  channels:Array<string>;
   channel?:any;
   userId?: any;
   

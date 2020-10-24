@@ -8,7 +8,7 @@ export class Device {
   updatedAt?: Date;
   table?:string;
   docId?:string;
-  channels:Array<any>;
+  channels:Array<string>;
   channel?:any;
 
   constructor(params: object = {}) {

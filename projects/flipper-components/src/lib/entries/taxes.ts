@@ -11,7 +11,7 @@ export class Taxes {
   updatedAt?: Date;
   table?:string;
   docId?:string;
-  channels:Array<any>;
+  channels:Array<string>;
   channel?:any;
   
   constructor(params: object = {}) {

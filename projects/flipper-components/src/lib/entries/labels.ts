@@ -3,7 +3,7 @@
     id?: any;
     name?: string;
     sku?: string;
-    channels:Array<any>;
+    channels:Array<string>;
     channel?:any;
 
 

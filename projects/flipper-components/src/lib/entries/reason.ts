@@ -9,7 +9,7 @@ export class Reason {
   updatedAt?: Date;
   table?:string;
   docId?:string;
-  channels:Array<any>;
+  channels:Array<string>;
   channel?:any;
   
   constructor(params: object = {}) {

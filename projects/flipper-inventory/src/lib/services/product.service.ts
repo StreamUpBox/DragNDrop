@@ -177,7 +177,9 @@ return this.database.query(['table', 'productId'], {
         picture: '/assets/icons/add-image-placeholder.png',
         isCurrentUpdate: false,
         createdAt: new Date(),
-        updatedAt: new Date()
+        updatedAt: new Date(),
+        userId: this.defaultBusiness$.userId,
+        channels:[this.defaultBusiness$.userId],
       };
 
       await this.database.put(PouchConfig.Tables.products + '_' + formProduct.id, formProduct);

@@ -17,9 +17,7 @@ export class StockService {
   stockHistories: StockHistory[];
   
 
-
-  constructor(private query: ModelService,
-              private model: MainModelService,
+  constructor(
               private setting: SettingsService,
               private database: PouchDBService) { }
 
@@ -36,7 +34,6 @@ export class StockService {
  
  allStocks(){
   return this.database.query(['table'], {
-    // FIXME(ganza): table should append branchId see flipperDatabase google document
     table: { $eq: 'stocks' }
   }).then(res => {
           if (res.docs && res.docs.length > 0) {
@@ -235,6 +232,7 @@ export class StockService {
           createdAt: new Date(),
           updatedAt: new Date(),
           table:'stocks',
+          channels:[formData.userId],
         });
         
       });

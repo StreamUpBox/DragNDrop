@@ -21,6 +21,9 @@ export class Stock {
   updatedAt?: any;
   table?:string;
   docId?:string;
+  channels:Array<any>;
+  channel?:any;
+  userId?: any;
   
   constructor(params: object = {}) {
     for (const name in params) {

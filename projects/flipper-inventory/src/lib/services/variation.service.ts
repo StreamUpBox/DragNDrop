@@ -171,6 +171,8 @@ export class VariationService {
         isActive: true,
         createdAt: new Date(),
         updatedAt: new Date(),
+        channels:[product.userId],
+        userId: product.userId,
         table:'variants',
       
       };
@@ -291,6 +293,7 @@ async updateStockControl(result: any, variant: Variant) {
             quantity: res.currentStock,
             note: res.reason,
             table:'stockHistories',
+            channels:[variant.userId],
             createdAt: new Date(),
             updatedAt: new Date(),
           });

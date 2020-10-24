@@ -3,6 +3,8 @@
     id?: any;
     name?: string;
     sku?: string;
+    channels:Array<any>;
+    channel?:any;
 
 
   constructor(params: object = {}) {

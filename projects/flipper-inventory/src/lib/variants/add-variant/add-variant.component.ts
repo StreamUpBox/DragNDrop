@@ -12,14 +12,13 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
   styleUrls: ['../../create-product/create-product.component.css', './add-variant.component.css']
 })
 export class AddVariantComponent implements OnInit {
-  constructor(private stock: StockService,
+  constructor(
     protected notificationSvc: NotificationService,
     public variant: VariationService,
     public dialogRef: MatDialogRef<AddVariantComponent>,
     private database: PouchDBService,
     private formBuilder: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
-  }
+    @Inject(MAT_DIALOG_DATA) public data: any) {}
   isFocused = '';
   submitted = false;
   form: FormGroup;
@@ -73,9 +72,11 @@ export class AddVariantComponent implements OnInit {
       isActive: false,
       createdAt: new Date(),
       updatedAt: new Date(),
+      channels:[this.data.product.userId],
+      userId: this.data.product.userId,
       table:'variants',
     };
-    console.log('here ganza',formData);
+
     await this.database.put(PouchConfig.Tables.variants+'_'+formData.id, formData);
   
       this.variant.createVariantStock(formData,this.variant.branches$);

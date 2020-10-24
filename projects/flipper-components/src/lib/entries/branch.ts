@@ -10,7 +10,8 @@ export class Branch {
   updatedAt?: Date;
   table?:string;
   docId?:string;
-
+  channels:Array<any>;
+  channel?:any;
   constructor(params: object = {}) {
     for (const name in params) {
       this[name] = params[name];

@@ -8,6 +8,8 @@ export class Menu {
   // FIXME(ganza): each model or document should have channels[userId] to authenticate the data
   createdAt?: Date;
   updatedAt?: Date;
+  channels:Array<any>;
+  channel?:any;
   constructor(params: object = {}) {
     for (const name in params) {
       this[name] = params[name];

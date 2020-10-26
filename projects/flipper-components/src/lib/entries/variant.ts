@@ -26,8 +26,10 @@ export class Variant {
   table:string;
   docId?:string;
   channels:Array<string>;
+
   channel?:string;
   userId?: string;
+
   
     constructor(params: object = {}) {
         for (const name in params) {

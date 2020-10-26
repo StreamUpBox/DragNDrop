@@ -2,11 +2,11 @@ import { OrderDetails } from './order-details';
 import { Branch } from './branch';
 
 export class Order {
-    id?: any;
+    id?: string;
     userId?: any;
-    branchId: any;
-    orderNumber: any;
-    customerId?: any;
+    branchId: string;
+    orderNumber: string;
+    customerId?: string;
     status?: string;
     reference?: string;
     // FIXME(ganza): each model or document should have channels[userId] to authenticate the data
@@ -35,8 +35,8 @@ export class Order {
     updatedAt?: Date;
     table?:string;
     docId?:string;
-    channels:Array<any>;
-    channel?:any;
+    channels:Array<string>;
+    channel?:string;
 
     constructor(params: object = {}) {
         for (const name in params) {

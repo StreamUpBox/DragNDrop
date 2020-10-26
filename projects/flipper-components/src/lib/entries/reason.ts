@@ -9,8 +9,8 @@ export class Reason {
   updatedAt?: Date;
   table?:string;
   docId?:string;
-  channels:Array<any>;
-  channel?:any;
+  channels:Array<string>;
+  channel?:string;
   
   constructor(params: object = {}) {
     for (const name in params) {

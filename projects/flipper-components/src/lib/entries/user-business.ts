@@ -7,8 +7,8 @@ export class UserBusiness {
   permissions?: any;
   table?:string;
   docId?:string;
-  channels:Array<any>;
-  channel?:any;
+  channels:Array<string>;
+  channel?:string;
 
   constructor(params: object = {}) {
     for (const name in params) {

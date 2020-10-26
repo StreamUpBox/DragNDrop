@@ -4,8 +4,8 @@ export class Device {
   branchId?: any;
   token?: string;
   syncedOnline?: boolean;
-  createdAt?: Date;
-  updatedAt?: Date;
+  createdAt: Date;
+  updatedAt: Date;
   table?:string;
   docId?:string;
   channels:Array<any>;

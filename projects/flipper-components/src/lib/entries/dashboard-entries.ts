@@ -36,7 +36,7 @@ export class Total {
 
 
 export class Items {
-  id?: number;
+  id: string;
   name?: string;
   updatedAt?: any;
   items?: number;

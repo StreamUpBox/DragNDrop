@@ -1,13 +1,13 @@
 export class User {
-  id?: any;
-  name?: string;
-  email?: string;
+  id: any;
+  name: string;
+  email: string;
   token?: string;
   active?: boolean;
-  createdAt?: Date;
-  updatedAt?: Date;
+  createdAt: Date;
+  updatedAt: Date;
   // FIXME(ganza): each model or document should have channels[userId] to authenticate the data
-  table?:string;
+  table:string;
   docId?:string;
   channels:Array<string>;
   channel?:string;

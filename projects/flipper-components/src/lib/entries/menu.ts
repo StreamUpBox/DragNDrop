@@ -6,8 +6,8 @@ export class Menu {
   active?: boolean;
   isSetting?: boolean;
   // FIXME(ganza): each model or document should have channels[userId] to authenticate the data
-  createdAt?: Date;
-  updatedAt?: Date;
+  createdAt: Date;
+  updatedAt: Date;
   channels:Array<string>;
   channel?:string;
   constructor(params: object = {}) {

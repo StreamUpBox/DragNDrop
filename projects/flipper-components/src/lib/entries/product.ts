@@ -1,7 +1,7 @@
 import { Variant } from './variant';
 
 export class Product {
-  id?: any;
+  id: string;
   name: string;
   description?: string;
   picture?: string;
@@ -25,9 +25,9 @@ export class Product {
   color?: string;
   syncedOnline?: boolean;
   isCurrentUpdate?: boolean;
-  createdAt?: any;
-  updatedAt?: any;
-  table?:string;
+  createdAt: Date;
+  updatedAt: Date;
+  table:string;
   docId?:string;
   channels:Array<string>;
   channel?:string;

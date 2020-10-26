@@ -1,9 +1,9 @@
 export class StockHistory {
-  id?: any;
-  orderId?: any;
-  variantId?: any;
+  id: string;
+  orderId?: string;
+  variantId?: string;
   variantName?: string;
-  productId?: any;
+  productId?: string;
   stockId?: any;
   reason?: string;
   quantity: any;
@@ -12,9 +12,9 @@ export class StockHistory {
   isPreviously?: boolean;
   syncedOnline?: boolean;
   note?: string;
-  createdAt?: any;
-  updatedAt?: any;
-  table?:string;
+  createdAt: Date;
+  updatedAt: Date;
+  table:string;
   docId?:string;
   channels:Array<string>;
   channel?:string;

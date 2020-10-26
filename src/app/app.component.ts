@@ -340,7 +340,7 @@ let variantsArray:Variant[]=[];
 
   async updateOrderDetails(details: { action: string, item: OrderDetails }) {
 
-    console.log(details);
+      console.log(details);
 
         if (details.action === 'DELETE') {
             await  this.database.remove(details.item);
@@ -356,6 +356,7 @@ let variantsArray:Variant[]=[];
 
             details.item.taxAmount = (subTotal * taxRate) / 100;
             details.item.subTotal = subTotal;
+            
             await this.database.put(PouchConfig.Tables.orderDetails+'_'+details.item.id, details.item);
 
         }

@@ -2,7 +2,7 @@ import { OrderDetails } from './order-details';
 import { Branch } from './branch';
 
 export class Order {
-    id?: string;
+    id: string;
     userId?: any;
     branchId: string;
     orderNumber: string;
@@ -31,9 +31,9 @@ export class Order {
     syncedOnline?: boolean;
     branch?: Branch;
     orderDate?: Date;
-    createdAt?: Date;
-    updatedAt?: Date;
-    table?:string;
+    createdAt: Date;
+     updatedAt: Date;
+    table:string;
     docId?:string;
     channels:Array<string>;
     channel?:string;

@@ -1,12 +1,12 @@
 export class BranchProducts {
-  id?: any;
-  branchId?: any;
-  productId?: any;
+  id: string;
+  branchId: string;
+  productId: string;
   syncedOnline?: boolean;
-  table?:string;
+  table:string;
   docId?:string;
-  channels:Array<any>;
-  channel?:any;
+  channels:Array<string>;
+  channel?:string;
   constructor(params: object = {}) {
     for (const name in params) {
       this[name] = params[name];

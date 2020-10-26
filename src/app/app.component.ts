@@ -339,26 +339,32 @@ let variantsArray:Variant[]=[];
   }
 
   async updateOrderDetails(details: { action: string, item: OrderDetails }) {
-    if (details.action === 'DELETE') {
-      await  this.database.remove(details.item);
-    }
 
-    if (details.action === 'UPDATE') {
-      details.item.price = parseFloat(details.item.price);
-      details.item.quantity = details.item.quantity;
+    console.log(details);
 
-      const taxRate=details.item.taxRate?details.item.taxRate:0;
-      const subTotal=details.item.price * details.item.quantity;
+        if (details.action === 'DELETE') {
+            await  this.database.remove(details.item);
+        }
 
-      details.item.taxAmount = (subTotal * taxRate) / 100;
-      details.item.subTotal = subTotal;
-      await this.database.put(PouchConfig.Tables.orderDetails+'_'+details.item.id, details.item);
-    }
+        if (details.action === 'UPDATE') {
 
-    await this.updateOrder();
-    await this.allOrderDetails(this.currentOrder.id);
-    await  this.getOrderDetails();
-    await this.hasDraftOrder();
+            details.item.price = parseFloat(details.item.price);
+            details.item.quantity = details.item.quantity;
+
+            const taxRate=details.item.taxRate?details.item.taxRate:0;
+            const subTotal=details.item.price * details.item.quantity;
+
+            details.item.taxAmount = (subTotal * taxRate) / 100;
+            details.item.subTotal = subTotal;
+            await this.database.put(PouchConfig.Tables.orderDetails+'_'+details.item.id, details.item);
+
+        }
+
+      await this.updateOrder();
+      await this.allOrderDetails(this.currentOrder.id);
+      await  this.getOrderDetails();
+      await this.hasDraftOrder();
+
   }
 
   public  async updateOrder() {

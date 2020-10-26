@@ -1,5 +1,5 @@
 export class Menu {
-  id?: any;
+  id?: string;
   name?: string;
   icon?: string;
   route?: string;
@@ -9,7 +9,9 @@ export class Menu {
   createdAt?: Date;
   updatedAt?: Date;
   channels:Array<string>;
-  channel?:any;
+
+  channel?:string;
+
   constructor(params: object = {}) {
     for (const name in params) {
       this[name] = params[name];

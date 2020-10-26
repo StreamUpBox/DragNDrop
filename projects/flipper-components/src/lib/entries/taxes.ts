@@ -12,7 +12,9 @@ export class Taxes {
   table?:string;
   docId?:string;
   channels:Array<string>;
-  channel?:any;
+
+  channel?:string;
+
   
   constructor(params: object = {}) {
     for (const name in params) {

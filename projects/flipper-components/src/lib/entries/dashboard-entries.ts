@@ -24,7 +24,7 @@ export class Total {
   since?: string;
   table?:string;
   docId?:string;
-  channels:Array<any>;
+  channels:Array<string>;
   channel:any
 
   constructor(params: object = {}) {
@@ -43,7 +43,7 @@ export class Items {
   total?: number;
  table?:string;
  docId?:string;
- channels:Array<any>;
+ channels:Array<string>;
  channel?:any;
 
   constructor(params: object = {}) {

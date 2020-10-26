@@ -9,7 +9,9 @@ export class Menu {
   createdAt?: Date;
   updatedAt?: Date;
   channels:Array<string>;
+
   channel?:string;
+
   constructor(params: object = {}) {
     for (const name in params) {
       this[name] = params[name];

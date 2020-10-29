@@ -509,6 +509,8 @@ let variantsArray:Variant[]=[];
     }
 
   }
+
+  
    updateStock(stockDetails: OrderDetails) {
     let stockId = '';
     if (stockDetails.stockId && (stockDetails.stockId!==null || stockDetails.stockId!==undefined)) {

@@ -360,7 +360,7 @@ let variantsArray:Variant[]=[];
 
             details.item.taxAmount = (subTotal * taxRate) / 100;
             details.item.subTotal = subTotal;
-            
+
             await this.database.put(PouchConfig.Tables.orderDetails+'_'+details.item.id, details.item);
         }
       

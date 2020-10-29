@@ -12,4 +12,5 @@ export class BranchProducts {
       this[name] = params[name];
     }
   }
+  
 }

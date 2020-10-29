@@ -201,29 +201,7 @@ return this.database.query(['table', 'productId'], {
     localStorage.setItem('userIsCreatingAnItem', `${bol}`);
   }
 
-  loadBranches(): void {
-    let arr = [];
-    if (this.hasDraftProduct) {
-      arr = this.model.filters<BranchProducts>(Tables.branchProducts, 'productId', this.hasDraftProduct.id);
-      const branch: Branch = this.query.queries<Branch>(Tables.branch, `
-       active=${true} AND businessId='${this.model.active<Business>(Tables.business).id}' ORDER BY id DESC `)[0];
-      if (arr.length === 0) {
-        this.model.create<BranchProducts>(Tables.branchProducts, {
-          id: this.database.uid(),
-          productId: this.hasDraftProduct.id,
-          branchId: branch.id
-        });
-
-        this.branchList.setValue([branch.id]);
-
-      } else {
-        arr.forEach(el => arr.push(el.branchId));
-        this.branchList.setValue(arr);
-      }
-    }
-
-  }
-
+  
 
   updateBranch(): void {
 

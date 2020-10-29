@@ -3,9 +3,9 @@ import { trigger, transition, useAnimation } from '@angular/animations';
 import {
   fadeInAnimation, CalculateTotalClassPipe, Order,
   STATUS, ORDERTYPE, MainModelService, Branch, Tables, Stock,
-  Product, OrderDetails, Business, Taxes, PouchDBService, PouchConfig, Variant } from '@enexus/flipper-components';
+  Product, OrderDetails, Business, Taxes, PouchDBService, PouchConfig, Variant, PriceVariant, StockHistory } from '@enexus/flipper-components';
 import { ModelService } from '@enexus/flipper-offline-database';
-import { ProductService, StockService, VariationService } from '@enexus/flipper-inventory';
+import { ProductService, StockControl, StockService, VariationService } from '@enexus/flipper-inventory';
 
 @Component({
   selector: 'app-root',
@@ -86,7 +86,7 @@ export class AppComponent implements OnInit {
     }
    
      this.currency = await this.defaultBusiness$  ? this.defaultBusiness$ .currency : 'RWF';
- console.log('buness', this.defaultBusiness$);
+
   }
   
   public currentBusiness() {
@@ -116,12 +116,12 @@ export class AppComponent implements OnInit {
   }
 
   public async newOrder() {
-    if (!this.setCurrentOrder) {
+    if (!this.currentOrder) {
           const formOrder:Order={
                 id: this.database.uid(),
                 reference: 'SO' + this.generateCode(),
                 orderNumber: 'SO' + this.generateCode(),
-                branchId: this.defaultBranch ? this.defaultBranch.id : 0,
+                branchId: this.defaultBranch ? this.defaultBranch.id : '0',
                 status: STATUS.OPEN,
                 orderType: ORDERTYPE.SALES,
                 active: true,
@@ -144,11 +144,11 @@ export class AppComponent implements OnInit {
 
   async hasDraftOrder() {
     await this.draftOrder(this.defaultBranch ? this.defaultBranch.id : 0) ;
-    if  (await this.setCurrentOrder) {
+    if  (await this.currentOrder) {
       await this.allOrderDetails(this.currentOrder.id);
       const orderDetails = await this.getOrderDetails();
-      
-      this.setCurrentOrder.orderItems = orderDetails;
+    
+      this.currentOrder.orderItems = orderDetails && orderDetails.length > 0?orderDetails:[];
     }
   }
   public async draftOrder(branchId) {
@@ -160,9 +160,9 @@ export class AppComponent implements OnInit {
       branchId: { $eq: branchId }
     }).then(res => {
       if (res.docs && res.docs.length > 0) {
-        this.setCurrentOrder = res.docs[0] as Order;
+        this.currentOrder = res.docs[0] as Order;
       } else {
-        this.setCurrentOrder=null;
+        this.currentOrder=null;
       }
   });
 }
@@ -184,12 +184,14 @@ public async productTax(taxId) {
 
 public async allOrderDetails(orderId) {
   // comment
- 
+  
   return await this.database.query(['table','orderId'], {
     table: { $eq: 'orderDetails' },
     orderId: { $eq: orderId }
   }).then(res => {
+   
     if (res.docs && res.docs.length > 0) {
+     
       this.orderDetails = res.docs as OrderDetails[];
     } else {
       this.orderDetails=[];
@@ -278,7 +280,7 @@ let variantsArray:Variant[]=[];
           variation.name = variation.name === 'Regular' ? variation.productName+' - Regular' : variation.name;
 
           variation.priceVariant = {
-            id: 0,
+            id: '0',
             priceId: 0,
             variantId: variation.id,
             minUnit: 0,
@@ -288,7 +290,10 @@ let variantsArray:Variant[]=[];
             wholeSalePrice: stock && stock.wholeSalePrice ? stock.wholeSalePrice : 0.00,
             discount: 0,
             markup: 0,
-            channels:[variant.userId]
+            table:'variants',
+            channels:[variant.userId],
+            createdAt:new Date(),
+            updatedAt:new Date()
           };
 
           if (stock.canTrackingStock===false) {
@@ -340,8 +345,6 @@ let variantsArray:Variant[]=[];
 
   async updateOrderDetails(details: { action: string, item: OrderDetails }) {
 
-      console.log(details);
-
         if (details.action === 'DELETE') {
             await  this.database.remove(details.item);
         }
@@ -358,32 +361,34 @@ let variantsArray:Variant[]=[];
             details.item.subTotal = subTotal;
             
             await this.database.put(PouchConfig.Tables.orderDetails+'_'+details.item.id, details.item);
-
         }
+      
 
-      await this.updateOrder();
-      await this.allOrderDetails(this.currentOrder.id);
-      await  this.getOrderDetails();
-      await this.hasDraftOrder();
-
+        await this.allOrderDetails(this.currentOrder.id);
+        this.currentOrder.orderItems = this.getOrderDetails();
+        this.updateOrder();
+    
   }
 
   public  async updateOrder() {
-    const orderDetails=this.orderDetails.filter(order=>order.orderId==this.setCurrentOrder.id);
+        await this.allOrderDetails(this.currentOrder.id);
+        await  this.getOrderDetails();
+
+    const orderDetails=await this.orderDetails.filter(order=>order.orderId==this.currentOrder.id);
     const subtotal = parseFloat(this.totalPipe.transform<OrderDetails>
       (orderDetails, 'subTotal'));
     const taxAmount = parseFloat(this.totalPipe.transform<OrderDetails>
       (orderDetails, 'taxAmount'));
-    this.setCurrentOrder.subTotal = subtotal;
+    this.currentOrder.subTotal = subtotal;
 
-    this.setCurrentOrder.taxAmount = taxAmount;
-    this.setCurrentOrder.saleTotal = subtotal + taxAmount;
+    this.currentOrder.taxAmount = taxAmount;
+    this.currentOrder.saleTotal = subtotal + taxAmount;
 
-    this.setCurrentOrder.customerChangeDue = this.setCurrentOrder.cashReceived > 0 ?
-      parseFloat(this.setCurrentOrder.cashReceived) - this.setCurrentOrder.saleTotal : 0.00;
-    this.setCurrentOrder.customerChangeDue = parseFloat(this.setCurrentOrder.customerChangeDue);
+    this.currentOrder.customerChangeDue = this.currentOrder.cashReceived > 0 ?
+      parseFloat(this.currentOrder.cashReceived) - this.currentOrder.saleTotal : 0.00;
+    this.currentOrder.customerChangeDue = parseFloat(this.currentOrder.customerChangeDue);
   
-    await this.database.put(PouchConfig.Tables.orders+'_'+this.setCurrentOrder.id, this.setCurrentOrder);
+    await this.database.put(PouchConfig.Tables.orders+'_'+this.currentOrder.id, this.currentOrder);
     await this.hasDraftOrder();
   }
 
@@ -425,7 +430,7 @@ let variantsArray:Variant[]=[];
       variantId: variant.id,
       taxRate,
       taxAmount: ((variant.priceVariant.retailPrice * event.quantity) * taxRate) / 100,
-      orderId: this.setCurrentOrder.id,
+      orderId: this.currentOrder.id,
       subTotal: variant.priceVariant.retailPrice * event.quantity,
       table:'orderDetails',
       createdAt: this.date,
@@ -435,7 +440,7 @@ let variantsArray:Variant[]=[];
 
     this.database.put(PouchConfig.Tables.orderDetails +'_'+ orderDetails.id, orderDetails);
     await this.allOrderDetails(this.currentOrder.id);
-    this.setCurrentOrder.orderItems = this.getOrderDetails();
+    this.currentOrder.orderItems = this.getOrderDetails();
     this.updateOrder();
 
   }
@@ -452,37 +457,14 @@ let variantsArray:Variant[]=[];
        this.currentOrder.updatedAt = new Date();
        this.currentOrder.customerChangeDue=this.currentOrder.customerChangeDue;
       
+      
+   
+
       await this.database.put(PouchConfig.Tables.orders + '_' +  this.currentOrder.id,  this.currentOrder);
-    
-     
-      this.getOrderDetails().forEach(async details=> {
-      const odetails= {
-        canTrackStock:details.stockId?true:false,
-        createdAt: details.createdAt,
-        id: details.id,
-        orderId: details.orderId,
-        price: details.price,
-        quantity: details.quantity,
-        stockId: details.stockId?details.stockId:'',
-        subTotal: details.subTotal,
-        taxAmount: details.taxAmount,
-        taxRate: details.taxRate,
-        unit: details.unit?details.unit:'',
-        updatedAt: details.updatedAt,
-        discountRate:0,
-        discountAmount:0,
-        variantId: details.variantId?details.variantId:'',
-        variantName: details.variantName?details.variantName:'Custom',
-        note:'',
-        channels:[this.defaultBusiness$.userId],
-      }
-       await  this.database.put(PouchConfig.Tables.orderDetails+ '_' +  odetails.id,odetails);
-      });
 
       
       this.collectCashCompleted = { isCompleted: true, collectedOrder: this.currentOrder };
       this.currentOrder = null;
-
       await this.init();
 
     }
@@ -497,9 +479,9 @@ let variantsArray:Variant[]=[];
 
       orderDetails.forEach(details => {
 
-        if (details.stockId > 0 || (details.stock && details.stock.canTrackingStock)) {
+        if ( (details.stockId!=null || details.stockId!=undefined ) || (details.stock && details.stock.canTrackingStock)) {
          
-          const stockHistories={
+          const stockHistories:StockHistory={
             id: this.database.uid(),
             orderId: details.orderId,
             variantId: details.variantId,
@@ -511,9 +493,10 @@ let variantsArray:Variant[]=[];
             isPreviously: false,
             syncedOnline: false,
             note: 'Customer sales',
+            table:'stockHistories',
             createdAt: new Date(),
             updatedAt: new Date(),
-            chanels:[this.defaultBusiness$.userId],
+            channels:[this.defaultBusiness$.userId],
           }
            this.database.put(PouchConfig.Tables.stockHistories + '_' +  stockHistories.id,  stockHistories);
          
@@ -527,13 +510,13 @@ let variantsArray:Variant[]=[];
 
   }
    updateStock(stockDetails: OrderDetails) {
-    let stockId = 0;
+    let stockId = '';
     if (stockDetails.stockId && (stockDetails.stockId!==null || stockDetails.stockId!==undefined)) {
       stockId = stockDetails.stockId;
     } else if (stockDetails.stock && stockDetails.stock.id) {
       stockId = stockDetails.stock.id;
     } else {
-      stockId = 0;
+      stockId = '';
     }
 
     const stock: Stock = this.stock.stocks.find(stock=>stock.id==stockId);

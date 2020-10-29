@@ -285,7 +285,7 @@ async updateStockControl(result: any, variant: Variant) {
         if (res.reason && res.currentStock > 0) {
           this.stock.createHistory({
             id: this.database.uid(),
-            orderId: 0,
+            orderId: null,
             variantId: variant.id,
             productId: variant.productId,
             stockId: res.id,
@@ -348,7 +348,7 @@ async updateStockControl(result: any, variant: Variant) {
   public openPrintBarcodeLablesDialog(product,allVariants): any {
     const labels: Labels[] = [];
     allVariants.forEach(v => {
-      labels.push({name: v.name, sku: v.SKU});
+      labels.push({name: v.name, sku: v.SKU,channels:[product.userId]});
     });
     return this.dialog.open(PrintBarcodeLabelsDialogComponent, DialogSize.SIZE_LG, labels).subscribe();
   }

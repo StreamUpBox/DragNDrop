@@ -140,6 +140,7 @@ export class AppComponent implements OnInit {
       this.hasDraftOrder();
 
     }
+    
   }
 
   async hasDraftOrder() {

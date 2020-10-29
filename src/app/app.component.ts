@@ -3,9 +3,8 @@ import { trigger, transition, useAnimation } from '@angular/animations';
 import {
   fadeInAnimation, CalculateTotalClassPipe, Order,
   STATUS, ORDERTYPE, MainModelService, Branch, Tables, Stock,
-  Product, OrderDetails, Business, Taxes, PouchDBService, PouchConfig, Variant, PriceVariant, StockHistory } from '@enexus/flipper-components';
-import { ModelService } from '@enexus/flipper-offline-database';
-import { ProductService, StockControl, StockService, VariationService } from '@enexus/flipper-inventory';
+  Product, OrderDetails, Business, Taxes, PouchDBService, PouchConfig, Variant, StockHistory } from '@enexus/flipper-components';
+import { ProductService, StockService, VariationService } from '@enexus/flipper-inventory';
 
 @Component({
   selector: 'app-root',
@@ -140,7 +139,7 @@ export class AppComponent implements OnInit {
       this.hasDraftOrder();
 
     }
-    
+
   }
 
   async hasDraftOrder() {

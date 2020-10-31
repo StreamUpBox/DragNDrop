@@ -6,8 +6,8 @@ export class Subscription {
   nextPaymentDate?: Date;
   status?: string;
   didSubscribed?: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   table:string;
   docId?:string;
   channels:Array<string>;

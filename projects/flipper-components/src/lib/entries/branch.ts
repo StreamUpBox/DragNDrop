@@ -6,8 +6,8 @@ export class Branch {
   syncedOnline?: boolean;
   mapLatitude?: any;
   mapLongitude?: any;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   table:string;
   docId?:string;
   channels:Array<string>;

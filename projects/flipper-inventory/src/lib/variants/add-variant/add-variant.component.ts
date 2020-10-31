@@ -41,8 +41,8 @@ export class AddVariantComponent implements OnInit {
       retailPrice: [ 0.00, Validators.min(0)],
       supplyPrice: [0.00, Validators.min(0)],
       unit:'',
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
 
     });
    
@@ -70,8 +70,8 @@ export class AddVariantComponent implements OnInit {
       SKU: this.form.value.SKU ? this.form.value.SKU : this.variant.generateSKU(),
       syncedOnline: false,
       isActive: false,
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
       channels:[this.data.product.userId],
       userId: this.data.product.userId,
       table:'variants',

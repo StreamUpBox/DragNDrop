@@ -25,8 +25,8 @@ export class Product {
   color?: string;
   syncedOnline?: boolean;
   isCurrentUpdate?: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   table:string;
   docId?:string;
   channels:Array<string>;

@@ -87,8 +87,8 @@ export class CreateProductComponent implements OnInit {
       picture: hasDraftProduct ? hasDraftProduct.picture : '',
       taxId: hasDraftProduct ? hasDraftProduct.taxId : '',
       supplierId: hasDraftProduct ? hasDraftProduct.supplierId : 0,
-      createdAt: new Date(),
-      updatedAt: new Date()
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
 
     });
   }

@@ -25,8 +25,8 @@ export class OrderDetails {
   syncedOnline?: boolean;
   canTrackStock?: boolean;
   note?: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   table:string;
   docId?:string;
   channels:Array<string>;

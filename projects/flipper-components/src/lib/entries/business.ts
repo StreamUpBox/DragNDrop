@@ -10,8 +10,8 @@ export class Business {
   syncedOnline?: boolean;
   userId?: string;
   typeId?: any;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   table:string;
   docId?:string;
   channels:Array<string>;

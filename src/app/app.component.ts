@@ -61,7 +61,7 @@ export class AppComponent implements OnInit {
  
   private setCurrentOrder: Order;
 
-  date = new Date();
+  date = new Date()..toISOString();
 
   ngOnInit() {
     this.init();
@@ -292,8 +292,8 @@ let variantsArray:Variant[]=[];
             markup: 0,
             table:'variants',
             channels:[variant.userId],
-            createdAt:new Date(),
-            updatedAt:new Date()
+            createdAt:new Date().toISOString(),
+            updatedAt:new Date().toISOString()
           };
 
           if (stock.canTrackingStock===false) {
@@ -453,8 +453,8 @@ let variantsArray:Variant[]=[];
       this.currentOrder.isDraft = false;
       this.currentOrder.active = false;
       this.currentOrder.status = STATUS.COMPLETE;
-       this.currentOrder.createdAt = new Date();
-       this.currentOrder.updatedAt = new Date();
+       this.currentOrder.createdAt = new Date().toISOString();
+       this.currentOrder.updatedAt = new Date().toISOString();
        this.currentOrder.customerChangeDue=this.currentOrder.customerChangeDue;
       
       
@@ -494,8 +494,8 @@ let variantsArray:Variant[]=[];
             syncedOnline: false,
             note: 'Customer sales',
             table:'stockHistories',
-            createdAt: new Date(),
-            updatedAt: new Date(),
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
             channels:[this.defaultBusiness$.userId],
           }
            this.database.put(PouchConfig.Tables.stockHistories + '_' +  stockHistories.id,  stockHistories);

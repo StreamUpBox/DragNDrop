@@ -18,7 +18,7 @@ export class VariationService {
   hasRegular: Variant = null;
   myAllVariants: Variant[] = [];
   SKU = '';
-  d = new Date();
+  d = new Date().toISOString();
   units: any[] = [];
   form: FormGroup;
   product: Product;
@@ -124,8 +124,8 @@ export class VariationService {
       retailPrice: [!action && variant && stock ? stock.retailPrice : 0.00, Validators.min(0)],
       supplyPrice: [!action && variant && stock ? stock.supplyPrice : 0.00, Validators.min(0)],
       unit: !action && variant && variant.unit ? variant.unit : '',
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
 
     });
   }
@@ -169,8 +169,8 @@ export class VariationService {
         SKU: this.generateSKU(),
         syncedOnline: false,
         isActive: true,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
         channels:[product.userId],
         userId: product.userId,
         table:'variants',
@@ -294,8 +294,8 @@ async updateStockControl(result: any, variant: Variant) {
             note: res.reason,
             table:'stockHistories',
             channels:[variant.userId],
-            createdAt: new Date(),
-            updatedAt: new Date(),
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
           });
         }
           // update Stock

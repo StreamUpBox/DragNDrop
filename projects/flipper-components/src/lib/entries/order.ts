@@ -27,12 +27,12 @@ export class Order {
     orderItems: OrderDetails[];
     paymentId?: any;
     orderNote?: string;
-    deliverDate?: Date;
+    deliverDate?: string;
     syncedOnline?: boolean;
     branch?: Branch;
-    orderDate?: Date;
-    createdAt: Date;
-     updatedAt: Date;
+    orderDate?: string;
+    createdAt: string;
+     updatedAt: string;
     table:string;
     docId?:string;
     channels:Array<string>;

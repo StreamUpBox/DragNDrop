@@ -17,8 +17,8 @@ export class Stock {
   syncedOnline?: boolean;
   canTrackingStock?: boolean;
   showLowStockAlert?: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   table:string;
   docId?:string;
   channels:Array<string>;

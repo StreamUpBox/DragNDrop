@@ -14,8 +14,8 @@ export class Receipt {
   customerText?: string;
   returnPolicy?: string;
   syncedOnline?: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   table:string;
   docId?:string;
   channels:Array<string>;

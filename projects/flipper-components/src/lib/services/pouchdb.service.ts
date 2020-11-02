@@ -9,7 +9,7 @@ import debugPouch from "pouchdb-debug";
 import { v1 as uuidv1 } from 'uuid';
 import { PouchConfig } from '../db-config';
 
-
+PouchDB.plugin(require('pouchdb-authentication'));
 
 class Response{
     res:any
@@ -371,8 +371,9 @@ export class PouchDBService {
         const sessionId = PouchConfig.sessionId;
         document.cookie = sessionId;
         //our main = bucket and is constant to all users.
+         
             this.database.login(PouchConfig.user, PouchConfig.password).then( ()=> {
-                this.database.sync('main', remote, {
+                PouchDB.sync('main', remote, {
                 live: false,
                 retry: true
             }).on('change', change => {

@@ -18,7 +18,7 @@ export class VariationService {
   hasRegular: Variant = null;
   myAllVariants: Variant[] = [];
   SKU = '';
-  d = new Date().toISOString();
+  d = new Date();
   units: any[] = [];
   form: FormGroup;
   product: Product;
@@ -32,7 +32,6 @@ export class VariationService {
 
   variantStock = { length: 0, currentStock: 0, lowStock: 0 };
   constructor(private stock: StockService, private dialog: DialogService,
-              private model: MainModelService,
               private setting: SettingsService,
               private formBuilder: FormBuilder,
               private database: PouchDBService) {

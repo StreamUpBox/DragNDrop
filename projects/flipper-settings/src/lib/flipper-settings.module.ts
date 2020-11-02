@@ -7,20 +7,19 @@ import { CreateUpdateBusinessComponent } from './business/create-update-business
 import { BusinessComponent } from './business/view/business.component';
 import { FlipperSettingsComponent } from './flipper-settings.component';
 
-
-
 @NgModule({
-  declarations: [
-     FlipperSettingsComponent,
-     CreateUpdateBusinessComponent,
-      BusinessComponent
-    ],
   imports: [
     CommonModule,
     VendorsModule,
     FlipperEventModule,
     FlipperComponentsModule
   ],
+  declarations: [
+     FlipperSettingsComponent,
+     CreateUpdateBusinessComponent,
+    BusinessComponent
+    ],
+ 
   exports: [
     CreateUpdateBusinessComponent,
     BusinessComponent,

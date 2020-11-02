@@ -367,39 +367,41 @@ export class PouchDBService {
         });
     }
 
-
     public sync(remote: string) {
         const sessionId = PouchConfig.sessionId;
         document.cookie = sessionId;
         //our main = bucket and is constant to all users.
-        PouchDB.sync('main', remote, {
-            live: false,
-            retry: true
-        }).on('change', change => {
-            if (change) {
-                this.listener.emit(change);
-            }
-        }).on('paused', change => {
-            console.log("sync paused");
-            if (change) {
-                this.listener.emit(change);
-            }
-        }).on('active', () => {
-        }).on('denied', change => {
-            console.log("sync denied");
-            if (change) {
-                this.listener.emit(change);
-            }
-        }).on('complete', change => {
-            console.log("sync complete");
-            if (change) {
-                this.listener.emit(change);
-            }
-        }).on('error', error => {
-            console.log("sync error");
-            console.error(JSON.stringify(error));
-        });
+            this.database.login(PouchConfig.user, PouchConfig.password).then( ()=> {
+                this.database.sync('main', remote, {
+                live: false,
+                retry: true
+            }).on('change', change => {
+                if (change) {
+                    this.listener.emit(change);
+                }
+  }).on('paused', change => {
+      console.log("sync paused");
+      if (change) {
+          this.listener.emit(change);
+      }
+  }).on('active', () => {
+  }).on('denied', change => {
+      console.log("sync denied");
+      if (change) {
+          this.listener.emit(change);
+      }
+  }).on('complete', change => {
+      console.log("sync complete");
+      if (change) {
+          this.listener.emit(change);
+      }
+  }).on('error', error => {
+      console.log("sync error");
+      console.error(JSON.stringify(error));
+  });
+  });
     }
+  
     public getChangeListener() {
         return this.listener;
     }

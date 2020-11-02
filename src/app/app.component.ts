@@ -61,7 +61,7 @@ export class AppComponent implements OnInit {
  
   private setCurrentOrder: Order;
 
-  date = new Date()..toISOString();
+  date = new Date().toISOString();
 
   ngOnInit() {
     this.init();

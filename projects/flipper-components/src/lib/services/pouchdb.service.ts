@@ -1,5 +1,5 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import PouchDB from 'pouchdb';
+import PouchDB from 'pouchdb/dist/pouchdb';
 import PouchFind from 'pouchdb-find';
 PouchDB.plugin(PouchFind);
 
@@ -9,7 +9,7 @@ import debugPouch from "pouchdb-debug";
 import { v1 as uuidv1 } from 'uuid';
 import { PouchConfig } from '../db-config';
 
-PouchDB.plugin(require('pouchdb-authentication'));
+
 
 class Response{
     res:any
@@ -264,7 +264,7 @@ export class PouchDBService {
                 this.database.changes({
                     filter: function (doc) {
                         //make sure we filter only to listen on our document of intrest.
-                        return doc.channel === filter;
+                        return doc.channels[0] === filter;
                     }
                 });
             }
@@ -367,42 +367,41 @@ export class PouchDBService {
         });
     }
 
+
     public sync(remote: string) {
         const sessionId = PouchConfig.sessionId;
         document.cookie = sessionId;
         //our main = bucket and is constant to all users.
-         
-            this.database.login(PouchConfig.user, PouchConfig.password).then( ()=> {
-                PouchDB.sync('main', remote, {
-                live: false,
-                retry: true
-            }).on('change', change => {
-                if (change) {
-                    this.listener.emit(change);
-                }
-  }).on('paused', change => {
-      console.log("sync paused");
-      if (change) {
-          this.listener.emit(change);
-      }
-  }).on('active', () => {
-  }).on('denied', change => {
-      console.log("sync denied");
-      if (change) {
-          this.listener.emit(change);
-      }
-  }).on('complete', change => {
-      console.log("sync complete");
-      if (change) {
-          this.listener.emit(change);
-      }
-  }).on('error', error => {
-      console.log("sync error");
-      console.error(JSON.stringify(error));
-  });
-  });
+        PouchDB.sync(PouchConfig.bucket, remote, {
+            password: PouchConfig.password,
+            user:PouchConfig.user,
+            live: false,
+            retry: true
+        }).on('change', change => {
+            if (change) {
+                this.listener.emit(change);
+            }
+        }).on('paused', change => {
+            console.log("sync paused");
+            if (change) {
+                this.listener.emit(change);
+            }
+        }).on('active', () => {
+        }).on('denied', change => {
+            console.log("sync denied");
+            if (change) {
+                this.listener.emit(change);
+            }
+        }).on('complete', change => {
+            console.log("sync complete");
+            if (change) {
+                this.listener.emit(change);
+            }
+        }).on('error', error => {
+            console.log("sync error");
+            console.error(JSON.stringify(error));
+        });
     }
-  
     public getChangeListener() {
         return this.listener;
     }

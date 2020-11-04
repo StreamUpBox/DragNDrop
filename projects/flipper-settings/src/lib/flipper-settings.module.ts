@@ -17,7 +17,7 @@ import { FlipperSettingsComponent } from './flipper-settings.component';
   declarations: [
      FlipperSettingsComponent,
      CreateUpdateBusinessComponent,
-    BusinessComponent
+     BusinessComponent
     ],
  
   exports: [

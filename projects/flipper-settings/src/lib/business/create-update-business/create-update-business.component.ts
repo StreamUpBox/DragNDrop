@@ -71,6 +71,7 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
     this.categories$ = this.model.loadAll<BusinessCategory>(Tables.businessCategory);
 
     if (PouchConfig.canSync) {
+     
       this.database.sync(PouchConfig.syncUrl);
     }
 

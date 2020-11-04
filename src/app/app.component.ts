@@ -47,7 +47,7 @@ export class AppComponent implements OnInit {
               public product: ProductService, 
                private totalPipe: CalculateTotalClassPipe) {
       this.branch = this.model.active<Branch>(Tables.branch);
-      this.database.connect(PouchConfig.bucket);
+      this.database.connect(PouchConfig.bucket,'117');
       if (PouchConfig.canSync) {
         this.database.sync(PouchConfig.syncUrl);
       }

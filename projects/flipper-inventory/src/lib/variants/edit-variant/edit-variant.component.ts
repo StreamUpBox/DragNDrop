@@ -30,8 +30,8 @@ export class EditVariantComponent implements OnInit {
         retailPrice: [ this.stock?this.stock.retailPrice:0.00, Validators.min(0)],
         supplyPrice: [ this.stock?this.stock.supplyPrice:0.00, Validators.min(0)],
         unit:  this.variation.unit ? this.variation.unit : '',
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
   
       });
     }

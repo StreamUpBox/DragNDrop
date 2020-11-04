@@ -10,7 +10,7 @@ export class StockControl {
   currentStock?: number;
   previousStock?: number;
   lowStock?: number;
-  branchId?: number;
+  branchId?: string;
   canTrackingStock?: boolean;
   showLowStockAlert?: boolean;
   stock?:Stock;
@@ -39,7 +39,7 @@ export class ManageStockComponent implements OnInit {
   }
   async loadStocks() {
     if (this.variation) {
-      const stockControl: StockControl[] = this.stocks;
+      const stockControl: Stock[] = this.stocks;
       if (stockControl.length > 0) {
         stockControl.forEach(stock => {
           const stockCtrl: StockControl = {id: stock.id, reason: '',

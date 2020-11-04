@@ -4,7 +4,7 @@ import { Branch } from './branch';
 import { Menu } from './menu';
 
 export class MenuEntries {
-  id?: any;
+  id?: string;
   businesses: Business[];
   user: User;
   // FIXME(ganza): each model or document should have channels[userId] to authenticate the data

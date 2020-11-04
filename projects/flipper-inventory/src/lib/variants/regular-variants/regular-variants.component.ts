@@ -118,8 +118,8 @@ export class RegularVariantsComponent implements OnInit {
       retailPrice: [ 0.00, Validators.min(0)],
       supplyPrice: [ 0.00, Validators.min(0)],
       unit: !action && variant && variant.unit ? variant.unit : '',
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
 
     });
 

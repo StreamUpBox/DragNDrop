@@ -517,6 +517,8 @@ export const PouchConfig = {
     bucket: 'main',
     syncUrl: localStorage.getItem('syncUrl') + '/' + localStorage.getItem('bucket'),
     canSync: JSON.parse(localStorage.getItem('canSync')),
+    user:localStorage.getItem('user'),
+    password:localStorage.getItem('password'),
     Tables: {
     user: TABLES.USER + '_' + localStorage.getItem('channel'),
     business: TABLES.BUSINESS + '_' + localStorage.getItem('channel'),

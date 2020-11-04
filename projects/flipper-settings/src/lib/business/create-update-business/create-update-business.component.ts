@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/co
 import {
   Business, Branch, ILatLng, Types, User, BusinessCategory,
   NotificationService, SettingsService, Taxes, PouchDBService,
-  PouchConfig, Tables, MainModelService,ActiveUser, ActiveBusiness, ActiveBranch
+  PouchConfig, Tables, MainModelService,ActiveUser, ActiveBusiness, 
 } from '@enexus/flipper-components';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -39,7 +39,6 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
     private model: MainModelService,
     private activeUser:ActiveUser,
     private activeBusiness:ActiveBusiness,
-    private activeBranch:ActiveBranch,
     private ref: ChangeDetectorRef) {
     this.getLocation();
     
@@ -72,6 +71,7 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
     this.categories$ = this.model.loadAll<BusinessCategory>(Tables.businessCategory);
 
     if (PouchConfig.canSync) {
+     
       this.database.sync(PouchConfig.syncUrl);
     }
 
@@ -112,7 +112,6 @@ if(this.activeUser.currentUser){
 }
 
 
- console.log(this.activeBusiness.currentBusiness);
  
 
       
@@ -163,8 +162,8 @@ if(this.activeUser.currentUser){
       timeZone: this.registerForm.value.timeZone,
       userId: this.activeUser.currentUser ? this.activeUser.currentUser.id : 0,
       active: true,
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
       table:'businesses',
       channels:[this.activeUser.currentUser ? this.activeUser.currentUser.id : 0],
       docId:PouchConfig.Tables.business
@@ -189,7 +188,9 @@ if(this.activeUser.currentUser){
       businessId: this.registerForm.value.id,
       table:'branches',
       channels:[this.activeUser.currentUser ? this.activeUser.currentUser.id : 0],
-      docId:PouchConfig.Tables.branches
+      docId:PouchConfig.Tables.branches,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
 
     };
 
@@ -203,8 +204,8 @@ if(this.activeUser.currentUser){
       businessId: this.registerForm.value.id,
       active: true,
       isDefault: true,
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
       table:'taxes',
       channels:[this.activeUser.currentUser ? this.activeUser.currentUser.id : 0],
       docId:PouchConfig.Tables.taxes
@@ -222,8 +223,8 @@ if(this.activeUser.currentUser){
       businessId: this.registerForm.value.id,
       active: true,
       isDefault: false,
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
       table:'taxes',
       channels:[this.activeUser.currentUser ? this.activeUser.currentUser.id : 0],
       docId:PouchConfig.Tables.taxes

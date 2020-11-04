@@ -229,8 +229,8 @@ export class StockService {
           inStock: 0,
           canTrackingStock: false,
           showLowStockAlert: false,
-          createdAt: new Date(),
-          updatedAt: new Date(),
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
           table:'stocks',
           channels:[formData.userId],
         });

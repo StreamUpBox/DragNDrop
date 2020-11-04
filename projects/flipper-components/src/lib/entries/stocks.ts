@@ -1,8 +1,8 @@
 export class Stock {
 
-  id?: any;
-  branchId?: any;
-  variantId?: any;
+  id: string;
+  branchId: string;
+  variantId: string;
   productId?: any;
   reasonId?: any;
   unitId?: any;
@@ -17,9 +17,9 @@ export class Stock {
   syncedOnline?: boolean;
   canTrackingStock?: boolean;
   showLowStockAlert?: boolean;
-  createdAt?: any;
-  updatedAt?: any;
-  table?:string;
+  createdAt: string;
+  updatedAt: string;
+  table:string;
   docId?:string;
   channels:Array<string>;
 

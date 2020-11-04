@@ -4,7 +4,7 @@
     name?: string;
     sku?: string;
     channels:Array<string>;
-    channel?:any;
+    channel?:string;
 
 
   constructor(params: object = {}) {

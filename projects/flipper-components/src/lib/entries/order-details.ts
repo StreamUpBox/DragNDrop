@@ -4,10 +4,10 @@ import { Stock } from './stocks';
 import { Product } from './product';
 
 export class OrderDetails {
-  id?: any;
-  orderId?: any;
-  variantId?: any;
-  stockId?: any;
+  id: string;
+  orderId: string;
+  variantId: string;
+  stockId: string;
   SKU?: string;
   unit?: string;
   variantName?: string;
@@ -25,12 +25,12 @@ export class OrderDetails {
   syncedOnline?: boolean;
   canTrackStock?: boolean;
   note?: string;
-  createdAt?: any;
-  updatedAt?: any;
-  table?:string;
+  createdAt: string;
+  updatedAt: string;
+  table:string;
   docId?:string;
   channels:Array<string>;
-  channel?:any;
+  channel?:string;
 
   constructor(params: object = {}) {
     for (const name in params) {

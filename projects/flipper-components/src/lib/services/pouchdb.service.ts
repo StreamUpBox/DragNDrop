@@ -1,5 +1,5 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import PouchDB from 'pouchdb';
+import PouchDB from 'pouchdb/dist/pouchdb';
 import PouchFind from 'pouchdb-find';
 PouchDB.plugin(PouchFind);
 
@@ -264,7 +264,7 @@ export class PouchDBService {
                 this.database.changes({
                     filter: function (doc) {
                         //make sure we filter only to listen on our document of intrest.
-                        return doc.channel === filter;
+                        return doc.channels[0] === filter;
                     }
                 });
             }
@@ -372,7 +372,9 @@ export class PouchDBService {
         const sessionId = PouchConfig.sessionId;
         document.cookie = sessionId;
         //our main = bucket and is constant to all users.
-        PouchDB.sync('main', remote, {
+        PouchDB.sync(PouchConfig.bucket, remote, {
+            password: PouchConfig.password,
+            user:PouchConfig.user,
             live: false,
             retry: true
         }).on('change', change => {

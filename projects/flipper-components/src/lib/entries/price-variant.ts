@@ -1,5 +1,5 @@
 export class PriceVariant {
-  id?: any;
+  id: string;
   priceId?: any;
   variantId?: any;
   minUnit?: any;
@@ -11,9 +11,9 @@ export class PriceVariant {
   // FIXME(ganza): each model or document should have channels[userId] to authenticate the data
   markup?: any;
   syncedOnline?: boolean;
-  createdAt?: any;
-  updatedAt?: any;
-  table?:string;
+  createdAt: string;
+  updatedAt: string;
+  table:string;
   docId?:string;
   channels:Array<string>;
 

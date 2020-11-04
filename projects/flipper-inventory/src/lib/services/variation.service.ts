@@ -32,7 +32,6 @@ export class VariationService {
 
   variantStock = { length: 0, currentStock: 0, lowStock: 0 };
   constructor(private stock: StockService, private dialog: DialogService,
-              private model: MainModelService,
               private setting: SettingsService,
               private formBuilder: FormBuilder,
               private database: PouchDBService) {
@@ -124,8 +123,8 @@ export class VariationService {
       retailPrice: [!action && variant && stock ? stock.retailPrice : 0.00, Validators.min(0)],
       supplyPrice: [!action && variant && stock ? stock.supplyPrice : 0.00, Validators.min(0)],
       unit: !action && variant && variant.unit ? variant.unit : '',
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
 
     });
   }
@@ -169,8 +168,8 @@ export class VariationService {
         SKU: this.generateSKU(),
         syncedOnline: false,
         isActive: true,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
         channels:[product.userId],
         userId: product.userId,
         table:'variants',
@@ -285,7 +284,7 @@ async updateStockControl(result: any, variant: Variant) {
         if (res.reason && res.currentStock > 0) {
           this.stock.createHistory({
             id: this.database.uid(),
-            orderId: 0,
+            orderId: null,
             variantId: variant.id,
             productId: variant.productId,
             stockId: res.id,
@@ -294,8 +293,8 @@ async updateStockControl(result: any, variant: Variant) {
             note: res.reason,
             table:'stockHistories',
             channels:[variant.userId],
-            createdAt: new Date(),
-            updatedAt: new Date(),
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
           });
         }
           // update Stock
@@ -348,7 +347,7 @@ async updateStockControl(result: any, variant: Variant) {
   public openPrintBarcodeLablesDialog(product,allVariants): any {
     const labels: Labels[] = [];
     allVariants.forEach(v => {
-      labels.push({name: v.name, sku: v.SKU});
+      labels.push({name: v.name, sku: v.SKU,channels:[product.userId]});
     });
     return this.dialog.open(PrintBarcodeLabelsDialogComponent, DialogSize.SIZE_LG, labels).subscribe();
   }

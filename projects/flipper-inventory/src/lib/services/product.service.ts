@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import {
-  Product, MainModelService, Tables, Business,
-  Branch, Taxes, BranchProducts, PouchDBService,
-  PouchConfig, Variant, Stock, StockHistory, BranchesEvent, User, CacheService
+  Product,Business,
+  Branch, Taxes, PouchDBService,
+  PouchConfig, Variant, Stock, User
 } from '@enexus/flipper-components';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { VariationService } from './variation.service';
-import { Observable, BehaviorSubject, of } from 'rxjs';
-import { ModelService } from '@enexus/flipper-offline-database';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -31,9 +30,7 @@ export class ProductService {
   allVariants: Variant[];
   stocks:Stock[]=[];
   
-  constructor(private query: ModelService,
-    private cacheService: CacheService,
-    private model: MainModelService,
+  constructor(
     private variant: VariationService,
     private formBuilder: FormBuilder,
     private database: PouchDBService) {
@@ -138,8 +135,8 @@ return this.database.query(['table', 'productId'], {
       picture: hasDraftProduct ? hasDraftProduct.picture : '',
       taxId: hasDraftProduct ? hasDraftProduct.taxId : '',
       supplierId: hasDraftProduct ? hasDraftProduct.supplierId : 0,
-      createdAt: new Date(),
-      updatedAt: new Date()
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
 
     });
   }
@@ -176,8 +173,8 @@ return this.database.query(['table', 'productId'], {
         color: '#000000',
         picture: '/assets/icons/add-image-placeholder.png',
         isCurrentUpdate: false,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
         userId: this.defaultBusiness$.userId,
         channels:[this.defaultBusiness$.userId],
       };
@@ -201,29 +198,7 @@ return this.database.query(['table', 'productId'], {
     localStorage.setItem('userIsCreatingAnItem', `${bol}`);
   }
 
-  loadBranches(): void {
-    let arr = [];
-    if (this.hasDraftProduct) {
-      arr = this.model.filters<BranchProducts>(Tables.branchProducts, 'productId', this.hasDraftProduct.id);
-      const branch: Branch = this.query.queries<Branch>(Tables.branch, `
-       active=${true} AND businessId='${this.model.active<Business>(Tables.business).id}' ORDER BY id DESC `)[0];
-      if (arr.length === 0) {
-        this.model.create<BranchProducts>(Tables.branchProducts, {
-          id: this.database.uid(),
-          productId: this.hasDraftProduct.id,
-          branchId: branch.id
-        });
-
-        this.branchList.setValue([branch.id]);
-
-      } else {
-        arr.forEach(el => arr.push(el.branchId));
-        this.branchList.setValue(arr);
-      }
-    }
-
-  }
-
+  
 
   updateBranch(): void {
 
@@ -287,7 +262,7 @@ return this.database.query(['table', 'productId'], {
       this.hasDraftProduct.isDraft = false;
       this.hasDraftProduct.isCurrentUpdate = false;
       this.hasDraftProduct.color = '#000000';
-      this.hasDraftProduct.updatedAt = new Date();
+      this.hasDraftProduct.updatedAt = new Date().toISOString();
       this.update();
 
 

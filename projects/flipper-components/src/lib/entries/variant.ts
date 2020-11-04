@@ -3,7 +3,7 @@ import { Stock } from './stocks';
 import { Product } from './product';
 
 export class Variant {
-  id?: any;
+  id: string;
   SKU: any;
   name: string;
   productName?: string;
@@ -21,9 +21,9 @@ export class Variant {
   product?: Product; 
   markup?: any;
   syncedOnline?: boolean;
-  createdAt?: any;
-  updatedAt?: any;
-  table?:string;
+  createdAt: string;
+  updatedAt: string;
+  table:string;
   docId?:string;
   channels:Array<string>;
 

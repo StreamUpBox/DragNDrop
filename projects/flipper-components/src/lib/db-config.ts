@@ -406,76 +406,116 @@ export const DEFAULT_FLIPPER_DB_CONFIG = {
             updatedAt: new Date()
         }
     ],
+    defaultCategory: [
+        {
+            name: 'Beauty Salon',
+            id: 'beauty-salon',
+            type_id:'beauty-and-personal-care'
+        },
+        {
+            name: 'Hair Salon/Barbershop',
+            id: 'hair-salon/barbershop',
+            type_id:'beauty-and-personal-care'
+        },
+        {
+            name: 'Independent Stylist/Barber',
+            id: 'independent-stylist/barber',
+            type_id:'beauty-and-personal-care'
+        },
+        {
+            name: 'Massage Therapist',
+            id: 'massage-therapist',
+            type_id:'beauty-and-personal-care'
+        },
+        {
+            name: 'Nail Salon',
+            id: 'nail-salon',
+            type_id:'beauty-and-personal-care'
+        },
+        {
+            name: 'Spa',
+            id: 'spa',
+            type_id:'beauty-and-personal-care'
+        },
+        {
+            name: 'Tanning Salon',
+            id: 'tanning-salon',
+            type_id:'beauty-and-personal-care'
+        },
+        {
+            name: 'Tattoo/Piercing',
+            id: 'tattoo/piercing',
+            type_id:'beauty-and-personal-care'
+        },
+        {
+            name: 'Pharamcy',
+            id: 'pharamcy',
+            type_id:'retail'
+        },
+        {
+            name: 'Grocery/Market',
+            id: 'grocery/market',
+            type_id:'retail'
+        },
+        {
+            name: 'Pet Store',
+            id: 'pet-store',
+            type_id:'retail'
+        },
+        {
+            name: 'Electronics',
+            id: 'electronics',
+            type_id:'retail'
+        },
+        {
+            name: 'Hardware Store',
+            id: 'hardware-store',
+            type_id:'retail'
+        },
+        {
+            name: 'Eyewear',
+            id: 'eyewear',
+            type_id:'retail'
+        },
+        {
+            name: 'Outdoor Markets',
+            id: 'outdoor-markets',
+            type_id:'retail'
+        },
+        {
+            name: 'Speciality Shop',
+            id: 'speciality-shop',
+            type_id:'retail'
+        },
+        {
+            name: 'Sporting Goods',
+            id: 'sporting-goods',
+            type_id:'retail'
+        },
+        {
+            name: 'Hobby Shop',
+            id: 'hobby-shop',
+            type_id:'retail'
+        },
+        {
+            name: 'Jewelry and Watches',
+            id: 'jewelry-and-watches',
+            type_id:'retail'
+        },
+        {
+            name: 'Flowers and Gifts',
+            id: 'flowers-and-gifts',
+            type_id:'retail'
+        }
+    ],
     defaultType: [
         {
             name: 'Beauty and Personal Care',
-            category: [
-                {
-                    name: 'Beauty Salon'
-                },
-                {
-                    name: 'Hair Salon/Barbershop'
-                },
-                {
-                    name: 'Independent Stylist/Barber'
-                },
-                {
-                    name: 'Massage Therapist'
-                },
-                {
-                    name: 'Nail Salon'
-                },
-                {
-                    name: 'Spa'
-                },
-                {
-                    name: 'Tanning Salon'
-                },
-                {
-                    name: 'Tattoo/Piercing'
-                }
-            ]
+            id: 'beauty-and-personal-care',
         },
         {
             name: 'Retail',
-            category: [
-                {
-                    name: 'Pharamcy'
-                },
-                {
-                    name: 'Grocery/Market'
-                },
-                {
-                    name: 'Pet Store'
-                },
-                {
-                    name: 'Electronics'
-                },
-                {
-                    name: 'Hardware Store'
-                },
-                {
-                    name: 'Eyewear'
-                },
-                {
-                    name: 'Outdoor Markets'
-                },
-                {
-                    name: 'Speciality Shop'
-                },
-                {
-                    name: 'Sporting Goods'
-                },
-                {
-                    name: 'Hobby Shop'
-                },
-                {
-                    name: 'Jewelry and Watches'
-                },
-                {
-                    name: 'Flowers and Gifts'
-                }
-            ]
+            id: 'retail',
         }
     ]
 };

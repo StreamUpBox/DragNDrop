@@ -123,7 +123,7 @@ export class FlipperBasicPosComponent  {
   }
 
 
-  addToCart(variant: Variant, quantity= 1, tax= null) {
+  addToCart(variant: any, quantity= 1, tax= null) {
 
     if (variant.priceVariant.retailPrice === 0 || variant.priceVariant.retailPrice === 0.00) {
       return this.dialog.open(UpdatePriceDialogComponent, DialogSize.SIZE_SM, variant.priceVariant.retailPrice).subscribe(result => {
@@ -161,11 +161,11 @@ export class FlipperBasicPosComponent  {
     return this.dialog.open(AddCartItemDialogComponent, DialogSize.SIZE_MD).subscribe(result => {
       if (result !== 'close' || result.price > 0 || result.quantity > 0) {
 
-        const variation: Variant = {unit: result.unit, name: result.name, SKU: 'p' + Math.floor(Math.random() * 100),
+        const variation = {unit: result.unit, name: result.name, SKU: 'p' + Math.floor(Math.random() * 100),
          productName: result.name,
 
         priceVariant: {
-                   id: 0,
+                   id: '',
                    priceId: 0,
                    variantId: 0,
                    minUnit: 0,
@@ -178,7 +178,10 @@ export class FlipperBasicPosComponent  {
         }, stock: {
           canTrackingStock: false,
           currentStock: 0,
-          id: 0
+          id: '',
+          channels:[],
+            createdAt:new Date().toISOString(),
+            updatedAt:new Date().toISOString()
         }
       };
 

@@ -4,6 +4,8 @@ import 'package:aurore/services/mail_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:stacked/stacked.dart';
+// import 'package:cblc_flutter/fleece.dart';
+// import 'package:couchbase_lite_dart/couchbase_lite_dart.dart';
 
 import 'couchbase.dart';
 import 'locator.dart';
@@ -11,6 +13,8 @@ import 'manager_view_model.dart';
 import 'services/bluethooth_service.dart';
 
 Future<void> main() async {
+  // Cbl.init();
+
   await DotEnv().load('.env');
   setupLocator();
   runApp(MyApp());
@@ -43,14 +47,11 @@ class _MyAppState extends State<MyApp> {
             viewModelBuilder: () => MainViewModel(),
             onModelReady: (model) => model.listenData(),
             builder: (context, model, child) {
-              return Container(child: Text('got it'));
+              return Container(child: Text('got it #'));
             },
           ),
           onPressed: () async {
-            // blueThoothManager.printReceipt();
-            _service.openCloseBusiness(businessId: '1', userId: '1');
-            // _blue.printReceipt(items: {'Beans':23.0,'Avocado':10.2});
-            // _mail.sendEmail();
+            // _service.openCloseBusiness(businessId: '128', userId: '1697');
           },
         ),
       )),

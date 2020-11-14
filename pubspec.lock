@@ -198,7 +198,7 @@ packages:
       name: couchbase_lite_dart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.0"
+    version: "0.3.1"
   coverage:
     dependency: transitive
     description:
@@ -292,7 +292,7 @@ packages:
       name: get
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.16.2"
+    version: "3.17.1"
   get_it:
     dependency: "direct main"
     description:
@@ -675,7 +675,7 @@ packages:
       name: sqlite3
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.7"
+    version: "0.1.8"
   sqlparser:
     dependency: transitive
     description:

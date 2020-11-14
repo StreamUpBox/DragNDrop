@@ -1,13 +1,8 @@
 import 'dart:async';
 
-import 'package:aurore/couchbase.dart';
 import 'package:aurore/logger.dart';
-import 'package:aurore/observable_response.dart';
-import 'package:couchbase_lite/couchbase_lite.dart';
 
-import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
-import 'package:rxdart/rxdart.dart';
 
 
 
@@ -42,7 +37,7 @@ class DatabaseService {
     return false;
   }
 
-  
+
 
   // ObservableResponse<ResultSet> observer({String property, String equator}) {
   //   final BehaviorSubject<ResultSet> stream = BehaviorSubject<ResultSet>();

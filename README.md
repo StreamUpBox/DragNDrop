@@ -1,4 +1,4 @@
-# aurore
+# COUCHBASEl_LITE_DART EXAMPLE DART
 
 A new Flutter project.
 

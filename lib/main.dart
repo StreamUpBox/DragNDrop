@@ -4,13 +4,14 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:stacked/stacked.dart';
 // import 'package:cblc_flutter/fleece.dart';
 // import 'package:couchbase_lite_dart/couchbase_lite_dart.dart';
+import 'package:couchbase_lite_dart/couchbase_lite_dart.dart';
 
 import 'locator.dart';
 import 'manager_view_model.dart';
 import 'services/bluethooth_service.dart';
 
 Future<void> main() async {
-  // Cbl.init();
+  Cbl.init();
   WidgetsFlutterBinding.ensureInitialized();
   await DotEnv().load('.env');
   setupLocator();

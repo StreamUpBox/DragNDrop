@@ -10,6 +10,7 @@ part 'user.g.dart';
 
 abstract class User implements Built<User, UserBuilder> {
 
+  @nullable
   @BuiltValueField(wireName: 'id')
   String get id;
 

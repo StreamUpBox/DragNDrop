@@ -1,4 +1,5 @@
 import 'package:aurore/services/bluethooth_service.dart';
+import 'package:aurore/services/database_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:stacked/stacked.dart';
@@ -31,7 +32,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    
+
     WidgetsBinding.instance.addPostFrameCallback((_) => _blue.initBluetooth());
   }
 
@@ -58,23 +59,37 @@ class _MyAppState extends State<MyApp> {
                         Container(
                           // color: Colors.blue,
                           child: RaisedButton(
-                              onPressed: model.observe,
+                              onPressed: model.save,
                               child: Text('Save',
                                   style: TextStyle(color: Colors.white))),
                         )
                       ],
                     )),
-                    // ListView(children: [
-                      
-                    // ],)
+                    Container(
+                      child: Row(
+                        children: [
+                          ...model.data.map(
+                            (object) => Container(
+                              margin: EdgeInsets.only(bottom: 22),
+                              child: Row(
+                                children: [Text(object.name)],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
             );
           },
-          onModelReady: (MainViewModel model){
+          onModelReady: (MainViewModel model) async {
             model.initFields();
-            
+            final databaseService = locator<DatabaseService>();
+            await databaseService.login();
+
+            model.observe(key: 'users');
           },
           viewModelBuilder: () => MainViewModel()),
     );

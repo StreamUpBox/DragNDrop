@@ -18,8 +18,6 @@ class _$UserSerializer implements StructuredSerializer<User> {
   Iterable<Object> serialize(Serializers serializers, User object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'id',
-      serializers.serialize(object.id, specifiedType: const FullType(String)),
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'channels',
@@ -27,7 +25,12 @@ class _$UserSerializer implements StructuredSerializer<User> {
           specifiedType:
               const FullType(BuiltList, const [const FullType(String)])),
     ];
-
+    if (object.id != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(object.id,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -75,9 +78,6 @@ class _$User extends User {
       (new UserBuilder()..update(updates)).build();
 
   _$User._({this.id, this.name, this.channels}) : super._() {
-    if (id == null) {
-      throw new BuiltValueNullFieldError('User', 'id');
-    }
     if (name == null) {
       throw new BuiltValueNullFieldError('User', 'name');
     }

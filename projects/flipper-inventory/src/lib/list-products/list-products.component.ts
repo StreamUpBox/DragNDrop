@@ -1,8 +1,6 @@
-import { Component, OnInit, ViewChild, OnDestroy, Input, NgZone } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, Input } from '@angular/core';
 import { ProductService } from '../services/product.service';
-import { Product, Stock, CalculateTotalClassPipe, Variant,
-   MigrateService, PouchConfig, PouchDBService, Tables,
-    StockHistory } from '@enexus/flipper-components';
+import { Product, Stock, CalculateTotalClassPipe, Variant, PouchConfig, PouchDBService } from '@enexus/flipper-components';
 
     
 import { Subscription, async } from 'rxjs';
@@ -52,10 +50,8 @@ export class ListProductsComponent implements OnInit, OnDestroy {
               private totalPipe: CalculateTotalClassPipe,
               private stock: StockService,
               public variant: VariationService,
-              private migrate: MigrateService,
               private database: PouchDBService,
-              public product: ProductService, 
-              private ngZone: NgZone) {
+              public product: ProductService) {
     this.database.connect(PouchConfig.bucket);
     this.dataSource = new MatTableDataSource([]);
  

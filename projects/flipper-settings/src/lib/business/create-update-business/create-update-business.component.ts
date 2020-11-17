@@ -1,9 +1,8 @@
 import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import {
-  Business, Branch, ILatLng, Types, User, BusinessCategory,
+  Business, Branch, ILatLng, User, BusinessCategory,
   NotificationService, SettingsService, Taxes, PouchDBService,
-  PouchConfig, Tables, MainModelService,ActiveUser, ActiveBusiness, DEFAULT_FLIPPER_DB_CONFIG, 
-} from '@enexus/flipper-components';
+  PouchConfig,ActiveUser, ActiveBusiness, DEFAULT_FLIPPER_DB_CONFIG} from '@enexus/flipper-components';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -36,7 +35,6 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
     private router: Router,
     protected notificationSvc: NotificationService,
     private formBuilder: FormBuilder,
-    private model: MainModelService,
     private activeUser:ActiveUser,
     private activeBusiness:ActiveBusiness,
     private ref: ChangeDetectorRef) {
@@ -113,11 +111,7 @@ if(this.activeUser.currentUser){
     });
 }
 
-
- 
-
-      
-      this.ref.detectChanges();
+     this.ref.detectChanges();
 
   }
 

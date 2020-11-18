@@ -1,5 +1,5 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import { NotificationService, fadeInAnimation, Product, MainModelService, Tables, Variant } from '@enexus/flipper-components';
+import { NotificationService, fadeInAnimation } from '@enexus/flipper-components';
 import { ProductService } from '../services/product.service';
 import { Router } from '@angular/router';
 import { trigger, transition, useAnimation } from '@angular/animations';
@@ -52,7 +52,7 @@ export class CreateProductComponent implements OnInit {
     }
   }
   form: FormGroup;
-  constructor(private dialog: DialogService, private model: MainModelService, private formBuilder: FormBuilder,
+  constructor(private dialog: DialogService, private formBuilder: FormBuilder,
 
     private router: Router, public product: ProductService,
     protected notificationSvc: NotificationService) {
@@ -114,20 +114,7 @@ export class CreateProductComponent implements OnInit {
     // this.updateVariantProductName();
   }
 
-  updateVariantProductName() {
-    let product = this.model.findByFirst<Product>(Tables.products, 'isDraft', true);
-    if (product) {
-      const variants = this.model.filters<Variant>(Tables.variants, 'productId', product.id);
-      if (variants.length > 0) {
-        variants.forEach(v => {
-          v.productName = product.name;
-          this.model.update<Variant>(Tables.variants, v, v.id);
-        });
-      }
 
-    }
-
-  }
 
 
 

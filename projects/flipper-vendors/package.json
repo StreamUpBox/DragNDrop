@@ -1,34 +1,11 @@
 {
   "name": "@enexus/flipper-vendors",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "peerDependencies": {
-    "@angular/common": "~8.2.9",
-    "@angular/core": "~8.2.9"
+    "@angular/common": "~10.0.2",
+    "@angular/core": "~10.0.2"
   },
-  "main": "bundles/flipper-vendors.umd.js",
-  "module": "fesm5/flipper-vendors.js",
-  "es2015": "fesm2015/flipper-vendors.js",
-  "esm5": "esm5/flipper-vendors.js",
-  "esm2015": "esm2015/flipper-vendors.js",
-  "fesm5": "fesm5/flipper-vendors.js",
-  "fesm2015": "fesm2015/flipper-vendors.js",
-  "typings": "flipper-vendors.d.ts",
-  "metadata": "flipper-vendors.metadata.json",
-  "sideEffects": false,
   "dependencies": {
     "tslib": "^2.0.0"
-},
-  "description": "Including all dependancies modules",
-  "directories": {
-    "lib": "lib"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "Material",
-    "flexLayout"
-  ],
-  "author": "Ganza respice",
-  "license": "ISC"
+  }
 }

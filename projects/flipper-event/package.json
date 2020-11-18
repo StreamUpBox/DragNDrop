@@ -1,6 +1,6 @@
 {
-  "name": "flipper-event",
-  "version": "0.0.3",
+  "name": "@enexus/flipper-event",
+  "version": "1.0.4",
   "peerDependencies": {
     "@angular/common": "~10.0.11",
     "@angular/core": "~10.0.11"

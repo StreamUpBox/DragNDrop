@@ -8,7 +8,6 @@
       "@enexus/flipper-vendors": "@enexus/flipper-vendors",
       "@enexus/flipper-event": "@enexus/flipper-event",
       "@enexus/flipper-dialog": "@enexus/flipper-dialog",
-      "@enexus/flipper-offline-database":"@enexus/flipper-offline-database",
       "lodash":"lodash",
       "ngx-barcode":"ngx-barcode",
       "pouchdb":"pouchdb",

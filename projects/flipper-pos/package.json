@@ -1,6 +1,6 @@
 {
-"name": "flipper-pos",
-  "version": "1.0.7",
+"name": "@enexus/flipper-pos",
+  "version": "1.2.7",
   "peerDependencies": {
     "@angular/common": "~10.0.11",
     "@angular/core": "~10.0.11"

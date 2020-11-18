@@ -57,4 +57,9 @@ export class AppModule {
     //  overlayContainer.getContainerElement().classList.add('unicorn-dark-theme');
   }
 }
-
+declare module "@angular/core" {
+  interface ModuleWithProviders<T = any> {
+    ngModule: Type<T>;
+    providers?: Provider[];
+  }
+}

@@ -8,7 +8,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-    FlexLayoutModule,
+    FlexLayoutModule
   ],
   exports: [
     FormsModule,
@@ -18,4 +18,11 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
   ],
 })
 export class VendorsModule {
+}
+
+declare module "@angular/core" {
+  interface ModuleWithProviders<T = any> {
+    ngModule: Type<T>;
+    providers?: Provider[];
+  }
 }

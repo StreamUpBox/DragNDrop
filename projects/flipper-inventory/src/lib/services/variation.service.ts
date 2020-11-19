@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { MainModelService, Tables, Variant, SettingsService, Business,
-         Branch, Product, StockHistory, Labels, PouchDBService, Stock, PouchConfig } from '@enexus/flipper-components';
+import {  Variant, SettingsService, Business,
+         Branch, Product, Labels, PouchDBService, Stock, PouchConfig } from '@enexus/flipper-components';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { VariantsDialogModelComponent } from '../variants/variants-dialog-model/variants-dialog-model.component';
 import { DialogService,  } from '@enexus/flipper-dialog';

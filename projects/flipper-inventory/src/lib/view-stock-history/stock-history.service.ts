@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { StockHistory, MainModelService, Tables, Variant, PouchDBService } from '@enexus/flipper-components';
+import { BehaviorSubject} from 'rxjs';
+import { StockHistory, Tables, Variant, PouchDBService } from '@enexus/flipper-components';
 import { StockService } from '../services/stock.service';
 
 @Injectable({
@@ -10,9 +10,8 @@ export class StockHistoryService {
   variantsSubject: BehaviorSubject<StockHistory[]>;
   stockHistories:StockHistory[]=[];
   private readonly variantsMap = new Map<string, StockHistory>();
-  constructor(private stockSvc: StockService,
-              private database: PouchDBService,
-              private model: MainModelService) {
+  constructor(
+              private database: PouchDBService) {
     this.variantsSubject = new BehaviorSubject([]);
   }
 
@@ -41,7 +40,5 @@ export class StockHistoryService {
   public host(id: string): StockHistory | undefined {
     return this.variantsMap.get(id);
   }
-  findVariant(variantId: string) {
-    return this.model.find<Variant>(Tables.variants, variantId);
-  }
+  
 }

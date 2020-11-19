@@ -5,8 +5,6 @@ import { FlipperComponentsModule, PouchDBService } from '@enexus/flipper-compone
 import { VendorsModule } from '@enexus/flipper-vendors';
 import { RouterModule } from '@angular/router';
 
-
-
 @NgModule({
   declarations: [FlipperMenuComponent],
   imports: [

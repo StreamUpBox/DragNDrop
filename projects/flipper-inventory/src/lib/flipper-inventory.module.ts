@@ -9,7 +9,6 @@ import { VariantsDialogModelComponent } from './variants/variants-dialog-model/v
 import { EditVariantComponent } from './variants/edit-variant/edit-variant.component';
 import { DisacrdDialogModelComponent } from './products/disacrd-dialog-model/disacrd-dialog-model.component';
 import { ManageStockComponent } from './manage-stock/manage-stock.component';
-import { FlipperOfflineDatabaseModule } from '@enexus/flipper-offline-database';
 import { AddVariantComponent } from './variants/add-variant/add-variant.component';
 import { ListProductsComponent } from './list-products/list-products.component';
 import { ProductVariantsComponent } from './list-products/product-variants/product-variants.component';
@@ -48,7 +47,6 @@ import { FlipperFileUploadModule } from '@enexus/flipper-file-upload';
     FlipperComponentsModule,
     
     FlipperFileUploadModule,
-    FlipperOfflineDatabaseModule,
     DialogModule
   ],
   entryComponents: [

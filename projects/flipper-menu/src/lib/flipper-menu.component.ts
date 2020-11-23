@@ -111,7 +111,58 @@ export class FlipperMenuComponent implements OnInit {
   
 
   async ngOnInit() {
-
+    this.menu= [
+      {
+          name: 'Analytics',
+          icon: 'analytics.svg',
+          route: 'analytics',
+          active: true,
+          isSetting: false,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+          channels:['v']
+      },
+      {
+          name: 'POS',
+          icon: 'pos.svg',
+          route: 'pos',
+          active: false,
+          isSetting: false,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+          channels:['v']
+      },
+      {
+          name: 'Inventory',
+          icon: 'inventory.svg',
+          route: 'inventory',
+          active: false,
+          isSetting: false,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+          channels:['v']
+      },
+      {
+          name: 'Transactions',
+          icon: 'transaction.svg',
+          route: 'transactions',
+          active: false,
+          isSetting: false,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+          channels:['v']
+      },
+      {
+          name: 'Settings',
+          icon: 'settings.svg',
+          route: 'settings',
+          active: false,
+          isSetting: true,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+          channels:['v']
+      }
+  ];
 
     await this.database.activeUser().then(res=>{
         if(res.docs && res.docs.length > 0){

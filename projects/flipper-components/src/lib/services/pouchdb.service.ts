@@ -367,16 +367,17 @@ export class PouchDBService {
         });
     }
 
-
+//https://www.joshmorony.com/offline-syncing-in-ionic-2-with-pouchdb-couchdb/
     public sync(remote: string) {
         const sessionId = PouchConfig.sessionId;
         document.cookie = sessionId;
         //our main = bucket and is constant to all users.
-        PouchDB.sync(PouchConfig.bucket, remote, {
-            password: PouchConfig.password,
-            user:PouchConfig.user,
-            live: false,
-            retry: true
+        PouchDB.sync('main', 'http://yegobox.com:4985/main', {
+            password: 'singlworld',
+            user:'admin',
+            live: true,
+            retry: true,
+            continuous: true
         }).on('change', change => {
             if (change) {
                 this.listener.emit(change);

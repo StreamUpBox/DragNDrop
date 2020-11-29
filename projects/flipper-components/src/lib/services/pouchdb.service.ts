@@ -6,17 +6,18 @@ PouchDB.plugin(PouchFind);
 import debugPouch from "pouchdb-debug";
 
 
+
 import { v1 as uuidv1 } from 'uuid';
 import { PouchConfig } from '../db-config';
 
 
 
-class Response{
-    res:any
-    docs:any
+class Response {
+    res: any
+    docs: any
 }
 
-interface Handler { (result: Response): void}
+interface Handler { (result: Response): void }
 
 
 @Injectable({
@@ -25,22 +26,22 @@ interface Handler { (result: Response): void}
 
 export class PouchDBService {
 
-    private isInstantiated: boolean;
+    private isInstantiated: boolean = false;
     private database: any;
     public listener: EventEmitter<any> = new EventEmitter();
     public listenerLogin: EventEmitter<any> = new EventEmitter();
 
 
 
-    public constructor() { 
-        console.log('debugging the pouchdb');
+    public constructor() {
         debugPouch(PouchDB);
+        this.sync([localStorage.getItem('userId')]); //we keep the current logged userId in local storage for quick access
     }
 
     public activeUser(table = 'users') {
         return this.database.createIndex({
             index: { fields: ['table', 'active'] }
-        }).then(result => {
+        }).then(() => {
             return this.database.find({
                 selector: {
                     table: { $eq: table },
@@ -54,56 +55,56 @@ export class PouchDBService {
 
         return this.database.createIndex({
             index: { fields: fields }
-        }).then(result => {
+        }).then(() => {
             return this.database.find({
-                
+
                 selector: selector
             });
         })
-    
+
     }
-    public async fastQuery(fields = [],selector = {}){
+    public async fastQuery(fields = [], selector = {}) {
         try {
             // Create the Index
             var result = await this.database.createIndex({
-                index:  { fields: fields }
+                index: { fields: fields }
             });
-        
+
             // Query the Index using find().
             result = await this.database.find({
-                
+
                 selector: selector
             });
-        
+
             // Found docs are in result.docs
             return await result.docs;
         }
-        catch( err ) {
+        catch (err) {
             console.log(err);
         }
     }
 
-    public callbackQuery(fields = [], selector = {},callback:Handler) {
+    public callbackQuery(fields = [], selector = {}, callback: Handler) {
 
         return this.database.find({
             selector: selector,
-            fields: fields      
-          }, function (err, result) {
+            fields: fields
+        }, function (err: any, result: Response) {
             if (err) { return console.log(err); }
             // handle result
             return callback(result)
-          });
-  
-        
+        });
+
+
     }
-    
 
 
-    public activeBusiness(userId, table = 'businesses') {
+
+    public activeBusiness(userId: any, table = 'businesses') {
         // comment
         return this.database.createIndex({
             index: { fields: ['table', 'active', 'userId'] }
-        }).then(result => {
+        }).then(() => {
             return this.database.find({
                 selector: {
                     table: { $eq: table },
@@ -114,11 +115,11 @@ export class PouchDBService {
         })
     }
 
-    public hasDraftProduct(businessId, table = 'products') {
+    public hasDraftProduct(businessId: any, table = 'products') {
         // comment
         return this.database.createIndex({
             index: { fields: ['table', 'isDraft', 'businessId'] }
-        }).then(result => {
+        }).then(() => {
             return this.database.find({
                 selector: {
                     table: { $eq: table },
@@ -130,10 +131,10 @@ export class PouchDBService {
     }
     public currentBusiness() {
 
-        return this.activeUser().then(user => {
+        return this.activeUser().then((user: { docs: string | any[]; }) => {
 
             if (user && user.docs.length > 0) {
-                return this.activeBusiness(user.docs[0].id, 'businesses').then(business => {
+                return this.activeBusiness(user.docs[0].id, 'businesses').then((business: { docs: string | any[]; }) => {
 
                     if (business && business.docs.length > 0) {
                         return business.docs[0];
@@ -144,17 +145,17 @@ export class PouchDBService {
     }
 
 
-    
+
     public currentTax() {
-        return this.activeUser().then(user => {
+        return this.activeUser().then((user: { docs: string | any[]; }) => {
 
             if (user && user.docs.length > 0) {
-                return this.activeBusiness(user.docs[0].id, 'businesses').then(business => {
+                return this.activeBusiness(user.docs[0].id, 'businesses').then((business: { docs: string | any[]; }) => {
                     if (business && business.docs.length > 0) {
 
                         return this.database.query(['table', 'businessId', "isDefault"], {
                             table: { $eq: 'taxes' }, businessId: { $eq: business.docs[0].id }, isDefault: { $eq: true }
-                        }).then(res => {
+                        }).then((res: { docs: string | any[]; }) => {
 
                             if (res.docs && res.docs.length > 0) {
                                 return res.docs[0];
@@ -173,14 +174,14 @@ export class PouchDBService {
 
     public listBusinessBranches() {
 
-        return this.currentBusiness().then(business => {
+        return this.currentBusiness().then((business: { id: any; }) => {
 
             if (business) {
 
                 return this.query(['table', 'businessId'], {
                     table: { $eq: 'branches' },
                     businessId: { $eq: business.id }
-                }).then(res => {
+                }).then((res: { docs: string | any[]; }) => {
                     if (res.docs && res.docs.length > 0) {
                         return res.docs;
                     } else {
@@ -196,39 +197,13 @@ export class PouchDBService {
 
     public listBusinessTaxes() {
 
-                return this.currentBusiness().then(business => {
-                    if (business) {
-
-                       return this.query(['table', 'businessId'], {
-                            table: { $eq: 'taxes' },
-                            businessId: { $eq: business.id }
-                        }).then(res => {
-
-                            if (res.docs && res.docs.length > 0) {
-                                return res.docs;
-                            } else {
-                                return [];
-                            }
-                        });
-
-                    } else {
-                        return [];
-                    }
-                });
-          
-    }
-
-
-    
-    public listBusinessTaxes2() {
-
-        return this.currentBusiness().then(business => {
+        return this.currentBusiness().then((business: { id: any; }) => {
             if (business) {
 
-               return this.callbackQuery(['table', 'businessId'], {
+                return this.query(['table', 'businessId'], {
                     table: { $eq: 'taxes' },
                     businessId: { $eq: business.id }
-                },(res) =>{
+                }).then((res: { docs: string | any[]; }) => {
 
                     if (res.docs && res.docs.length > 0) {
                         return res.docs;
@@ -241,12 +216,38 @@ export class PouchDBService {
                 return [];
             }
         });
-  
-}
-    public activeBranch(businessId, table = "branches") {
+
+    }
+
+
+
+    public listBusinessTaxes2() {
+
+        return this.currentBusiness().then((business: { id: any; }) => {
+            if (business) {
+
+                return this.callbackQuery(['table', 'businessId'], {
+                    table: { $eq: 'taxes' },
+                    businessId: { $eq: business.id }
+                }, (res) => {
+
+                    if (res.docs && res.docs.length > 0) {
+                        return res.docs;
+                    } else {
+                        return [];
+                    }
+                });
+
+            } else {
+                return [];
+            }
+        });
+
+    }
+    public activeBranch(businessId: string, table = "branches") {
         return this.database.createIndex({
             index: { fields: ['tables', 'active', 'businessId'] }
-        }).then(result => {
+        }).then(() => {
             return this.database.find({
                 selector: {
                     table: { $eq: table },
@@ -257,13 +258,15 @@ export class PouchDBService {
         })
     }
 
+
     public connect(dbName: string, filter: string = null) {
         if (!this.isInstantiated && dbName) {
             this.database = new PouchDB(dbName);
             if (filter != null) {
                 this.database.changes({
-                    filter: function (doc) {
+                    filter: (doc: any) => {
                         //make sure we filter only to listen on our document of intrest.
+                        // TODO: see if we need this as not filter can be part of the sync function
                         return doc.channels[0] === filter;
                     }
                 });
@@ -291,22 +294,22 @@ export class PouchDBService {
     }
 
     public remove(document: any) {
-        try{
-        return this.database.remove(document);
-        }catch(e){
-            console.log('did not removed',e);
+        try {
+            return this.database.remove(document);
+        } catch (e) {
+            console.log('did not removed', e);
         }
     }
 
-    public find(id) {
+    public find(id: string) {
 
-        return this.get(id).then(result => {
+        return this.get(id).then((result: any) => {
             return result;
-        }, error => {
+        }, (error: { status: string; }) => {
             if (error.status === '404') {
                 throw new Error((`ERROR:${error}`));
             } else {
-                return new Promise((resolve, reject) => {
+                return new Promise((_resolve, reject) => {
                     reject(error);
                 });
             }
@@ -315,7 +318,7 @@ export class PouchDBService {
 
     }
 
-    getResponse(result, isArray) {
+    getResponse(result: any[], isArray: any) {
 
         if (!Array.isArray(result) && isArray) {
             return [result];
@@ -350,57 +353,46 @@ export class PouchDBService {
         document.channels = [PouchConfig.channel];
 
 
-        return this.get(id).then(result => {
-            console.log('result',result);
+        return this.get(id).then((result: { _rev: any; }) => {
             document._rev = result._rev;
-            console.log('updated doc',document);
+            console.log('updated doc', document);
             return this.database.put(document);
-        }, error => {
-            console.log('error on update',error);
+        }, (error: { status: string | number; }) => {
+            console.log('error on update', error);
             if (error.status === '404' || error.status === 404) {
                 return this.database.put(document);
             } else {
-                return new Promise((resolve, reject) => {
+                return new Promise((_resolve, reject) => {
                     reject(error);
                 });
             }
         });
     }
 
-//https://www.joshmorony.com/offline-syncing-in-ionic-2-with-pouchdb-couchdb/
-    public sync(remote: string) {
-        const sessionId = PouchConfig.sessionId;
-        document.cookie = sessionId;
-        //our main = bucket and is constant to all users.
+    //https://www.joshmorony.com/offline-syncing-in-ionic-2-with-pouchdb-couchdb/
+    public sync(channels: Array<string>) {
+        //NOTE: our main = bucket and is constant to all users. //do not use sessionId on pouchDB we don't use it on backend i.e on the server
         PouchDB.sync('main', 'http://yegobox.com:4985/main', {
             password: 'singlworld',
-            user:'admin',
+            user: 'admin',
             live: true,
+            "purge-on-removal": true,
             retry: true,
-            continuous: true
-        }).on('change', change => {
-            if (change) {
-                this.listener.emit(change);
-            }
-        }).on('paused', change => {
-            console.log("sync paused");
-            if (change) {
-                this.listener.emit(change);
-            }
+            continous: true,
+            filter: "sync_gateway/bychannel", //NOTE: now filter is part of sync function!
+            query_params: { "channels": channels },
+        }).on('change', (info: any) => {
+            console.log("sync change:", info)
+        }).on('paused', (err: any) => {
+            console.log("sync paused", err)
         }).on('active', () => {
-        }).on('denied', change => {
-            console.log("sync denied");
-            if (change) {
-                this.listener.emit(change);
-            }
-        }).on('complete', change => {
-            console.log("sync complete");
-            if (change) {
-                this.listener.emit(change);
-            }
-        }).on('error', error => {
-            console.log("sync error");
-            console.error(JSON.stringify(error));
+            console.log("sync active")
+        }).on('denied', (err: any) => {
+            console.log('denied', err);
+        }).on('complete', (info: any) => {
+            console.log("sync complete")
+        }).on('error', (err) => {
+            console.log("sync error", err)
         });
     }
     public getChangeListener() {

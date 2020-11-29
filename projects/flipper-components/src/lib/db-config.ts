@@ -3,6 +3,7 @@ import { Menu } from './entries';
 import { Reason } from './entries/reason';
 
 
+
 export const APP_CONFIG = new InjectionToken<FlipperDBConfig[]>('APP_CONFIG');
 
 export enum TABLES {

@@ -32,11 +32,11 @@
       "ng-offline-db/*": [
         "dist/ng-offline-db/*"
       ],
-      "flipper-menu": [
+      "@enexus/flipper-menu": [
         "dist/flipper-menu"
       ],
-      "flipper-menu/*": [
-        "dist/flipper-menu/*"
+      "@enexus/flipper-menu/*": [
+        "dist/flipper-menu*"
       ],
 
       "@enexus/flipper-pos": [
@@ -135,6 +135,7 @@
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true
+    "strictInjectionParameters": true,
+    "enableIvy":false
   }
 }

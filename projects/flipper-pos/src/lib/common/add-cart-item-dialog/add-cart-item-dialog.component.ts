@@ -1,7 +1,7 @@
-import { Component, OnInit, Inject, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NotificationService, Taxes, MainModelService, Tables, Business, SettingsService } from '@enexus/flipper-components';
+import { NotificationService, Taxes, SettingsService } from '@enexus/flipper-components';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -12,12 +12,10 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class AddCartItemDialogComponent implements OnInit {
   taxes$: Taxes[] = [];
   units: any[] = [];
-  constructor(private model: MainModelService, public dialogRef: MatDialogRef<AddCartItemDialogComponent>,
+  constructor(public dialogRef: MatDialogRef<AddCartItemDialogComponent>,
     private formBuilder: FormBuilder,
     protected notificationSvc: NotificationService, private setting: SettingsService) {
     this.units = this.setting.units();
-    this.taxes$ = this.model.filters<Taxes>(Tables.taxes, 'businessId',
-      this.model.active<Business>(Tables.business).id);
   }
 
   get formControl() { return this.form.controls; }

@@ -1,26 +1,11 @@
 {
-  "name": "flipper-color",
-  "version": "0.0.4",
+  "name": "@enexus/flipper-color",
+  "version": "1.6.16",
   "peerDependencies": {
-    "@angular/common": "~10.0.11",
-    "@angular/core": "~10.0.11"
+    "@angular/common": "~10.0.2",
+    "@angular/core": "~10.0.2"
   },
-  "sideEffects": false,
   "dependencies": {
     "tslib": "^2.0.0"
-},
-  "description": "Including different color like primary,error,success,danger",
-  "directories": {
-    "lib": "lib"
-  },
-  "keywords": [
-    "Primary",
-    "Danger",
-    "Success",
-    "Info",
-    "and",
-    "Default"
-  ],
-  "author": "Ganza respice",
-  "license": "ISC"
+  }
 }

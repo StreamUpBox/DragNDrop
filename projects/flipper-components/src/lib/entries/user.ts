@@ -10,7 +10,8 @@ export class User {
   table:string;
   docId?:string;
   channels:Array<string>;
-
+  expiresAt:any;
+  userId:any;
   channel?:string;
 
   

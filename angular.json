@@ -173,21 +173,22 @@
         }
       }
     },
+  
     "flippermenu": {
       "projectType": "library",
       "root": "projects/flipper-menu",
       "sourceRoot": "projects/flipper-menu/src",
-      "prefix": "flipper",
+      "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
             "tsConfig": "projects/flipper-menu/tsconfig.lib.json",
-            "project": "projects/flipper-menu/ng-package.json",
-            "configurations": {
-              "production": {
-                "tsConfig": "projects/flipper-menu/tsconfig.lib.prod.json"
-              }
+            "project": "projects/flipper-menu/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/flipper-menu/tsconfig.lib.prod.json"
             }
           }
         },

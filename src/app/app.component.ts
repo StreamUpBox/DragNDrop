@@ -48,6 +48,7 @@ export class AppComponent implements OnInit {
                private totalPipe: CalculateTotalClassPipe) {
       this.branch = this.model.active<Branch>(Tables.branch);
       this.database.connect(PouchConfig.bucket,'117');
+      
       if (PouchConfig.canSync) {
         this.database.sync(PouchConfig.syncUrl);
       }
@@ -63,7 +64,24 @@ export class AppComponent implements OnInit {
 
   date = new Date().toISOString();
 
-  ngOnInit() {
+  async ngOnInit() {
+    const user = {
+      _id: '',
+      name: 'ganza',
+      email: 'respinho2014@gmail.com',
+      token: 'xxxxx',
+      active: true,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      id: this.database.uid(),
+      userId: 117,
+      expiresAt: Date.parse('2020-02-10') as number,
+      table:'users',
+      docId:PouchConfig.Tables.user,
+      
+    };
+    
+    // await  this.database.put(PouchConfig.Tables.user, user);
     this.init();
   }
   async init() {

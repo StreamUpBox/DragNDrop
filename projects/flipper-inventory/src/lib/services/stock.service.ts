@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { MainModelService, Tables, Stock, Branch, SettingsService,
+import {  Stock, Branch, SettingsService,
    StockHistory, Variant, PouchDBService, PouchConfig } from '@enexus/flipper-components';
-import { ModelService } from '@enexus/flipper-offline-database';
 
 @Injectable({
   providedIn: 'root'
@@ -250,7 +249,6 @@ export class StockService {
   updateHistory(stock: StockHistory): any {
     return  this.database.put(PouchConfig.Tables.stockHistories+'_'+stock.id, stock);
   }
-
 
   update(stock: Stock): Stock {
     if (stock) {

@@ -16,7 +16,6 @@ import { MatchHeightDirective } from './directive/match-height.directive';
 import { MergeArryByIdPipe } from './pipe/merge-arry-by-id.pipe';
 import { ArrayRemoveItemPipe } from './pipe/array-remove-item.pipe';
 import { FindKeyPipe } from './pipe/find-key.pipe';
-import { FlipperOfflineDatabaseModule } from '@enexus/flipper-offline-database';
 import { NotificationListComponent } from './notifications/notification.component';
 import { NotificationService } from './notifications/notification.service';
 import { GenerateBarcodeComponent } from './generate-barcode/generate-barcode.component';
@@ -29,7 +28,6 @@ import { LoadingIconComponent } from './loading-icon/loading-icon.component';
     ColorModule,
     FlipperEventModule,
     DialogModule,
-    FlipperOfflineDatabaseModule,
     NgxBarcodeModule
   ],
   declarations: [

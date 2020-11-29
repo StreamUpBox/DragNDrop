@@ -1,9 +1,8 @@
 import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import {
-  Business, Branch, ILatLng, Types, User, BusinessCategory,
+  Business, Branch, ILatLng, User, BusinessCategory,
   NotificationService, SettingsService, Taxes, PouchDBService,
-  PouchConfig, Tables, MainModelService,ActiveUser, ActiveBusiness, 
-} from '@enexus/flipper-components';
+  PouchConfig,ActiveUser, ActiveBusiness, DEFAULT_FLIPPER_DB_CONFIG} from '@enexus/flipper-components';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -15,11 +14,11 @@ import { Router } from '@angular/router';
 export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
   registerForm: FormGroup;
   submitted = false;
-  types$: Types[] = [];
+  types$: any[] = [];
   taxes$: Taxes[] = [];
   user:User=null;
 
-  categories$: BusinessCategory[] = [];
+  categories$: any[] = [];
   searchCategoryByTypes$: BusinessCategory[] = [];
   isCategoryFound = false;
   business$: Business[] = [];
@@ -36,7 +35,6 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
     private router: Router,
     protected notificationSvc: NotificationService,
     private formBuilder: FormBuilder,
-    private model: MainModelService,
     private activeUser:ActiveUser,
     private activeBusiness:ActiveBusiness,
     private ref: ChangeDetectorRef) {
@@ -60,15 +58,17 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
     }
   }
 
+  
+
 
   ngAfterViewInit(): void {
     this.getLocation();
   }
   async ngOnInit() {
     this.getLocation();
+    this.types$= DEFAULT_FLIPPER_DB_CONFIG.defaultType;
+    this.categories$=DEFAULT_FLIPPER_DB_CONFIG.defaultCategory;
     
-    this.types$ = this.model.loadAll<Types>(Tables.type);
-    this.categories$ = this.model.loadAll<BusinessCategory>(Tables.businessCategory);
 
     if (PouchConfig.canSync) {
      
@@ -111,24 +111,19 @@ if(this.activeUser.currentUser){
     });
 }
 
-
- 
-
-      
-      this.ref.detectChanges();
+     this.ref.detectChanges();
 
   }
 
 
   get f() { return this.registerForm.controls; }
 
-  async getBusinessCategory(id: string) {
+  async getBusinessCategory(typeId: string) {
 
     this.searchCategoryByTypes$ = [];
     await this.categories$.forEach(cat => {
 
-      const catTypeId = typeof cat.typeId === 'string' ? cat.typeId : cat.typeId;
-      const typeId = typeof id === 'string' ? id : id;
+      const catTypeId = cat.type_id;
       if (catTypeId === typeId) {
         this.searchCategoryByTypes$.push(cat);
       }
@@ -142,7 +137,7 @@ if(this.activeUser.currentUser){
 
   onSubmit() {
     this.submitted = true;
-
+    console.log(this.activeUser.currentUser);
     // stop here if form is invalid
     if (this.registerForm.invalid) {
       this.notificationSvc.error('Create Business', 'We need you to complete all of the required fields before we can continue');

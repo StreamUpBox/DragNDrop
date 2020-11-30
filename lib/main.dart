@@ -1,100 +1,74 @@
-import 'package:aurore/services/bluethooth_service.dart';
-import 'package:aurore/services/database_service.dart';
+
+import 'package:aurore/locator.dart';
+import 'package:aurore/manager_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:stacked/stacked.dart';
-// import 'package:cblc_flutter/fleece.dart';
-// import 'package:couchbase_lite_dart/couchbase_lite_dart.dart';
-import 'package:couchbase_lite_dart/couchbase_lite_dart.dart';
-
-import 'locator.dart';
-import 'manager_view_model.dart';
 
 
-Future<void> main() async {
-  Cbl.init();
-  WidgetsFlutterBinding.ensureInitialized();
-  await DotEnv().load('.env');
+void main() {
   setupLocator();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
  
-  // final DatabaseService _service = locator<DatabaseService>();
-  // final BlueToothService _blue = locator<BlueToothService>();
-  // final MailService _mail = locator<MailService>();
-  final _name = TextEditingController();
-  // @override
-  // void initState() {
-  //   super.initState();
-
-  //   WidgetsBinding.instance.addPostFrameCallback((_) => _blue.initBluetooth());
-  // }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: ViewModelBuilder.reactive(
-          builder: (BuildContext context, MainViewModel model, Widget child) {
-            return Scaffold(
-              body: Padding(
-                padding: const EdgeInsets.all(38.0),
-                child: ListView(
-                  children: [
-                    Column(
-                      children: [
-                        Form(
-                            child: Row(
-                          children: [
-                            ConstrainedBox(
-                              constraints:
-                                  BoxConstraints.tight(const Size(200, 50)),
-                              child: TextFormField(
-                                controller: _name,
-                                onChanged:(value){
-                                  model.setName(name:value);
-                                }
-                              ),
-                            ),
-                            Container(
-                              // color: Colors.blue,
-                              child: RaisedButton(
-                                  onPressed: (){
-                                    model.save(name:_name.text);
-                                  },
-                                  child: Text('Save',
-                                      style: TextStyle(color: Colors.white))),
-                            )
-                          ],
-                        )),
-                        Container(
-                          child: Column(
-                            children: [
-                              ...model.data.map(
-                                (object) => Container(
-                                  margin: EdgeInsets.only(bottom: 22),
-                                  child: Text(object.name),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
+      home: ViewModelBuilder.reactive(builder: (BuildContext context,MainViewModel model, Widget child){
+        return Scaffold(
+        appBar: AppBar(
+          title: const Text('Bluetooth Thermal Printer Demo'),
+        ),
+        body: Container(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Search Paired Bluetooth"),
+              OutlineButton(
+                onPressed: () {
+                  model.getBluetooth();
+                },
+                child: Text("Search"),
+              ),
+              Container(
+                height: 200,
+                child: ListView.builder(
+                  itemCount: model.state.bluethioothDevices !=null && model.state.bluethioothDevices.length > 0
+                      ? model.state.bluethioothDevices.length
+                      : 0,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      onTap: () {
+                        String select = model.state.bluethioothDevices[index];
+                        List list = select.split("#");
+                        // String name = list[0];
+                        String mac = list[1];
+                        model.setConnect(mac);
+                      },
+                      title: Text('${model.state.bluethioothDevices[index]}'),
+                      subtitle: Text("Click to connect"),
+                    );
+                  },
                 ),
               ),
-            );
-          },
-          onModelReady: (MainViewModel model) async {
-            // model.initFields();
-            final databaseService = locator<DatabaseService>();
-            await databaseService.login();
-
-            model.observe(key: 'users');
-          },
-          viewModelBuilder: () => MainViewModel()),
+              SizedBox(
+                height: 30,
+              ),
+              OutlineButton(
+                onPressed: model.state.blueConnected ? model.blue.printGraphics : null,
+                child: Text("Print"),
+              ),
+              OutlineButton(
+                onPressed: model.state.blueConnected ? model.blue.printTicket : null,
+                child: Text("Print Ticket"),
+              ),
+            ],
+          ),
+        ),
+      );
+      }, viewModelBuilder: ()=>MainViewModel()),
     );
   }
 }

@@ -29,13 +29,11 @@ dependencies:
   # get it
   get_it: 
   logger: ^0.6.0
-  bluetooth_print: 
-    git:
-      url: 'https://github.com/yegobox/bluetooth_print.git'
-      ref: 'yegobox'
   mailer: 
   path_provider: ^1.6.24   
   shared_preferences: 0.5.2
+  bluetooth_thermal_printer: 
+  esc_pos_utils: ^0.4.9
  
  
 dev_dependencies:

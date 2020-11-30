@@ -1,20 +1,25 @@
+import 'package:aurore/services/bluethooth_service.dart';
 import 'package:aurore/services/database_service.dart';
+import 'package:aurore/services/shared_state_service.dart';
+import 'package:bluetooth_thermal_printer/bluetooth_thermal_printer.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:logger/logger.dart';
 import 'package:couchbase_lite_dart/couchbase_lite_dart.dart';
+import 'package:stacked/stacked.dart';
 import 'package:uuid/uuid.dart';
-import 'package:aurore/base_model.dart';
 
-import 'base_model.dart';
 import 'locator.dart';
 import 'logger.dart';
 import 'models/user.dart';
 
-class MainViewModel extends BaseModel {
+class MainViewModel extends ReactiveViewModel {
   final Logger log = Logging.getLogger('data:');
   
   final DatabaseService _databaseService = locator<DatabaseService>();
+  final state = locator<SharedStateService>();
+
+  final blue = locator<BlueToothService>();
   
   final List<User> _users = <User>[];
 
@@ -53,8 +58,10 @@ class MainViewModel extends BaseModel {
   void save({String name}) {
     final id = Uuid().v1();
 
+// ignore: unused_local_variable
 String _name;
  
+// ignore: unused_element
 void setName({String name}){
    _name = name;
  }
@@ -107,4 +114,26 @@ log.d(name);
 
     // _databaseService.saveDocument(doc:doc);
   }
+
+   Future<void> getBluetooth() async {
+    final List bluetooths = await BluetoothThermalPrinter.getBluetooths;
+    print("Print $bluetooths");
+      state.setBluethoothDevices(devices:bluetooths);
+    notifyListeners();
+  }
+
+  Future<void> setConnect(String mac) async {
+    print(mac);
+    final String result = await BluetoothThermalPrinter.connect(mac);
+    print("state conneected $result");
+    if (result == "true") {
+        state.setBluethoothConnected(connected:true);
+    }else{
+      state.setBluethoothConnected(connected:false);
+    }
+     notifyListeners();
+  }
+
+  @override
+  List<ReactiveServiceMixin> get reactiveServices => [state];
 }

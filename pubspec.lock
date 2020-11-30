@@ -198,7 +198,7 @@ packages:
       name: couchbase_lite_dart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.1"
+    version: "0.4.0"
   coverage:
     dependency: transitive
     description:
@@ -292,7 +292,7 @@ packages:
       name: get
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.17.1"
+    version: "3.21.1"
   get_it:
     dependency: "direct main"
     description:
@@ -376,7 +376,7 @@ packages:
       name: json_annotation
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.0"
+    version: "3.1.1"
   logger:
     dependency: "direct main"
     description:
@@ -453,14 +453,14 @@ packages:
       name: node_interop
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.0"
+    version: "1.2.1"
   node_io:
     dependency: transitive
     description:
       name: node_io
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.1"
+    version: "1.2.0"
   node_preamble:
     dependency: transitive
     description:
@@ -608,6 +608,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.24.1"
+  shared_preferences:
+    dependency: "direct main"
+    description:
+      name: shared_preferences
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.5.2"
   shelf:
     dependency: transitive
     description:
@@ -710,7 +717,7 @@ packages:
       name: stacked_services
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.4+4"
+    version: "0.5.4+5"
   stream_channel:
     dependency: transitive
     description:
@@ -829,7 +836,7 @@ packages:
       name: win32
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.7.3"
+    version: "1.7.4"
   xdg_directories:
     dependency: transitive
     description:

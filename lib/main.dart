@@ -9,7 +9,7 @@ import 'package:couchbase_lite_dart/couchbase_lite_dart.dart';
 
 import 'locator.dart';
 import 'manager_view_model.dart';
-import 'services/bluethooth_service.dart';
+
 
 Future<void> main() async {
   Cbl.init();
@@ -19,22 +19,18 @@ Future<void> main() async {
   runApp(MyApp());
 }
 
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
+class MyApp extends StatelessWidget {
+ 
   // final DatabaseService _service = locator<DatabaseService>();
-  final BlueToothService _blue = locator<BlueToothService>();
+  // final BlueToothService _blue = locator<BlueToothService>();
   // final MailService _mail = locator<MailService>();
+  final _name = TextEditingController();
+  // @override
+  // void initState() {
+  //   super.initState();
 
-  @override
-  void initState() {
-    super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => _blue.initBluetooth());
-  }
+  //   WidgetsBinding.instance.addPostFrameCallback((_) => _blue.initBluetooth());
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -44,48 +40,55 @@ class _MyAppState extends State<MyApp> {
             return Scaffold(
               body: Padding(
                 padding: const EdgeInsets.all(38.0),
-                child: Column(
+                child: ListView(
                   children: [
-                    Form(
-                        child: Row(
+                    Column(
                       children: [
-                        ConstrainedBox(
-                          constraints:
-                              BoxConstraints.tight(const Size(200, 50)),
-                          child: TextFormField(
-                            controller: model.name,
-                          ),
-                        ),
-                        Container(
-                          // color: Colors.blue,
-                          child: RaisedButton(
-                              onPressed: model.save,
-                              child: Text('Save',
-                                  style: TextStyle(color: Colors.white))),
-                        )
-                      ],
-                    )),
-                    Container(
-                      child: Row(
-                        children: [
-                          ...model.data.map(
-                            (object) => Container(
-                              margin: EdgeInsets.only(bottom: 22),
-                              child: Row(
-                                children: [Text(object.name)],
+                        Form(
+                            child: Row(
+                          children: [
+                            ConstrainedBox(
+                              constraints:
+                                  BoxConstraints.tight(const Size(200, 50)),
+                              child: TextFormField(
+                                controller: _name,
+                                onChanged:(value){
+                                  model.setName(name:value);
+                                }
                               ),
                             ),
+                            Container(
+                              // color: Colors.blue,
+                              child: RaisedButton(
+                                  onPressed: (){
+                                    model.save(name:_name.text);
+                                  },
+                                  child: Text('Save',
+                                      style: TextStyle(color: Colors.white))),
+                            )
+                          ],
+                        )),
+                        Container(
+                          child: Column(
+                            children: [
+                              ...model.data.map(
+                                (object) => Container(
+                                  margin: EdgeInsets.only(bottom: 22),
+                                  child: Text(object.name),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ),
+                        ),
+                      ],
+                    )
                   ],
                 ),
               ),
             );
           },
           onModelReady: (MainViewModel model) async {
-            model.initFields();
+            // model.initFields();
             final databaseService = locator<DatabaseService>();
             await databaseService.login();
 

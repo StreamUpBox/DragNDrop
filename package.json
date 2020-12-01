@@ -25,6 +25,7 @@
     "buildAll": "ng build flipperComponents && ng build flipperButton && ng build flipperDashboard  && ng build flipperColor  && ng build flipperFont && ng build flipperDialog  && ng build flipperEvent && ng build flipperPos ",
     "e2e": "ng e2e"
   },
+  "publishConfig": { "registry": "https://npm.pkg.github.com/" },
   "config": {
     "ghooks": {
       "pre-commit": "npm run lint",

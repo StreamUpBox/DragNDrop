@@ -215,7 +215,7 @@ export class FlipperMenuComponent implements OnInit {
 
 
     if (PouchConfig.canSync) {
-      this.database.sync(PouchConfig.syncUrl);
+      this.database.sync([localStorage.getItem('userId')]);
     }
     // await this.database.getChangeListener().subscribe(data => {
 

@@ -14,6 +14,7 @@ export class FlipperEventBusService {
     this.events = new Subject<BusEvent>();
   }
 
+  
   publish(event: BusEvent): void {
     // console.log(event);
     this.events.next(event);

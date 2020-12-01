@@ -23,4 +23,5 @@ export * from './default-tax-event';
 export * from './taxes-event';
 export * from './branches-event';
 export * from './current-stock-event';
+export * from './any-event';
 

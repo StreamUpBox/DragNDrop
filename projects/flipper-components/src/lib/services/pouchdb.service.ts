@@ -9,6 +9,8 @@ import debugPouch from "pouchdb-debug";
 
 import { v1 as uuidv1 } from 'uuid';
 import { PouchConfig } from '../db-config';
+import { FlipperEventBusService } from '@enexus/flipper-event';
+import { AnyEvent } from '../events';
 
 
 
@@ -33,7 +35,7 @@ export class PouchDBService {
 
 
 
-    public constructor() {
+    public constructor( private eventBus: FlipperEventBusService,) {
         debugPouch(PouchDB);
         this.sync([localStorage.getItem('userId')]); //we keep the current logged userId in local storage for quick access
     }
@@ -372,7 +374,7 @@ export class PouchDBService {
     //https://www.joshmorony.com/offline-syncing-in-ionic-2-with-pouchdb-couchdb/
     public sync(channels: Array<string>) {
         //NOTE: our main = bucket and is constant to all users. //do not use sessionId on pouchDB we don't use it on backend i.e on the server
-        PouchDB.sync('main', 'http://yegobox.com:4985/main', {
+        return PouchDB.sync('main', 'http://yegobox.com:4985/main', {
             password: 'singlworld',
             user: 'admin',
             live: true,
@@ -381,18 +383,6 @@ export class PouchDBService {
             continous: true,
             filter: "sync_gateway/bychannel", //NOTE: now filter is part of sync function!
             query_params: { "channels": channels },
-        }).on('change', (info: any) => {
-            console.log("sync change:", info)
-        }).on('paused', (err: any) => {
-            console.log("sync paused", err)
-        }).on('active', () => {
-            console.log("sync active")
-        }).on('denied', (err: any) => {
-            console.log('denied', err);
-        }).on('complete', (info: any) => {
-            console.log("sync complete")
-        }).on('error', (err) => {
-            console.log("sync error", err)
         });
     }
     public getChangeListener() {

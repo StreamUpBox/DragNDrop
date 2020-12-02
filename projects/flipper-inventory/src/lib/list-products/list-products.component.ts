@@ -62,11 +62,11 @@ export class ListProductsComponent implements OnInit, OnDestroy {
    async ngOnInit() {
      
     if (PouchConfig.canSync) {
-      this.database.sync(PouchConfig.syncUrl);
+      this.database.sync([localStorage.getItem('userId')]);
     }
     await this.variant.activeBusiness();
     await this. variant.variations();
-    await this.stock. allStocks();
+    await this.stock.allStocks();
     if(this.variant.defaultBusiness){
       await this.refresh();
     }

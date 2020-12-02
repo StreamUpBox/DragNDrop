@@ -50,7 +50,7 @@ export class AppComponent implements OnInit {
       this.database.connect(PouchConfig.bucket,'117');
       
       if (PouchConfig.canSync) {
-        this.database.sync(PouchConfig.syncUrl);
+        this.database.sync([localStorage.getItem('userId')]);
       }
       this.init();
   }

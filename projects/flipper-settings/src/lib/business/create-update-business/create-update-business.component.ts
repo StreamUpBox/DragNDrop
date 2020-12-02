@@ -72,7 +72,7 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
 
     if (PouchConfig.canSync) {
      
-      this.database.sync(PouchConfig.syncUrl);
+      this.database.sync([localStorage.getItem('userId')]);
     }
 
     this.countries = this.setting.countries();

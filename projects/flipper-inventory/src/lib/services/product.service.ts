@@ -239,7 +239,7 @@ return this.database.query(['table', 'productId'], {
 
   updateOnlineDatabase() {
     if (PouchConfig.canSync) {
-      this.database.sync(PouchConfig.syncUrl);
+      this.database.sync([localStorage.getItem('userId')]);
     }
     if (!this.hasDraftProduct.isDraft) {
 

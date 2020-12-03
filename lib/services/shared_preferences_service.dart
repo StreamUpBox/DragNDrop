@@ -6,6 +6,8 @@ class SharedPreferenceService {
     await prefs.setString('userId', userId);
   }
 
+  bool get hasUser => null;
+
   Future<String> getUserId() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.containsKey('userId') ? prefs.getString('userId') : null;

@@ -11,13 +11,13 @@ class DatabaseServiceMock extends Mock implements DatabaseService {}
 
 class NavigationServiceMock extends Mock implements NavigationService {}
 
-Future<SharedPreferenceService> getAndRegisterSharedPreferencesMock(
-    {bool hasUser = true}) async {
+SharedPreferenceService getAndRegisterSharedPreferencesMock(
+    {bool hasUser = true})  {
   _removeRegistrationIfExists<SharedPreferenceService>();
   var service = SharedPreferencesServiceMock();
 
   // stubbing
-  when(await service.getUserId()).thenReturn('1');
+  when(service.hasUser).thenReturn(hasUser);
 
   locator.registerSingleton<SharedPreferenceService>(service);
   return service;

@@ -50,6 +50,7 @@ dev_dependencies:
   flutter_launcher_icons: ^0.7.4
   couchbase_lite_dart: ^0.4.0
   uuid: 2.2.2
+  injectable:
 
 flutter_icons:
   android: true

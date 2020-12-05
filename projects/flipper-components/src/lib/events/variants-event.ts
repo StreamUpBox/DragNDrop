@@ -1,12 +1,10 @@
-import { BusEvent } from '@enexus/flipper-event';
-import { Variant } from '../entries/variant';
-
+import { BusEvent } from '@enexus/flipper-event'
+import { Variant } from '../entries/variant'
 
 export class VariantsEvent extends BusEvent {
-
-  public static readonly CHANNEL = 'variants';
+  public static readonly CHANNEL = 'variants'
 
   constructor(public variants: Variant[]) {
-    super(VariantsEvent.CHANNEL);
+    super(VariantsEvent.CHANNEL)
   }
 }

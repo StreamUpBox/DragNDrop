@@ -1,28 +1,17 @@
-import {NgModule} from '@angular/core';
-import {MaterialModule} from './material/material.module';
-import {FlexLayoutModule} from '@angular/flex-layout';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { NgModule } from '@angular/core'
+import { MaterialModule } from './material/material.module'
+import { FlexLayoutModule } from '@angular/flex-layout'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
 @NgModule({
-  imports: [
-    FormsModule,
-    ReactiveFormsModule,
-    MaterialModule,
-    FlexLayoutModule
-  ],
-  exports: [
-    FormsModule,
-    ReactiveFormsModule,
-    MaterialModule,
-    FlexLayoutModule,
-  ],
+  imports: [FormsModule, ReactiveFormsModule, MaterialModule, FlexLayoutModule],
+  exports: [FormsModule, ReactiveFormsModule, MaterialModule, FlexLayoutModule],
 })
-export class VendorsModule {
-}
+export class VendorsModule {}
 
-declare module "@angular/core" {
+declare module '@angular/core' {
   interface ModuleWithProviders<T = any> {
-    ngModule: Type<T>;
-    providers?: Provider[];
+    ngModule: Type<T>
+    providers?: Provider[]
   }
 }

@@ -1,22 +1,17 @@
-import {Directive, Input, TemplateRef, ViewContainerRef} from '@angular/core';
+import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core'
 
 @Directive({
-  selector: '[flipperLibLazyIf]'
+  selector: '[flipperLibLazyIf]',
 })
 export class LazyIfDirective {
-  private loaded = false;
+  private loaded = false
 
-  constructor(
-    private templateRef: TemplateRef<any>,
-    private viewContainer: ViewContainerRef) {
-  }
+  constructor(private templateRef: TemplateRef<any>, private viewContainer: ViewContainerRef) {}
 
   @Input() set libLazyIf(condition: boolean) {
     if (condition && !this.loaded) {
-      this.viewContainer.createEmbeddedView(this.templateRef);
-      this.loaded = true;
+      this.viewContainer.createEmbeddedView(this.templateRef)
+      this.loaded = true
     }
   }
-
-  
 }

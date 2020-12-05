@@ -1,12 +1,8 @@
-import { NgModule } from '@angular/core';
-
-
-
+import { NgModule } from '@angular/core'
 
 @NgModule({
   declarations: [],
-  imports: [
-  ],
-  exports: []
+  imports: [],
+  exports: [],
 })
-export class FlipperOfflineDatabaseModule { }
+export class FlipperOfflineDatabaseModule {}

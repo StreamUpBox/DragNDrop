@@ -1,8 +1,8 @@
-.current-stock{
-    position: absolute;
-    top: 153px;
-    font-size: 9px;
-    color: gray;
-    left: 260px;
-    z-index: 99999
+.current-stock {
+  position: absolute;
+  top: 153px;
+  font-size: 9px;
+  color: gray;
+  left: 260px;
+  z-index: 99999;
 }

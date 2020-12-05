@@ -1,45 +1,39 @@
-import { Component, OnInit, Inject, HostListener } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-
+import { Component, OnInit, Inject, HostListener } from '@angular/core'
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 
 @Component({
   selector: 'flipper-variants-dialog-model',
   templateUrl: './variants-dialog-model.component.html',
-  styleUrls: ['./variants-dialog-model.component.css']
+  styleUrls: ['./variants-dialog-model.component.css'],
 })
 export class VariantsDialogModelComponent implements OnInit {
-  constructor(public dialogRef: MatDialogRef<VariantsDialogModelComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
-
-  }
-  stockControls: any = null;
+  constructor(
+    public dialogRef: MatDialogRef<VariantsDialogModelComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
+  stockControls: any = null
 
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
     if (event.key === 'Esc') {
-      this.done();
+      this.done()
     }
 
     if (event.key === 'Enter') {
-      this.done();
+      this.done()
     }
   }
 
-
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   stockControl(event) {
-   
-    this.stockControls = event;
+    this.stockControls = event
   }
 
   done() {
-    this.dialogRef.close(this.stockControls);
+    this.dialogRef.close(this.stockControls)
   }
 
   close() {
-    this.done();
+    this.done()
   }
-
 }

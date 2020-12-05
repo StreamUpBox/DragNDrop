@@ -1,15 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core'
 
 @Component({
   selector: 'flipper-settings',
   template: `<flipper-create-update-business></flipper-create-update-business>`,
-  styles: []
+  styles: [],
 })
 export class FlipperSettingsComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

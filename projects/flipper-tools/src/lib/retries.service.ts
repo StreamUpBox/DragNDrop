@@ -1,12 +1,11 @@
-import {Injectable} from '@angular/core';
-import { Retry } from './retry';
+import { Injectable } from '@angular/core'
+import { Retry } from './retry'
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RetriesService {
-
   get() {
-    return new Retry();
+    return new Retry()
   }
 }

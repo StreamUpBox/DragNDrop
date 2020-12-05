@@ -8,7 +8,6 @@
 // })
 // export class MainModelService {
 
-
 //   constructor(private model: ModelService, private db: Schema) {
 //     this.db.createDb(DEFAULT_FLIPPER_DB_CONFIG.database.name, DEFAULT_FLIPPER_DB_CONFIG.database.engine);
 //   }
@@ -45,13 +44,12 @@
 //     } catch (e) { throw new Error((`ERROR:${e}`)); }
 //   }
 
-  
 //   loadAll<T>(table: string): T[] {
 //     this.checkTable(table);
 //     try {
 //       return this.model.get<T>(table);
-//     } catch (e) { 
-     
+//     } catch (e) {
+
 //       throw new Error((`ERROR:${e}`));
 //      }
 //   }

@@ -1,7 +1,7 @@
-import { Branch } from './branch';
+import { Branch } from './branch'
 
 describe('Branch', () => {
   it('should create an instance', () => {
-    expect(new Branch()).toBeTruthy();
-  });
-});
+    expect(new Branch()).toBeTruthy()
+  })
+})

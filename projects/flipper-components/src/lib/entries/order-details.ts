@@ -1,40 +1,39 @@
-
-import { Variant } from './variant';
-import { Stock } from './stocks';
-import { Product } from './product';
+import { Variant } from './variant'
+import { Stock } from './stocks'
+import { Product } from './product'
 
 export class OrderDetails {
-  id: string;
-  orderId: string;
-  variantId: string;
-  stockId: string;
-  SKU?: string;
-  unit?: string;
-  variantName?: string;
-  productName?: string;
-  stock?: Stock;
-  variant?: Variant;
-  product?: Product;
-  price?: any;
-  quantity: any;
-  subTotal?: any;
-  taxRate?: any;
-  taxAmount?: any;
-  discountRate?: any;
-  discountAmount?: any;
-  syncedOnline?: boolean;
-  canTrackStock?: boolean;
-  note?: string;
-  createdAt: string;
-  updatedAt: string;
-  table:string;
-  docId?:string;
-  channels:Array<string>;
-  channel?:string;
+  id: string
+  orderId: string
+  variantId: string
+  stockId: string
+  SKU?: string
+  unit?: string
+  variantName?: string
+  productName?: string
+  stock?: Stock
+  variant?: Variant
+  product?: Product
+  price?: any
+  quantity: any
+  subTotal?: any
+  taxRate?: any
+  taxAmount?: any
+  discountRate?: any
+  discountAmount?: any
+  syncedOnline?: boolean
+  canTrackStock?: boolean
+  note?: string
+  createdAt: string
+  updatedAt: string
+  table: string
+  docId?: string
+  channels: Array<string>
+  channel?: string
 
   constructor(params: object = {}) {
     for (const name in params) {
-      this[name] = params[name];
+      this[name] = params[name]
     }
   }
 }

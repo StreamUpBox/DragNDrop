@@ -1,26 +1,23 @@
-import { Pipe, PipeTransform, Injectable } from '@angular/core';
+import { Pipe, PipeTransform, Injectable } from '@angular/core'
 
 @Pipe({
-  name: 'arrayRemoveItem'
+  name: 'arrayRemoveItem',
 })
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ArrayRemoveItemPipe implements PipeTransform {
-
   transform<T>(arrayOfData: Array<T>, value: object): Array<T> {
-    return this.arrayRemove<T>(arrayOfData, value);
+    return this.arrayRemove<T>(arrayOfData, value)
   }
 
-  arrayRemove<T>(arr: Array<T>= [], objectToRemove): Array<T> {
+  arrayRemove<T>(arr: Array<T> = [], objectToRemove): Array<T> {
     if (arr.length > 0) {
-      return arr.filter((ele) => {
-       return  JSON.stringify(ele) !== JSON.stringify(objectToRemove);
-    });
+      return arr.filter(ele => {
+        return JSON.stringify(ele) !== JSON.stringify(objectToRemove)
+      })
     } else {
-      return arr;
+      return arr
     }
-
- }
-
+  }
 }

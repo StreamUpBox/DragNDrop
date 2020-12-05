@@ -1,1 +1,1 @@
-export const dialogRefSpy = () => jasmine.createSpyObj('MatDialogRef', ['close']);
+export const dialogRefSpy = () => jasmine.createSpyObj('MatDialogRef', ['close'])

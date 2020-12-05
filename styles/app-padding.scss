@@ -1,6 +1,5 @@
 @import 'app-variables';
 
-
 // paddings
 @mixin p() {
   padding: $app-padding-y $app-margin-x !important;
@@ -45,7 +44,6 @@
 @mixin p-b-n() {
   padding-bottom: 0 !important;
 }
-
 
 // Paddings
 

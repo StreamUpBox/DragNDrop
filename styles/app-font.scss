@@ -63,7 +63,6 @@
   color: $app-color-purple-3;
 }
 
-
 // Text color
 .text-error {
   @include text-error();
@@ -104,21 +103,21 @@
 .text-green {
   @include text-green();
 }
-.text-blue{
-  @include text-blue(); 
+.text-blue {
+  @include text-blue();
 }
-.text-red{
-  @include text-red(); 
+.text-red {
+  @include text-red();
 }
 
-.text-purple-1{
-  @include text-purple-1(); 
+.text-purple-1 {
+  @include text-purple-1();
 }
-.text-purple-2{
-  @include text-purple-2(); 
+.text-purple-2 {
+  @include text-purple-2();
 }
-.text-purple-3{
-  @include text-purple-3(); 
+.text-purple-3 {
+  @include text-purple-3();
 }
 
 // Fonts
@@ -149,7 +148,6 @@
   font-size: $app-font-size-32;
   line-height: $app-line-height-lg;
 }
-
 
 @mixin font-weight-bold() {
   font-weight: $app-font-weight-bold;
@@ -189,7 +187,6 @@
   @include font-weight-italic();
 }
 
-
 .font-weight-400 {
   @include font-weight-400();
 }
@@ -213,7 +210,6 @@
 .font-lg {
   @include font-lg();
 }
-
 
 .font-weight-bold {
   @include font-weight-bold();

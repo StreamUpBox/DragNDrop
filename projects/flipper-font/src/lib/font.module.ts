@@ -1,25 +1,13 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FontSizeClassPipe } from './font-size-class.pipe';
-import { FontWeightClassPipe } from './font-weight-class.pipe';
+import { NgModule } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { FontSizeClassPipe } from './font-size-class.pipe'
+import { FontWeightClassPipe } from './font-weight-class.pipe'
 
 @NgModule({
-  imports: [
-    CommonModule
-  ],
+  imports: [CommonModule],
 
-  declarations: [
-    FontWeightClassPipe,
-    FontSizeClassPipe,
-  ],
-  exports: [
-    FontWeightClassPipe,
-    FontSizeClassPipe,
-  ],
-  providers: [
-    FontWeightClassPipe,
-    FontSizeClassPipe,
-  ]
+  declarations: [FontWeightClassPipe, FontSizeClassPipe],
+  exports: [FontWeightClassPipe, FontSizeClassPipe],
+  providers: [FontWeightClassPipe, FontSizeClassPipe],
 })
-export class FontModule {
-}
+export class FontModule {}

@@ -24,9 +24,11 @@
     "lint": "ng lint --fix=true",
     "buildAll": "ng build flipperComponents && ng build flipperButton && ng build flipperDashboard  && ng build flipperColor  && ng build flipperFont && ng build flipperDialog  && ng build flipperEvent && ng build flipperPos ",
     "e2e": "ng e2e",
-    "format": "prettier \"./src/**/*.+(js|jsx|css|less|scss|ts|tsx|md)\" --write"
+    "format": "prettier \"./**/*.+(js|jsx|css|less|scss|ts|tsx|md)\" --write"
   },
-  "publishConfig": { "registry": "https://npm.pkg.github.com/" },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "config": {
     "ghooks": {
       "pre-commit": "npm run lint",
@@ -86,6 +88,7 @@
     "@types/node": "^12.11.1",
     "cheerio": "^1.0.0-rc.3",
     "codelyzer": "^6.0.0",
+    "husky": "^4.3.0",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "~5.0.0",
@@ -93,8 +96,10 @@
     "karma-coverage-istanbul-reporter": "~3.0.2",
     "karma-jasmine": "~3.3.0",
     "karma-jasmine-html-reporter": "^1.5.0",
+    "lint-staged": "^10.5.3",
     "ng-packagr": "^10.0.0",
     "pouchdb-debug": "^7.2.1",
+    "prettier": "^2.2.1",
     "protractor": "~7.0.0",
     "rimraf": "^3.0.2",
     "standard-version": "^8.0.2",

@@ -23,7 +23,8 @@
     "test": "ng test",
     "lint": "ng lint --fix=true",
     "buildAll": "ng build flipperComponents && ng build flipperButton && ng build flipperDashboard  && ng build flipperColor  && ng build flipperFont && ng build flipperDialog  && ng build flipperEvent && ng build flipperPos ",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "format": "prettier \"./src/**/*.+(js|jsx|css|less|scss|ts|tsx|md)\" --write"
   },
   "publishConfig": { "registry": "https://npm.pkg.github.com/" },
   "config": {

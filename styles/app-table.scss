@@ -22,7 +22,7 @@
   @include text-ellipsis();
 }
 
-@mixin mat-row-selected(){
+@mixin mat-row-selected() {
   @include background-primary-shade(900);
 }
 

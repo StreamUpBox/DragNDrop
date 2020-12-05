@@ -1,25 +1,24 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { AddedVariantsComponent } from './added-variants.component';
+import { AddedVariantsComponent } from './added-variants.component'
 
 describe('AddedVariantsComponent', () => {
-  let component: AddedVariantsComponent;
-  let fixture: ComponentFixture<AddedVariantsComponent>;
+  let component: AddedVariantsComponent
+  let fixture: ComponentFixture<AddedVariantsComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddedVariantsComponent ]
-    })
-    .compileComponents();
-  }));
+      declarations: [AddedVariantsComponent],
+    }).compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddedVariantsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(AddedVariantsComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

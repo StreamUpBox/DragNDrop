@@ -1,18 +1,18 @@
-  .flipper-common-button-css {
-    width: 133px;
-    height: 42px;
-    border-radius: 2px;
-    border: solid 1px rgba(0, 0, 0, 0.05);
-    color: #ffffff;
+.flipper-common-button-css {
+  width: 133px;
+  height: 42px;
+  border-radius: 2px;
+  border: solid 1px rgba(0, 0, 0, 0.05);
+  color: #ffffff;
 }
-.flipper-common-circle-button{
+.flipper-common-circle-button {
   width: 52px;
   height: 52px;
   border-radius: 100px;
   border-color: transparent;
   color: #ffffff;
 }
-::placeholder{
+::placeholder {
   width: 171px;
   height: 22px;
   font-family: Heebo;
@@ -26,7 +26,6 @@
   padding: 5%;
 }
 
-
 /* css for inputs */
 input {
   width: 250px;
@@ -35,4 +34,3 @@ input {
   border: solid 1px #a8c6df;
   background-color: #ffffff;
 }
-

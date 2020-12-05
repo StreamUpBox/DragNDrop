@@ -5,8 +5,8 @@
   margin: 0;
   border-top-width: 2px;
   border-top-style: dotted;
-  color: #3f5ec6!important;
-  border-top-color: #3f5ec6!important;
+  color: #3f5ec6 !important;
+  border-top-color: #3f5ec6 !important;
   // box-shadow: 0 20px 40px -14px #3f5ec6;
 }
 
@@ -15,7 +15,7 @@
   // top: 25px;
   right: 0;
   margin-left: 8px;
-  
+
   float: right;
   width: 50.3px;
   height: 50px;
@@ -70,7 +70,6 @@
         text-align: center;
         color: #1b2125;
       }
-
     }
   }
 }
@@ -104,230 +103,207 @@
 }
 
 .row:after {
-  content: "";
+  content: '';
   display: table;
   clear: both;
 }
 
 .row {
-
   .row:after {
-    content: "";
+    content: '';
     display: table;
     clear: both;
   }
 
-  
   display: flex;
   flex-wrap: wrap;
   list-style: none;
   margin: 0;
-  
-/* Create two equal columns that floats next to each other */
-.column-sm {
-  border-radius: 0.25rem;
-  box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);
-  float: right;
-  width: 35%;
-  padding: 10px;
 
-  flipper-calculator {
-    display: flex;
-    padding: 0.8rem;
-    height: 96vh;
-  }
-}
+  /* Create two equal columns that floats next to each other */
+  .column-sm {
+    border-radius: 0.25rem;
+    box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);
+    float: right;
+    width: 35%;
+    padding: 10px;
 
-
-.column-lg {
-  border-radius: 0.25rem;
-  box-shadow: 0 5px 4px -4px rgba(0, 0, 0, 0.25);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  float: left;
-  width: 65%;
-  padding: 10px;
-  height: 100vh; /* Should be removed. Only for demonstration */
-  .search-card {
-    display: flex;
-    flipper-search-box{
-      width: 100%;;
+    flipper-calculator {
       display: flex;
+      padding: 0.8rem;
+      height: 96vh;
+    }
+  }
+
+  .column-lg {
+    border-radius: 0.25rem;
+    box-shadow: 0 5px 4px -4px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    float: left;
+    width: 65%;
+    padding: 10px;
+    height: 100vh; /* Should be removed. Only for demonstration */
+    .search-card {
+      display: flex;
+      flipper-search-box {
+        width: 100%;
+        display: flex;
+      }
+
+      .kbd-hotkeys-button {
+        position: relative;
+        top: 9px;
+        bottom: 0px;
+        left: 0px;
+        opacity: 0.95;
+        padding: 4px;
+        width: 70px;
+        height: 40px;
+        border-radius: 2px;
+        border: solid 1px #d6e8fa;
+        background-color: #d6e8fa;
+        font-weight: 500;
+        font-stretch: normal;
+        font-style: normal;
+        line-height: 1.14;
+        letter-spacing: 1.25px;
+        text-align: center;
+        color: #1b2733;
+        .svg-icon-keyboard {
+          position: relative;
+          bottom: 12px;
+        }
+      }
     }
 
-    .kbd-hotkeys-button{
+    flipper-message {
       position: relative;
-      top: 9px;
-      bottom: 0px;
-      left: 0px;
-      opacity: .95;
-      padding: 4px;
-      width: 70px;
-      height: 40px;
-      border-radius: 2px;
-      border: solid 1px #d6e8fa;
-      background-color: #d6e8fa;
-      font-weight: 500;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: 1.14;
-      letter-spacing: 1.25px;
-      text-align: center;
-      color: #1b2733;
-    .svg-icon-keyboard{
-      position: relative;
-    bottom: 12px;
-    }
-  
-  
-  }
-  }
- 
-  flipper-message {
-    position: relative;
-    top: 50px;
-    width: 100%;
+      top: 50px;
+      width: 100%;
       display: flex;
       flex-direction: column;
-    overflow: hidden;
-  }
+      overflow: hidden;
+    }
 
- 
-
-.shoppinglist {
-  display: flex;
-    height: 100vh;
-    height: 100vh;
-    width: 94%;
-    position: relative;
-    top: 35px;
-
-  .item-lists {
-
-    height: 78vh;
-    overflow: auto;
-    width: 100%;
-
-    flipper-autocomplete {
-      width: 100%;
+    .shoppinglist {
+      display: flex;
+      height: 100vh;
+      height: 100vh;
+      width: 94%;
       position: relative;
-      // top: 25px;
-      
-      .setCartFocused{
-     
-      
-  color: #3f5ec6!important;
-  border-left-width: 2px;
-  border-left-style: dotted;
-  border-left-color: #3f5ec6!important;
+      top: 35px;
 
-  border-right-width: 2px;
-  border-right-style: dotted;
-  border-right-color: #3f5ec6!important;
-  box-shadow: 0px 1px 1px 1px #3f5ec6;
-      }
+      .item-lists {
+        height: 78vh;
+        overflow: auto;
+        width: 100%;
 
-      .mat-option {
-        height: 83px;
-        border-top: solid 4px #fcfeff;
-        background-color: #ffffff;
-        // margin-bottom: 10px;
-       
-        .item {
+        flipper-autocomplete {
+          width: 100%;
           position: relative;
-          display: inline-table;
-          // left: 30px;
-         
+          // top: 25px;
 
-          .item-sub-title {
-            position: relative;
-            display: block;
+          .setCartFocused {
+            color: #3f5ec6 !important;
+            border-left-width: 2px;
+            border-left-style: dotted;
+            border-left-color: #3f5ec6 !important;
 
-            .details {
+            border-right-width: 2px;
+            border-right-style: dotted;
+            border-right-color: #3f5ec6 !important;
+            box-shadow: 0px 1px 1px 1px #3f5ec6;
+          }
+
+          .mat-option {
+            height: 83px;
+            border-top: solid 4px #fcfeff;
+            background-color: #ffffff;
+            // margin-bottom: 10px;
+
+            .item {
               position: relative;
-              bottom: 12px;
-              margin-right: 18px;
-              display: inline-block;
-              width: auto;
-              height: 19px;
-              font-family: Roboto;
-              font-size: 14px;
-              font-weight: 500;
-              font-stretch: normal;
-              font-style: normal;
-              line-height: normal;
-              letter-spacing: -0.05px;
-              color: #202124;
+              display: inline-table;
+              // left: 30px;
 
-              .oval {
-                position: absolute;
-                top: 5px;
-                right: 0;
-                bottom: 0;
-                left: 0;
-                width: 8px;
-                height: 8px;
-                background-color: #53be6d;
-                border-radius: 50px;
-                ;
+              .item-sub-title {
+                position: relative;
+                display: block;
+
+                .details {
+                  position: relative;
+                  bottom: 12px;
+                  margin-right: 18px;
+                  display: inline-block;
+                  width: auto;
+                  height: 19px;
+                  font-family: Roboto;
+                  font-size: 14px;
+                  font-weight: 500;
+                  font-stretch: normal;
+                  font-style: normal;
+                  line-height: normal;
+                  letter-spacing: -0.05px;
+                  color: #202124;
+
+                  .oval {
+                    position: absolute;
+                    top: 5px;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+                    width: 8px;
+                    height: 8px;
+                    background-color: #53be6d;
+                    border-radius: 50px;
+                  }
+                }
               }
 
+              .item-title {
+                position: relative;
+                top: 10px;
+                width: 240px;
+                height: 26px;
+                font-family: Roboto;
+                font-size: 20px;
+                font-weight: normal;
+                font-stretch: normal;
+                font-style: normal;
+                line-height: normal;
+                letter-spacing: -0.07px;
+                color: #2575ec;
+              }
             }
 
+            .icon-2 {
+              position: relative;
+              left: 11px;
+              width: 53px;
+              height: 53px;
+              top: 22px;
+              border-radius: 4px;
+              border: solid 1px #d6daff;
+              background-color: #ffffff;
+              display: inline-block;
 
-          }
-
-          .item-title {
-            position: relative;
-            top: 10px;
-            width: 240px;
-            height: 26px;
-            font-family: Roboto;
-            font-size: 20px;
-            font-weight: normal;
-            font-stretch: normal;
-            font-style: normal;
-            line-height: normal;
-            letter-spacing: -0.07px;
-            color: #2575ec;
-            
-
-          }
-
-        }
-
-        .icon-2 {
-          position: relative;
-          left: 11px;
-          width: 53px;
-          height: 53px;
-          top: 22px;
-          border-radius: 4px;
-          border: solid 1px #d6daff;
-          background-color: #ffffff;
-          display: inline-block;
-
-          .icon-img {
-            width: 47px;
-            height: 36px;
-            position: relative;
-            top: 7px;
-            left: 4px;
+              .icon-img {
+                width: 47px;
+                height: 36px;
+                position: relative;
+                top: 7px;
+                left: 4px;
+              }
+            }
           }
         }
       }
     }
-
   }
-
 }
-
-}
-
-
-}
-.link{
+.link {
   cursor: pointer;
   color: #2996cc !important;
   text-decoration: none;

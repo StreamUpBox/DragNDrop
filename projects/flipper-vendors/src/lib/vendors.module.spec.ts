@@ -1,13 +1,13 @@
-import { VendorsModule } from './vendors.module';
+import { VendorsModule } from './vendors.module'
 
 describe('VendorsModule', () => {
-  let vendorsModule: VendorsModule;
+  let vendorsModule: VendorsModule
 
   beforeEach(() => {
-    vendorsModule = new VendorsModule();
-  });
+    vendorsModule = new VendorsModule()
+  })
 
   it('should create an instance', () => {
-    expect(vendorsModule).toBeTruthy();
-  });
-});
+    expect(vendorsModule).toBeTruthy()
+  })
+})

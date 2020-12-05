@@ -65,16 +65,16 @@ $check-length: 35px;
 #successAnimation.animated,
 #failureAnimation.animated {
   animation: 1s ease-out 0s 1 both scaleAnimation;
-  
+
   #successAnimationCircle,
   #failureAnimationCircle {
     animation: 1s cubic-bezier(0.77, 0, 0.175, 1) 0s 1 both drawCircle;
   }
-  
+
   #successAnimationCheck {
     animation: 1s cubic-bezier(0.77, 0, 0.175, 1) 0s 1 both drawCheck;
   }
-  
+
   .failureAnimationCheckLine {
     stroke-dasharray: 100;
     stroke-dashoffset: 100;
@@ -83,7 +83,7 @@ $check-length: 35px;
 }
 
 #animate {
-  background: rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.2);
   cursor: pointer;
   border: 0;
   border-radius: 3px;
@@ -95,6 +95,6 @@ $check-length: 35px;
   position: absolute;
   transform: translateX(-50%);
   &:active {
-    background: rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.1);
   }
 }

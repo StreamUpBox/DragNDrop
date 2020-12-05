@@ -1,8 +1,7 @@
-import {NgModule} from '@angular/core';
+import { NgModule } from '@angular/core'
 
 @NgModule({
   imports: [],
-  declarations: []
+  declarations: [],
 })
-export class FlipperEventModule {
-}
+export class FlipperEventModule {}

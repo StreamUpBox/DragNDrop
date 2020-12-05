@@ -1,7 +1,7 @@
-import { CHANNELS } from './channels';
+import { CHANNELS } from './channels'
 
 describe('CHANNELS', () => {
   it('should create an instance', () => {
-    expect(new CHANNELS()).toBeTruthy();
-  });
-});
+    expect(new CHANNELS()).toBeTruthy()
+  })
+})

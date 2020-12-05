@@ -1,1 +1,1 @@
-export type Table = 'businesses' | 'branches' | 'menus' | 'users' ;
+export type Table = 'businesses' | 'branches' | 'menus' | 'users'

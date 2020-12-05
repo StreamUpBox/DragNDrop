@@ -1,18 +1,25 @@
 ##
+
 # flipper plugins
+
 ##
+
 flipper Dashboard
 
 install
-````
+
+```
 npm install @enexus/flipper-dashboard
-````
-````
+```
+
+```
 <flipper-dashboard [dashboardEntries]="dashboardentries"></flipper-dashboard>
-````
+```
+
 - Dashboardentries is required intries for dashboard
 - Example of dashboardentries object of data should look like this.
-````
+
+```
 dashboardentries:DashBoardEntries= {
     total_store:{
     value:'1,024,000',
@@ -90,85 +97,117 @@ total:5000
 },
 ]
 };
-````
+```
+
 Listening on flipper-dashboard events
 
-````
+```
 No event to listen to
-````
-##
-flipper Menu
-````
-````
+```
 
 ##
+
+flipper Menu
+
+```
+
+```
+
+##
+
 flipper-color
 install
-````
+
+```
 npm install @enexus/flipper-color
-````
+```
+
 For example you can call colorToTextClass with color to be green
-````
+
+```
 <div [ngClass]="['green' | colorToTextClass]">
   Message
  </div>
-````
-````
+```
+
+```
 <div [ngClass]="['blue' | colorToBackgroundClass]">
   Message
  </div>
-````
-````
+```
+
+```
 <div [ngClass]="['red' | colorToFillClass]">
   Message
 </div>
-````
+```
+
 All available flipper-colors
-````
+
+```
  'error' | 'warn' | 'success' | 'info' | 'primary' | 'accent' | 'background' | 'foreground' | 'highlight' | 'muted' | "green" | "blue" | "purple-1" | "purple-2" | "purple-3" | "red";
-````
+```
+
 ## flipper-fonts
+
 install
-````
+
+```
 npm i @enexus/flipper-font
-````
+```
+
 import module
-````
+
+```
 FontModule
-````
-````
+```
+
+```
 <div [ngClass]="['bold' | fontWeightClass]">
   Message
 </div>
-````
-````
+```
+
+```
 <div [ngClass]="['sm' | fontSizeClass]">
   Message
 </div>
-````
+```
+
 available fonts sizes:
-````
+
+```
 'sm' | 'md' | 'lg' | 'xs' | '26' | '24' | '28' | '32';
-````
+```
+
 available fonts weight:
-````
+
+```
 'italic' | 'bold' | '400' | '600' | '700' | '800' | '500'
-````
+```
+
 ##flipper-vendors
 install
-````
+
+```
 npm i @enexus/flipper-vendors
-````
+```
+
 Import module
-````
+
+```
 VendorsModule
-````
+```
+
 ## flipper-buttons
+
 install
-````
+
+```
 npm install --save enexus@flipper-button
-````
-````
+```
+
+```
 <flipper-button
     color="blue|green|dark"
     shape="circle|default"
@@ -176,29 +215,36 @@ npm install --save enexus@flipper-button
     height="20px"
     width="20px"
 ></flipper-button>
-````
+```
+
 ##flipper-menu
 install
-````
+
+```
 npm i @enexus/flipper-menu
-````
+```
+
 Module
-````
+
+```
 FlipperMenuModule
-````
-````
-<flipper-menu 
-[menuEntries]="entries" 
-(menuToggled)="isMenuToggled($event)" 
-(switchedBusiness)="displaySwitchedBusiness($event)" 
+```
+
+```
+<flipper-menu
+[menuEntries]="entries"
+(menuToggled)="isMenuToggled($event)"
+(switchedBusiness)="displaySwitchedBusiness($event)"
 (switchedBranch)="displaySwitchedBranch($event)"
-(logoutUser)="didUserLoggedOut($event)" 
-(routerClicked)="getRouterClicked($event)" 
+(logoutUser)="didUserLoggedOut($event)"
+(routerClicked)="getRouterClicked($event)"
  >
  </flipper-menu>
-````
+```
+
 Example of menu object.
-````
+
+```
 MenuEntries {
 this.entries = {
     user: {
@@ -289,24 +335,32 @@ menu: [
  ]
     }
 }
-````
+```
+
 ##flipper-dialog
 install
-````
+
+```
 npm i @enexus/flipper-dialog
-````
+```
+
 Service
-````
+
+```
 DialogService
-````
+```
+
 - Options
-````
+
+```
 delete|confirm|open|wait
-````
+```
+
 - Interface
-````
+
+```
 DialogSize
-````
+```
 
 the name of icon should be defied inside your application asset files.
 the library does not ship with the icon itself.

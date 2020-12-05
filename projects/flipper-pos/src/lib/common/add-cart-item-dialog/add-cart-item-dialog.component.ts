@@ -1,33 +1,37 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core'
 
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NotificationService, Taxes, SettingsService } from '@enexus/flipper-components';
-import { MatDialogRef } from '@angular/material/dialog';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { NotificationService, Taxes, SettingsService } from '@enexus/flipper-components'
+import { MatDialogRef } from '@angular/material/dialog'
 
 @Component({
   selector: 'flipper-add-cart-item-dialog',
   templateUrl: './add-cart-item-dialog.component.html',
-  styleUrls: ['./add-cart-item-dialog.component.css']
+  styleUrls: ['./add-cart-item-dialog.component.css'],
 })
 export class AddCartItemDialogComponent implements OnInit {
-  taxes$: Taxes[] = [];
-  units: any[] = [];
-  constructor(public dialogRef: MatDialogRef<AddCartItemDialogComponent>,
+  taxes$: Taxes[] = []
+  units: any[] = []
+  constructor(
+    public dialogRef: MatDialogRef<AddCartItemDialogComponent>,
     private formBuilder: FormBuilder,
-    protected notificationSvc: NotificationService, private setting: SettingsService) {
-    this.units = this.setting.units();
+    protected notificationSvc: NotificationService,
+    private setting: SettingsService
+  ) {
+    this.units = this.setting.units()
   }
 
-  get formControl() { return this.form.controls; }
-  submitted = false;
-  form: FormGroup;
-  isFocused = '';
+  get formControl() {
+    return this.form.controls
+  }
+  submitted = false
+  form: FormGroup
+  isFocused = ''
 
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
     if (event.key === 'Esc') {
-      this.dialogRef.close('close');
+      this.dialogRef.close('close')
     }
-
   }
 
   ngOnInit() {
@@ -36,39 +40,42 @@ export class AddCartItemDialogComponent implements OnInit {
       name: 'Custom Amount',
       quantity: [1, Validators.min(0)],
       tax: 0,
-      unit: ''
-    });
+      unit: '',
+    })
   }
 
   onSubmit() {
-    this.submitted = true;
+    this.submitted = true
 
     // stop here if form is invalid
     if (this.form.invalid) {
-      this.notificationSvc.error('Add Cart item', 'We need you to complete all of the required fields before we can continue');
-      return;
+      this.notificationSvc.error(
+        'Add Cart item',
+        'We need you to complete all of the required fields before we can continue'
+      )
+      return
     } else {
       this.dialogRef.close({
-        price: this.form.value.price, quantity: this.form.value.quantity
-          && this.form.value.quantity > 0 ? this.form.value.quantity
-          : 1, name: this.form.value.name ? this.form.value.name : 'Custom Amount',
-        tax: this.form.value.tax ? this.form.value.tax : 0, unit: this.form.value.unit
-      });
+        price: this.form.value.price,
+        quantity: this.form.value.quantity && this.form.value.quantity > 0 ? this.form.value.quantity : 1,
+        name: this.form.value.name ? this.form.value.name : 'Custom Amount',
+        tax: this.form.value.tax ? this.form.value.tax : 0,
+        unit: this.form.value.unit,
+      })
     }
-
   }
 
   focusing(value: any) {
-    this.isFocused = value;
+    this.isFocused = value
     if (value === 'name') {
-      this.form.controls.name.setValue('');
+      this.form.controls.name.setValue('')
     } else if (value === 'price') {
-      this.form.controls.price.setValue('');
+      this.form.controls.price.setValue('')
     } else if (value === 'quantity') {
-      this.form.controls.quantity.setValue('');
+      this.form.controls.quantity.setValue('')
     }
   }
   focusingOut() {
-    this.isFocused = '';
+    this.isFocused = ''
   }
 }

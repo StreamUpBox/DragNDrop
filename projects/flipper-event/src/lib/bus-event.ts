@@ -1,4 +1,3 @@
 export class BusEvent {
-  constructor(public channel: string) {
-  }
+  constructor(public channel: string) {}
 }

@@ -1,15 +1,15 @@
-import { Component, OnInit, Inject, HostListener } from '@angular/core';
+import { Component, OnInit, Inject, HostListener } from '@angular/core'
 
-import { VariationService } from '../../services/variation.service';
-import { NotificationService, Variant, Product, PouchDBService, PouchConfig } from '@enexus/flipper-components';
-import { StockService } from '../../services/stock.service';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { VariationService } from '../../services/variation.service'
+import { NotificationService, Variant, Product, PouchDBService, PouchConfig } from '@enexus/flipper-components'
+import { StockService } from '../../services/stock.service'
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
+import { FormGroup, Validators, FormBuilder } from '@angular/forms'
 
 @Component({
   selector: 'flipper-add-variant',
   templateUrl: './add-variant.component.html',
-  styleUrls: ['../../create-product/create-product.component.css', './add-variant.component.css']
+  styleUrls: ['../../create-product/create-product.component.css', './add-variant.component.css'],
 })
 export class AddVariantComponent implements OnInit {
   constructor(
@@ -18,22 +18,24 @@ export class AddVariantComponent implements OnInit {
     public dialogRef: MatDialogRef<AddVariantComponent>,
     private database: PouchDBService,
     private formBuilder: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: any) {}
-  isFocused = '';
-  submitted = false;
-  form: FormGroup;
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
+  isFocused = ''
+  submitted = false
+  form: FormGroup
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
     if (event.key === 'Esc') {
-      this.dialogRef.close();
+      this.dialogRef.close()
     }
 
     if (event.key === 'Enter') {
-      this.onSubmit();
+      this.onSubmit()
     }
   }
-  get formControl() { return this.form.controls; }
+  get formControl() {
+    return this.form.controls
+  }
   ngOnInit() {
-     
     // this.variant.activeBusiness();
     this.form = this.formBuilder.group({
       name: [ '', Validators.required],
@@ -43,22 +45,23 @@ export class AddVariantComponent implements OnInit {
       unit:'',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-
-    });
-   
+    })
   }
   async onSubmit() {
-    await this.variant.currentBranches();
-    this.submitted = true;
-    this.dialogRef.close('done');
+    await this.variant.currentBranches()
+    this.submitted = true
+    this.dialogRef.close('done')
     if (this.form.invalid) {
-      this.notificationSvc.error('Create Business', 'We need you to complete all of the required fields before we can continue');
-      return;
+      this.notificationSvc.error(
+        'Create Business',
+        'We need you to complete all of the required fields before we can continue'
+      )
+      return
     }
 
     // console.log('here ganza',this.variant.branches$);
-    
-    const formData: Variant ={
+
+    const formData: Variant = {
       id: this.database.uid(),
       name: this.form.value.name,
       productName: this.data.product.name,
@@ -72,24 +75,23 @@ export class AddVariantComponent implements OnInit {
       isActive: false,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-      channels:[this.data.product.userId],
+      channels: [this.data.product.userId],
       userId: this.data.product.userId,
-      table:'variants',
-    };
+      table: 'variants',
+    }
 
-    await this.database.put(formData.id, formData);
-  
-      this.variant.createVariantStock(formData,this.variant.branches$);
-    
-    return this.dialogRef.close('done');
+    await this.database.put(PouchConfig.Tables.variants + '_' + formData.id, formData)
+
+    this.variant.createVariantStock(formData, this.variant.branches$)
+
+    return this.dialogRef.close('done')
   }
 
-
   focusing(value) {
-    this.isFocused = value;
+    this.isFocused = value
 
     if (value === 'retailPrice') {
-      this.form.controls.retailPrice.setValue('');
+      this.form.controls.retailPrice.setValue('')
     } else if (value === 'supplyPrice') {
       this.form.controls.supplyPrice.setValue('');
     } else if (value === 'sku') {
@@ -98,21 +100,23 @@ export class AddVariantComponent implements OnInit {
   }
 
   focusingOut() {
-    if (this.isFocused === 'retailPrice' && (this.form.controls.retailPrice.value === 0 ||
-      this.form.controls.retailPrice.value === '')) {
-      this.form.controls.retailPrice.setValue(0);
+    if (
+      this.isFocused === 'retailPrice' &&
+      (this.form.controls.retailPrice.value === 0 || this.form.controls.retailPrice.value === '')
+    ) {
+      this.form.controls.retailPrice.setValue(0)
     }
-    if (this.isFocused === 'supplyPrice' && (this.form.controls.supplyPrice.value === 0 ||
-      this.form.controls.supplyPrice.value === '')) {
-      this.form.controls.supplyPrice.setValue(0);
+    if (
+      this.isFocused === 'supplyPrice' &&
+      (this.form.controls.supplyPrice.value === 0 || this.form.controls.supplyPrice.value === '')
+    ) {
+      this.form.controls.supplyPrice.setValue(0)
     }
 
     if (this.isFocused === 'sku' && (this.form.controls.sku.value === 0 || this.form.controls.sku.value === '')) {
       this.form.controls.sku.setValue(this.variant.generateSKU());
     }
 
-
-    this.isFocused = '';
+    this.isFocused = ''
   }
-
 }

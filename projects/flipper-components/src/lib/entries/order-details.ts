@@ -1,7 +1,6 @@
-
-import { Variant } from './variant';
-import { Stock } from './stocks';
-import { Product } from './product';
+import { Variant } from './variant'
+import { Stock } from './stocks'
+import { Product } from './product'
 
 export class OrderDetails {
   id: string;
@@ -34,7 +33,7 @@ export class OrderDetails {
 
   constructor(params: object = {}) {
     for (const name in params) {
-      this[name] = params[name];
+      this[name] = params[name]
     }
   }
 }

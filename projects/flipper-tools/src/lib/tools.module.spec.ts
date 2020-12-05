@@ -1,13 +1,13 @@
-import { ToolsModule } from './tools.module';
+import { ToolsModule } from './tools.module'
 
 describe('ToolsModule', () => {
-  let toolsModule: ToolsModule;
+  let toolsModule: ToolsModule
 
   beforeEach(() => {
-    toolsModule = new ToolsModule();
-  });
+    toolsModule = new ToolsModule()
+  })
 
   it('should create an instance', () => {
-    expect(toolsModule).toBeTruthy();
-  });
-});
+    expect(toolsModule).toBeTruthy()
+  })
+})

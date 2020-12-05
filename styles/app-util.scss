@@ -7,11 +7,13 @@
   @include scrollable();
 }
 
-.hover-show-child, .hover-show-child-2 {
+.hover-show-child,
+.hover-show-child-2 {
   display: none;
 }
 
-.hover-show-parent:hover .hover-show-child, .hover-show-parent-2:hover .hover-show-child-2 {
+.hover-show-parent:hover .hover-show-child,
+.hover-show-parent-2:hover .hover-show-child-2 {
   display: block;
 }
 

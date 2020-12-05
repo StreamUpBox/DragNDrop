@@ -3,7 +3,7 @@
 @import 'app-compact';
 @import 'app-util';
 
-@mixin panel-header(){
+@mixin panel-header() {
   @include block-filler-x();
   background-color: mat-color($app-background, 800);
   border-bottom: 1px solid mat-color($app-background, 700);

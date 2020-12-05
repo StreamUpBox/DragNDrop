@@ -1,6 +1,6 @@
 export enum ORDERTYPE {
-    PURCHASE= 'purchase',
-    SALES= 'sales',
-    RETURN= 'return',
-    TRANSFER= 'transfer',
+  PURCHASE = 'purchase',
+  SALES = 'sales',
+  RETURN = 'return',
+  TRANSFER = 'transfer',
 }

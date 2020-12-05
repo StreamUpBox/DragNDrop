@@ -27,19 +27,21 @@ $app-tabs-icon-line-height: $app-tabs-icon-font-size + 2;
   }
 
   @media (max-width: 1024px) {
-    .tab-label-bottom, .tab-label-top {
+    .tab-label-bottom,
+    .tab-label-top {
       display: none;
     }
   }
 
   @media (max-height: 740px) {
-    .tab-label-right, .tab-label-left {
+    .tab-label-right,
+    .tab-label-left {
       display: none;
     }
   }
 }
 
-@mixin scrollable-mat-tabs(){
+@mixin scrollable-mat-tabs() {
   height: 100%;
   .mat-tab-body-wrapper {
     height: 100%;

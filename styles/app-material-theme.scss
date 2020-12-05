@@ -20,7 +20,7 @@ $app-background: mat-palette($mat-light-green);
 $app-warn: mat-palette($mat-amber);
 
 // Create the theme object (a Sass map containing all of the palettes).
- 
+
 $app-dark: mat-color($app-background, 100);
 
 // $mat-theme: (
@@ -47,31 +47,31 @@ $app-dark: mat-color($app-background, 100);
 //   background: $mat-light-theme-background,
 // );
 
-
 $theme-foreground: (
-  base:              gray,
-  divider:           $white-12-opacity,
-  dividers:          $white-12-opacity,
-  disabled:          rgba(200, 200, 200, 0.38),
-  disabled-button:   rgba(200, 200, 200, 0.38),
-  disabled-text:     rgba(200, 200, 200, 0.38),
-  hint-text:         rgba(200, 200, 200, 0.38),
-  secondary-text:    rgba(200, 200, 200, 0.54),
-  icon:              rgba(200, 200, 200, 0.54),
-  icons:             rgba(200, 200 , 200, 0.54),
-  text:              rgba(27, 26, 26, 0.87),
-  slider-min:        rgba(200, 200, 200, 0.87),
-  slider-off:        rgba(200, 200, 200, 0.26),
+  base: gray,
+  divider: $white-12-opacity,
+  dividers: $white-12-opacity,
+  disabled: rgba(200, 200, 200, 0.38),
+  disabled-button: rgba(200, 200, 200, 0.38),
+  disabled-text: rgba(200, 200, 200, 0.38),
+  hint-text: rgba(200, 200, 200, 0.38),
+  secondary-text: rgba(200, 200, 200, 0.54),
+  icon: rgba(200, 200, 200, 0.54),
+  icons: rgba(200, 200, 200, 0.54),
+  text: rgba(27, 26, 26, 0.87),
+  slider-min: rgba(200, 200, 200, 0.87),
+  slider-off: rgba(200, 200, 200, 0.26),
   slider-off-active: rgba(200, 200, 200, 0.38),
 );
 
 $theme-background: (
   status-bar: map_get($mat-grey, 300),
-  app-bar:    map_get($mat-grey, 100),
+  app-bar: map_get($mat-grey, 100),
   background: map_get($mat-grey, 50),
-  hover:      rgba(200, 200, 200, 0.04), // TODO(kara): check style with Material Design UX
-  card:       white,
-  dialog:     white,
+  hover: rgba(200, 200, 200, 0.04),
+  // TODO(kara): check style with Material Design UX
+  card: white,
+  dialog: white,
   disabled-button: $black-12-opacity,
   raised-button: white,
   focused-button: $black-6-opacity,
@@ -82,20 +82,13 @@ $theme-background: (
 );
 
 $theme: (
-    primary: $app-primary,
-    accent: $app-accent,
-    warn: $app-warn,
-    is-dark: false,
-    foreground: $theme-foreground,
-    background: $theme-background
-  );
-
-
-
-
-  
-
-
+  primary: $app-primary,
+  accent: $app-accent,
+  warn: $app-warn,
+  is-dark: false,
+  foreground: $theme-foreground,
+  background: $theme-background,
+);
 
 $app-dark-primary: mat-palette($mat-blue);
 $app-dark-accent: mat-palette($mat-green);
@@ -111,24 +104,24 @@ $app-dark-warn: mat-palette($mat-amber);
 //$mat-theme: mat-dark-theme($app-primary, $app-accent, $app-warn);
 $app-dark-white: mat-color($app-dark-background, 100);
 $dark-theme: (
-  primary:$app-dark-primary,
+  primary: $app-dark-primary,
   accent: $app-dark-accent,
   warn: $app-dark-warn,
   is-dark: true,
   foreground: (
-    base:              $app-dark-white,
-    divider:           $light-dividers,
-    dividers:          $light-dividers,
-    disabled:          $light-disabled-text,
-    disabled-button:   rgba($app-dark-white, 0.3),
-    disabled-text:     $light-disabled-text,
-    hint-text:         $light-disabled-text,
-    secondary-text:    $light-secondary-text,
-    icon:              $app-dark-white,
-    icons:             $app-dark-white,
-    text:              $app-dark-white,
-    slider-min:        $app-dark-white,
-    slider-off:        rgba($app-dark-white, 0.3),
+    base: $app-dark-white,
+    divider: $light-dividers,
+    dividers: $light-dividers,
+    disabled: $light-disabled-text,
+    disabled-button: rgba($app-dark-white, 0.3),
+    disabled-text: $light-disabled-text,
+    hint-text: $light-disabled-text,
+    secondary-text: $light-secondary-text,
+    icon: $app-dark-white,
+    icons: $app-dark-white,
+    text: $app-dark-white,
+    slider-min: $app-dark-white,
+    slider-off: rgba($app-dark-white, 0.3),
     slider-off-active: rgba($app-dark-white, 0.3),
   ),
   background: $mat-dark-theme-background,
@@ -140,7 +133,6 @@ $dark-theme: (
 
 @include angular-material-theme($theme);
 
-
 $_background: map-get($theme, background);
 $_foreground: map-get($theme, foreground);
 $app-background-color: mat-color($_background, background);
@@ -148,21 +140,17 @@ $app-foreground-color: mat-color($_foreground, text);
 $app-foreground-secondary-color: mat-color($_foreground, secondary-text);
 
 .unicorn-dark-theme {
+  @include angular-material-theme($dark-theme);
 
-@include angular-material-theme($dark-theme);
-
-$_background: map-get($dark-theme, background);
-$_foreground: map-get($dark-theme, foreground);
-$app-background-color: mat-color($_background, background);
-$app-foreground-color: mat-color($_foreground, text);
-$app-foreground-secondary-color: mat-color($_foreground, secondary-text);
+  $_background: map-get($dark-theme, background);
+  $_foreground: map-get($dark-theme, foreground);
+  $app-background-color: mat-color($_background, background);
+  $app-foreground-color: mat-color($_foreground, text);
+  $app-foreground-secondary-color: mat-color($_foreground, secondary-text);
 }
-
 
 // $_background: map-get($dark-theme, background);
 // $_foreground: map-get($dark-theme, foreground);
 // $app-background-color: mat-color($_background, background);
 // $app-foreground-color: mat-color($_foreground, text);
 // $app-foreground-secondary-color: mat-color($_foreground, secondary-text);
-
-

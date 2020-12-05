@@ -1,2 +1,1 @@
-
-export * from './match-height.directive';
+export * from './match-height.directive'

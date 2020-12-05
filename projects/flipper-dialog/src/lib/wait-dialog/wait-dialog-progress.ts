@@ -1,4 +1,4 @@
 export interface WaitDialogProgress {
-  title: string;
-  progress: number;
+  title: string
+  progress: number
 }

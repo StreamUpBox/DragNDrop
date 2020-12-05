@@ -8,7 +8,7 @@ export class OrderDetails {
   orderId: string;
   variantId: string;
   stockId: string;
-  SKU?: string;
+  sku?: string;
   unit?: string;
   variantName?: string;
   productName?: string;

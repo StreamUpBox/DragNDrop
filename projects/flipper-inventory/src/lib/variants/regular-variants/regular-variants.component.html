@@ -7,12 +7,12 @@
       <tr class="tr"
         style="border-top: 1px #d5d9dc solid; border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
   
-        <td class="td-sm" [class.trIsFocused]="isFocused=='SKU'" [class.tdIsFocused]="isFocused=='SKU'">
-          SKU
+        <td class="td-sm" [class.trIsFocused]="isFocused=='sku'" [class.tdIsFocused]="isFocused=='sku'">
+          sku
         </td>
-        <td style="width:25%" [class.trIsFocused]="isFocused=='SKU'">
-          <input class="input" formControlName="SKU" type="text" (input)="updateVariant('SKU',$event)"
-            (focus)="focusing('SKU')" (focusout)="focusingOut()" placeholder="SKU" />
+        <td style="width:25%" [class.trIsFocused]="isFocused=='sku'">
+          <input class="input" formControlName="sku" type="text" (input)="updateVariant('sku',$event)"
+            (focus)="focusing('sku')" (focusout)="focusingOut()" placeholder="sku" />
         </td>
   
         <td class="td-sm" [class.trIsFocused]="isFocused=='unit'" [class.tdIsFocused]="isFocused=='unit'">

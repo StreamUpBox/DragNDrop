@@ -114,7 +114,7 @@ export class RegularVariantsComponent implements OnInit {
 
     this.form =  this.formBuilder.group({
       name: [!action && variant && variant.name ? variant.name : '', Validators.required],
-      SKU: !action && variant && variant.SKU ? variant.SKU : this.variant.generateSKU(),
+      sku: !action && variant && variant.sku ? variant.sku : this.variant.generateSKU(),
       retailPrice: [ 0.00, Validators.min(0)],
       supplyPrice: [ 0.00, Validators.min(0)],
       unit: !action && variant && variant.unit ? variant.unit : '',
@@ -155,8 +155,8 @@ export class RegularVariantsComponent implements OnInit {
       this.form.controls.retailPrice.setValue('');
     } else if (value === 'supplyPrice') {
       this.form.controls.supplyPrice.setValue('');
-    } else if (value === 'SKU') {
-      this.form.controls.SKU.setValue('');
+    } else if (value === 'sku') {
+      this.form.controls.sku.setValue('');
     }
   }
 
@@ -184,9 +184,9 @@ export class RegularVariantsComponent implements OnInit {
           this.form.controls.supplyPrice.setValue(stock.supplyPrice ? stock.supplyPrice : 0);
         }
 
-      if (this.isFocused === 'SKU' && (this.form.controls.SKU.value === 0 ||
-        this.form.controls.SKU.value === '')) {
-          this.form.controls.SKU.setValue(this.regularVariantion.SKU);
+      if (this.isFocused === 'sku' && (this.form.controls.sku.value === 0 ||
+        this.form.controls.sku.value === '')) {
+          this.form.controls.sku.setValue(this.regularVariantion.sku);
         }
 
 

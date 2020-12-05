@@ -179,7 +179,7 @@ return this.database.query(['table', 'productId'], {
         channels:[this.defaultBusiness$.userId],
       };
 
-      await this.database.put(PouchConfig.Tables.products + '_' + formProduct.id, formProduct);
+      await this.database.put(formProduct.id, formProduct);
       if(this.branches$.length > 0){
          this.variant.createRegular(formProduct,this.branches$); 
       }
@@ -204,8 +204,9 @@ return this.database.query(['table', 'productId'], {
 
     if (this.hasDraftProduct && this.branchList.value.length > 0) {
       this.branchList.value.forEach(id => {
-        this.database.put(PouchConfig.Tables.branchProducts + '_' + this.hasDraftProduct.id, {
-          id: this.database.uid(),
+        let key=this.database.uid();
+        this.database.put(key, {
+          id: key,
           productId: this.hasDraftProduct.id,
           branchId: id
         });
@@ -215,7 +216,7 @@ return this.database.query(['table', 'productId'], {
 
   async update() {
     if (this.hasDraftProduct) {
-      return await this.database.put(PouchConfig.Tables.products + '_' + this.hasDraftProduct.id, this.hasDraftProduct);
+      return await this.database.put(this.hasDraftProduct.id, this.hasDraftProduct);
     }
 
   }
@@ -243,7 +244,7 @@ return this.database.query(['table', 'productId'], {
     }
     if (!this.hasDraftProduct.isDraft) {
 
-      this.database.put(PouchConfig.Tables.products + '_' + this.hasDraftProduct.id, this.hasDraftProduct);
+      this.database.put(this.hasDraftProduct.id, this.hasDraftProduct);
 
       if (this.hasDraftProduct) {
         //TODO: now update this function so it works!.

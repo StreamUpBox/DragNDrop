@@ -161,7 +161,7 @@ export class FlipperBasicPosComponent  {
     return this.dialog.open(AddCartItemDialogComponent, DialogSize.SIZE_MD).subscribe(result => {
       if (result !== 'close' || result.price > 0 || result.quantity > 0) {
 
-        const variation = {unit: result.unit, name: result.name, SKU: 'p' + Math.floor(Math.random() * 100),
+        const variation = {unit: result.unit, name: result.name, sku: 'p' + Math.floor(Math.random() * 100),
          productName: result.name,
 
         priceVariant: {

@@ -164,11 +164,11 @@ if(this.activeUser.currentUser){
       docId:PouchConfig.Tables.business
     };
 
-    this.database.put(PouchConfig.Tables.business+'_'+formBusinessData.id, formBusinessData);
+    this.database.put(formBusinessData.id, formBusinessData);
 
     if(this.activeBusiness.currentBusiness){
           this.activeBusiness.currentBusiness.active=false;
-          this.database.put(PouchConfig.Tables.business+'_'+this.activeBusiness.currentBusiness.id, 
+          this.database.put(this.activeBusiness.currentBusiness.id, 
           this.activeBusiness.currentBusiness);
     }
 
@@ -189,7 +189,7 @@ if(this.activeUser.currentUser){
 
     };
 
-    this.database.put(PouchConfig.Tables.branches+'_'+formBranchData.id, formBranchData);
+    this.database.put(formBranchData.id, formBranchData);
 
 
     const formTaxes2 = {
@@ -208,7 +208,7 @@ if(this.activeUser.currentUser){
 
 
    
-    this.database.put(PouchConfig.Tables.taxes+'_'+formTaxes2.id, formTaxes2);
+    this.database.put(formTaxes2.id, formTaxes2);
 
     const formTaxes1 =
     {
@@ -224,7 +224,7 @@ if(this.activeUser.currentUser){
       channels:[this.activeUser.currentUser ? this.activeUser.currentUser.id : 0],
       docId:PouchConfig.Tables.taxes
     };
-    this.database.put(PouchConfig.Tables.taxes+'_'+formTaxes1.id, formTaxes1);
+    this.database.put(formTaxes1.id, formTaxes1);
 
    
     

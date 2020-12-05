@@ -13,14 +13,14 @@
          </tr>
 
          
-         <tr class="tr" [class.trIsFocused]="isFocused=='SKU'" style=" border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
+         <tr class="tr" [class.trIsFocused]="isFocused=='sku'" style=" border-right: 1px #d5d9dc solid; border-left: 1px #d5d9dc solid;">
             
-            <td class="td"  [class.tdIsFocused]="isFocused=='SKU'">
-                SKU
+            <td class="td"  [class.tdIsFocused]="isFocused=='sku'">
+                sku
               </td>
               <td style="width:60%">
-                <input class="input" formControlName="SKU" type="text" (input)="updateVariant('SKU',$event)"
-                (focus)="focusing('SKU')" (focusout)="focusingOut()" placeholder="SKU" />
+                <input class="input" formControlName="sku" type="text" (input)="updateVariant('sku',$event)"
+                (focus)="focusing('sku')" (focusout)="focusingOut()" placeholder="sku" />
               </td>
          </tr>
 

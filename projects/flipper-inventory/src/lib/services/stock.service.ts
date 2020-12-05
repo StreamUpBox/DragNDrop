@@ -240,19 +240,19 @@ export class StockService {
   }
 
    create(stock: Stock) {
-    return  this.database.put(PouchConfig.Tables.stocks+'_'+stock.id, stock);
+    return  this.database.put(stock.id, stock);
   }
 
   createHistory(stock: StockHistory): any {
-    return  this.database.put(PouchConfig.Tables.stockHistories+'_'+stock.id, stock);
+    return  this.database.put(stock.id, stock);
   }
   updateHistory(stock: StockHistory): any {
-    return  this.database.put(PouchConfig.Tables.stockHistories+'_'+stock.id, stock);
+    return  this.database.put(stock.id, stock);
   }
 
   update(stock: Stock): Stock {
     if (stock) {
-      return this.database.put(PouchConfig.Tables.stocks+'_'+stock.id, stock);
+      return this.database.put(stock.id, stock);
     }
 
   }

@@ -17,7 +17,7 @@ import { DialogSize } from '@enexus/flipper-dialog';
 export class VariationService {
   hasRegular: Variant = null;
   myAllVariants: Variant[] = [];
-  SKU = '';
+  sku = '';
   d = new Date();
   units: any[] = [];
   form: FormGroup;
@@ -119,7 +119,7 @@ export class VariationService {
 
     this.form =  this.formBuilder.group({
       name: [!action && variant && variant.name ? variant.name : '', Validators.required],
-      SKU: !action && variant && variant.SKU ? variant.SKU : this.generateSKU(),
+      sku: !action && variant && variant.sku ? variant.sku : this.generateSKU(),
       retailPrice: [!action && variant && stock ? stock.retailPrice : 0.00, Validators.min(0)],
       supplyPrice: [!action && variant && stock ? stock.supplyPrice : 0.00, Validators.min(0)],
       unit: !action && variant && variant.unit ? variant.unit : '',
@@ -144,7 +144,7 @@ export class VariationService {
  }
 
   create(variant: Variant) {
-    return  this.database.put(PouchConfig.Tables.variants+'_'+variant.id, variant);
+    return  this.database.put(variant.id, variant);
   }
   delete(variant: Variant) {
     return  this.database.remove(variant);
@@ -160,13 +160,9 @@ export class VariationService {
         id: this.database.uid(),
         name: 'Regular',
         productName: product.name,
-        categoryName: '',
         productId: product.id,
-        supplyPrice:0.00,
-        retailPrice: 0.00,
         unit: this.units.length > 0?this.units[0].value:'',
-        SKU: this.generateSKU(),
-        syncedOnline: false,
+        sku: this.generateSKU(),
         isActive: true,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
@@ -175,7 +171,8 @@ export class VariationService {
         table:'variants',
       
       };
-      await this.database.put(PouchConfig.Tables.variants+'_'+formData.id, formData);
+
+      await this.database.put(formData.id, formData);
        this.createVariantStock(formData,branches);
        this.allVariant(product);
       this.regular();
@@ -246,8 +243,8 @@ export class VariationService {
 
   updateRegularVariant(variation: Variant, key: string, val: any): void {
     if (variation) {
-      if (key === 'SKU' && val === '') {
-        val = variation.SKU;
+      if (key === 'sku' && val === '') {
+        val = variation.sku;
       }
 
       variation[key] = val;
@@ -260,7 +257,7 @@ export class VariationService {
   update(variation: Variant): void {
     if (variation) {
       // console.log('need to update variant',variation);
-      return this.database.put(PouchConfig.Tables.variants+'_'+variation.id, variation);
+      return this.database.put(variation.id, variation);
     }
 
   }
@@ -347,7 +344,7 @@ async updateStockControl(result: any, variant: Variant) {
   public openPrintBarcodeLablesDialog(product,allVariants): any {
     const labels: Labels[] = [];
     allVariants.forEach(v => {
-      labels.push({name: v.name, sku: v.SKU,channels:[product.userId]});
+      labels.push({name: v.name, sku: v.sku,channels:[product.userId]});
     });
     return this.dialog.open(PrintBarcodeLabelsDialogComponent, DialogSize.SIZE_LG, labels).subscribe();
   }

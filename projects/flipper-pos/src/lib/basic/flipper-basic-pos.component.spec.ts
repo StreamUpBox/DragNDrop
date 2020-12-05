@@ -28,7 +28,7 @@ orderItems: [{id: 1,
 }]};
 
   const variant: Variant[] = [{id: 1,
-  SKU: 'P',
+  sku: 'P',
   name: 'Cake',
   isActive: true,
   priceVariant: {
@@ -78,7 +78,7 @@ orderItems: [{id: 1,
   it('should receive and set input foundVariant', () => {
 
     expect(component.foundVariant).toEqual([{id: 1,
-      SKU: 'P',
+      sku: 'P',
       name: 'Cake',
       isActive: true,
       priceVariant: {

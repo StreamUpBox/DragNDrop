@@ -4,7 +4,7 @@ import { Product } from './product';
 
 export class Variant {
   id: string;
-  SKU: any;
+  sku: any;
   name: string;
   productName?: string;
   categoryName?: string;

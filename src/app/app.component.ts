@@ -81,7 +81,6 @@ export class AppComponent implements OnInit {
       
     };
     
-    // await  this.database.put(PouchConfig.Tables.user, user);
     this.init();
   }
   async init() {
@@ -153,7 +152,7 @@ export class AppComponent implements OnInit {
                 updatedAt: this.date
           };
 
-      await this.database.put(PouchConfig.Tables.orders + '_' + formOrder.id, formOrder);
+      await this.database.put(formOrder.id, formOrder);
       this.hasDraftOrder();
 
     }
@@ -248,34 +247,7 @@ public async allOrderDetails(orderId) {
 
   public loadVariants(param=null) {
 
-  
-  // const products: Product[]= this.model.raw(`SELECT branchProducts.branchId,branchProducts.productId,products.id,branchProducts.id as branchProductId
-  //             FROM branchProducts JOIN products ON branchProducts.productId = products.id AND branchProducts.branchId="${this.branch.id}"
-  //             ORDER BY products.id DESC
-  //             `) as Product[];
-              // products.forEach(product => {
-               
-              //   const variant: Variant = this.query.select(Tables.variants).where('productId', product.id)
-              //   .first<Variant>();
-              //   variants.push(variant);
-              // });
-//
-      // this.theVariantFiltered=[];
-      // this.variants=[];
 let variantsArray:Variant[]=[];
-// const variants:Variant[]= this.model.raw(`SELECT
-//  products.id as pId,
-//  variants.id,
-//  products.name as pName,
-//  variants.name,
-//  variants.SKU,
-//  variants.unit,
-//  variants.channel,
-//  variants.productId,
-//  variants.createdAt,
-//  variants.updatedAt
-//  FROM variants,products WHERE variants.productId = products.id  AND  (products.name LIKE "%${param}%" OR variants.name LIKE "%${param}%" OR variants.SKU="${param}") `);
-        
 
   if (this.variant.allVariants.length > 0) {
 
@@ -351,7 +323,7 @@ let variantsArray:Variant[]=[];
     return arrayOfObject.filter((v, i) => {
       // console.log(v);
       if (v.name.toString().toLowerCase().indexOf(query) >= 0
-        || v.SKU.toString().toLowerCase().indexOf(query) > 0
+        || v.sku.toString().toLowerCase().indexOf(query) > 0
         || v.productName.toString().toLowerCase().indexOf(query) >= 0
        ) {
         return true;
@@ -378,7 +350,7 @@ let variantsArray:Variant[]=[];
             details.item.taxAmount = (subTotal * taxRate) / 100;
             details.item.subTotal = subTotal;
 
-            await this.database.put(PouchConfig.Tables.orderDetails+'_'+details.item.id, details.item);
+            await this.database.put(details.item.id, details.item);
         }
       
 
@@ -406,7 +378,7 @@ let variantsArray:Variant[]=[];
       parseFloat(this.currentOrder.cashReceived) - this.currentOrder.saleTotal : 0.00;
     this.currentOrder.customerChangeDue = parseFloat(this.currentOrder.customerChangeDue);
   
-    await this.database.put(PouchConfig.Tables.orders+'_'+this.currentOrder.id, this.currentOrder);
+    await this.database.put(this.currentOrder.id, this.currentOrder);
     await this.hasDraftOrder();
   }
 
@@ -443,7 +415,7 @@ let variantsArray:Variant[]=[];
       canTrackStock: variant.stock.canTrackingStock,
       stockId: variant.stock.id,
       unit: variant.unit,
-      SKU: variant.SKU,
+      sku: variant.sku,
       quantity: event.quantity,
       variantId: variant.id,
       taxRate,
@@ -456,7 +428,7 @@ let variantsArray:Variant[]=[];
       channels:[this.defaultBusiness$.userId]
     };
 
-    this.database.put(PouchConfig.Tables.orderDetails +'_'+ orderDetails.id, orderDetails);
+    this.database.put(orderDetails.id, orderDetails);
     await this.allOrderDetails(this.currentOrder.id);
     this.currentOrder.orderItems = this.getOrderDetails();
     this.updateOrder();
@@ -478,7 +450,7 @@ let variantsArray:Variant[]=[];
       
    
 
-      await this.database.put(PouchConfig.Tables.orders + '_' +  this.currentOrder.id,  this.currentOrder);
+      await this.database.put(this.currentOrder.id,  this.currentOrder);
 
       
       this.collectCashCompleted = { isCompleted: true, collectedOrder: this.currentOrder };
@@ -516,7 +488,7 @@ let variantsArray:Variant[]=[];
             updatedAt: new Date().toISOString(),
             channels:[this.defaultBusiness$.userId],
           }
-           this.database.put(PouchConfig.Tables.stockHistories + '_' +  stockHistories.id,  stockHistories);
+           this.database.put(stockHistories.id,  stockHistories);
          
           this.updateStock(details);
         }
@@ -543,13 +515,13 @@ let variantsArray:Variant[]=[];
     if (stock) {
       stock.currentStock = stock.currentStock - stockDetails.quantity;
 
-       this.database.put(PouchConfig.Tables.stocks + '_' +  stock.id,  stock);
+       this.database.put(stock.id,  stock);
     }
 
   }
 
   async saveOrderUpdated(event: Order) {
-    await this.database.put(PouchConfig.Tables.orders + '_' +  event.id,  event);
+    await this.database.put(event.id,  event);
     await this.hasDraftOrder();
   }
 

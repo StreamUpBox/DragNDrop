@@ -1,9 +1,12 @@
-import { Component, OnInit, Output, EventEmitter, ChangeDetectorRef, NgZone
+import {
+  Component, OnInit, Output, EventEmitter, ChangeDetectorRef, NgZone
 } from '@angular/core';
 import { trigger, transition, animate } from '@angular/animations';
-import { Menu, Business, Branch, User, MenuEntries, PouchDBService, Tables,
-   PouchConfig,ActiveUser,UserLoggedEvent,CurrentBranchEvent,BusinessesEvent,CurrentBusinessEvent,BranchesEvent } from '@enexus/flipper-components';
-   import { FlipperEventBusService } from '@enexus/flipper-event';
+import {
+  Menu, Business, Branch, User, MenuEntries, PouchDBService, Tables,
+  PouchConfig, ActiveUser, UserLoggedEvent, CurrentBranchEvent, BusinessesEvent, CurrentBusinessEvent, BranchesEvent
+} from '@enexus/flipper-components';
+import { FlipperEventBusService } from '@enexus/flipper-event';
 import { Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
@@ -74,142 +77,142 @@ export class FlipperMenuComponent implements OnInit {
   user$: User = null;
 
   constructor(private database: PouchDBService,
-              private eventBus: FlipperEventBusService,
-              private route: Router,
-              private ref: ChangeDetectorRef,
-              public activeUser:ActiveUser,
-              private ngZone: NgZone) {
-              this.database.connect(PouchConfig.bucket);
+    private eventBus: FlipperEventBusService,
+    private route: Router,
+    private ref: ChangeDetectorRef,
+    public activeUser: ActiveUser,
+    private ngZone: NgZone) {
+    this.database.connect(PouchConfig.bucket);
 
-                  this.eventBus.of < UserLoggedEvent > (UserLoggedEvent.CHANNEL)
-                    .pipe(filter(e => e.user && e.user.id !== null ))
-                    .subscribe(res =>
-                    this.activeUser.currentUser = res.user);
+    this.eventBus.of<UserLoggedEvent>(UserLoggedEvent.CHANNEL)
+      .pipe(filter(e => e.user && e.user.id !== null))
+      .subscribe(res =>
+        this.activeUser.currentUser = res.user);
 
-                    this.eventBus.of < BusinessesEvent > (BusinessesEvent.CHANNEL)
-                    .pipe(filter(e => e.businesses && e.businesses.length > 0 ))
-                    .subscribe(res =>
-                    this.business$ = res.businesses);
+    this.eventBus.of<BusinessesEvent>(BusinessesEvent.CHANNEL)
+      .pipe(filter(e => e.businesses && e.businesses.length > 0))
+      .subscribe(res =>
+        this.business$ = res.businesses);
 
-                      this.eventBus.of < CurrentBusinessEvent > (CurrentBusinessEvent.CHANNEL)
-                        .subscribe(res =>
-                          this.defaultBusiness$ = res.business);
+    this.eventBus.of<CurrentBusinessEvent>(CurrentBusinessEvent.CHANNEL)
+      .subscribe(res =>
+        this.defaultBusiness$ = res.business);
 
-                          this.eventBus.of < BranchesEvent > (BranchesEvent.CHANNEL)
-                           .pipe(filter(e => e.branches && e.branches.length > 0 ))
-                        .subscribe(res =>
-                          this.branches$ = res.branches);
+    this.eventBus.of<BranchesEvent>(BranchesEvent.CHANNEL)
+      .pipe(filter(e => e.branches && e.branches.length > 0))
+      .subscribe(res =>
+        this.branches$ = res.branches);
 
-                           this.eventBus.of < CurrentBranchEvent > (CurrentBranchEvent.CHANNEL)
-                        .subscribe(res =>
-                          this.defaultBranch$= res.branch);
+    this.eventBus.of<CurrentBranchEvent>(CurrentBranchEvent.CHANNEL)
+      .subscribe(res =>
+        this.defaultBranch$ = res.branch);
 
-                    }
+  }
 
-  
- 
-  
+
+
+
 
   async ngOnInit() {
-    this.menu= [
+    this.menu = [
       {
-          name: 'Analytics',
-          icon: 'analytics.svg',
-          route: 'analytics',
-          active: true,
-          isSetting: false,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-          channels:['v']
+        name: 'Analytics',
+        icon: 'analytics.svg',
+        route: 'analytics',
+        active: true,
+        isSetting: false,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        channels: ['v']
       },
       {
-          name: 'POS',
-          icon: 'pos.svg',
-          route: 'pos',
-          active: false,
-          isSetting: false,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-          channels:['v']
+        name: 'POS',
+        icon: 'pos.svg',
+        route: 'pos',
+        active: false,
+        isSetting: false,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        channels: ['v']
       },
       {
-          name: 'Inventory',
-          icon: 'inventory.svg',
-          route: 'inventory',
-          active: false,
-          isSetting: false,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-          channels:['v']
+        name: 'Inventory',
+        icon: 'inventory.svg',
+        route: 'inventory',
+        active: false,
+        isSetting: false,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        channels: ['v']
       },
       {
-          name: 'Transactions',
-          icon: 'transaction.svg',
-          route: 'transactions',
-          active: false,
-          isSetting: false,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-          channels:['v']
+        name: 'Transactions',
+        icon: 'transaction.svg',
+        route: 'transactions',
+        active: false,
+        isSetting: false,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        channels: ['v']
       },
       {
-          name: 'Settings',
-          icon: 'settings.svg',
-          route: 'settings',
-          active: false,
-          isSetting: true,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-          channels:['v']
+        name: 'Settings',
+        icon: 'settings.svg',
+        route: 'settings',
+        active: false,
+        isSetting: true,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        channels: ['v']
       }
-  ];
+    ];
 
-    await this.database.activeUser().then(res=>{
-        if(res.docs && res.docs.length > 0){
-            this.eventBus.publish(new UserLoggedEvent(res.docs[0]));
-        }
+    await this.database.activeUser().then(res => {
+      if (res.docs && res.docs.length > 0) {
+        this.eventBus.publish(new UserLoggedEvent(res.docs[0]));
+      }
     });
 
 
-    if(this.activeUser.currentUser){
+    if (this.activeUser.currentUser) {
 
-       await this.database.query(['table','userId'],{
-                  table: {$eq:'businesses'},
-                  userId:{$eq:this.activeUser.currentUser.id}
-              }).then(res=>{
-        if(res.docs && res.docs.length > 0){
-            this.eventBus.publish(new BusinessesEvent(res.docs));
+      await this.database.query(['table', 'userId'], {
+        table: { $eq: 'businesses' },
+        userId: { $eq: this.activeUser.currentUser.id }
+      }).then(res => {
+        if (res.docs && res.docs.length > 0) {
+          this.eventBus.publish(new BusinessesEvent(res.docs));
         }
-    });
-    
-        //defaultBusiness
-        await this.database.activeBusiness(this.activeUser.currentUser.id).then(res=>{
-            if(res.docs && res.docs.length > 0){
-                this.eventBus.publish(new CurrentBusinessEvent(res.docs[0]));
-            }
+      });
+
+      //defaultBusiness
+      await this.database.activeBusiness(this.activeUser.currentUser.id).then(res => {
+        if (res.docs && res.docs.length > 0) {
+          this.eventBus.publish(new CurrentBusinessEvent(res.docs[0]));
+        }
+      });
+
+      //this.defaultBusiness$
+      if (this.defaultBusiness$) {
+        await this.database.query(['table', 'businessId'], {
+          table: { $eq: 'branches' },
+          businessId: { $eq: this.defaultBusiness$.id }
+        }).then(res => {
+          if (res.docs && res.docs.length > 0) {
+            this.eventBus.publish(new BranchesEvent(res.docs));
+          }
         });
 
-        //this.defaultBusiness$
-        if(this.defaultBusiness$){
-                await this.database.query(['table','businessId'],{
-                                table: {$eq:'branches'},
-                                businessId:{$eq:this.defaultBusiness$.id}
-                            }).then(res=>{
-                            if(res.docs && res.docs.length > 0){
-                                this.eventBus.publish(new BranchesEvent(res.docs));
-                            }
-                  });
+
+        await this.database.activeBranch(this.defaultBusiness$.id).then(res => {
+          if (res.docs && res.docs.length > 0) {
+            this.eventBus.publish(new CurrentBranchEvent(res.docs[0]));
+          }
+        });
 
 
-              await this.database.activeBranch(this.defaultBusiness$.id).then(res=>{
-                    if(res.docs && res.docs.length > 0){
-                        this.eventBus.publish(new CurrentBranchEvent(res.docs[0]));
-                    }
-                });
 
-              
-
-        }
+      }
 
     }
 
@@ -231,13 +234,13 @@ export class FlipperMenuComponent implements OnInit {
     //         if (doc && this.user$ &&
     //           doc._id && doc._id === PouchConfig.Tables.business) {
     //            this.allBusiness$ = doc.businesses.filter(bus => bus.userId === this.user$.id);
-       
+
     //         }
 
     //         if (doc && this.defaultBusiness$ &&
     //           doc._id && doc._id === PouchConfig.Tables.branches) {
     //             this.allBranches$ = doc.branches;
-               
+
     //         }
 
 
@@ -275,12 +278,12 @@ export class FlipperMenuComponent implements OnInit {
       throw new Error('No current default business set.');
     }
 
-    this.defaultBusiness$.active=false;
-    this.database.put(PouchConfig.Tables.business+'_'+this.defaultBusiness$.id, this.defaultBusiness$);
+    this.defaultBusiness$.active = false;
+    this.database.put(this.defaultBusiness$.id, this.defaultBusiness$);
 
-     business.active=true;
-    this.database.put(PouchConfig.Tables.business+'_'+business.id, business);
-  
+    business.active = true;
+    this.database.put(business.id, business);
+
     this.ref.detectChanges();
   }
 
@@ -289,13 +292,13 @@ export class FlipperMenuComponent implements OnInit {
     if (!branch == null) {
       throw new Error('No current default business set.');
     }
-    
-     this.defaultBranch$.active=false;
-    this.database.put(PouchConfig.Tables.branches+'_'+this.defaultBranch$.id, this.defaultBranch$);
 
-     branch.active=true;
-    this.database.put(PouchConfig.Tables.branches+'_'+branch.id, branch);
-   
+    this.defaultBranch$.active = false;
+    this.database.put(this.defaultBranch$.id, this.defaultBranch$);
+
+    branch.active = true;
+    this.database.put(branch.id, branch);
+
 
     this.ref.detectChanges();
   }
@@ -306,8 +309,8 @@ export class FlipperMenuComponent implements OnInit {
 
     if (isSetting) {
       menus.filter(m => {
-          m.active = false;
-          menuPusher.push(m);
+        m.active = false;
+        menuPusher.push(m);
       });
       this.settingMenu.active = true;
     } else {
@@ -322,7 +325,7 @@ export class FlipperMenuComponent implements OnInit {
 
     }
     this.menu = menuPusher;
-   // this.route.navigate([menu.route]);
+    // this.route.navigate([menu.route]);
   }
 
   hideBranchDropDown() {
@@ -345,4 +348,3 @@ export class FlipperMenuComponent implements OnInit {
     this.logoutUser.emit(this.loggedUser);
   }
 }
- 

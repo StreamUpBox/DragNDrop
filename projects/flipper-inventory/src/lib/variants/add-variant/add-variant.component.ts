@@ -37,7 +37,7 @@ export class AddVariantComponent implements OnInit {
     // this.variant.activeBusiness();
     this.form = this.formBuilder.group({
       name: [ '', Validators.required],
-      SKU: this.variant.generateSKU(),
+      sku: this.variant.generateSKU(),
       retailPrice: [ 0.00, Validators.min(0)],
       supplyPrice: [0.00, Validators.min(0)],
       unit:'',
@@ -67,7 +67,7 @@ export class AddVariantComponent implements OnInit {
       supplyPrice: parseInt(this.form.value.supplyPrice, 10),
       retailPrice: parseInt(this.form.value.retailPrice, 10),
       unit: this.form.value.unit,
-      SKU: this.form.value.SKU ? this.form.value.SKU : this.variant.generateSKU(),
+      sku: this.form.value.sku ? this.form.value.sku : this.variant.generateSKU(),
       syncedOnline: false,
       isActive: false,
       createdAt: new Date().toISOString(),
@@ -77,7 +77,7 @@ export class AddVariantComponent implements OnInit {
       table:'variants',
     };
 
-    await this.database.put(PouchConfig.Tables.variants+'_'+formData.id, formData);
+    await this.database.put(formData.id, formData);
   
       this.variant.createVariantStock(formData,this.variant.branches$);
     
@@ -92,8 +92,8 @@ export class AddVariantComponent implements OnInit {
       this.form.controls.retailPrice.setValue('');
     } else if (value === 'supplyPrice') {
       this.form.controls.supplyPrice.setValue('');
-    } else if (value === 'SKU') {
-      this.form.controls.SKU.setValue('');
+    } else if (value === 'sku') {
+      this.form.controls.sku.setValue('');
     }
   }
 
@@ -107,8 +107,8 @@ export class AddVariantComponent implements OnInit {
       this.form.controls.supplyPrice.setValue(0);
     }
 
-    if (this.isFocused === 'SKU' && (this.form.controls.SKU.value === 0 || this.form.controls.SKU.value === '')) {
-      this.form.controls.SKU.setValue(this.variant.generateSKU());
+    if (this.isFocused === 'sku' && (this.form.controls.sku.value === 0 || this.form.controls.sku.value === '')) {
+      this.form.controls.sku.setValue(this.variant.generateSKU());
     }
 
 

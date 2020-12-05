@@ -26,7 +26,7 @@ export class EditVariantComponent implements OnInit {
     if (this.variation) {
       this.form =  this.formBuilder.group({
         name: [this.variation.name ? this.variation.name : '', Validators.required],
-        SKU: this.variation.SKU ? this.variation.SKU : this.variant.generateSKU(),
+        sku: this.variation.sku ? this.variation.sku : this.variant.generateSKU(),
         retailPrice: [ this.stock?this.stock.retailPrice:0.00, Validators.min(0)],
         supplyPrice: [ this.stock?this.stock.supplyPrice:0.00, Validators.min(0)],
         unit:  this.variation.unit ? this.variation.unit : '',
@@ -66,8 +66,8 @@ export class EditVariantComponent implements OnInit {
       this.variant.form.controls.retailPrice.setValue('');
     } else if (value === 'supplyPrice') {
       this.variant.form.controls.supplyPrice.setValue('');
-    } else if (value === 'SKU') {
-      this.variant.form.controls.SKU.setValue('');
+    } else if (value === 'sku') {
+      this.variant.form.controls.sku.setValue('');
     } else if (value === 'name') {
       this.variant.form.controls.name.setValue('');
     }
@@ -85,9 +85,9 @@ export class EditVariantComponent implements OnInit {
               this.variant.form.controls.supplyPrice.setValue(this.stock.supplyPrice ? this.stock.supplyPrice : 0);
             }
 
-          if (this.isFocused === 'SKU' && (this.variant.form.controls.SKU.value === 0 ||
-            this.variant.form.controls.SKU.value === '')) {
-              this.variant.form.controls.SKU.setValue(this.variation.SKU);
+          if (this.isFocused === 'sku' && (this.variant.form.controls.sku.value === 0 ||
+            this.variant.form.controls.sku.value === '')) {
+              this.variant.form.controls.sku.setValue(this.variation.sku);
             }
           if (this.isFocused === 'name' && (this.variant.form.controls.name.value === 0 ||
             this.variant.form.controls.name.value === '')) {

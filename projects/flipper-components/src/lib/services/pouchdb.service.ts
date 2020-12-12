@@ -31,6 +31,7 @@ export class PouchDBService {
   public listenerLogin: EventEmitter<any> = new EventEmitter()
 
   public constructor(private eventBus: FlipperEventBusService) {
+    this.connect('main')
     debugPouch(PouchDB)
     this.sync([localStorage.getItem('userId')]) //we keep the current logged userId in local storage for quick access
   }

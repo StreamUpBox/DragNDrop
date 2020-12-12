@@ -1,14 +1,14 @@
 import { Injectable, EventEmitter } from '@angular/core'
 import PouchDB from 'pouchdb/dist/pouchdb'
-import PouchFind from 'pouchdb-find'
-PouchDB.plugin(PouchFind)
+// import PouchFind from 'pouchdb-find'
+// PouchDB.plugin(PouchFind)
+PouchDB.plugin(require('pouchdb-find').default)
 
 import debugPouch from 'pouchdb-debug'
 
 import { v1 as uuidv1 } from 'uuid'
 import { PouchConfig } from '../db-config'
 import { FlipperEventBusService } from '@enexus/flipper-event'
-import { AnyEvent } from '../events'
 
 class Response {
   res: any

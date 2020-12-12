@@ -26,7 +26,7 @@ interface Handler {
 })
 export class PouchDBService {
   private isInstantiated: boolean = false
-  private database: PouchDB;
+  private database: any;
   public listener: EventEmitter<any> = new EventEmitter()
   public listenerLogin: EventEmitter<any> = new EventEmitter()
 
@@ -245,6 +245,7 @@ export class PouchDBService {
   }
 
   public connect(dbName: string, filter: string = null) {
+    console.log('did couchbase connected?');
     if (!this.isInstantiated && dbName) {
       this.database = new PouchDB(dbName)
      

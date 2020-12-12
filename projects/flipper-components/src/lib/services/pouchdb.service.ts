@@ -2,7 +2,6 @@ import { Injectable, EventEmitter } from '@angular/core'
 import PouchDB from 'pouchdb/dist/pouchdb'
 // import PouchFind from 'pouchdb-find'
 // PouchDB.plugin(PouchFind)
-PouchDB.plugin(require('pouchdb-find').default)
 
 import debugPouch from 'pouchdb-debug'
 
@@ -29,6 +28,7 @@ export class PouchDBService {
   public listenerLogin: EventEmitter<any> = new EventEmitter()
 
   public constructor(private eventBus: FlipperEventBusService) {
+    PouchDB.plugin(require('pouchdb-find').default)
     this.connect('main')
     debugPouch(PouchDB)
     this.sync([localStorage.getItem('userId')]) //we keep the current logged userId in local storage for quick access

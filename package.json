@@ -22,7 +22,7 @@
     "publish": "npm publish --access public",
     "test": "ng test",
     "lint": "ng lint --fix=true",
-    "buildAll": " ng build flippercolor && ng build flipperevent   && ng build flipperfont && ng build flipperfileupload   && ng build paymentcard && ng build flippervendors  && ng build flipperdialog && ng build flippercomponents && ng build flipperdashboard && ng build flippermenu && ng build flipperinventory  && ng build flipperpos ",
+    "buildAll": "ng build flippercolor && ng build flipperevent   && ng build flipperfont && ng build flipperfileupload   && ng build paymentcard && ng build flippervendors  && ng build flipperdialog && ng build flippercomponents && ng build flipperdashboard && ng build flippermenu && ng build flipperinventory  && ng build flipperpos ",
     "e2e": "ng e2e",
     "format": "prettier \"./**/*.+(js|jsx|css|less|scss|ts|tsx|md)\" --write"
   },
@@ -64,7 +64,6 @@
     "deepmerge": "^4.0.0",
     "dot-object": "^1.9.0",
     "event-source-polyfill": "^1.0.11",
-    "hammerjs": "^2.0.8",
     "ng-payment-card": "0.0.8",
     "ngx-barcode": "^0.2.4",
     "ngx-credit-cards": "^1.0.9",

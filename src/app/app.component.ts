@@ -9,7 +9,7 @@ import {
   Branch,
   Tables,
   Stock,
-  Product,p
+  Product,
   OrderDetails,
   Business,
   Taxes,

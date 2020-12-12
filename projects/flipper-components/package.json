@@ -1,9 +1,9 @@
 {
   "name": "@enexus/flipper-components",
-  "version": "1.6.34",
+  "version": "1.6.39",
   "peerDependencies": {
-    "@angular/common": "~10.0.2",
-    "@angular/core": "~10.0.2"
+    "@angular/common": "~11.0.4",
+    "@angular/core": "~11.0.4"
   },
   "dependencies": {
     "tslib": "^2.0.0"

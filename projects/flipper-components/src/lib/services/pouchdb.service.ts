@@ -245,10 +245,10 @@ export class PouchDBService {
   }
 
   public connect(dbName: string, filter: string = null) {
-    console.log('did couchbase connected?');
+   
     if (!this.isInstantiated && dbName) {
       this.database = new PouchDB(dbName)
-     
+      console.log('did couchbase connected?');
       if (filter != null) {
         this.database.changes({
           filter: (doc: any) => {

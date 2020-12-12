@@ -1,107 +1,141 @@
-/*
-  This is a "Solution Style" tsconfig.json file, and is used by editors and TypeScript’s language server to improve development experience.
-  It is not intended to be used to perform a compilation.
-
-  To learn more about this file see: https://angular.io/config/solution-tsconfig.
-*/
 {
-  "files": [],
-  "references": [
-    {
-      "path": "./tsconfig.app.json"
-    },
-    {
-      "path": "./tsconfig.spec.json"
-    },
-    {
-      "path": "./projects/flipper-button/tsconfig.lib.json"
-    },
-    {
-      "path": "./projects/flipper-button/tsconfig.spec.json"
-    },
-    {
-      "path": "./projects/flipper-menu/tsconfig.lib.json"
-    },
-    {
-      "path": "./projects/flipper-menu/tsconfig.spec.json"
-    },
-    {
-      "path": "./projects/flipper-dashboard/tsconfig.lib.json"
-    },
-    {
-      "path": "./projects/flipper-dashboard/tsconfig.spec.json"
-    },
-    {
-      "path": "./projects/flipper-vendors/tsconfig.lib.json"
-    },
-    {
-      "path": "./projects/flipper-vendors/tsconfig.spec.json"
-    },
-    {
-      "path": "./projects/flipper-color/tsconfig.lib.json"
-    },
-    {
-      "path": "./projects/flipper-color/tsconfig.spec.json"
-    },
-    {
-      "path": "./projects/flipper-dialog/tsconfig.lib.json"
-    },
-    {
-      "path": "./projects/flipper-dialog/tsconfig.spec.json"
-    },
-    {
-      "path": "./projects/flipper-font/tsconfig.lib.json"
-    },
-    {
-      "path": "./projects/flipper-font/tsconfig.spec.json"
-    },
-    {
-      "path": "./projects/flipper-event/tsconfig.lib.json"
-    },
-    {
-      "path": "./projects/flipper-event/tsconfig.spec.json"
-    },
-    {
-      "path": "./projects/flipper-pos/tsconfig.lib.json"
-    },
-    {
-      "path": "./projects/flipper-pos/tsconfig.spec.json"
-    },
-    {
-      "path": "./projects/flipper-components/tsconfig.lib.json"
-    },
-    {
-      "path": "./projects/flipper-components/tsconfig.spec.json"
-    },
-    {
-      "path": "./projects/flipper-offline-database/tsconfig.lib.json"
-    },
-    {
-      "path": "./projects/flipper-offline-database/tsconfig.spec.json"
-    },
-    {
-      "path": "./projects/flipper-settings/tsconfig.lib.json"
-    },
-    {
-      "path": "./projects/flipper-settings/tsconfig.spec.json"
-    },
-    {
-      "path": "./projects/flipper-inventory/tsconfig.lib.json"
-    },
-    {
-      "path": "./projects/flipper-inventory/tsconfig.spec.json"
-    },
-    {
-      "path": "./projects/flipper-file-upload/tsconfig.lib.json"
-    },
-    {
-      "path": "./projects/flipper-file-upload/tsconfig.spec.json"
-    },
-    {
-      "path": "./projects/payment-card/tsconfig.lib.json"
-    },
-    {
-      "path": "./projects/payment-card/tsconfig.spec.json"
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "module": "es2020",
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2015",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    "paths": {
+      "yegobox-login": [
+        "dist/yegobox-login"
+      ],
+      "yegobox-login/*": [
+        "dist/yegobox-login/*"
+      ],
+      "ng-offline-db": [
+        "dist/ng-offline-db"
+      ],
+      "ng-offline-db/*": [
+        "dist/ng-offline-db/*"
+      ],
+      "@enexus/flipper-menu": [
+        "dist/flipper-menu"
+      ],
+      "@enexus/flipper-menu/*": [
+        "dist/flipper-menu*"
+      ],
+
+      "@enexus/flipper-pos": [
+        "dist/flipper-pos"
+      ],
+      "@enexus/flipper-pos/*": [
+        "dist/flipper-pos/*"
+      ],
+      "@enexus/flipper-event": [
+        "dist/flipper-event"
+      ],
+      "@enexus/flipper-event/*": [
+        "dist/flipper-event/*"
+      ],
+      "@enexus/flipper-dialog": [
+        "dist/flipper-dialog"
+      ],
+      "@enexus/flipper-dialog/*": [
+        "dist/flipper-dialog/*"
+      ],
+      "@enexus/flipper-vendors": [
+        "dist/flipper-vendors"
+      ],
+      "@enexus/flipper-vendors/*": [
+        "dist/flipper-vendors/*"
+      ],
+      "@enexus/flipper-color": [
+        "dist/flipper-color"
+      ],
+      "@enexus/flipper-color/*": [
+        "dist/flipper-color/*"
+      ],
+      "@enexus/flipper-font": [
+        "dist/flipper-font"
+      ],
+      "@enexus/flipper-font/*": [
+        "dist/flipper-font/*"
+      ],
+      "flipper-dashboard": [
+        "dist/flipper-dashboard"
+      ],
+      "flipper-dashboard/*": [
+        "dist/flipper-dashboard/*"
+      ],
+      "flipper-button": [
+        "dist/flipper-button"
+      ],
+      "flipper-button/*": [
+        "dist/flipper-button/*"
+      ],
+      "@enexus/flipper-components": [
+        "dist/flipper-components"
+      ],
+      "@enexus/flipper-components/*": [
+        "dist/flipper-components/*"
+      ],
+      "@enexus/flipper-offline-database": [
+        "dist/flipper-offline-database"
+      ],
+      "@enexus/flipper-offline-database/*": [
+        "dist/flipper-offline-database/*"
+      ],
+      "@enexus/flipper-settings": [
+        "dist/flipper-settings"
+      ],
+      "@enexus/flipper-settings/*": [
+        "dist/flipper-settings/*"
+      ],
+      "@enexus/flipper-inventory": [
+        "dist/flipper-inventory"
+      ],
+      "@enexus/flipper-inventory/*": [
+        "dist/flipper-inventory/*"
+      ], 
+      "@enexus/flipper-file-upload": [
+        "dist/flipper-file-upload"
+      ],
+      "@enexus/flipper-file-upload/*": [
+        "dist/flipper-file-upload/*"
+      ],
+      "@enexus/payment-card": [
+        "dist/payment-card"
+      ],
+      "@enexus/payment-card/*": [
+        "dist/payment-card"
+      ],
+      "enable-sync": [
+        "dist/enable-sync/enable-sync",
+        "dist/enable-sync"
+      ],
+      "testlivereload": [
+        "dist/testlivereload/testlivereload",
+        "dist/testlivereload"
+      ]
     }
-  ]
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true,
+    "enableIvy":false
+  }
 }

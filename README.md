@@ -364,3 +364,7 @@ DialogSize
 
 the name of icon should be defied inside your application asset files.
 the library does not ship with the icon itself.
+
+# Run this command to build all plugin in first place. then you can run command independently
+
+- npm run buildAll

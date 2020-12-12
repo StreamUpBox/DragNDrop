@@ -224,7 +224,7 @@ export class StockService {
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
           table: 'stocks',
-          channels: [formData.userId],
+          channels: [localStorage.getItem('userId')],
         })
       })
     }

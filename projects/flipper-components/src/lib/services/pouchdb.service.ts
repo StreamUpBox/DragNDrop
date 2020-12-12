@@ -1,10 +1,9 @@
 import { Injectable, EventEmitter } from '@angular/core'
 import PouchDB from 'pouchdb/dist/pouchdb';
-// import PouchFind from 'pouchdb-find'
-// PouchDB.plugin(PouchFind);
+import PouchFind from 'pouchdb-find'
+PouchDB.plugin(PouchFind);
  
-declare var require: any;
- PouchDB.plugin(require('pouchdb-find').default);
+
  
 import debugPouch from 'pouchdb-debug';
 
@@ -27,7 +26,7 @@ interface Handler {
 })
 export class PouchDBService {
   private isInstantiated: boolean = false
-  private database: any
+  private database: PouchDB;
   public listener: EventEmitter<any> = new EventEmitter()
   public listenerLogin: EventEmitter<any> = new EventEmitter()
 

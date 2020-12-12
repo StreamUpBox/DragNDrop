@@ -1,12 +1,9 @@
 import { Injectable, EventEmitter } from '@angular/core'
-import PouchDB from 'pouchdb/dist/pouchdb';
-// import PouchFind from 'pouchdb-find'
-// PouchDB.plugin(PouchFind);
- 
-declare var require: any;
- PouchDB.plugin(require('pouchdb-find').default);
- 
-import debugPouch from 'pouchdb-debug';
+import PouchDB from 'pouchdb/dist/pouchdb'
+import PouchFind from 'pouchdb-find'
+PouchDB.plugin(PouchFind)
+
+import debugPouch from 'pouchdb-debug'
 
 import { v1 as uuidv1 } from 'uuid'
 import { PouchConfig } from '../db-config'
@@ -32,6 +29,7 @@ export class PouchDBService {
   public listenerLogin: EventEmitter<any> = new EventEmitter()
 
   public constructor(private eventBus: FlipperEventBusService) {
+    this.connect('main')
     debugPouch(PouchDB)
     this.sync([localStorage.getItem('userId')]) //we keep the current logged userId in local storage for quick access
   }
@@ -247,7 +245,6 @@ export class PouchDBService {
   public connect(dbName: string, filter: string = null) {
     if (!this.isInstantiated && dbName) {
       this.database = new PouchDB(dbName)
-     
       if (filter != null) {
         this.database.changes({
           filter: (doc: any) => {
@@ -330,9 +327,9 @@ export class PouchDBService {
 
   public put(id: string, document: any) {
     document._id = id
-    document.uid = this.uid();
-    document.channel = localStorage.getItem('userId');
-    document.channels = [localStorage.getItem('userId')];
+    document.uid = this.uid()
+    document.channel = PouchConfig.channel
+    document.channels = [PouchConfig.channel]
 
     return this.get(id).then(
       (result: { _rev: any }) => {
@@ -359,12 +356,12 @@ export class PouchDBService {
     return PouchDB.sync('main', 'http://yegobox.com:4985/main', {
       password: 'singlworld',
       user: 'admin',
-      push:true,
       live: true,
+      'purge-on-removal': true,
       retry: true,
       continous: true,
-      // filter: "sync_gateway/bychannel",
-      // query_params: { "channels": ['43'] },
+      filter: 'sync_gateway/bychannel', //NOTE: now filter is part of sync function!
+      query_params: { channels: channels },
     })
   }
   public getChangeListener() {

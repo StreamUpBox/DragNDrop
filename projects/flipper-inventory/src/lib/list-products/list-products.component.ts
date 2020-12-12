@@ -7,6 +7,7 @@ import {
   Variant,
   PouchConfig,
   PouchDBService,
+  AnyEvent,
 } from '@enexus/flipper-components'
 
 import { Subscription, async } from 'rxjs'
@@ -17,6 +18,7 @@ import { Router } from '@angular/router'
 import { MatTableDataSource } from '@angular/material/table'
 import { MatPaginator } from '@angular/material/paginator'
 import { MatSort } from '@angular/material/sort'
+import { FlipperEventBusService } from '@enexus/flipper-event'
 
 @Component({
   selector: 'flipper-list-products',
@@ -57,32 +59,65 @@ export class ListProductsComponent implements OnInit, OnDestroy {
     private stock: StockService,
     public variant: VariationService,
     private database: PouchDBService,
+    private eventBus: FlipperEventBusService,
     public product: ProductService
   ) {
-    this.database.connect(PouchConfig.bucket)
+    this.database.connect(PouchConfig.bucket,localStorage.getItem('userId'));
     this.dataSource = new MatTableDataSource([])
 
     this.subscription = this.product.productsSubject.subscribe(
       loadAllProducts => (this.loadAllProducts = loadAllProducts)
     )
+
+    this.eventBus
+    .of<AnyEvent>(AnyEvent.CHANNEL)
+    .subscribe(res => {
+      this.init();
+    })
   }
 
-  async ngOnInit() {
-    if (PouchConfig.canSync) {
-      this.database.sync([localStorage.getItem('userId')])
-    }
-    await this.variant.activeBusiness()
-    await this.variant.variations()
-    await this.stock.allStocks()
-    if (this.variant.defaultBusiness) {
-      await this.refresh()
-    }
+   ngOnInit() {
+  
+     this.init();
+  
+    // let async: any =   this.database.sync([localStorage.getItem('userId')]);
+    // async
+    // .on('change',  (info: any)  => {
+    //   console.log('chanel',localStorage.getItem('userId'));
+    //   console.log(info);
+    //         this.init();
+    // })
+    // .on('paused', (err: any) => {
+    //   console.log('sync paused', err)
+    // })
+    // .on('active', () => {
+    //   console.log('sync active')
+    // })
+    // .on('denied', (err: any) => {
+    //   console.log('denied', err)
+    // })
+    // .on('complete', (info: any) => {
+    //   console.log('sync complete')
+    // })
+    // .on('error', err => {
+    //   console.log('sync error', err)
+    // })
+    
+ 
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe()
   }
-
+  
+async init(){
+  await this.variant.activeBusiness();
+  await this. variant.variations();
+  await this.stock.allStocks();
+  if(this.variant.defaultBusiness){
+    await this.refresh();
+  }
+}
   async refresh() {
     this.loading = true
 
@@ -107,10 +142,12 @@ export class ListProductsComponent implements OnInit, OnDestroy {
     let products = []
     if (hosts.length > 0) {
       hosts.forEach(product => {
-        data['product'] = product
-        data['allVariant'] = this.variant.allVariants.filter(res => res.productId == product.id)
-        data['stocks'] = this.stock.stocks.filter(res => res.productId == product.id)
-        products.push(data)
+        console.log(product);
+       
+        product['allVariant'] = this.variant.allVariants.filter(res => res.productId == product.id)
+        product['stocks'] = this.stock.stocks.filter(res => res.productId == product.id)
+        products.push(product);
+        
       })
     }
 
@@ -165,10 +202,10 @@ export class ListProductsComponent implements OnInit, OnDestroy {
       if (stocks.length > 1) {
         return stocks.length + ' Prices'
       } else {
-        return this.variant.defaultBusiness.currency + ' ' + stocks[0][type]
+        return this.variant.defaultBusiness.currency + ' ' + (stocks && stocks.length > 0?stocks[0][type]:0);
       }
     } else {
-      return 0
+      return this.variant.defaultBusiness.currency + ' ' + 0
     }
   }
 }

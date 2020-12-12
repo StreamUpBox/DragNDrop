@@ -94,27 +94,31 @@ export class RegularVariantsComponent implements OnInit {
   }
 
   public openAddVariantDialog(product: Product): any {
-    return this.dialog
-      .open(AddVariantComponent, DialogSize.SIZE_MD, { product: product, currency: this.defaultBusiness.currency })
-      .subscribe(result => {
-        if (result === 'done') {
-          this.didAddNewVariant.emit(true)
-        }
-      })
+    return this.dialog.open(AddVariantComponent, DialogSize.SIZE_MD, {product:product,currency:this.defaultBusiness.currency}).subscribe(result => {
+      if (result === 'done') {
+        this.didAddNewVariant.emit(true);
+      }
+
+    });
+  }
+ 
+   request(action = null, variant = null) {
+
+     if(variant!==null || variant!==undefined){
+
+    this.form =  this.formBuilder.group({
+      name: [!action && variant && variant.name ? variant.name : '', Validators.required],
+      sku: !action && variant && variant.sku ? variant.sku : this.variant.generateSKU(),
+      retailPrice: [ 0.00, Validators.min(0)],
+      supplyPrice: [ 0.00, Validators.min(0)],
+      unit: !action && variant && variant.unit ? variant.unit : '',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+
+    });
+
   }
 
-  request(action = null, variant = null) {
-    if (variant !== null || variant !== undefined) {
-      this.form = this.formBuilder.group({
-        name: [!action && variant && variant.name ? variant.name : '', Validators.required],
-        SKU: !action && variant && variant.SKU ? variant.SKU : this.variant.generateSKU(),
-        retailPrice: [0.0, Validators.min(0)],
-        supplyPrice: [0.0, Validators.min(0)],
-        unit: !action && variant && variant.unit ? variant.unit : '',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      })
-    }
   }
 
   updateVariant(key: any, event: any) {
@@ -144,7 +148,7 @@ export class RegularVariantsComponent implements OnInit {
     } else if (value === 'supplyPrice') {
       this.form.controls.supplyPrice.setValue('')
     } else if (value === 'SKU') {
-      this.form.controls.SKU.setValue('')
+      this.form.controls.sku.setValue('')
     }
   }
 
@@ -174,7 +178,7 @@ export class RegularVariantsComponent implements OnInit {
     }
 
     if (this.isFocused === 'SKU' && (this.form.controls.SKU.value === 0 || this.form.controls.SKU.value === '')) {
-      this.form.controls.SKU.setValue(this.regularVariantion.SKU)
+      this.form.controls.SKU.setValue(this.regularVariantion.sku)
     }
 
     this.isFocused = ''

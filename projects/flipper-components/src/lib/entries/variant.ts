@@ -3,20 +3,20 @@ import { Stock } from './stocks'
 import { Product } from './product'
 
 export class Variant {
-  id: string
-  SKU: any
-  name: string
-  productName?: string
-  categoryName?: string
-  brandName?: string
-  productId?: any
-  supplyPrice?: any
-  retailPrice?: any
-  wholeSalePrice?: any
-  unit?: string
-  isActive?: boolean
-  priceVariant?: PriceVariant
-  stock?: Stock
+  id: string;
+  sku: any;
+  name: string;
+  productName?: string;
+  categoryName?: string;
+  brandName?: string;
+  productId?: any;
+  supplyPrice?: any;
+  retailPrice?: any;
+  wholeSalePrice?: any;
+  unit?: string;
+  isActive?: boolean;
+  priceVariant?: PriceVariant;
+  stock?: Stock;
   // FIXME(ganza): each model or document should have channels[userId] to authenticate the data
   product?: Product
   markup?: any

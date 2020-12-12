@@ -76,34 +76,43 @@ describe('SearchBoxComponent', () => {
   })
 
   it('should emit add to cart variant', () => {
-    spyOn(component.addToCartEmit, 'emit')
-    component.addToCart({ id: 1, SKU: 'P', name: 'Cake', isActive: true })
-    expect(component.addToCartEmit.emit).toHaveBeenCalledWith({ id: 1, sku: 'P', name: 'Cake', isActive: true })
-  })
+      spyOn(component.addToCartEmit, 'emit');
+      component.addToCart({id: 1,
+      sku: 'P',
+      name: 'Cake',
+      isActive: true
+    });
+      expect(component.addToCartEmit.emit).toHaveBeenCalledWith({id: 1,
+      sku: 'P',
+      name: 'Cake',
+      isActive: true
+    });
+
+    });
 
   it('should receive and set input foundVariant', () => {
-    component.foundVariant = [
-      {
+    component.foundVariant = [{id: 1,
+      sku: 'P',
+      name: 'Cake',
+      isActive: true,
+      priceVariant: {
         id: 1,
-        SKU: 'P',
-        name: 'Cake',
-        isActive: true,
-        priceVariant: {
-          id: 1,
-          priceId: 1,
-          variantId: 1,
-          minUnit: 0,
-          maxUnit: 0,
-          retailPrice: 500,
-          supplyPrice: 150,
-          wholeSalePrice: 500,
-          discount: 2,
-          markup: 1,
-        },
-      },
-    ]
-    expect(component.foundVariant).toEqual([
-      {
+        priceId: 1,
+        variantId: 1,
+        minUnit: 0,
+        maxUnit: 0,
+        retailPrice: 500,
+        supplyPrice: 150,
+        wholeSalePrice: 500,
+        discount: 2,
+        markup: 1
+      }
+    }];
+    expect(component.foundVariant).toEqual([{id: 1,
+      sku: 'P',
+      name: 'Cake',
+      isActive: true,
+      priceVariant: {
         id: 1,
         SKU: 'P',
         name: 'Cake',

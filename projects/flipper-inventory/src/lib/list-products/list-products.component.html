@@ -23,16 +23,16 @@
         <img [src]="'./assets/icons/item-chevron-right.svg'" *ngIf="!expandedElement">
         <img [src]="'./assets/icons/item-chevron-down.svg'" *ngIf="expandedElement">
       </span> -->
-       <span class="ml-3 product-name" (click)="editProduct(product.product)"> {{product.product.name}}
+       <span class="ml-3 product-name" (click)="editProduct(product)"> {{product.name}}
       
       </span> 
       </td>
     </ng-container>
     <ng-container matColumnDef="sku">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>SKU</th>
-        <td mat-cell *matCellDef="let product" (click)="editProduct(product.product)">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>sku</th>
+        <td mat-cell *matCellDef="let product" (click)="editProduct(product)">
         <span *ngIf="product.allVariant.length > 0">
-            {{product.allVariant.length > 1?product.allVariant.length+' Variants':product.allVariant[0].SKU}}
+            {{product.allVariant.length > 1?product.allVariant.length+' Variants':product.allVariant[0].sku}}
         </span> 
         </td>
       </ng-container>
@@ -40,7 +40,7 @@
 
     <ng-container matColumnDef="soldby">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Sold By</th>
-      <td mat-cell *matCellDef="let product" (click)="editProduct(product.product)">
+      <td mat-cell *matCellDef="let product" (click)="editProduct(product)">
         <span *ngIf="product.allVariant.length > 0">
            <span *ngIf="product.allVariant.length > 1; else oneVariant">
                 <b *ngFor="let vrmt of product.allVariant; let i = index;">
@@ -56,22 +56,22 @@
 
     <ng-container matColumnDef="inStock">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>In Stock</th>
-      <td mat-cell *matCellDef="let product" (click)="editProduct(product.product)">
+      <td mat-cell *matCellDef="let product" (click)="editProduct(product)">
         {{getTotalStock(product.stocks)}}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="retailprice">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Retail Price</th>
-      <td mat-cell *matCellDef="let product" (click)="editProduct(product.product)">
-        {{getStockPrice(product.stocks,'retailPrice')}}
+      <td mat-cell *matCellDef="let product" (click)="editProduct(product)">
+        {{getStockPrice(product.stocks,'retailPrice')=='undefined'?variant.defaultBusiness.currency+' 0':getStockPrice(product.stocks,'retailPrice')}}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="supplyprice">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Supply Price</th>
-        <td mat-cell *matCellDef="let product"  (click)="editProduct(product.product)">
-            {{getStockPrice(product.stocks,'supplyPrice')}}
+        <td mat-cell *matCellDef="let product"  (click)="editProduct(product)">
+            {{getStockPrice(product.stocks,'supplyPrice')=='undefined'?variant.defaultBusiness.currency+' 0':getStockPrice(product.stocks,'supplyPrice')}}
         </td>
       </ng-container>
 

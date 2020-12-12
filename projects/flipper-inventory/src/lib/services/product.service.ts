@@ -47,6 +47,8 @@ export class ProductService {
     await this.create()
   }
 
+
+  
   public currentBusiness() {
     return this.database.currentBusiness().then(business => {
       this.defaultBusiness$ = business
@@ -54,7 +56,7 @@ export class ProductService {
   }
   currentBranches() {
     return this.database.listBusinessBranches().then(branches => {
-      this.branches$ = branches
+      this.branches$ = branches.filter(res=>res.active==true);
     })
   }
 
@@ -167,15 +169,16 @@ export class ProductService {
         color: '#000000',
         picture: '/assets/icons/add-image-placeholder.png',
         isCurrentUpdate: false,
+        branchId:this.branches$.length > 0?this.branches$[0].id:'0',
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
-        userId: this.defaultBusiness$.userId,
-        channels: [this.defaultBusiness$.userId],
+        userId: localStorage.getItem('userId'),
+        channels: [localStorage.getItem('userId')],
       }
 
-      await this.database.put(PouchConfig.Tables.products + '_' + formProduct.id, formProduct)
-      if (this.branches$.length > 0) {
-        this.variant.createRegular(formProduct, this.branches$)
+      await this.database.put(formProduct.id, formProduct);
+      if(this.branches$.length > 0){
+         this.variant.createRegular(formProduct,this.branches$); 
       }
     }
     await this.hasDraft()
@@ -193,8 +196,9 @@ export class ProductService {
   updateBranch(): void {
     if (this.hasDraftProduct && this.branchList.value.length > 0) {
       this.branchList.value.forEach(id => {
-        this.database.put(PouchConfig.Tables.branchProducts + '_' + this.hasDraftProduct.id, {
-          id: this.database.uid(),
+        let key=this.database.uid();
+        this.database.put(key, {
+          id: key,
           productId: this.hasDraftProduct.id,
           branchId: id,
         })
@@ -204,7 +208,7 @@ export class ProductService {
 
   async update() {
     if (this.hasDraftProduct) {
-      return await this.database.put(PouchConfig.Tables.products + '_' + this.hasDraftProduct.id, this.hasDraftProduct)
+      return await this.database.put(this.hasDraftProduct.id, this.hasDraftProduct);
     }
   }
 
@@ -225,10 +229,11 @@ export class ProductService {
 
   updateOnlineDatabase() {
     if (PouchConfig.canSync) {
-      this.database.sync([localStorage.getItem('userId')])
+      this.database.sync([localStorage.getItem('userId')]);
     }
     if (!this.hasDraftProduct.isDraft) {
-      this.database.put(PouchConfig.Tables.products + '_' + this.hasDraftProduct.id, this.hasDraftProduct)
+
+      this.database.put(this.hasDraftProduct.id, this.hasDraftProduct);
 
       if (this.hasDraftProduct) {
         //TODO: now update this function so it works!.

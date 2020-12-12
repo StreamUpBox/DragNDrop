@@ -183,7 +183,7 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
       updatedAt: new Date().toISOString(),
     }
 
-    this.database.put(PouchConfig.Tables.branches + '_' + formBranchData.id, formBranchData)
+    this.database.put(formBranchData.id, formBranchData)
 
     const formTaxes2 = {
       id: this.database.uid(),
@@ -199,9 +199,13 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
       docId: PouchConfig.Tables.taxes,
     }
 
-    this.database.put(PouchConfig.Tables.taxes + '_' + formTaxes2.id, formTaxes2)
+    this.database.put(formTaxes2.id, formTaxes2)
 
-    const formTaxes1 = {
+   
+    this.database.put(formTaxes2.id, formTaxes2);
+
+    const formTaxes1 =
+    {
       id: this.database.uid(),
       name: 'no Tax',
       percentage: 0,
@@ -210,11 +214,18 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
       isDefault: false,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-      table: 'taxes',
-      channels: [this.activeUser.currentUser ? this.activeUser.currentUser.id : 0],
-      docId: PouchConfig.Tables.taxes,
-    }
-    this.database.put(PouchConfig.Tables.taxes + '_' + formTaxes1.id, formTaxes1)
+      table:'taxes',
+      channels:[this.activeUser.currentUser ? this.activeUser.currentUser.id : 0],
+      docId:PouchConfig.Tables.taxes
+    };
+    this.database.put(formTaxes1.id, formTaxes1);
+
+   
+    
+    setTimeout(() => {
+      this.notificationSvc.success('Create Business', 'Business ' + formBusinessData.name + ' Created successfully!');
+      this.router.navigate(['/admin']);
+    }, 100);
 
     setTimeout(() => {
       this.notificationSvc.success('Create Business', 'Business ' + formBusinessData.name + ' Created successfully!')

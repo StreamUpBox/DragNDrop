@@ -7,7 +7,6 @@ import {
   User,
   MenuEntries,
   PouchDBService,
-  Tables,
   PouchConfig,
   ActiveUser,
   UserLoggedEvent,
@@ -266,10 +265,10 @@ export class FlipperMenuComponent implements OnInit {
     }
 
     this.defaultBusiness$.active = false
-    this.database.put(PouchConfig.Tables.business + '_' + this.defaultBusiness$.id, this.defaultBusiness$)
+    this.database.put(this.defaultBusiness$.id, this.defaultBusiness$)
 
     business.active = true
-    this.database.put(PouchConfig.Tables.business + '_' + business.id, business)
+    this.database.put(business.id, business)
 
     this.ref.detectChanges()
   }
@@ -280,10 +279,10 @@ export class FlipperMenuComponent implements OnInit {
     }
 
     this.defaultBranch$.active = false
-    this.database.put(PouchConfig.Tables.branches + '_' + this.defaultBranch$.id, this.defaultBranch$)
+    this.database.put(this.defaultBranch$.id, this.defaultBranch$)
 
     branch.active = true
-    this.database.put(PouchConfig.Tables.branches + '_' + branch.id, branch)
+    this.database.put(branch.id, branch)
 
     this.ref.detectChanges()
   }
@@ -294,10 +293,10 @@ export class FlipperMenuComponent implements OnInit {
 
     if (isSetting) {
       menus.filter(m => {
-        m.active = false
-        menuPusher.push(m)
-      })
-      this.settingMenu.active = true
+        m.active = false;
+        menuPusher.push(m);
+      });
+      this.settingMenu.active = true;
     } else {
       menus.filter(m => {
         if (m.id === menu.id) {
@@ -308,7 +307,7 @@ export class FlipperMenuComponent implements OnInit {
         menuPusher.push(m)
       })
     }
-    this.menu = menuPusher
+    this.menu = menuPusher;
     // this.route.navigate([menu.route]);
   }
 

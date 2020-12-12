@@ -6,11 +6,10 @@ import {
   Order,
   STATUS,
   ORDERTYPE,
-  MainModelService,
   Branch,
   Tables,
   Stock,
-  Product,
+  Product,p
   OrderDetails,
   Business,
   Taxes,
@@ -53,14 +52,12 @@ export class AppComponent implements OnInit {
 
   public currency = null
   constructor(
-    private model: MainModelService,
     private database: PouchDBService,
     private stock: StockService,
     public variant: VariationService,
     public product: ProductService,
     private totalPipe: CalculateTotalClassPipe
   ) {
-    this.branch = this.model.active<Branch>(Tables.branch)
     this.database.connect(PouchConfig.bucket, '117')
 
     if (PouchConfig.canSync) {
@@ -93,7 +90,6 @@ export class AppComponent implements OnInit {
       docId: PouchConfig.Tables.user,
     }
 
-    // await  this.database.put(PouchConfig.Tables.user, user);
     this.init()
   }
   async init() {
@@ -161,7 +157,7 @@ export class AppComponent implements OnInit {
         updatedAt: this.date,
       }
 
-      await this.database.put(PouchConfig.Tables.orders + '_' + formOrder.id, formOrder)
+      await this.database.put(formOrder.id, formOrder)
       this.hasDraftOrder()
     }
   }
@@ -343,7 +339,7 @@ export class AppComponent implements OnInit {
       // console.log(v);
       if (
         v.name.toString().toLowerCase().indexOf(query) >= 0 ||
-        v.SKU.toString().toLowerCase().indexOf(query) > 0 ||
+        v.sku.toString().toLowerCase().indexOf(query) > 0 ||
         v.productName.toString().toLowerCase().indexOf(query) >= 0
       ) {
         return true
@@ -368,7 +364,7 @@ export class AppComponent implements OnInit {
       details.item.taxAmount = (subTotal * taxRate) / 100
       details.item.subTotal = subTotal
 
-      await this.database.put(PouchConfig.Tables.orderDetails + '_' + details.item.id, details.item)
+      await this.database.put(details.item.id, details.item)
     }
 
     await this.allOrderDetails(this.currentOrder.id)
@@ -394,7 +390,7 @@ export class AppComponent implements OnInit {
         : 0.0
     this.currentOrder.customerChangeDue = parseFloat(this.currentOrder.customerChangeDue)
 
-    await this.database.put(PouchConfig.Tables.orders + '_' + this.currentOrder.id, this.currentOrder)
+    await this.database.put(this.currentOrder.id, this.currentOrder)
     await this.hasDraftOrder()
   }
 
@@ -428,7 +424,7 @@ export class AppComponent implements OnInit {
       canTrackStock: variant.stock.canTrackingStock,
       stockId: variant.stock.id,
       unit: variant.unit,
-      SKU: variant.SKU,
+      sku: variant.sku,
       quantity: event.quantity,
       variantId: variant.id,
       taxRate,
@@ -441,7 +437,7 @@ export class AppComponent implements OnInit {
       channels: [this.defaultBusiness$.userId],
     }
 
-    this.database.put(PouchConfig.Tables.orderDetails + '_' + orderDetails.id, orderDetails)
+    this.database.put(orderDetails.id, orderDetails)
     await this.allOrderDetails(this.currentOrder.id)
     this.currentOrder.orderItems = this.getOrderDetails()
     this.updateOrder()
@@ -459,7 +455,7 @@ export class AppComponent implements OnInit {
       this.currentOrder.updatedAt = new Date().toISOString()
       this.currentOrder.customerChangeDue = this.currentOrder.customerChangeDue
 
-      await this.database.put(PouchConfig.Tables.orders + '_' + this.currentOrder.id, this.currentOrder)
+      await this.database.put(this.currentOrder.id, this.currentOrder)
 
       this.collectCashCompleted = { isCompleted: true, collectedOrder: this.currentOrder }
       this.currentOrder = null
@@ -494,7 +490,7 @@ export class AppComponent implements OnInit {
             updatedAt: new Date().toISOString(),
             channels: [this.defaultBusiness$.userId],
           }
-          this.database.put(PouchConfig.Tables.stockHistories + '_' + stockHistories.id, stockHistories)
+          this.database.put(stockHistories.id, stockHistories)
 
           this.updateStock(details)
         }
@@ -516,12 +512,12 @@ export class AppComponent implements OnInit {
     if (stock) {
       stock.currentStock = stock.currentStock - stockDetails.quantity
 
-      this.database.put(PouchConfig.Tables.stocks + '_' + stock.id, stock)
+      this.database.put(stock.id, stock)
     }
   }
 
   async saveOrderUpdated(event: Order) {
-    await this.database.put(PouchConfig.Tables.orders + '_' + event.id, event)
+    await this.database.put(event.id, event)
     await this.hasDraftOrder()
   }
 }

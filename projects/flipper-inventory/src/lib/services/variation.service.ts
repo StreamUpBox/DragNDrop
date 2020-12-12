@@ -7,8 +7,7 @@ import {
   Product,
   Labels,
   PouchDBService,
-  Stock,
-  PouchConfig,
+  Stock
 } from '@enexus/flipper-components'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { VariantsDialogModelComponent } from '../variants/variants-dialog-model/variants-dialog-model.component'
@@ -23,30 +22,28 @@ import { DialogSize } from '@enexus/flipper-dialog'
   providedIn: 'root',
 })
 export class VariationService {
-  hasRegular: Variant = null
-  myAllVariants: Variant[] = []
-  SKU = ''
-  d = new Date()
-  units: any[] = []
-  form: FormGroup
-  product: Product
-  variantsSubject: BehaviorSubject<Variant[]>
-  defaultBusiness: Business = null
-  allVariants: Variant[] = []
-  branches$: Branch[] = []
-  private readonly variantsMap = new Map<string, Variant>()
-  variant: Variant
+  hasRegular: Variant = null;
+  myAllVariants: Variant[] = [];
+  sku = '';
+  d = new Date();
+  units: any[] = [];
+  form: FormGroup;
+  product: Product;
+  variantsSubject: BehaviorSubject<Variant[]>;
+  defaultBusiness:Business=null;
+  allVariants:Variant[]=[];
+  branches$: Branch[] = [];
+  private readonly variantsMap = new Map<string, Variant>();
+  variant: Variant;
+ 
 
-  variantStock = { length: 0, currentStock: 0, lowStock: 0 }
-  constructor(
-    private stock: StockService,
-    private dialog: DialogService,
-    private setting: SettingsService,
-    private formBuilder: FormBuilder,
-    private database: PouchDBService
-  ) {
-    this.variantsSubject = new BehaviorSubject([])
-    this.units = this.setting.units()
+  variantStock = { length: 0, currentStock: 0, lowStock: 0 };
+  constructor(private stock: StockService, private dialog: DialogService,
+              private setting: SettingsService,
+              private formBuilder: FormBuilder,
+              private database: PouchDBService) {
+    this.variantsSubject = new BehaviorSubject([]);
+    this.units = this.setting.units();
   }
 
   public loadAllVariants(product: Product): Observable<Variant[]> {
@@ -124,9 +121,9 @@ export class VariationService {
 
     this.form = this.formBuilder.group({
       name: [!action && variant && variant.name ? variant.name : '', Validators.required],
-      SKU: !action && variant && variant.SKU ? variant.SKU : this.generateSKU(),
-      retailPrice: [!action && variant && stock ? stock.retailPrice : 0.0, Validators.min(0)],
-      supplyPrice: [!action && variant && stock ? stock.supplyPrice : 0.0, Validators.min(0)],
+      sku: !action && variant && variant.sku ? variant.sku : this.generateSKU(),
+      retailPrice: [!action && variant && stock ? stock.retailPrice : 0.00, Validators.min(0)],
+      supplyPrice: [!action && variant && stock ? stock.supplyPrice : 0.00, Validators.min(0)],
       unit: !action && variant && variant.unit ? variant.unit : '',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
@@ -148,7 +145,7 @@ export class VariationService {
   }
 
   create(variant: Variant) {
-    return this.database.put(PouchConfig.Tables.variants + '_' + variant.id, variant)
+    return  this.database.put(variant.id, variant);
   }
   delete(variant: Variant) {
     return this.database.remove(variant)
@@ -164,24 +161,22 @@ export class VariationService {
         id: this.database.uid(),
         name: 'Regular',
         productName: product.name,
-        categoryName: '',
         productId: product.id,
-        supplyPrice: 0.0,
-        retailPrice: 0.0,
-        unit: this.units.length > 0 ? this.units[0].value : '',
-        SKU: this.generateSKU(),
-        syncedOnline: false,
+        unit: this.units.length > 0?this.units[0].value:'',
+        sku: this.generateSKU(),
         isActive: true,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
-        channels: [product.userId],
-        userId: product.userId,
-        table: 'variants',
-      }
-      await this.database.put(PouchConfig.Tables.variants + '_' + formData.id, formData)
-      this.createVariantStock(formData, branches)
-      this.allVariant(product)
-      this.regular()
+        channels: [localStorage.getItem('userId')],
+        userId: localStorage.getItem('userId'),
+        table:'variants',
+      
+      };
+
+      await this.database.put(formData.id, formData);
+       this.createVariantStock(formData,branches);
+       this.allVariant(product);
+      this.regular();
     }
   }
 
@@ -246,8 +241,8 @@ export class VariationService {
 
   updateRegularVariant(variation: Variant, key: string, val: any): void {
     if (variation) {
-      if (key === 'SKU' && val === '') {
-        val = variation.SKU
+      if (key === 'sku' && val === '') {
+        val = variation.sku;
       }
 
       variation[key] = val
@@ -259,7 +254,7 @@ export class VariationService {
   update(variation: Variant): void {
     if (variation) {
       // console.log('need to update variant',variation);
-      return this.database.put(PouchConfig.Tables.variants + '_' + variation.id, variation)
+      return this.database.put(variation.id, variation);
     }
   }
 
@@ -290,7 +285,7 @@ export class VariationService {
               quantity: res.currentStock,
               note: res.reason,
               table: 'stockHistories',
-              channels: [variant.userId],
+              channels: [localStorage.getItem('userId')],
               createdAt: new Date().toISOString(),
               updatedAt: new Date().toISOString(),
             })
@@ -335,9 +330,9 @@ export class VariationService {
   public openPrintBarcodeLablesDialog(product, allVariants): any {
     const labels: Labels[] = []
     allVariants.forEach(v => {
-      labels.push({ name: v.name, sku: v.SKU, channels: [product.userId] })
-    })
-    return this.dialog.open(PrintBarcodeLabelsDialogComponent, DialogSize.SIZE_LG, labels).subscribe()
+      labels.push({name: v.name, sku: v.sku,channels:[localStorage.getItem('userId')]});
+    });
+    return this.dialog.open(PrintBarcodeLabelsDialogComponent, DialogSize.SIZE_LG, labels).subscribe();
   }
 
   async deleteProductVariations(product: Product) {

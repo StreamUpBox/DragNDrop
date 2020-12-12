@@ -187,7 +187,7 @@ export const DEFAULT_FLIPPER_DB_CONFIG = {
       name: TABLES.VARIANTS,
       query: `id STRING,
                     name STRING,
-                    SKU STRING,
+                    sku STRING,
                     productId STRING,
                     unit STRING NULL,
                     channel STRING,

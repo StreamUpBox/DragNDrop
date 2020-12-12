@@ -38,11 +38,11 @@ export class AddVariantComponent implements OnInit {
   ngOnInit() {
     // this.variant.activeBusiness();
     this.form = this.formBuilder.group({
-      name: ['', Validators.required],
-      SKU: this.variant.generateSKU(),
-      retailPrice: [0.0, Validators.min(0)],
-      supplyPrice: [0.0, Validators.min(0)],
-      unit: '',
+      name: [ '', Validators.required],
+      sku: this.variant.generateSKU(),
+      retailPrice: [ 0.00, Validators.min(0)],
+      supplyPrice: [0.00, Validators.min(0)],
+      unit:'',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     })
@@ -70,13 +70,13 @@ export class AddVariantComponent implements OnInit {
       supplyPrice: parseInt(this.form.value.supplyPrice, 10),
       retailPrice: parseInt(this.form.value.retailPrice, 10),
       unit: this.form.value.unit,
-      SKU: this.form.value.SKU ? this.form.value.SKU : this.variant.generateSKU(),
+      sku: this.form.value.sku ? this.form.value.sku : this.variant.generateSKU(),
       syncedOnline: false,
       isActive: false,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-      channels: [this.data.product.userId],
-      userId: this.data.product.userId,
+      channels: [localStorage.getItem('userId')],
+      userId: localStorage.getItem('userId'),
       table: 'variants',
     }
 
@@ -93,9 +93,9 @@ export class AddVariantComponent implements OnInit {
     if (value === 'retailPrice') {
       this.form.controls.retailPrice.setValue('')
     } else if (value === 'supplyPrice') {
-      this.form.controls.supplyPrice.setValue('')
-    } else if (value === 'SKU') {
-      this.form.controls.SKU.setValue('')
+      this.form.controls.supplyPrice.setValue('');
+    } else if (value === 'sku') {
+      this.form.controls.sku.setValue('');
     }
   }
 
@@ -113,8 +113,8 @@ export class AddVariantComponent implements OnInit {
       this.form.controls.supplyPrice.setValue(0)
     }
 
-    if (this.isFocused === 'SKU' && (this.form.controls.SKU.value === 0 || this.form.controls.SKU.value === '')) {
-      this.form.controls.SKU.setValue(this.variant.generateSKU())
+    if (this.isFocused === 'sku' && (this.form.controls.sku.value === 0 || this.form.controls.sku.value === '')) {
+      this.form.controls.sku.setValue(this.variant.generateSKU());
     }
 
     this.isFocused = ''

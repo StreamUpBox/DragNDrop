@@ -12,9 +12,26 @@ import { BrowserModule } from '@angular/platform-browser'
 import { Order, Variant } from '@enexus/flipper-components'
 
 describe('FlipperBasicPosComponent', () => {
-  let component: FlipperBasicPosComponent
-  let fixture: ComponentFixture<FlipperBasicPosComponent>
-  const order: Order = {
+  let component: FlipperBasicPosComponent;
+  let fixture: ComponentFixture<FlipperBasicPosComponent>;
+  const order: Order = {id: 1, branchId: 1, orderNumber: '01',
+  subTotal: 0.00,
+  cashReceived: 0.00,
+  customerChangeDue: 0.00,
+orderItems: [{id: 1,
+  price: 100,
+  variantName: 'cake',
+  quantity: 1,
+  variantId: 1,
+  orderId: 1,
+  subTotal: 100
+}]};
+
+  const variant: Variant[] = [{id: 1,
+  sku: 'P',
+  name: 'Cake',
+  isActive: true,
+  priceVariant: {
     id: 1,
     branchId: 1,
     orderNumber: '01',
@@ -24,10 +41,22 @@ describe('FlipperBasicPosComponent', () => {
     orderItems: [{ id: 1, price: 100, variantName: 'cake', quantity: 1, variantId: 1, orderId: 1, subTotal: 100 }],
   }
 
-  const variant: Variant[] = [
-    {
-      id: 1,
-      SKU: 'P',
+  beforeEach(() => {
+    fixture = TestBed.createComponent(FlipperBasicPosComponent);
+    component = fixture.componentInstance;
+    component.currentOrder = order;
+    component.foundVariant = variant;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should receive and set input foundVariant', () => {
+
+    expect(component.foundVariant).toEqual([{id: 1,
+      sku: 'P',
       name: 'Cake',
       isActive: true,
       priceVariant: {

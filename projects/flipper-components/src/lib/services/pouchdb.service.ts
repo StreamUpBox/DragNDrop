@@ -1,7 +1,7 @@
 import { Injectable, EventEmitter } from '@angular/core'
 import PouchDB from 'pouchdb/dist/pouchdb';
-import PouchFind from 'pouchdb-find'
-PouchDB.plugin(PouchFind);
+import PouchFind from 'pouchdb-find';
+
  
 
  
@@ -31,6 +31,7 @@ export class PouchDBService {
   public listenerLogin: EventEmitter<any> = new EventEmitter()
 
   public constructor(private eventBus: FlipperEventBusService) {
+    PouchDB.plugin(PouchFind);
     this.connect('main')
     debugPouch(PouchDB)
     this.sync([localStorage.getItem('userId')]) //we keep the current logged userId in local storage for quick access
@@ -246,8 +247,8 @@ export class PouchDBService {
 
   public connect(dbName: string, filter: string = null) {
    
-    if (!this.isInstantiated && dbName) {
-      this.database = new PouchDB(dbName)
+    if (!this.isInstantiated) {
+      this.database = new PouchDB('main')
       console.log('did couchbase connected?');
       if (filter != null) {
         this.database.changes({

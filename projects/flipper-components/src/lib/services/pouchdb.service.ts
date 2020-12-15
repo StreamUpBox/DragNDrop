@@ -357,10 +357,10 @@ export class PouchDBService {
       password: 'singlworld',
       user: 'admin',
       live: true,
-      'purge-on-removal': true,
+      // 'purge-on-removal': true,
       retry: true,
-      continous: true,
-      filter: 'sync_gateway/bychannel', //NOTE: now filter is part of sync function!
+      // continous: true,
+      // filter: 'sync_gateway/bychannel', //NOTE: now filter is part of sync function!
       query_params: { channels: channels },
     })
   }

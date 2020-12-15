@@ -28,7 +28,7 @@ import { ProductService, StockService, VariationService } from '@enexus/flipper-
     trigger('insertPos', [transition(':enter', useAnimation(fadeInAnimation, { params: { duration: '1s' } }))]),
   ],
 })
-export class AppComponent implements OnInit {
+export class OrderComponent implements OnInit {
   get theVariantFiltered(): Variant[] {
     return this.seTheVariantFiltered
   }

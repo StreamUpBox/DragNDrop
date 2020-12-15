@@ -23,7 +23,7 @@
     "test": "ng test",
     "lint": "ng lint --fix=true",
     "publish-npm": "cd projects/flipper-components && npm run patch && cd ../.. && ng build flippercomponents  &&  cd dist/flipper-components && npm publish --access public && cd ../.. && cd projects/flipper-inventory && npm run patch && cd ../.. && ng build flipperinventory  &&  cd dist/flipper-inventory && npm publish --access public",
-    "buildAll": "ng build flippercolor && ng build flipperevent   && ng build flipperfont && ng build flipperfileupload   && ng build paymentcard && ng build flippervendors  && ng build flipperdialog && ng build flippercomponents && ng build flipperdashboard && ng build flippermenu && ng build flipperinventory  && ng build flipperpos ",
+    "buildAll": "ng build flippercolor && ng build flipperevent   && ng build flipperfont && ng build flipperfileupload   && ng build paymentcard && ng build flippervendors  && ng build flipperdialog && ng build flippercomponents && ng build flipperdashboard && ng build flippermenu && ng build flipperinventory  && ng build flipperpos && ng build flippersettings",
     "e2e": "ng e2e",
     "format": "prettier \"./**/*.+(js|jsx|css|less|scss|ts|tsx|md)\" --write"
   },

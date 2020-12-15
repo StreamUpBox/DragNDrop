@@ -12,9 +12,11 @@ import { FlipperComponentsModule, PouchDBService } from '@enexus/flipper-compone
 
 import { MigrationModule } from './migration/migration.module'
 import { FlipperInventoryModule } from '@enexus/flipper-inventory'
-import { FlipperOfflineDatabaseModule } from '@enexus/flipper-offline-database'
+// import { FlipperOfflineDatabaseModule } from '@enexus/flipper-offline-database'
 
 import { FlipperPosModule } from '@enexus/flipper-pos'
+import { OrderComponent } from './order.component'
+import { InventoryComponent } from './inventory.component'
 // import { FlipperSettingsModule } from '@enexus/flipper-settings';
 
 // import { MigrationModule } from './migration/migration.module';
@@ -36,7 +38,7 @@ import { FlipperPosModule } from '@enexus/flipper-pos'
     FlipperComponentsModule,
     FlipperPosModule,
     BrowserAnimationsModule,
-    FlipperOfflineDatabaseModule,
+    // FlipperOfflineDatabaseModule,
     FlipperInventoryModule,
     // FlipperFileUploadModule,
     MigrationModule.forRoot(),
@@ -44,7 +46,9 @@ import { FlipperPosModule } from '@enexus/flipper-pos'
   ],
   entryComponents: [],
   providers: [PouchDBService],
-  bootstrap: [AppComponent],
+  // bootstrap: [AppComponent],
+  // bootstrap: [OrderComponent],
+  bootstrap: [InventoryComponent],
 })
 export class AppModule {
   constructor() {

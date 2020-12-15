@@ -18,8 +18,9 @@ const routes: Routes = [
     component: CreateProductComponent,
   },
   {
-    path: 'setup/business/new',
-    component: CreateUpdateBusinessComponent,
+    // path: 'setup/business/new',
+    // for testing the inventory please comment the line below
+    // component: CreateUpdateBusinessComponent,
   },
 ]
 

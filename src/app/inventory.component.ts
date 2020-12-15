@@ -22,13 +22,13 @@ import { ProductService, StockService, VariationService } from '@enexus/flipper-
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
+  templateUrl: './inventory.component.html',
   styleUrls: ['./app.component.css'],
   animations: [
     trigger('insertPos', [transition(':enter', useAnimation(fadeInAnimation, { params: { duration: '1s' } }))]),
   ],
 })
-export class AppComponent implements OnInit {
+export class InventoryComponent implements OnInit {
   get theVariantFiltered(): Variant[] {
     return this.seTheVariantFiltered
   }

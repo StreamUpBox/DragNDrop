@@ -41,6 +41,7 @@ class MainViewModel extends ReactiveViewModel {
     //     notifyListeners();
     //   }
     // }
+    
     q.addChangeListener((results) {
       for (Map map in results.allResults) {
         map.forEach((key, value) {

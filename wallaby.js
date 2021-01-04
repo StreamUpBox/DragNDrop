@@ -2,7 +2,6 @@ module.exports = function (wallaby) {
   const wallabyWebpack = require('wallaby-webpack')
   const path = require('path')
   const fs = require('fs')
-
   const specPattern = '/**/*spec.ts'
   const angularConfig = require('./angular.json')
 
@@ -81,7 +80,7 @@ module.exports = function (wallaby) {
    import 'zone.js/dist/zone-testing';
    import { getTestBed } from '@angular/core/testing';
    import { BrowserDynamicTestingModule,  platformBrowserDynamicTesting} from '@angular/platform-browser-dynamic/testing';
-  
+
    getTestBed().initTestEnvironment(BrowserDynamicTestingModule, platformBrowserDynamicTesting());`,
     },
 

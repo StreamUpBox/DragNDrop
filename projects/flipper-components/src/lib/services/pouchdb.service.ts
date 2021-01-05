@@ -1,16 +1,13 @@
 import { Injectable, EventEmitter } from '@angular/core'
-import PouchDB from 'pouchdb/dist/pouchdb';
-import PouchFind from 'pouchdb-find';
+import PouchDB from 'pouchdb/dist/pouchdb'
+// import PouchFind from 'pouchdb-find'
+// PouchDB.plugin(PouchFind)
 
- 
-
- 
-import debugPouch from 'pouchdb-debug';
+import debugPouch from 'pouchdb-debug'
 
 import { v1 as uuidv1 } from 'uuid'
 import { PouchConfig } from '../db-config'
 import { FlipperEventBusService } from '@enexus/flipper-event'
-import { AnyEvent } from '../events'
 
 class Response {
   res: any
@@ -26,12 +23,13 @@ interface Handler {
 })
 export class PouchDBService {
   private isInstantiated: boolean = false
-  private database: any;
+  private database: any
   public listener: EventEmitter<any> = new EventEmitter()
   public listenerLogin: EventEmitter<any> = new EventEmitter()
 
   public constructor(private eventBus: FlipperEventBusService) {
-    PouchDB.plugin(PouchFind);
+    // PouchDB.plugin(PouchFind);
+    PouchDB.plugin(require('pouchdb-find').default)
     this.connect('main')
     debugPouch(PouchDB)
     this.sync([localStorage.getItem('userId')]) //we keep the current logged userId in local storage for quick access
@@ -246,10 +244,9 @@ export class PouchDBService {
   }
 
   public connect(dbName: string, filter: string = null) {
-   
     if (!this.isInstantiated) {
       this.database = new PouchDB('main')
-      console.log('did couchbase connected?');
+      console.log('did couchbase connected?')
       if (filter != null) {
         this.database.changes({
           filter: (doc: any) => {
@@ -332,9 +329,9 @@ export class PouchDBService {
 
   public put(id: string, document: any) {
     document._id = id
-    document.uid = this.uid();
-    document.channel = localStorage.getItem('userId');
-    document.channels = [localStorage.getItem('userId')];
+    document.uid = this.uid()
+    document.channel = localStorage.getItem('userId')
+    document.channels = [localStorage.getItem('userId')]
 
     return this.get(id).then(
       (result: { _rev: any }) => {
@@ -361,7 +358,7 @@ export class PouchDBService {
     return PouchDB.sync('main', 'http://yegobox.com:4985/main', {
       password: 'singlworld',
       user: 'admin',
-      push:true,
+      push: true,
       live: true,
       retry: true,
       continous: true,

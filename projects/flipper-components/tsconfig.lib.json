@@ -1,11 +1,17 @@
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "../../out-tsc/lib",
+    "declarationMap": true,
     "target": "es2015",
+    "moduleResolution": "node",
+
+    "typeRoots": [
+      "node_modules/@types"
+    ],
     "declaration": true,
     "inlineSources": true,
-    "types": [],
+    "types": ["node"],
     "lib": [
       "dom",
       "es2018"

@@ -1,6 +1,6 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing'
 import { RouterTestingModule } from '@angular/router/testing'
-import { AppComponent } from './app.component'
+import { AppComponent } from './app.pos-component'
 import { FlipperMenuComponent, FlipperMenuModule } from 'flipper-menu'
 import { VendorsModule } from '@enexus/flipper-vendors'
 import { FlipperEventModule } from 'projects/flipper-event/src/public_api'

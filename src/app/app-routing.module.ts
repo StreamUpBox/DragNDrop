@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core'
 import { Routes, RouterModule } from '@angular/router'
-import { AppComponent } from './app.component'
+import { AppComponent } from './app.pos-component'
 import { ProductsComponent } from '@enexus/flipper-inventory'
 import { CreateProductComponent } from '@enexus/flipper-inventory'
 import { CreateUpdateBusinessComponent } from '@enexus/flipper-settings'

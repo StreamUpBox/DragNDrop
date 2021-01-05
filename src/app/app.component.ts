@@ -7,23 +7,23 @@ import {
   STATUS,
   ORDERTYPE,
   Branch,
-  Tables,
   Stock,
-  Product,p
+  Product,
   OrderDetails,
+  StockHistory,
   Business,
   Taxes,
   PouchDBService,
   PouchConfig,
   Variant,
-  StockHistory,
 } from '@enexus/flipper-components'
+
 import { ProductService, StockService, VariationService } from '@enexus/flipper-inventory'
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  styleUrls: ['./app.component.scss'],
   animations: [
     trigger('insertPos', [transition(':enter', useAnimation(fadeInAnimation, { params: { duration: '1s' } }))]),
   ],
@@ -58,11 +58,11 @@ export class AppComponent implements OnInit {
     public product: ProductService,
     private totalPipe: CalculateTotalClassPipe
   ) {
-    this.database.connect(PouchConfig.bucket, '117')
-
-    if (PouchConfig.canSync) {
-      this.database.sync([localStorage.getItem('userId')])
-    }
+    this.database.connect(PouchConfig.bucket, localStorage.getItem('channel'))
+    // if (PouchConfig.canSync) {
+    // NOTE: set to sync always atleast for now.
+    this.database.sync([PouchConfig.syncUrl])
+    // }
     this.init()
   }
 
@@ -75,21 +75,6 @@ export class AppComponent implements OnInit {
   date = new Date().toISOString()
 
   async ngOnInit() {
-    const user = {
-      _id: '',
-      name: 'ganza',
-      email: 'respinho2014@gmail.com',
-      token: 'xxxxx',
-      active: true,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      id: this.database.uid(),
-      userId: 117,
-      expiresAt: Date.parse('2020-02-10') as number,
-      table: 'users',
-      docId: PouchConfig.Tables.user,
-    }
-
     this.init()
   }
   async init() {
@@ -105,10 +90,10 @@ export class AppComponent implements OnInit {
 
     if (this.currentOrder) {
       await this.allOrderDetails(this.currentOrder.id)
-      await this.getOrderDetails()
+      this.getOrderDetails()
     }
 
-    this.currency = (await this.defaultBusiness$) ? this.defaultBusiness$.currency : 'RWF'
+    this.currency = this.defaultBusiness$ ? this.defaultBusiness$.currency : 'RWF'
   }
 
   public currentBusiness() {
@@ -157,7 +142,7 @@ export class AppComponent implements OnInit {
         updatedAt: this.date,
       }
 
-      await this.database.put(formOrder.id, formOrder)
+      await this.database.put(PouchConfig.Tables.orders + '_' + formOrder.id, formOrder)
       this.hasDraftOrder()
     }
   }
@@ -364,7 +349,7 @@ export class AppComponent implements OnInit {
       details.item.taxAmount = (subTotal * taxRate) / 100
       details.item.subTotal = subTotal
 
-      await this.database.put(details.item.id, details.item)
+      await this.database.put(PouchConfig.Tables.orderDetails + '_' + details.item.id, details.item)
     }
 
     await this.allOrderDetails(this.currentOrder.id)
@@ -390,7 +375,7 @@ export class AppComponent implements OnInit {
         : 0.0
     this.currentOrder.customerChangeDue = parseFloat(this.currentOrder.customerChangeDue)
 
-    await this.database.put(this.currentOrder.id, this.currentOrder)
+    await this.database.put(PouchConfig.Tables.orders + '_' + this.currentOrder.id, this.currentOrder)
     await this.hasDraftOrder()
   }
 
@@ -437,7 +422,7 @@ export class AppComponent implements OnInit {
       channels: [this.defaultBusiness$.userId],
     }
 
-    this.database.put(orderDetails.id, orderDetails)
+    this.database.put(PouchConfig.Tables.orderDetails + '_' + orderDetails.id, orderDetails)
     await this.allOrderDetails(this.currentOrder.id)
     this.currentOrder.orderItems = this.getOrderDetails()
     this.updateOrder()
@@ -455,7 +440,7 @@ export class AppComponent implements OnInit {
       this.currentOrder.updatedAt = new Date().toISOString()
       this.currentOrder.customerChangeDue = this.currentOrder.customerChangeDue
 
-      await this.database.put(this.currentOrder.id, this.currentOrder)
+      await this.database.put(PouchConfig.Tables.orders + '_' + this.currentOrder.id, this.currentOrder)
 
       this.collectCashCompleted = { isCompleted: true, collectedOrder: this.currentOrder }
       this.currentOrder = null
@@ -490,7 +475,7 @@ export class AppComponent implements OnInit {
             updatedAt: new Date().toISOString(),
             channels: [this.defaultBusiness$.userId],
           }
-          this.database.put(stockHistories.id, stockHistories)
+          this.database.put(PouchConfig.Tables.stockHistories + '_' + stockHistories.id, stockHistories)
 
           this.updateStock(details)
         }
@@ -512,12 +497,12 @@ export class AppComponent implements OnInit {
     if (stock) {
       stock.currentStock = stock.currentStock - stockDetails.quantity
 
-      this.database.put(stock.id, stock)
+      this.database.put(PouchConfig.Tables.stocks + '_' + stock.id, stock)
     }
   }
 
   async saveOrderUpdated(event: Order) {
-    await this.database.put(event.id, event)
+    await this.database.put(PouchConfig.Tables.orders + '_' + event.id, event)
     await this.hasDraftOrder()
   }
 }

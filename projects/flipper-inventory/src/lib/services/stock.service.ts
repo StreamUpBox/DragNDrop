@@ -231,20 +231,20 @@ export class StockService {
     return true
   }
 
-   create(stock: Stock) {
-    return  this.database.put(stock.id, stock);
+  create(stock: Stock) {
+    return this.database.put(stock.id, stock)
   }
 
   createHistory(stock: StockHistory): any {
-    return  this.database.put(stock.id, stock);
+    return this.database.put(stock.id, stock)
   }
   updateHistory(stock: StockHistory): any {
-    return  this.database.put(stock.id, stock);
+    return this.database.put(stock.id, stock)
   }
 
   update(stock: Stock): Stock {
     if (stock) {
-      return this.database.put(stock.id, stock);
+      return this.database.put(stock.id, stock)
     }
   }
 

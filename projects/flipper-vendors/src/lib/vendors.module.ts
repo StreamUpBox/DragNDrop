@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core'
+import { ModuleWithProviders, NgModule } from '@angular/core'
 import { MaterialModule } from './material/material.module'
 import { FlexLayoutModule } from '@angular/flex-layout'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
@@ -7,5 +7,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
   imports: [FormsModule, ReactiveFormsModule, MaterialModule, FlexLayoutModule],
   exports: [FormsModule, ReactiveFormsModule, MaterialModule, FlexLayoutModule],
 })
-export class VendorsModule {}
-
+export class VendorsModule {
+  static forRoot(): ModuleWithProviders<VendorsModule> {
+    return {
+      ngModule: VendorsModule,
+    }
+  }
+}

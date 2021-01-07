@@ -107,10 +107,7 @@
     "ts-node": "~8.3.0",
     "tsickle": "^0.38.1",
     "tslint": "~6.1.0",
-<<<<<<< HEAD
     "wallaby-webpack": "^3.9.16",
-=======
->>>>>>> 8fdce39fedf1f771f0b9ca75a19db9adb8daa420
     "typescript": "^4.0.5"
   }
 }

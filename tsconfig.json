@@ -1,19 +1,5 @@
 {
   "compileOnSave": false,
-<<<<<<< HEAD
-<<<<<<< HEAD
-  "files": [
-    "projects/flipper-inventory/src/test.ts"
-  ],
-
-  "include": [
-    "projects/flipper-inventory/src/test.ts",
-    "projects/flipper-inventory/src/**/*.d.ts"
-  ],
-=======
->>>>>>> 8fdce39fedf1f771f0b9ca75a19db9adb8daa420
-=======
->>>>>>> 8fdce39fedf1f771f0b9ca75a19db9adb8daa420
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
@@ -26,15 +12,7 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es2015",
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> 8fdce39fedf1f771f0b9ca75a19db9adb8daa420
-=======
-    
->>>>>>> 8fdce39fedf1f771f0b9ca75a19db9adb8daa420
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -133,15 +111,7 @@
       ],
       "@enexus/flipper-inventory/*": [
         "dist/flipper-inventory/*"
-<<<<<<< HEAD
-<<<<<<< HEAD
       ],
-=======
-      ], 
->>>>>>> 8fdce39fedf1f771f0b9ca75a19db9adb8daa420
-=======
-      ], 
->>>>>>> 8fdce39fedf1f771f0b9ca75a19db9adb8daa420
       "@enexus/flipper-file-upload": [
         "dist/flipper-file-upload"
       ],
@@ -169,12 +139,4 @@
     "strictInjectionParameters": true,
     "enableIvy":false
   }
-<<<<<<< HEAD
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 8fdce39fedf1f771f0b9ca75a19db9adb8daa420
-=======
-}
->>>>>>> 8fdce39fedf1f771f0b9ca75a19db9adb8daa420

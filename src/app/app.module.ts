@@ -5,11 +5,11 @@ import { AppComponent } from './app.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { VendorsModule } from '@enexus/flipper-vendors'
 import { FlipperComponentsModule, PouchDBService } from '@enexus/flipper-components'
-import { FlipperPosModule } from '@enexus/flipper-pos'
+import { FlipperInventoryModule } from '@enexus/flipper-inventory'
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, VendorsModule, FlipperComponentsModule, FlipperPosModule, BrowserAnimationsModule],
+  imports: [BrowserModule, VendorsModule, FlipperComponentsModule, FlipperInventoryModule, BrowserAnimationsModule],
   entryComponents: [],
   providers: [PouchDBService],
   bootstrap: [AppComponent],

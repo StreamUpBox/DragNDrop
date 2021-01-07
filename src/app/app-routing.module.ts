@@ -3,23 +3,15 @@ import { Routes, RouterModule } from '@angular/router'
 import { ProductsComponent } from '@enexus/flipper-inventory'
 import { CreateProductComponent } from '@enexus/flipper-inventory'
 import { CreateUpdateBusinessComponent } from '@enexus/flipper-settings'
-import { AppComponent } from './app.component'
 
 const routes: Routes = [
-  { path: 'index', component: AppComponent },
+  { path: 'index', component: ProductsComponent },
   { path: '', redirectTo: '/index', pathMatch: 'full' },
-  { path: 'admin', component: AppComponent },
-  { path: 'admin/pos', component: AppComponent },
-  { path: 'admin/analytics', component: AppComponent },
-  { path: 'admin/settings', component: AppComponent },
+
   { path: 'admin/inventory', component: ProductsComponent },
   {
     path: 'add/product',
     component: CreateProductComponent,
-  },
-  {
-    path: 'setup/business/new',
-    component: CreateUpdateBusinessComponent,
   },
 ]
 

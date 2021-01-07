@@ -1,14 +1,2 @@
-<div @insertPos>
-  <flipper-basic-pos
-  [currentOrder]="currentOrder"
-  [collectCashCompleted]="collectCashCompleted"
-  [currency]="currency"
-  (addToCartEmit)="addToCart($event)"
-  [foundVariant]="theVariantFiltered"
-  (searchEmitValue)="iWantToSearchVariant($event)"
-  (saveOrderUpdatedEmit)="saveOrderUpdated($event)"
-  (updateOrderDetailsEmit)="updateOrderDetails($event)"
-  (didCollectCashEmit)="didCollectCash($event)">
-  </flipper-basic-pos>
-
-</div>
+<flipper-notification></flipper-notification>
+<router-outlet #outlet="outlet"></router-outlet>

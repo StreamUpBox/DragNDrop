@@ -23,7 +23,7 @@ import { ProductService, StockService, VariationService } from '@enexus/flipper-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  styleUrls: ['./app.component.css'],
   animations: [
     trigger('insertPos', [transition(':enter', useAnimation(fadeInAnimation, { params: { duration: '1s' } }))]),
   ],

@@ -10,7 +10,7 @@
       "@enexus/flipper-dialog": "@enexus/flipper-dialog",
       "lodash":"lodash",
       "ngx-barcode":"ngx-barcode",
-      "pouchdb":"pouchdb",
+      "pouchdb":"pouchdb/dist/pouchdb",
       "pouchdb-find":"pouchdb-find",
       "uuid":"uuid"
     }

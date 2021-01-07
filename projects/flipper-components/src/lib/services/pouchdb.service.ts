@@ -28,6 +28,10 @@ export class PouchDBService {
   public listenerLogin: EventEmitter<any> = new EventEmitter()
 
   public constructor(private eventBus: FlipperEventBusService) {
+<<<<<<< HEAD
+=======
+    // PouchDB.plugin(PouchFind);
+>>>>>>> 8fdce39fedf1f771f0b9ca75a19db9adb8daa420
     PouchDB.plugin(require('pouchdb-find').default)
     this.connect('main')
     debugPouch(PouchDB)
@@ -243,8 +247,9 @@ export class PouchDBService {
   }
 
   public connect(dbName: string, filter: string = null) {
-    if (!this.isInstantiated && dbName) {
-      this.database = new PouchDB(dbName)
+    if (!this.isInstantiated) {
+      this.database = new PouchDB('main')
+      console.log('did couchbase connected?')
       if (filter != null) {
         this.database.changes({
           filter: (doc: any) => {
@@ -328,8 +333,8 @@ export class PouchDBService {
   public put(id: string, document: any) {
     document._id = id
     document.uid = this.uid()
-    document.channel = PouchConfig.channel
-    document.channels = [PouchConfig.channel]
+    document.channel = localStorage.getItem('userId')
+    document.channels = [localStorage.getItem('userId')]
 
     return this.get(id).then(
       (result: { _rev: any }) => {
@@ -356,12 +361,20 @@ export class PouchDBService {
     return PouchDB.sync('main', 'http://yegobox.com:4985/main', {
       password: 'singlworld',
       user: 'admin',
+      push: true,
       live: true,
+<<<<<<< HEAD
       // 'purge-on-removal': true,
       retry: true,
       // continous: true,
       // filter: 'sync_gateway/bychannel', //NOTE: now filter is part of sync function!
       query_params: { channels: channels },
+=======
+      retry: true,
+      continous: true,
+      // filter: "sync_gateway/bychannel",
+      // query_params: { "channels": ['43'] },
+>>>>>>> 8fdce39fedf1f771f0b9ca75a19db9adb8daa420
     })
   }
   public getChangeListener() {

@@ -70,3 +70,9 @@ import { LoadingIconComponent } from './loading-icon/loading-icon.component'
   ],
 })
 export class FlipperComponentsModule {}
+declare module '@angular/core' {
+  interface ModuleWithProviders<T = any> {
+    ngModule: Type<T>
+    providers?: Provider[]
+  }
+}

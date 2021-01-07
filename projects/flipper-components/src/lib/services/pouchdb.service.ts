@@ -28,10 +28,7 @@ export class PouchDBService {
   public listenerLogin: EventEmitter<any> = new EventEmitter()
 
   public constructor(private eventBus: FlipperEventBusService) {
-<<<<<<< HEAD
-=======
     // PouchDB.plugin(PouchFind);
->>>>>>> 8fdce39fedf1f771f0b9ca75a19db9adb8daa420
     PouchDB.plugin(require('pouchdb-find').default)
     this.connect('main')
     debugPouch(PouchDB)
@@ -363,18 +360,10 @@ export class PouchDBService {
       user: 'admin',
       push: true,
       live: true,
-<<<<<<< HEAD
-      // 'purge-on-removal': true,
-      retry: true,
-      // continous: true,
-      // filter: 'sync_gateway/bychannel', //NOTE: now filter is part of sync function!
-      query_params: { channels: channels },
-=======
       retry: true,
       continous: true,
       // filter: "sync_gateway/bychannel",
       // query_params: { "channels": ['43'] },
->>>>>>> 8fdce39fedf1f771f0b9ca75a19db9adb8daa420
     })
   }
   public getChangeListener() {

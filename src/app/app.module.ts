@@ -20,9 +20,7 @@ import { AppRoutingModule } from './app-routing.module'
   ],
   entryComponents: [],
   providers: [PouchDBService],
-  // bootstrap: [AppComponent],
-  // bootstrap: [OrderComponent],
-  bootstrap: [InventoryComponent],
+  bootstrap: [AppComponent],
 })
 export class AppModule {
   constructor() {

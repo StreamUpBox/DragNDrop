@@ -1,6 +1,7 @@
 {
   "compileOnSave": false,
 <<<<<<< HEAD
+<<<<<<< HEAD
   "files": [
     "projects/flipper-inventory/src/test.ts"
   ],
@@ -9,6 +10,8 @@
     "projects/flipper-inventory/src/test.ts",
     "projects/flipper-inventory/src/**/*.d.ts"
   ],
+=======
+>>>>>>> 8fdce39fedf1f771f0b9ca75a19db9adb8daa420
 =======
 >>>>>>> 8fdce39fedf1f771f0b9ca75a19db9adb8daa420
   "compilerOptions": {
@@ -24,7 +27,11 @@
     "importHelpers": true,
     "target": "es2015",
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 8fdce39fedf1f771f0b9ca75a19db9adb8daa420
 =======
     
 >>>>>>> 8fdce39fedf1f771f0b9ca75a19db9adb8daa420
@@ -127,7 +134,11 @@
       "@enexus/flipper-inventory/*": [
         "dist/flipper-inventory/*"
 <<<<<<< HEAD
+<<<<<<< HEAD
       ],
+=======
+      ], 
+>>>>>>> 8fdce39fedf1f771f0b9ca75a19db9adb8daa420
 =======
       ], 
 >>>>>>> 8fdce39fedf1f771f0b9ca75a19db9adb8daa420
@@ -159,7 +170,11 @@
     "enableIvy":false
   }
 <<<<<<< HEAD
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 8fdce39fedf1f771f0b9ca75a19db9adb8daa420
 =======
 }
 >>>>>>> 8fdce39fedf1f771f0b9ca75a19db9adb8daa420

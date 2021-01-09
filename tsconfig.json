@@ -12,7 +12,6 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es2015",
-    
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -39,7 +38,6 @@
       "@enexus/flipper-menu/*": [
         "dist/flipper-menu*"
       ],
-
       "@enexus/flipper-pos": [
         "dist/flipper-pos"
       ],
@@ -111,7 +109,7 @@
       ],
       "@enexus/flipper-inventory/*": [
         "dist/flipper-inventory/*"
-      ], 
+      ],
       "@enexus/flipper-file-upload": [
         "dist/flipper-file-upload"
       ],
@@ -131,12 +129,16 @@
       "testlivereload": [
         "dist/testlivereload/testlivereload",
         "dist/testlivereload"
+      ],
+      "test-p": [
+        "dist/test-p/test-p",
+        "dist/test-p"
       ]
     }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true,
-    "enableIvy":false
+    "enableIvy": false
   }
 }

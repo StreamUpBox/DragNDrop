@@ -12,6 +12,9 @@ import { DialogModule } from '@enexus/flipper-dialog'
 import { CommonModule } from '@angular/common'
 import { UpdatePriceDialogComponent } from './common/update-price-dialog/update-price-dialog.component'
 import { AddCartItemDialogComponent } from './common/add-cart-item-dialog/add-cart-item-dialog.component'
+import { FlipperPosComponent } from './flipper-pos.component'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { BrowserModule } from '@angular/platform-browser'
 
 @NgModule({
   declarations: [
@@ -24,8 +27,10 @@ import { AddCartItemDialogComponent } from './common/add-cart-item-dialog/add-ca
     CalculatorComponent,
     UpdatePriceDialogComponent,
     AddCartItemDialogComponent,
+    FlipperPosComponent,
   ],
-  imports: [CommonModule, FlipperComponentsModule, VendorsModule, DialogModule],
+
+  imports: [CommonModule, FlipperComponentsModule, BrowserAnimationsModule, BrowserModule, VendorsModule, DialogModule],
   entryComponents: [UpdatePriceDialogComponent, AddCartItemDialogComponent],
 
   exports: [
@@ -36,6 +41,7 @@ import { AddCartItemDialogComponent } from './common/add-cart-item-dialog/add-ca
     BasicShoppingListComponent,
     StandardShoppingListComponent,
     CalculatorComponent,
+    FlipperPosComponent,
   ],
 })
 export class FlipperPosModule {}

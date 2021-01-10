@@ -1,13 +1,13 @@
 import { Injectable, EventEmitter } from '@angular/core'
 import PouchDB from 'pouchdb/dist/pouchdb'
-// import PouchFind from 'pouchdb-find'
-// PouchDB.plugin(PouchFind)
-
 import debugPouch from 'pouchdb-debug'
 
 import { v1 as uuidv1 } from 'uuid'
-import { PouchConfig } from '../db-config'
 import { FlipperEventBusService } from '@enexus/flipper-event'
+import { flipperUrl } from '../constants'
+import { Business } from '../entries/business'
+import { HttpClient } from '@angular/common/http'
+import { Branch } from '../entries/branch'
 
 class Response {
   res: any
@@ -27,7 +27,7 @@ export class PouchDBService {
   public listener: EventEmitter<any> = new EventEmitter()
   public listenerLogin: EventEmitter<any> = new EventEmitter()
 
-  public constructor(private eventBus: FlipperEventBusService) {
+  public constructor(private http: HttpClient, private eventBus: FlipperEventBusService) {
     // PouchDB.plugin(PouchFind);
     PouchDB.plugin(require('pouchdb-find').default)
     this.connect('main')
@@ -142,6 +142,7 @@ export class PouchDBService {
   }
 
   public currentTax() {
+    // TODO: migrate this
     return this.activeUser().then((user: { docs: string | any[] }) => {
       if (user && user.docs.length > 0) {
         return this.activeBusiness(user.docs[0].id, 'businesses').then((business: { docs: string | any[] }) => {
@@ -167,23 +168,37 @@ export class PouchDBService {
     })
   }
 
-  public listBusinessBranches() {
-    return this.currentBusiness().then((business: { id: any }) => {
-      if (business) {
-        return this.query(['table', 'businessId'], {
-          table: { $eq: 'branches' },
-          businessId: { $eq: business.id },
-        }).then((res: { docs: string | any[] }) => {
-          if (res.docs && res.docs.length > 0) {
-            return res.docs
-          } else {
-            return []
-          }
-        })
-      } else {
-        return []
-      }
-    })
+  public async listBusinessBranches() {
+    // I put any on the first promise as my intention is to return a list of branches not businesses
+    return await this.http
+      .get<any>(flipperUrl + '/api/business')
+      .toPromise()
+      .then(async business => {
+        if (business) {
+          return await this.http
+            .get<[Branch]>(flipperUrl + '/api/branches/' + business.id)
+            .toPromise()
+            .then(branches => {
+              return branches
+            })
+        }
+      })
+    // return this.currentBusiness().then((business: { id: any }) => {
+    //   if (business) {
+    //     return this.query(['table', 'businessId'], {
+    //       table: { $eq: 'branches' },
+    //       businessId: { $eq: business.id },
+    //     }).then((res: { docs: string | any[] }) => {
+    //       if (res.docs && res.docs.length > 0) {
+    //         return res.docs
+    //       } else {
+    //         return []
+    //       }
+    //     })
+    //   } else {
+    //     return []
+    //   }
+    // })
   }
 
   public listBusinessTaxes() {

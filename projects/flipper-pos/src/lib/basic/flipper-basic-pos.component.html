@@ -11,7 +11,7 @@
           </td>
           <td style="width:10%">
             <button (click)="addCartItem()" class="button-default button--secondary ml-3">
-              <img [src]="'./assets/icons/plus.svg'" class="icon-img" style="position: relative;top: 5.5px;">
+              <img [src]="'./assets/icons/plus.svg'" alt="search" class="icon-img" style="position: relative;top: 5.5px;">
             </button>
           </td>
 
@@ -36,6 +36,7 @@
         <mat-list *ngIf="currentOrder.orderItems.length > 0">
           <div mat-subheader>Items({{currentOrder.orderItems.length}})</div>
 
+          <!-- {{currentOrder.orderItems|json}} -->
           <flipper-autocomplete *ngFor="let item of  currentOrder.orderItems; let i = index;">
             <mat-divider></mat-divider>
             <mat-list-item (click)="canSetCartFocused(item)" [class.setCartFocused]="cartFocused==item">
@@ -79,11 +80,11 @@
                         <table>
                           <tr>
                             <td>
-                              <img [src]="'./assets/icons/minus.svg'" (click)="updateQuantity(item,'-')">
+                              <img [src]="'./assets/icons/minus.svg'" alt="minus" (click)="updateQuantity(item,'-')">
                             </td>
                             <td>{{item.quantity}}</td>
                             <td>
-                              <img [src]="'./assets/icons/plus.svg'" (click)="updateQuantity(item,'+')">
+                              <img [src]="'./assets/icons/plus.svg'" alt="plus" (click)="updateQuantity(item,'+')">
                             </td>
                           </tr>
                         </table>
@@ -91,7 +92,7 @@
                     </td>
                     <td>
                       <button class="remove-item" type="button">
-                        <img [src]="'./assets/icons/x.svg'" class="delete-icon" (click)="removeItem(item)">
+                        <img [src]="'./assets/icons/x.svg'" alt="delete" class="delete-icon" (click)="removeItem(item)">
                       </button>
                     </td>
 

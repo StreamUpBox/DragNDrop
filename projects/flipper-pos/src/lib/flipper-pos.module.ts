@@ -15,6 +15,7 @@ import { AddCartItemDialogComponent } from './common/add-cart-item-dialog/add-ca
 import { FlipperPosComponent } from './flipper-pos.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { BrowserModule } from '@angular/platform-browser'
+import { HttpClientModule } from '@angular/common/http'
 
 @NgModule({
   declarations: [
@@ -30,7 +31,15 @@ import { BrowserModule } from '@angular/platform-browser'
     FlipperPosComponent,
   ],
 
-  imports: [CommonModule, FlipperComponentsModule, BrowserAnimationsModule, BrowserModule, VendorsModule, DialogModule],
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    FlipperComponentsModule,
+    BrowserAnimationsModule,
+    BrowserModule,
+    VendorsModule,
+    DialogModule,
+  ],
   entryComponents: [UpdatePriceDialogComponent, AddCartItemDialogComponent],
 
   exports: [

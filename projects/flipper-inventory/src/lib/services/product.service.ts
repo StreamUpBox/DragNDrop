@@ -13,6 +13,8 @@ import {
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms'
 import { VariationService } from './variation.service'
 import { BehaviorSubject } from 'rxjs'
+import { HttpClient } from '@angular/common/http'
+import { flipperUrl } from '../constants'
 
 @Injectable({
   providedIn: 'root',
@@ -35,7 +37,12 @@ export class ProductService {
   allVariants: Variant[]
   stocks: Stock[] = []
 
-  constructor(private variant: VariationService, private formBuilder: FormBuilder, private database: PouchDBService) {
+  constructor(
+    private http: HttpClient,
+    private variant: VariationService,
+    private formBuilder: FormBuilder,
+    private database: PouchDBService
+  ) {
     this.productsSubject = new BehaviorSubject([])
   }
 
@@ -47,8 +54,6 @@ export class ProductService {
     await this.create()
   }
 
-
-  
   public currentBusiness() {
     return this.database.currentBusiness().then(business => {
       this.defaultBusiness$ = business
@@ -56,7 +61,7 @@ export class ProductService {
   }
   currentBranches() {
     return this.database.listBusinessBranches().then(branches => {
-      this.branches$ = branches.filter(res=>res.active==true);
+      this.branches$ = branches.filter(res => res.active == true)
     })
   }
 
@@ -72,52 +77,64 @@ export class ProductService {
   }
 
   //stocks
-  getProductStocks(productId: any) {
-    return this.database
-      .query(['table', 'productId'], {
-        table: { $eq: 'stocks' },
-        productId: { $eq: productId },
-      })
-      .then(res => {
-        if (res.docs && res.docs.length > 0) {
-          this.stocks = res.docs
-        } else {
-          this.stocks = null
-        }
-      })
+  getProductStocks({ productId }: any) {
+    this.http.get<[Stock]>(flipperUrl + '/api/stocks-byProductId/' + productId).subscribe(stocks => {
+      this.stocks = stocks
+    })
+
+    // return this.database
+    //   .query(['table', 'productId'], {
+    //     table: { $eq: 'stocks' },
+    //     productId: { $eq: productId },
+    //   })
+    //   .then(res => {
+    //     if (res.docs && res.docs.length > 0) {
+    //       this.stocks = res.docs
+    //     } else {
+    //       this.stocks = null
+    //     }
+    //   })
   }
 
   productVariations(productId) {
-    return this.database
-      .query(['table', 'productId'], {
-        table: { $eq: 'variants' },
-        productId: { $eq: productId },
-      })
-      .then(res => {
-        if (res.docs && res.docs.length > 0) {
-          return res.docs as Variant[]
-        } else {
-          return []
-        }
-      })
+    return this.http.get<[Variant]>(flipperUrl + '/api/variants/' + productId).toPromise()
+    // return this.database
+    //   .query(['table', 'productId'], {
+    //     table: { $eq: 'variants' },
+    //     productId: { $eq: productId },
+    //   })
+    //   .then(res => {
+    //     if (res.docs && res.docs.length > 0) {
+    //       return res.docs as Variant[]
+    //     } else {
+    //       return []
+    //     }
+    //   })
   }
 
   public async loadAllProducts(businessId) {
     await this.productsList(businessId)
   }
   public async productsList(businessId) {
-    return await this.database
-      .query(['table', 'businessId'], {
-        table: { $eq: 'products' },
-        businessId: { $eq: businessId },
+    await this.http
+      .get<[Product]>(flipperUrl + '/api/products')
+      .toPromise()
+      .then(products => {
+        // console.log(this.users);
+        this.products = products as Product[]
       })
-      .then(res => {
-        if (res.docs && res.docs.length > 0) {
-          this.products = res.docs as Product[]
-        } else {
-          this.products = [] as Product[]
-        }
-      })
+    // return await this.database
+    //   .query(['table', 'businessId'], {
+    //     table: { $eq: 'products' },
+    //     businessId: { $eq: businessId },
+    //   })
+    //   .then(res => {
+    //     if (res.docs && res.docs.length > 0) {
+    //       this.products = res.docs as Product[]
+    //     } else {
+    //       this.products = [] as Product[]
+    //     }
+    //   })
   }
 
   public host(id: string): Product | undefined {
@@ -126,7 +143,7 @@ export class ProductService {
 
   async request() {
     const hasDraftProduct = this.hasDraftProduct
-    this.form = await this.formBuilder.group({
+    this.form = this.formBuilder.group({
       name: [hasDraftProduct ? hasDraftProduct.name : '', Validators.required],
       categoryId: hasDraftProduct ? hasDraftProduct.categoryId : 0,
       description: hasDraftProduct ? hasDraftProduct.description : '',
@@ -143,11 +160,12 @@ export class ProductService {
   }
 
   hasDraft() {
+    // TODO: migrate this code.
     return this.database.hasDraftProduct(this.defaultBusiness$ ? this.defaultBusiness$.id : 0).then(draft => {
       if (draft && draft.docs.length > 0) {
         this.hasDraftProduct = draft.docs[0]
         this.allVariant(this.hasDraftProduct)
-        this.getProductStocks(this.hasDraftProduct.id)
+        this.getProductStocks({ productId: this.hasDraftProduct.id })
       }
     })
   }
@@ -155,7 +173,6 @@ export class ProductService {
   async create() {
     if (this.defaultBusiness$ && !this.hasDraftProduct) {
       const formProduct = {
-        id: this.database.uid(),
         name: 'new item',
         businessId: this.defaultBusiness$ ? this.defaultBusiness$.id : 0,
         isDraft: true,
@@ -167,18 +184,22 @@ export class ProductService {
         categoryId: 0,
         table: 'products',
         color: '#000000',
-        picture: '/assets/icons/add-image-placeholder.png',
+        picture: '/assets/icons/add-image-placeholder.png', //FIXME: replace with internet url or find how android would load this
         isCurrentUpdate: false,
-        branchId:this.branches$.length > 0?this.branches$[0].id:'0',
+        branchId: this.branches$.length > 0 ? this.branches$[0].id : '0',
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
         userId: localStorage.getItem('userId'),
         channels: [localStorage.getItem('userId')],
       }
 
-      await this.database.put(formProduct.id, formProduct);
-      if(this.branches$.length > 0){
-         this.variant.createRegular(formProduct,this.branches$); 
+      // await this.database.put(formProduct.id, formProduct);
+      await this.http
+        .post(flipperUrl + '/api/product', formProduct)
+        .toPromise()
+        .then()
+      if (this.branches$.length > 0) {
+        this.variant.createRegular(formProduct, this.branches$)
       }
     }
     await this.hasDraft()
@@ -196,7 +217,7 @@ export class ProductService {
   updateBranch(): void {
     if (this.hasDraftProduct && this.branchList.value.length > 0) {
       this.branchList.value.forEach(id => {
-        let key=this.database.uid();
+        let key = this.database.uid()
         this.database.put(key, {
           id: key,
           productId: this.hasDraftProduct.id,
@@ -208,7 +229,7 @@ export class ProductService {
 
   async update() {
     if (this.hasDraftProduct) {
-      return await this.database.put(this.hasDraftProduct.id, this.hasDraftProduct);
+      return await this.database.put(this.hasDraftProduct.id, this.hasDraftProduct)
     }
   }
 
@@ -229,11 +250,10 @@ export class ProductService {
 
   updateOnlineDatabase() {
     if (PouchConfig.canSync) {
-      this.database.sync([localStorage.getItem('userId')]);
+      this.database.sync([localStorage.getItem('userId')])
     }
     if (!this.hasDraftProduct.isDraft) {
-
-      this.database.put(this.hasDraftProduct.id, this.hasDraftProduct);
+      this.database.put(this.hasDraftProduct.id, this.hasDraftProduct)
 
       if (this.hasDraftProduct) {
         //TODO: now update this function so it works!.

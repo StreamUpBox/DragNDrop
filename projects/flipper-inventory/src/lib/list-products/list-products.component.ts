@@ -62,24 +62,21 @@ export class ListProductsComponent implements OnInit, OnDestroy {
     private eventBus: FlipperEventBusService,
     public product: ProductService
   ) {
-    this.database.connect(PouchConfig.bucket,localStorage.getItem('userId'));
+    this.database.connect(PouchConfig.bucket, localStorage.getItem('userId'))
     this.dataSource = new MatTableDataSource([])
 
     this.subscription = this.product.productsSubject.subscribe(
       loadAllProducts => (this.loadAllProducts = loadAllProducts)
     )
 
-    this.eventBus
-    .of<AnyEvent>(AnyEvent.CHANNEL)
-    .subscribe(res => {
-      this.init();
+    this.eventBus.of<AnyEvent>(AnyEvent.CHANNEL).subscribe(res => {
+      this.init()
     })
   }
 
-   ngOnInit() {
-  
-     this.init();
-  
+  ngOnInit() {
+    this.init()
+
     // let async: any =   this.database.sync([localStorage.getItem('userId')]);
     // async
     // .on('change',  (info: any)  => {
@@ -102,22 +99,20 @@ export class ListProductsComponent implements OnInit, OnDestroy {
     // .on('error', err => {
     //   console.log('sync error', err)
     // })
-    
- 
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe()
   }
-  
-async init(){
-  await this.variant.activeBusiness();
-  await this. variant.variations();
-  await this.stock.allStocks();
-  if(this.variant.defaultBusiness){
-    await this.refresh();
+
+  async init() {
+    await this.variant.activeBusiness()
+    // await this. variant.variations(); // it does not make sense to load variation with no productID
+    await this.stock.allStocks()
+    if (this.variant.defaultBusiness) {
+      await this.refresh()
+    }
   }
-}
   async refresh() {
     this.loading = true
 
@@ -142,12 +137,10 @@ async init(){
     let products = []
     if (hosts.length > 0) {
       hosts.forEach(product => {
-        console.log(product);
-       
+        console.log(product)
         product['allVariant'] = this.variant.allVariants.filter(res => res.productId == product.id)
         product['stocks'] = this.stock.stocks.filter(res => res.productId == product.id)
-        products.push(product);
-        
+        products.push(product)
       })
     }
 
@@ -202,7 +195,7 @@ async init(){
       if (stocks.length > 1) {
         return stocks.length + ' Prices'
       } else {
-        return this.variant.defaultBusiness.currency + ' ' + (stocks && stocks.length > 0?stocks[0][type]:0);
+        return this.variant.defaultBusiness.currency + ' ' + (stocks && stocks.length > 0 ? stocks[0][type] : 0)
       }
     } else {
       return this.variant.defaultBusiness.currency + ' ' + 0

@@ -20,6 +20,7 @@ import { FlipperComponentsModule } from '@enexus/flipper-components'
 import { DialogModule } from '@enexus/flipper-dialog'
 
 import { FlipperFileUploadModule } from '@enexus/flipper-file-upload'
+import { HttpClientModule } from '@angular/common/http'
 
 @NgModule({
   declarations: [
@@ -44,7 +45,7 @@ import { FlipperFileUploadModule } from '@enexus/flipper-file-upload'
     VendorsModule,
     FlipperEventModule,
     FlipperComponentsModule,
-
+    HttpClientModule,
     FlipperFileUploadModule,
     DialogModule,
   ],

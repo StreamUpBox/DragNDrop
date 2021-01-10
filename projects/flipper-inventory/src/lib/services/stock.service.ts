@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import {
   Stock,
@@ -8,6 +9,7 @@ import {
   PouchDBService,
   PouchConfig,
 } from '@enexus/flipper-components'
+import { flipperUrl } from '../constants'
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +24,7 @@ export class StockService {
   stockHistory: StockHistory
   stockHistories: StockHistory[]
 
-  constructor(private setting: SettingsService, private database: PouchDBService) {}
+  constructor(private http: HttpClient, private setting: SettingsService, private database: PouchDBService) {}
 
   async init() {
     await this.currentBranches()
@@ -101,19 +103,25 @@ export class StockService {
     })
   }
 
-  variantStockHistory(variantId: string): StockHistory[] {
-    return this.database
-      .query(['table', 'variantId'], {
-        table: { $eq: 'stockHistories' },
-        variantId: { $eq: variantId },
+  async variantStockHistory(variantId: string): Promise<StockHistory[]> {
+    return await this.http
+      .get<[StockHistory]>(flipperUrl + '/api/stockHistories/' + variantId)
+      .toPromise()
+      .then(histories => {
+        return (this.stockHistories = histories)
       })
-      .then(res => {
-        if (res.docs && res.docs.length > 0) {
-          this.stockHistories = res.docs as StockHistory[]
-        } else {
-          this.stockHistories = [] as StockHistory[]
-        }
-      })
+    // return this.database
+    //   .query(['table', 'variantId'], {
+    //     table: { $eq: 'stockHistories' },
+    //     variantId: { $eq: variantId },
+    //   })
+    //   .then(res => {
+    //     if (res.docs && res.docs.length > 0) {
+    //       this.stockHistories = res.docs as StockHistory[]
+    //     } else {
+    //       this.stockHistories = [] as StockHistory[]
+    //     }
+    //   })
   }
 
   productStockHistory(variantIds: string[], reasons: string[] = []) {
@@ -231,8 +239,12 @@ export class StockService {
     return true
   }
 
-  create(stock: Stock) {
-    return this.database.put(stock.id, stock)
+  async create(stock: Stock) {
+    await this.http
+      .put(flipperUrl + '/api/stock/' + stock.id, stock)
+      .toPromise()
+      .then()
+    // return this.database.put(stock.id, stock)
   }
 
   createHistory(stock: StockHistory): any {
@@ -242,21 +254,28 @@ export class StockService {
     return this.database.put(stock.id, stock)
   }
 
-  update(stock: Stock): Stock {
+  async update(stock: Stock): Promise<Stock> {
     if (stock) {
-      return this.database.put(stock.id, stock)
+      // return this.database.put(stock.id, stock)
+      return await this.http
+        .put<Stock>(flipperUrl + '/api/stock/' + stock.id, stock)
+        .toPromise()
+        .then(updatatedStock => {
+          return updatatedStock
+        })
     }
   }
 
   updateStockHistoryAction(variantId: string) {
     const draft = this.findDraftStockHistory(variantId)
 
-    const stockVariant: StockHistory[] = this.variantStockHistory(variantId)
-    if (stockVariant.length > 0) {
-      stockVariant.forEach(vs => {
-        this.updateHistory(vs)
-      })
-    }
+    this.variantStockHistory(variantId).then(stockVariant => {
+      if (stockVariant.length > 0) {
+        stockVariant.forEach(vs => {
+          this.updateHistory(vs)
+        })
+      }
+    })
 
     if (draft) {
       draft.isDraft = false

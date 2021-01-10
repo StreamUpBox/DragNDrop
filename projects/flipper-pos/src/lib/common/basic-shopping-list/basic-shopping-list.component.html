@@ -8,12 +8,11 @@
   <flipper-autocomplete *ngFor="let item of orderItems; let i = index;">
     <mat-option>
       <div class="icon">
-        <img [src]="'./assets/icons/search.svg'" class="icon-img">
+        <img [src]="'./assets/icons/search.svg'" alt="search" class="icon-img">
       </div>
       <div class="item">
         <span class="item-title">
           {{item.orderId}} / {{item.variantName}}
-
         </span>
         <div class="item-sub-title">
           <span class="details">RWF {{item.price}}</span>
@@ -26,18 +25,18 @@
       </div>
       <div class="remove-item">
 
-        <img [src]="'./assets/icons/x.svg'" class="delete-icon" (click)="removeItem(item)">
+        <img [src]="'./assets/icons/x.svg'" alt="search" class="delete-icon" (click)="removeItem(item)">
 
       </div>
       <div class="update-qty">
         <table>
           <tr>
             <td>
-              <img [src]="'./assets/icons/minus.svg'" (click)="updateQuantity(item,'-')">
+              <img [src]="'./assets/icons/minus.svg'" alt="search" (click)="updateQuantity(item,'-')">
             </td>
             <td>{{item.quantity}}</td>
             <td>
-              <img [src]="'./assets/icons/plus.svg'" (click)="updateQuantity(item,'+')">
+              <img [src]="'./assets/icons/plus.svg'" alt="search" (click)="updateQuantity(item,'+')">
             </td>
           </tr>
         </table>

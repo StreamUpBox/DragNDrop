@@ -214,7 +214,7 @@ export class FlipperBasicPosComponent {
     order.cashReceived = order.cashReceived ? order.cashReceived : order.saleTotal
     order.customerChangeDue = order.cashReceived > 0 ? order.cashReceived - order.saleTotal : 0.0
 
-    order.customerChangeDue = order.customerChangeDue
+    // order.customerChangeDue = order.customerChangeDue
 
     this.saveOrderUpdatedEmit.emit(order)
   }
@@ -233,16 +233,17 @@ export class FlipperBasicPosComponent {
           })
         item.quantity = lastQty
       }
+      item.subTotal = item.price * item.quantity
+      this.removeItem(item)
     } else if (this.action === '+') {
       item.quantity = item.quantity + 1
+      item.subTotal = item.price * item.quantity
+      this.updateQty(item)
     }
-    item.subTotal = item.price * item.quantity
-    this.updateQty(item)
   }
   canSetCartFocused(item) {
     this.cartFocused = item
   }
-
   collectCash(event) {
     if (event === true) {
       this.currentOrder = null

@@ -21,8 +21,17 @@ import { NotificationService } from './notifications/notification.service'
 import { GenerateBarcodeComponent } from './generate-barcode/generate-barcode.component'
 import { NgxBarcodeModule } from 'ngx-barcode'
 import { LoadingIconComponent } from './loading-icon/loading-icon.component'
+import { HttpClientModule } from '@angular/common/http'
 @NgModule({
-  imports: [CommonModule, VendorsModule, ColorModule, FlipperEventModule, DialogModule, NgxBarcodeModule],
+  imports: [
+    HttpClientModule,
+    CommonModule,
+    VendorsModule,
+    ColorModule,
+    FlipperEventModule,
+    DialogModule,
+    NgxBarcodeModule,
+  ],
   declarations: [
     LoadingIconComponent,
     NotificationListComponent,

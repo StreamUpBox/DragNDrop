@@ -7,7 +7,7 @@ import {
   Product,
   Labels,
   PouchDBService,
-  Stock
+  Stock,
 } from '@enexus/flipper-components'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { VariantsDialogModelComponent } from '../variants/variants-dialog-model/variants-dialog-model.component'
@@ -17,33 +17,38 @@ import { BehaviorSubject, Observable, of } from 'rxjs'
 import { ViewStockHistoryComponent } from '../view-stock-history/view-stock-history.component'
 import { PrintBarcodeLabelsDialogComponent } from '../print-barcode-labels-dialog/print-barcode-labels-dialog.component'
 import { DialogSize } from '@enexus/flipper-dialog'
+import { HttpClient } from '@angular/common/http'
+import { flipperUrl } from '../constants'
 
 @Injectable({
   providedIn: 'root',
 })
 export class VariationService {
-  hasRegular: Variant = null;
-  myAllVariants: Variant[] = [];
-  sku = '';
-  d = new Date();
-  units: any[] = [];
-  form: FormGroup;
-  product: Product;
-  variantsSubject: BehaviorSubject<Variant[]>;
-  defaultBusiness:Business=null;
-  allVariants:Variant[]=[];
-  branches$: Branch[] = [];
-  private readonly variantsMap = new Map<string, Variant>();
-  variant: Variant;
- 
+  hasRegular: Variant = null
+  myAllVariants: Variant[] = []
+  sku = ''
+  d = new Date()
+  units: any[] = []
+  form: FormGroup
+  product: Product
+  variantsSubject: BehaviorSubject<Variant[]>
+  defaultBusiness: Business = null
+  allVariants: Variant[] = []
+  branches$: Branch[] = []
+  private readonly variantsMap = new Map<string, Variant>()
+  variant: Variant
 
-  variantStock = { length: 0, currentStock: 0, lowStock: 0 };
-  constructor(private stock: StockService, private dialog: DialogService,
-              private setting: SettingsService,
-              private formBuilder: FormBuilder,
-              private database: PouchDBService) {
-    this.variantsSubject = new BehaviorSubject([]);
-    this.units = this.setting.units();
+  variantStock = { length: 0, currentStock: 0, lowStock: 0 }
+  constructor(
+    private http: HttpClient,
+    private stock: StockService,
+    private dialog: DialogService,
+    private setting: SettingsService,
+    private formBuilder: FormBuilder,
+    private database: PouchDBService
+  ) {
+    this.variantsSubject = new BehaviorSubject([])
+    this.units = this.setting.units()
   }
 
   public loadAllVariants(product: Product): Observable<Variant[]> {
@@ -122,8 +127,8 @@ export class VariationService {
     this.form = this.formBuilder.group({
       name: [!action && variant && variant.name ? variant.name : '', Validators.required],
       sku: !action && variant && variant.sku ? variant.sku : this.generateSKU(),
-      retailPrice: [!action && variant && stock ? stock.retailPrice : 0.00, Validators.min(0)],
-      supplyPrice: [!action && variant && stock ? stock.supplyPrice : 0.00, Validators.min(0)],
+      retailPrice: [!action && variant && stock ? stock.retailPrice : 0.0, Validators.min(0)],
+      supplyPrice: [!action && variant && stock ? stock.supplyPrice : 0.0, Validators.min(0)],
       unit: !action && variant && variant.unit ? variant.unit : '',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
@@ -145,7 +150,7 @@ export class VariationService {
   }
 
   create(variant: Variant) {
-    return  this.database.put(variant.id, variant);
+    return this.database.put(variant.id, variant)
   }
   delete(variant: Variant) {
     return this.database.remove(variant)
@@ -157,26 +162,28 @@ export class VariationService {
       branches = this.branches$
     }
     if (!this.hasRegular) {
-      const formData = await {
-        id: this.database.uid(),
+      const formData = {
         name: 'Regular',
         productName: product.name,
         productId: product.id,
-        unit: this.units.length > 0?this.units[0].value:'',
+        unit: this.units.length > 0 ? this.units[0].value : '',
         sku: this.generateSKU(),
         isActive: true,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
         channels: [localStorage.getItem('userId')],
         userId: localStorage.getItem('userId'),
-        table:'variants',
-      
-      };
+        table: 'variants',
+      }
 
-      await this.database.put(formData.id, formData);
-       this.createVariantStock(formData,branches);
-       this.allVariant(product);
-      this.regular();
+      // await this.database.put(formData.id, formData);
+      await this.http
+        .post(flipperUrl + '/api/variant', formData)
+        .toPromise()
+        .then()
+      this.createVariantStock(formData, branches)
+      this.allVariant(product)
+      this.regular()
     }
   }
 
@@ -199,36 +206,51 @@ export class VariationService {
   }
 
   async allVariant(product: Product) {
-    return this.productVariations(product.id).then(res => {
-      this.allVariants = res as Variant[]
-    })
-  }
-  productVariations(productId) {
-    return this.database
-      .query(['table', 'productId'], {
-        table: { $eq: 'variants' },
-        productId: { $eq: productId },
+    return this.http
+      .get<[Variant]>(flipperUrl + '/api/variants/' + product.id)
+      .toPromise()
+      .then(variants => {
+        this.allVariants = variants as Variant[]
       })
-      .then(res => {
-        if (res.docs && res.docs.length > 0) {
-          return res.docs as Variant[]
-        } else {
-          return []
-        }
-      })
+    // return this.productVariations(product.id).then(res => {
+    //   this.allVariants = res as Variant[]
+    // })
   }
+  // productVariations(productId) {
+  //   return this.database
+  //     .query(['table', 'productId'], {
+  //       table: { $eq: 'variants' },
+  //       productId: { $eq: productId },
+  //     })
+  //     .then(res => {
+  //       if (res.docs && res.docs.length > 0) {
+  //         return res.docs as Variant[]
+  //       } else {
+  //         return []
+  //       }
+  //     })
+  // }
+  // as on POS we only show all variations regadless of the product
   variations() {
-    return this.database
-      .query(['table'], {
-        table: { $eq: 'variants' },
+    return this.http
+      .get<[Variant]>(flipperUrl + '/api/variants')
+      .toPromise()
+      .then(variants => {
+        // this.allVariants = variants as Variant[]
+        this.allVariants = variants as Variant[]
       })
-      .then(res => {
-        if (res.docs && res.docs.length > 0) {
-          this.allVariants = res.docs as Variant[]
-        } else {
-          this.allVariants = []
-        }
-      })
+
+    // return this.database
+    //   .query(['table'], {
+    //     table: { $eq: 'variants' },
+    //   })
+    //   .then(res => {
+    //     if (res.docs && res.docs.length > 0) {
+    //       this.allVariants = res.docs as Variant[]
+    //     } else {
+    //       this.allVariants = []
+    //     }
+    //   })
   }
 
   get formControl() {
@@ -242,7 +264,7 @@ export class VariationService {
   updateRegularVariant(variation: Variant, key: string, val: any): void {
     if (variation) {
       if (key === 'sku' && val === '') {
-        val = variation.sku;
+        val = variation.sku
       }
 
       variation[key] = val
@@ -254,7 +276,7 @@ export class VariationService {
   update(variation: Variant): void {
     if (variation) {
       // console.log('need to update variant',variation);
-      return this.database.put(variation.id, variation);
+      return this.database.put(variation.id, variation)
     }
   }
 
@@ -309,9 +331,10 @@ export class VariationService {
             res.currentStock = res.stock.currentStock
           }
 
-          if (res.currentStock === 0 || res.currentStock === null || res.currentStock === '') {
-            res.stock.currentStock = res.stock.currentStock
-          }
+          // FIXME: this code does not make sense
+          // if (res.currentStock === 0 || res.currentStock === null || res.currentStock === '') {
+          //   res.stock.currentStock = res.stock.currentStock
+          // }
 
           res.stock.canTrackingStock = res.canTrackingStock
           res.stock.lowStock = res.lowStock
@@ -330,9 +353,9 @@ export class VariationService {
   public openPrintBarcodeLablesDialog(product, allVariants): any {
     const labels: Labels[] = []
     allVariants.forEach(v => {
-      labels.push({name: v.name, sku: v.sku,channels:[localStorage.getItem('userId')]});
-    });
-    return this.dialog.open(PrintBarcodeLabelsDialogComponent, DialogSize.SIZE_LG, labels).subscribe();
+      labels.push({ name: v.name, sku: v.sku, channels: [localStorage.getItem('userId')] })
+    })
+    return this.dialog.open(PrintBarcodeLabelsDialogComponent, DialogSize.SIZE_LG, labels).subscribe()
   }
 
   async deleteProductVariations(product: Product) {

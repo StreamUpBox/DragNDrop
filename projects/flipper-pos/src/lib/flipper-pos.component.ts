@@ -178,7 +178,6 @@ export class FlipperPosComponent implements OnInit {
 
   public async productTax(taxId) {
     // comment
-
     return await this.database
       .query(['table', 'id'], {
         table: { $eq: 'taxes' },

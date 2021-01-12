@@ -79,6 +79,7 @@ export class FlipperPosComponent implements OnInit {
     await this.currentBranches()
     await this.newOrder()
     await this.hasDraftOrder()
+    this.updateOrder()
     await this.variant.variations()
     await this.stock.allStocks()
     if (this.defaultBusiness$) {
@@ -316,8 +317,9 @@ export class FlipperPosComponent implements OnInit {
 
   async updateOrderDetails(details: { action: string; item: OrderDetails }) {
     if (details.action === 'DELETE') {
-      // await this.database.remove(details.item)
-      console.log('can remove', details.item)
+      this.currentOrder.orderItems = this.currentOrder.orderItems.filter(el => {
+        return el.id != details.item.id
+      })
     }
 
     if (details.action === 'UPDATE') {
@@ -329,20 +331,19 @@ export class FlipperPosComponent implements OnInit {
       details.item.taxAmount = (subTotal * taxRate) / 100
       details.item.subTotal = subTotal
 
-      console.log('can update the dociiii', details.item)
-      // await this.database.put(PouchConfig.Tables.orderDetails + '_' + details.item.id, details.item)
+      this.currentOrder.orderItems = this.currentOrder.orderItems.filter(el => {
+        return el.id != details.item.id
+      })
+      this.currentOrder.orderItems.push(details.item)
     }
 
     // await this.allOrderDetails(this.currentOrder.id)
     // this.currentOrder.orderItems = this.getOrderDetails()
-    // this.updateOrder()
+    this.updateOrder()
   }
 
   public async updateOrder() {
-    await this.allOrderDetails(this.currentOrder.id)
-    this.getOrderDetails()
-
-    const orderDetails = this.orderDetails.filter(order => order.orderId == this.currentOrder.id)
+    const orderDetails = this.currentOrder.orderItems.filter(order => order.orderId == this.currentOrder.id)
     const subtotal = parseFloat(this.totalPipe.transform<OrderDetails>(orderDetails, 'subTotal'))
     const taxAmount = parseFloat(this.totalPipe.transform<OrderDetails>(orderDetails, 'taxAmount'))
     this.currentOrder.subTotal = subtotal
@@ -356,63 +357,14 @@ export class FlipperPosComponent implements OnInit {
         : 0.0
     this.currentOrder.customerChangeDue = parseFloat(this.currentOrder.customerChangeDue)
 
-    await this.database.put(PouchConfig.Tables.orders + '_' + this.currentOrder.id, this.currentOrder)
-    await this.hasDraftOrder()
+    this.currentOrder = this.currentOrder
   }
 
   public async addToCart(event: any) {
-    // const variant: Variant = event.variant
-    let taxRate = 0
-    let product = null
-    let tax = null
-    // if (variant.productId) {
-    //   product = this.product.products.find(prod => prod.id == variant.productId)
-
-    //   if (product) {
-    //     await this.productTax(product.taxId)
-    //     tax = this.defaultTax$ ? this.defaultTax$.percentage : 0
-    //   } else {
-    //     tax = 0
-    //   }
-    // } else {
-    //   tax = event.tax ? event.tax : 0
-    // }
-
-    taxRate = event.tax ? event.tax : tax ? tax : 0
-
-    // const orderDetails: OrderDetails = {
-    //   price: variant.priceVariant.retailPrice,
-    //   variantName: variant.name,
-    //   productName: variant.productName,
-    //   canTrackStock: variant.canTrackingStock,
-    //   stockId: variant.stock.id,
-    //   unit: variant.unit,
-    //   sku: variant.sku,
-    //   quantity: event.quantity,
-    //   variantId: variant.id,
-    //   taxRate,
-    // FIXME: the taxable amount might be wrong
-    // taxAmount: (variant.priceVariant.retailPrice * event.quantity * taxRate) / 100,
-    // orderId: this.currentOrder.id,
-    // subTotal: variant.priceVariant.retailPrice * event.quantity,
-    // table: 'orderDetails',
-    // createdAt: this.date,
-    // updatedAt: this.date,
-    // channels: [this.defaultBusiness$.userId],
-    //}
-
-    console.log(event)
-
-    // await this.http
-    //   .post(flipperUrl + '/api/order-detail', orderDetails)
-    //   .toPromise()
-    //   .then(orders => {
-    // console.log('orders',orders);
-    //  })
-    // this.database.put(PouchConfig.Tables.orderDetails + '_' + orderDetails.id, orderDetails)
-    // await this.allOrderDetails(this.currentOrder.id)
-    // this.currentOrder.orderItems = this.getOrderDetails()
-    // this.updateOrder()
+    event.id = this.database.uid()
+    event.orderId = this.currentOrder.id
+    this.updateOrder()
+    this.currentOrder.orderItems.push(event)
   }
 
   async didCollectCash(event) {

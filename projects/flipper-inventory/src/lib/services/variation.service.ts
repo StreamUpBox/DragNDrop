@@ -156,7 +156,7 @@ export class VariationService {
     return this.database.remove(variant)
   }
 
-  async createRegular(product: Product, branches = []) {
+  async createRegular(product: any, branches = []) {
     if (branches.length == 0) {
       await this.currentBranches()
       branches = this.branches$

@@ -130,21 +130,17 @@ export class FlipperBasicPosComponent {
     }
   }
 
-  addToCart(variant: any, quantity = 1, tax = null) {
-    if (variant.priceVariant.retailPrice === 0 || variant.priceVariant.retailPrice === 0.0) {
-      return this.dialog
-        .open(UpdatePriceDialogComponent, DialogSize.SIZE_SM, variant.priceVariant.retailPrice)
-        .subscribe(result => {
-          if (result !== 'close') {
-            if (result.price && result.price > 0) {
-              variant.priceVariant.retailPrice = result.price
-
-              this.addToCartEmit.emit({ variant, quantity, tax })
-            }
+  addToCart(item, updateProduct = false) {
+    if (updateProduct) {
+      return this.dialog.open(UpdatePriceDialogComponent, DialogSize.SIZE_SM, item.price).subscribe(result => {
+        if (result !== 'close') {
+          if (result.price && result.price > 0) {
+            this.addToCartEmit.emit(result)
           }
-        })
+        }
+      })
     } else {
-      this.addToCartEmit.emit({ variant, quantity, tax })
+      this.addToCartEmit.emit(item)
     }
   }
   updatePrice(item: OrderDetails) {
@@ -162,35 +158,7 @@ export class FlipperBasicPosComponent {
   addCartItem() {
     return this.dialog.open(AddCartItemDialogComponent, DialogSize.SIZE_MD).subscribe(result => {
       if (result !== 'close' || result.price > 0 || result.quantity > 0) {
-        const variation = {
-          unit: result.unit,
-          name: result.name,
-          SKU: 'p' + Math.floor(Math.random() * 100),
-          productName: result.name,
-
-          priceVariant: {
-            id: '',
-            priceId: 0,
-            variantId: 0,
-            minUnit: 0,
-            maxUnit: 0,
-            retailPrice: result.price,
-            supplyPrice: 0,
-            wholeSalePrice: 0,
-            discount: 0,
-            markup: 0,
-          },
-          stock: {
-            canTrackingStock: false,
-            currentStock: 0,
-            id: '',
-            channels: [],
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-          },
-        }
-
-        this.addToCart(variation, result.quantity, result.tax)
+        this.addToCart(result)
       }
     })
   }

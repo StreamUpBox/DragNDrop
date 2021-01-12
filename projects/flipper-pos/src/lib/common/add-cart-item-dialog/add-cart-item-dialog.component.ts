@@ -12,6 +12,7 @@ import { MatDialogRef } from '@angular/material/dialog'
 export class AddCartItemDialogComponent implements OnInit {
   taxes$: Taxes[] = []
   units: any[] = []
+
   constructor(
     public dialogRef: MatDialogRef<AddCartItemDialogComponent>,
     private formBuilder: FormBuilder,
@@ -39,7 +40,7 @@ export class AddCartItemDialogComponent implements OnInit {
       price: ['', Validators.required, Validators.min(0)],
       name: 'Custom Amount',
       quantity: [1, Validators.min(0)],
-      tax: 0,
+      tax: null,
       unit: '',
     })
   }
@@ -58,8 +59,10 @@ export class AddCartItemDialogComponent implements OnInit {
       this.dialogRef.close({
         price: this.form.value.price,
         quantity: this.form.value.quantity && this.form.value.quantity > 0 ? this.form.value.quantity : 1,
-        name: this.form.value.name ? this.form.value.name : 'Custom Amount',
-        tax: this.form.value.tax ? this.form.value.tax : 0,
+        variantName: this.form.value.name ? this.form.value.name : 'No prduct name',
+        productName: this.form.value.name ? this.form.value.name : '--',
+        taxName: this.form.value.tax ? this.form.value.tax.name : 0,
+        taxId: this.form.value.tax ? this.form.value.tax.id : 0,
         unit: this.form.value.unit,
       })
     }
@@ -67,13 +70,13 @@ export class AddCartItemDialogComponent implements OnInit {
 
   focusing(value: any) {
     this.isFocused = value
-    if (value === 'name') {
-      this.form.controls.name.setValue('')
-    } else if (value === 'price') {
-      this.form.controls.price.setValue('')
-    } else if (value === 'quantity') {
-      this.form.controls.quantity.setValue('')
-    }
+    // if (value === 'name') {
+    //   this.form.controls.name.setValue('')
+    // } else if (value === 'price') {
+    //   this.form.controls.price.setValue('')
+    // } else if (value === 'quantity') {
+    //   this.form.controls.quantity.setValue('')
+    // }
   }
   focusingOut() {
     this.isFocused = ''

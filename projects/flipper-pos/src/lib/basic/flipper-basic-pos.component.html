@@ -43,7 +43,7 @@
               <!-- <img [src]="'./assets/icons/archive-3.svg'" style="width:48px"> -->
               <div mat-line>
                 <span
-                  *ngIf="item.variant; else noVariant">{{item.variant.name=='Regular'?item.product.name:item.variant.name}}
+                  *ngIf="item.variant; else noVariant">{{item.variantName=='Regular'?item.productName:item.variantName}}
                 </span>
                 <ng-template #noVariant>
                   <span>
@@ -53,14 +53,14 @@
 
               </div>
               <div mat-line>
-                <span *ngIf="item.stock && item.stock.canTrackingStock">In stock({{item.stock.currentStock}}) of </span>
+                <span *ngIf="item.canTrackingStock">In stock({{item.currentStock}}) of </span>
                 &nbsp;
                 |&nbsp;
                 <a class="link" (click)="updatePrice(item)">
                   {{currency}} {{item.price}}</a><span *ngIf="item.unit">{{item.unit?'/'+item.unit:''}}</span>
                   &nbsp;
                 |&nbsp;
-                <span class="details" *ngIf="item.product; else noProduct">{{item.product.name}}</span>
+                <span class="details" *ngIf="item.productName; else noProduct">{{item.productName}}</span>
                 <ng-template #noProduct>
                   <span class="details">
                     {{item.productName}}

@@ -56,7 +56,7 @@
                         </td>
                         <td style="width:60%">
                           <input type="text" class="input" formControlName="name"
-                          (focus)="focusing('name')" (focusout)="focusingOut()" autofocus placeholder="Description(item or service name)" />
+                          (focus)="focusing('name')" (focusout)="focusingOut()" autofocus placeholder="Description(product or service name)" />
                         </td>
                   </tr>
 
@@ -69,7 +69,7 @@
                       <mat-select class="select" formControlName="tax" placeholder="Choose Tax"
                         (focus)="focusing('taxes')"
                         (focusout)="focusingOut()">
-                        <mat-option *ngFor="let tax of taxes$" [value]="tax.percentage">
+                        <mat-option *ngFor="let tax of taxes$" [value]="tax">
                           {{tax.name}} ({{tax.percentage}}%)
                         </mat-option>
                       </mat-select>

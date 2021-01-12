@@ -361,56 +361,58 @@ export class FlipperPosComponent implements OnInit {
   }
 
   public async addToCart(event: any) {
-    const variant: Variant = event.variant
+    // const variant: Variant = event.variant
     let taxRate = 0
     let product = null
     let tax = null
-    if (variant.productId) {
-      product = this.product.products.find(prod => prod.id == variant.productId)
+    // if (variant.productId) {
+    //   product = this.product.products.find(prod => prod.id == variant.productId)
 
-      if (product) {
-        await this.productTax(product.taxId)
-        tax = this.defaultTax$ ? this.defaultTax$.percentage : 0
-      } else {
-        tax = 0
-      }
-    } else {
-      tax = event.tax ? event.tax : 0
-    }
+    //   if (product) {
+    //     await this.productTax(product.taxId)
+    //     tax = this.defaultTax$ ? this.defaultTax$.percentage : 0
+    //   } else {
+    //     tax = 0
+    //   }
+    // } else {
+    //   tax = event.tax ? event.tax : 0
+    // }
 
     taxRate = event.tax ? event.tax : tax ? tax : 0
 
-    const orderDetails: OrderDetails = {
-      price: variant.priceVariant.retailPrice,
-      variantName: variant.name,
-      productName: variant.productName,
-      canTrackStock: variant.stock.canTrackingStock,
-      stockId: variant.stock.id,
-      unit: variant.unit,
-      sku: variant.sku,
-      quantity: event.quantity,
-      variantId: variant.id,
-      taxRate,
-      // FIXME: the taxable amount might be wrong
-      taxAmount: (variant.priceVariant.retailPrice * event.quantity * taxRate) / 100,
-      orderId: this.currentOrder.id,
-      subTotal: variant.priceVariant.retailPrice * event.quantity,
-      table: 'orderDetails',
-      createdAt: this.date,
-      updatedAt: this.date,
-      channels: [this.defaultBusiness$.userId],
-    }
+    // const orderDetails: OrderDetails = {
+    //   price: variant.priceVariant.retailPrice,
+    //   variantName: variant.name,
+    //   productName: variant.productName,
+    //   canTrackStock: variant.canTrackingStock,
+    //   stockId: variant.stock.id,
+    //   unit: variant.unit,
+    //   sku: variant.sku,
+    //   quantity: event.quantity,
+    //   variantId: variant.id,
+    //   taxRate,
+    // FIXME: the taxable amount might be wrong
+    // taxAmount: (variant.priceVariant.retailPrice * event.quantity * taxRate) / 100,
+    // orderId: this.currentOrder.id,
+    // subTotal: variant.priceVariant.retailPrice * event.quantity,
+    // table: 'orderDetails',
+    // createdAt: this.date,
+    // updatedAt: this.date,
+    // channels: [this.defaultBusiness$.userId],
+    //}
 
-    await this.http
-      .post(flipperUrl + '/api/order-detail', orderDetails)
-      .toPromise()
-      .then(orders => {
-        // console.log('orders',orders);
-      })
+    console.log(event)
+
+    // await this.http
+    //   .post(flipperUrl + '/api/order-detail', orderDetails)
+    //   .toPromise()
+    //   .then(orders => {
+    // console.log('orders',orders);
+    //  })
     // this.database.put(PouchConfig.Tables.orderDetails + '_' + orderDetails.id, orderDetails)
-    await this.allOrderDetails(this.currentOrder.id)
-    this.currentOrder.orderItems = this.getOrderDetails()
-    this.updateOrder()
+    // await this.allOrderDetails(this.currentOrder.id)
+    // this.currentOrder.orderItems = this.getOrderDetails()
+    // this.updateOrder()
   }
 
   async didCollectCash(event) {

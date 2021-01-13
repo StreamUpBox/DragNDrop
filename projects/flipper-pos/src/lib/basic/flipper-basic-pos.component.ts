@@ -218,7 +218,6 @@ export class FlipperBasicPosComponent {
     }
     this.didCollectCashEmit.emit(event)
   }
-
   closeModel(event) {
     this.userDidCloseModel = event
   }

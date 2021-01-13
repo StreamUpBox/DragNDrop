@@ -1,7 +1,3 @@
-import { Variant } from './variant'
-import { Stock } from './stocks'
-import { Product } from './product'
-
 export class OrderDetails {
   id?: string
   orderId: string
@@ -11,9 +7,6 @@ export class OrderDetails {
   unit?: string
   variantName?: string
   productName?: string
-  stock?: Stock
-  variant?: Variant
-  product?: Product
   price?: any
   quantity: any
   subTotal?: any
@@ -21,15 +14,12 @@ export class OrderDetails {
   taxAmount?: any
   discountRate?: any
   discountAmount?: any
-  syncedOnline?: boolean
   canTrackStock?: boolean
   note?: string
   createdAt: string
   updatedAt: string
   table: string
-  docId?: string
-  channels: Array<string>
-  channel?: string
+  channels: string[]
 
   constructor(params: object = {}) {
     for (const name in params) {

@@ -167,7 +167,7 @@ export class FlipperPosComponent implements OnInit {
     }
   }
   public async draftOrder(branchId) {
-    //pass empty body to get a draft oder.
+    //pass empty body to get a draft order.
     await this.http
       .post(flipperUrl + '/api/order', {})
       .toPromise()
@@ -232,11 +232,6 @@ export class FlipperPosComponent implements OnInit {
       if (variant) {
         product = this.product.products.find(prod => prod.id == variant.productId)
       }
-
-      details.stock = stock
-      details.variant = variant
-      details.product = product
-
       orderDetails.unshift(details)
     })
 
@@ -438,11 +433,7 @@ export class FlipperPosComponent implements OnInit {
 
     if (orderDetails.length) {
       orderDetails.forEach(details => {
-        if (
-          details.stockId != null ||
-          details.stockId != undefined ||
-          (details.stock && details.stock.canTrackingStock)
-        ) {
+        if (details.stockId != null || details.stockId != undefined) {
           const stockHistories: StockHistory = {
             id: this.database.uid(),
             orderId: details.orderId,
@@ -472,8 +463,6 @@ export class FlipperPosComponent implements OnInit {
     let stockId = ''
     if (stockDetails.stockId && (stockDetails.stockId !== null || stockDetails.stockId !== undefined)) {
       stockId = stockDetails.stockId
-    } else if (stockDetails.stock && stockDetails.stock.id) {
-      stockId = stockDetails.stock.id
     } else {
       stockId = ''
     }

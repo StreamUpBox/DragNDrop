@@ -8,7 +8,6 @@ import {
   ORDERTYPE,
   Branch,
   Stock,
-  Product,
   OrderDetails,
   StockHistory,
   Business,
@@ -221,20 +220,8 @@ export class FlipperPosComponent implements OnInit {
   getOrderDetails() {
     const orderDetails: OrderDetails[] = []
     this.orderDetails.forEach(details => {
-      let stock: Stock = null
-      let variant: Variant = null
-      let product: Product = null
-      variant = this.variant.allVariants.find(variation => variation.id == details.variantId)
-      if (variant) {
-        stock = this.stock.stocks.find(variation => variation.variantId == variation.id)
-      }
-
-      if (variant) {
-        product = this.product.products.find(prod => prod.id == variant.productId)
-      }
       orderDetails.unshift(details)
     })
-
     return orderDetails
   }
 
@@ -419,9 +406,9 @@ export class FlipperPosComponent implements OnInit {
       this.currentOrder.status = STATUS.COMPLETE
       this.currentOrder.createdAt = new Date().toISOString()
       this.currentOrder.updatedAt = new Date().toISOString()
-      // this.currentOrder.customerChangeDue = this.currentOrder.customerChangeDue
 
-      await this.database.put(PouchConfig.Tables.orders + '_' + this.currentOrder.id, this.currentOrder)
+      // TODO:collect cash, implement this call http put method to update
+      // await this.database.put(PouchConfig.Tables.orders + '_' + this.currentOrder.id, this.currentOrder)
 
       this.collectCashCompleted = { isCompleted: true, collectedOrder: this.currentOrder }
       this.currentOrder = null
@@ -471,12 +458,14 @@ export class FlipperPosComponent implements OnInit {
     if (stock) {
       stock.currentStock = stock.currentStock - stockDetails.quantity
 
-      this.database.put(PouchConfig.Tables.stocks + '_' + stock.id, stock)
+      // TODO: implement stocks http put method
+      // this.database.put(PouchConfig.Tables.stocks + '_' + stock.id, stock)
     }
   }
 
   async saveOrderUpdated(event: Order) {
-    await this.database.put(PouchConfig.Tables.orders + '_' + event.id, event)
+    // TODO: implement orders http put method
+    // await this.database.put(PouchConfig.Tables.orders + '_' + event.id, event)
     await this.hasDraftOrder()
   }
 }

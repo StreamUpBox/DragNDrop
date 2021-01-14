@@ -103,13 +103,6 @@ void _addKey(String key) {
     if (_expr.length > 0) {
       _expr = _expr.substring(0, _expr.length - 1);
     }
-  } else if (key == '=') {
-    try {
-      var parser = const Parser();
-      _result = parser.parseExpression(_expr).toString();
-    } on Error {
-      _result = 'Error';
-    }
   }
   // ignore: invalid_use_of_protected_member
   _displayState.setState(() {
@@ -121,31 +114,34 @@ void _addKey(String key) {
 class Keyboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Expanded(
-        flex: 4,
-        child: new Center(
-            child: new AspectRatio(
-          aspectRatio: 1.0,
-          child: new GridView.count(
-            crossAxisCount: 4,
-            childAspectRatio: 1.0,
-            padding: const EdgeInsets.all(4.0),
-            mainAxisSpacing: 4.0,
-            crossAxisSpacing: 4.0,
-            children: <String>[
-              // @formatter:off
-              '7', '8', '9', '/',
-              '4', '5', '6', '*',
-              '1', '2', '3', '-',
-              'C', '0', '=', '+',
-              // @formatter:on
-            ].map((key) {
-              return new GridTile(
-                child: new KeyboardKey(key),
-              );
-            }).toList(),
-          ),
-        )));
+    return Container(
+      child: new Expanded(
+          flex: 4,
+          child: new Center(
+              child: new AspectRatio(
+            aspectRatio: 1.0,
+            child: new GridView.count(
+              shrinkWrap: false,
+              crossAxisCount: 3,
+              childAspectRatio: 2.0,
+              padding: const EdgeInsets.all(2.0),
+              mainAxisSpacing: 50.0,
+              crossAxisSpacing: 1.0,
+              children: <String>[
+                // @formatter:off
+                '1', '2', '3',
+                '4', '5', '6',
+                '7', '8', '9',
+                'C', '0', '+',
+                // @formatter:on
+              ].map((key) {
+                return new GridTile(
+                  child: new KeyboardKey(key),
+                );
+              }).toList(),
+            ),
+          ))),
+    );
   }
 }
 
@@ -174,7 +170,7 @@ class KeyboardKey extends StatelessWidget {
 }
 
 var digits = <String>['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-var operators = <String>['+', '-', '*', '/'];
+var operators = <String>['+'];
 
 class Parser {
   const Parser();

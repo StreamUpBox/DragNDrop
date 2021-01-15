@@ -46,6 +46,15 @@ export class FlipperPosComponent implements OnInit {
   set currentOrder(value: Order) {
     this.setCurrentOrder = value
   }
+
+  get stockVariant(): any[] {
+    return this.setStockVariant
+  }
+
+  set stockVariant(value: any[]) {
+    this.setStockVariant = value
+  }
+
   public branch: Branch | null
   public defaultBusiness$: Business = null
   public defaultBranch: Branch = null
@@ -71,6 +80,7 @@ export class FlipperPosComponent implements OnInit {
   public collectCashCompleted: object = {}
 
   private setCurrentOrder: Order
+  private setStockVariant: any[]
 
   date = new Date().toISOString()
 
@@ -79,16 +89,8 @@ export class FlipperPosComponent implements OnInit {
     await this.currentBranches()
     await this.newOrder()
     await this.hasDraftOrder()
+    await this.stockVariants()
     this.updateOrder()
-    await this.variant.variations()
-    await this.stock.allStocks()
-    if (this.defaultBusiness$) {
-      await this.product.loadAllProducts(this.defaultBusiness$.id)
-    }
-
-    if (this.currentOrder) {
-      this.getOrderDetails()
-    }
 
     this.currency = this.defaultBusiness$ ? this.defaultBusiness$.currency : 'RWF'
   }
@@ -101,6 +103,7 @@ export class FlipperPosComponent implements OnInit {
         this.defaultBusiness$ = business
       })
   }
+
   async currentBranches() {
     await this.http
       .get<[Branch]>(flipperUrl + '/api/branches/' + this.defaultBusiness$.id)
@@ -161,9 +164,7 @@ export class FlipperPosComponent implements OnInit {
   async hasDraftOrder() {
     await this.draftOrder(this.defaultBranch)
     if (this.currentOrder) {
-      await this.allOrderDetails(this.currentOrder.id)
-      const orderDetails = this.getOrderDetails()
-
+      const orderDetails = [] //this.getOrderDetails()
       this.currentOrder.orderItems = orderDetails && orderDetails.length > 0 ? orderDetails : []
     }
   }
@@ -177,114 +178,39 @@ export class FlipperPosComponent implements OnInit {
       })
   }
 
-  public async productTax(taxId) {
-    // comment
-
-    return await this.database
-      .query(['table', 'id'], {
-        table: { $eq: 'taxes' },
-        id: { $eq: taxId },
-      })
-      .then(res => {
-        if (res.docs && res.docs.length > 0) {
-          this.defaultTax$ = res.docs[0] as Taxes
-        } else {
-          this.defaultTax$ = null
-        }
-      })
-  }
-
-  public async allOrderDetails(orderId) {
-    // comment
-    console.log(orderId)
+  public async stockVariants() {
     await this.http
-      .get<[OrderDetails]>(flipperUrl + '/api/orders/' + orderId)
+      .get<[any]>(flipperUrl + '/api/stock-variant')
       .toPromise()
       .then(orders => {
         if (orders.length > 0) {
-          this.orderDetails = orders
+          this.stockVariant = orders
         } else {
-          this.orderDetails = []
+          this.stockVariant = []
         }
       })
-    // return await this.database
-    //   .query(['table', 'orderId'], {
-    //     table: { $eq: 'orderDetails' },
-    //     orderId: { $eq: orderId },
-    //   })
-    //   .then(res => {
-    //     if (res.docs && res.docs.length > 0) {
-    //       this.orderDetails = res.docs as OrderDetails[]
-    //     } else {
-    //       this.orderDetails = []
-    //     }
-    //   })
-  }
-  getOrderDetails() {
-    const orderDetails: OrderDetails[] = []
-    this.orderDetails.forEach(details => {
-      let stock: Stock = null
-      let variant: Variant = null
-      let product: Product = null
-      variant = this.variant.allVariants.find(variation => variation.id == details.variantId)
-      if (variant) {
-        stock = this.stock.stocks.find(variation => variation.variantId == variation.id)
-      }
-
-      if (variant) {
-        product = this.product.products.find(prod => prod.id == variant.productId)
-      }
-
-      details.stock = stock
-      details.variant = variant
-      details.product = product
-
-      orderDetails.unshift(details)
-    })
-
-    return orderDetails
   }
 
   public loadVariants(param = null) {
-    let variantsArray: Variant[] = []
+    let variantsArray: any[] = []
 
-    if (this.variant.allVariants.length > 0) {
-      this.variant.allVariants.forEach(variant => {
-        const stock: Stock = this.stock.stocks.find(res => res.variantId == variant.id)
-
-        if (stock) {
-          const variation: Variant = variant
-
-          variation.productName = variant.productName
-
-          variation.stock = stock
-
-          variation.name = variation.name === 'Regular' ? variation.productName + ' - Regular' : variation.name
-
-          variation.priceVariant = {
-            id: '0',
-            priceId: 0,
-            variantId: variation.id,
-            minUnit: 0,
-            maxUnit: 0,
-            retailPrice: stock.retailPrice ? stock.retailPrice : 0.0,
-            supplyPrice: stock.supplyPrice ? stock.supplyPrice : 0.0,
-            wholeSalePrice: stock.wholeSalePrice ? stock.wholeSalePrice : 0.0,
-            discount: 0,
-            markup: 0,
-            table: 'variants',
-            channels: [variant.userId],
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-          }
-
-          if (stock.canTrackingStock === false) {
-            variantsArray.push(variation)
-          } else {
-            if (stock.canTrackingStock === true && stock.currentStock > 0) {
-              variantsArray.push(variation)
-            }
-          }
+    if (this.stockVariant.length > 0) {
+      this.stockVariant.forEach(variant => {
+        const form = {
+          id: variant.id,
+          retailPrice: variant.retailPrice,
+          sku: variant.sku ? variant.sku : '00',
+          name: variant.name ? variant.name : 'no item',
+          productName: variant.productName ? variant.productName : 'no item',
+          taxName: null,
+          taxId: null,
+          unit: null,
+          currentStock: variant.value,
+          canTrackingStock: variant.canTrackingStock,
+        }
+        if (form.currentStock > 0) {
+          // Todo: niba stock irimo koko this should be true if(form.canTrackingStock && form.currentStock > 0){
+          variantsArray.push(form)
         }
       })
     }
@@ -337,8 +263,6 @@ export class FlipperPosComponent implements OnInit {
       this.currentOrder.orderItems.push(details.item)
     }
 
-    // await this.allOrderDetails(this.currentOrder.id)
-    // this.currentOrder.orderItems = this.getOrderDetails()
     this.updateOrder()
   }
 
@@ -370,14 +294,12 @@ export class FlipperPosComponent implements OnInit {
   async didCollectCash(event) {
     this.collectCashCompleted = { isCompleted: false, collectedOrder: this.currentOrder }
     if (event === true) {
-      await this.allOrderDetails(this.currentOrder.id)
       await this.createStockHistory()
       this.currentOrder.isDraft = false
       this.currentOrder.active = false
       this.currentOrder.status = STATUS.COMPLETE
       this.currentOrder.createdAt = new Date().toISOString()
       this.currentOrder.updatedAt = new Date().toISOString()
-      // this.currentOrder.customerChangeDue = this.currentOrder.customerChangeDue
 
       await this.database.put(PouchConfig.Tables.orders + '_' + this.currentOrder.id, this.currentOrder)
 
@@ -387,7 +309,7 @@ export class FlipperPosComponent implements OnInit {
   }
 
   async createStockHistory() {
-    const orderDetails = this.getOrderDetails()
+    const orderDetails = [] //this.getOrderDetails()
 
     if (orderDetails.length) {
       orderDetails.forEach(details => {

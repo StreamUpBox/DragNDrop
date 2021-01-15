@@ -51,7 +51,7 @@ export class SearchBoxComponent implements OnInit, AfterViewInit {
   }
 
   @Output() searchEmitValue = new EventEmitter<string>()
-  @Output() addToCartEmit = new EventEmitter<Variant>()
+  @Output() addToCartEmit = new EventEmitter<any>()
 
   public searchControl: FormControl
   private debounce = 1000
@@ -140,8 +140,19 @@ export class SearchBoxComponent implements OnInit, AfterViewInit {
     }
   }
 
-  addToCart(variant: Variant) {
-    this.addToCartEmit.emit(variant)
+  addToCart(variant: any) {
+    const form = {
+      id: variant.id,
+      price: variant.retailPrice,
+      quantity: 1,
+      variantName: variant.name,
+      productName: variant.productName,
+      taxName: variant.taxName ? variant.taxName : 'no vat',
+      taxId: variant.taxId ? variant.taxId : 0,
+      unit: variant.unit,
+    }
+
+    this.addToCartEmit.emit(form)
     this.clearSearchBox()
   }
   focusing() {

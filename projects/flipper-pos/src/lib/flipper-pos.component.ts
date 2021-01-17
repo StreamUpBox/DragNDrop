@@ -45,6 +45,15 @@ export class FlipperPosComponent implements OnInit {
   set currentOrder(value: Order) {
     this.setCurrentOrder = value
   }
+
+  get stockVariant(): any[] {
+    return this.setStockVariant
+  }
+
+  set stockVariant(value: any[]) {
+    this.setStockVariant = value
+  }
+
   public branch: Branch | null
   public defaultBusiness$: Business = null
   public defaultBranch: Branch = null
@@ -70,6 +79,7 @@ export class FlipperPosComponent implements OnInit {
   public collectCashCompleted: object = {}
 
   private setCurrentOrder: Order
+  private setStockVariant: any[]
 
   date = new Date().toISOString()
 
@@ -78,15 +88,8 @@ export class FlipperPosComponent implements OnInit {
     await this.currentBranches()
     await this.newOrder()
     await this.hasDraftOrder()
-    await this.variant.variations()
-    await this.stock.allStocks()
-    if (this.defaultBusiness$) {
-      await this.product.loadAllProducts(this.defaultBusiness$.id)
-    }
-
-    if (this.currentOrder) {
-      this.getOrderDetails()
-    }
+    await this.stockVariants()
+    this.updateOrder()
 
     this.currency = this.defaultBusiness$ ? this.defaultBusiness$.currency : 'RWF'
   }
@@ -99,6 +102,7 @@ export class FlipperPosComponent implements OnInit {
         this.defaultBusiness$ = business
       })
   }
+
   async currentBranches() {
     await this.http
       .get<[Branch]>(flipperUrl + '/api/branches/' + this.defaultBusiness$.id)
@@ -159,9 +163,7 @@ export class FlipperPosComponent implements OnInit {
   async hasDraftOrder() {
     await this.draftOrder(this.defaultBranch)
     if (this.currentOrder) {
-      await this.allOrderDetails(this.currentOrder.id)
-      const orderDetails = this.getOrderDetails()
-
+      const orderDetails = [] //this.getOrderDetails()
       this.currentOrder.orderItems = orderDetails && orderDetails.length > 0 ? orderDetails : []
     }
   }
@@ -175,96 +177,39 @@ export class FlipperPosComponent implements OnInit {
       })
   }
 
-  public async productTax(taxId) {
-    // comment
-    return await this.database
-      .query(['table', 'id'], {
-        table: { $eq: 'taxes' },
-        id: { $eq: taxId },
-      })
-      .then(res => {
-        if (res.docs && res.docs.length > 0) {
-          this.defaultTax$ = res.docs[0] as Taxes
-        } else {
-          this.defaultTax$ = null
-        }
-      })
-  }
-
-  public async allOrderDetails(orderId) {
-    // comment
-    console.log(orderId)
+  public async stockVariants() {
     await this.http
-      .get<[OrderDetails]>(flipperUrl + '/api/orders/' + orderId)
+      .get<[any]>(flipperUrl + '/api/stock-variant')
       .toPromise()
       .then(orders => {
         if (orders.length > 0) {
-          this.orderDetails = orders
+          this.stockVariant = orders
         } else {
-          this.orderDetails = []
+          this.stockVariant = []
         }
       })
-    // return await this.database
-    //   .query(['table', 'orderId'], {
-    //     table: { $eq: 'orderDetails' },
-    //     orderId: { $eq: orderId },
-    //   })
-    //   .then(res => {
-    //     if (res.docs && res.docs.length > 0) {
-    //       this.orderDetails = res.docs as OrderDetails[]
-    //     } else {
-    //       this.orderDetails = []
-    //     }
-    //   })
-  }
-  getOrderDetails() {
-    const orderDetails: OrderDetails[] = []
-    this.orderDetails.forEach(details => {
-      orderDetails.unshift(details)
-    })
-    return orderDetails
   }
 
   public loadVariants(param = null) {
-    let variantsArray: Variant[] = []
+    let variantsArray: any[] = []
 
-    if (this.variant.allVariants.length > 0) {
-      this.variant.allVariants.forEach(variant => {
-        const stock: Stock = this.stock.stocks.find(res => res.variantId == variant.id)
-
-        if (stock) {
-          const variation: Variant = variant
-
-          variation.productName = variant.productName
-
-          variation.stock = stock
-
-          variation.name = variation.name === 'Regular' ? variation.productName + ' - Regular' : variation.name
-
-          variation.priceVariant = {
-            id: '0',
-            priceId: 0,
-            variantId: variation.id,
-            minUnit: 0,
-            maxUnit: 0,
-            retailPrice: stock.retailPrice ? stock.retailPrice : 0.0,
-            supplyPrice: stock.supplyPrice ? stock.supplyPrice : 0.0,
-            wholeSalePrice: stock.wholeSalePrice ? stock.wholeSalePrice : 0.0,
-            discount: 0,
-            markup: 0,
-            table: 'variants',
-            channels: [variant.userId],
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-          }
-
-          if (stock.canTrackingStock === false) {
-            variantsArray.push(variation)
-          } else {
-            if (stock.canTrackingStock === true && stock.currentStock > 0) {
-              variantsArray.push(variation)
-            }
-          }
+    if (this.stockVariant.length > 0) {
+      this.stockVariant.forEach(variant => {
+        const form = {
+          id: variant.id,
+          retailPrice: variant.retailPrice,
+          sku: variant.sku ? variant.sku : '00',
+          name: variant.name ? variant.name : 'no item',
+          productName: variant.productName ? variant.productName : 'no item',
+          taxName: null,
+          taxId: null,
+          unit: null,
+          currentStock: variant.value,
+          canTrackingStock: variant.canTrackingStock,
+        }
+        if (form.currentStock > 0) {
+          // Todo: niba stock irimo koko this should be true if(form.canTrackingStock && form.currentStock > 0){
+          variantsArray.push(form)
         }
       })
     }
@@ -297,8 +242,9 @@ export class FlipperPosComponent implements OnInit {
 
   async updateOrderDetails(details: { action: string; item: OrderDetails }) {
     if (details.action === 'DELETE') {
-      // await this.database.remove(details.item)
-      console.log('can remove', details.item)
+      this.currentOrder.orderItems = this.currentOrder.orderItems.filter(el => {
+        return el.id != details.item.id
+      })
     }
 
     if (details.action === 'UPDATE') {
@@ -310,20 +256,17 @@ export class FlipperPosComponent implements OnInit {
       details.item.taxAmount = (subTotal * taxRate) / 100
       details.item.subTotal = subTotal
 
-      console.log('can update the dociiii', details.item)
-      // await this.database.put(PouchConfig.Tables.orderDetails + '_' + details.item.id, details.item)
+      this.currentOrder.orderItems = this.currentOrder.orderItems.filter(el => {
+        return el.id != details.item.id
+      })
+      this.currentOrder.orderItems.push(details.item)
     }
 
-    // await this.allOrderDetails(this.currentOrder.id)
-    // this.currentOrder.orderItems = this.getOrderDetails()
-    // this.updateOrder()
+    this.updateOrder()
   }
 
   public async updateOrder() {
-    await this.allOrderDetails(this.currentOrder.id)
-    this.getOrderDetails()
-
-    const orderDetails = this.orderDetails.filter(order => order.orderId == this.currentOrder.id)
+    const orderDetails = this.currentOrder.orderItems.filter(order => order.orderId == this.currentOrder.id)
     const subtotal = parseFloat(this.totalPipe.transform<OrderDetails>(orderDetails, 'subTotal'))
     const taxAmount = parseFloat(this.totalPipe.transform<OrderDetails>(orderDetails, 'taxAmount'))
     this.currentOrder.subTotal = subtotal
@@ -337,69 +280,19 @@ export class FlipperPosComponent implements OnInit {
         : 0.0
     this.currentOrder.customerChangeDue = parseFloat(this.currentOrder.customerChangeDue)
 
-    await this.database.put(PouchConfig.Tables.orders + '_' + this.currentOrder.id, this.currentOrder)
-    await this.hasDraftOrder()
+    this.currentOrder = this.currentOrder
   }
 
   public async addToCart(event: any) {
-    // const variant: Variant = event.variant
-    let taxRate = 0
-    let product = null
-    let tax = null
-    // if (variant.productId) {
-    //   product = this.product.products.find(prod => prod.id == variant.productId)
-
-    //   if (product) {
-    //     await this.productTax(product.taxId)
-    //     tax = this.defaultTax$ ? this.defaultTax$.percentage : 0
-    //   } else {
-    //     tax = 0
-    //   }
-    // } else {
-    //   tax = event.tax ? event.tax : 0
-    // }
-
-    taxRate = event.tax ? event.tax : tax ? tax : 0
-
-    // const orderDetails: OrderDetails = {
-    //   price: variant.priceVariant.retailPrice,
-    //   variantName: variant.name,
-    //   productName: variant.productName,
-    //   canTrackStock: variant.canTrackingStock,
-    //   stockId: variant.stock.id,
-    //   unit: variant.unit,
-    //   sku: variant.sku,
-    //   quantity: event.quantity,
-    //   variantId: variant.id,
-    //   taxRate,
-    // FIXME: the taxable amount might be wrong
-    // taxAmount: (variant.priceVariant.retailPrice * event.quantity * taxRate) / 100,
-    // orderId: this.currentOrder.id,
-    // subTotal: variant.priceVariant.retailPrice * event.quantity,
-    // table: 'orderDetails',
-    // createdAt: this.date,
-    // updatedAt: this.date,
-    // channels: [this.defaultBusiness$.userId],
-    //}
-
-    console.log(event)
-
-    // await this.http
-    //   .post(flipperUrl + '/api/order-detail', orderDetails)
-    //   .toPromise()
-    //   .then(orders => {
-    // console.log('orders',orders);
-    //  })
-    // this.database.put(PouchConfig.Tables.orderDetails + '_' + orderDetails.id, orderDetails)
-    // await this.allOrderDetails(this.currentOrder.id)
-    // this.currentOrder.orderItems = this.getOrderDetails()
-    // this.updateOrder()
+    event.id = this.database.uid()
+    event.orderId = this.currentOrder.id
+    this.updateOrder()
+    this.currentOrder.orderItems.push(event)
   }
 
   async didCollectCash(event) {
     this.collectCashCompleted = { isCompleted: false, collectedOrder: this.currentOrder }
     if (event === true) {
-      await this.allOrderDetails(this.currentOrder.id)
       await this.createStockHistory()
       this.currentOrder.isDraft = false
       this.currentOrder.active = false
@@ -416,7 +309,7 @@ export class FlipperPosComponent implements OnInit {
   }
 
   async createStockHistory() {
-    const orderDetails = this.getOrderDetails()
+    const orderDetails = [] //this.getOrderDetails()
 
     if (orderDetails.length) {
       orderDetails.forEach(details => {
@@ -466,6 +359,6 @@ export class FlipperPosComponent implements OnInit {
   async saveOrderUpdated(event: Order) {
     // TODO: implement orders http put method
     // await this.database.put(PouchConfig.Tables.orders + '_' + event.id, event)
-    await this.hasDraftOrder()
+    this.hasDraftOrder()
   }
 }

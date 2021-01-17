@@ -27,7 +27,7 @@ aria-label="Search" #mySearchInput placeholder="Search product code to retreive"
                   <div class="item-sub-title">
 
                       <span class="details">
-                        {{currency}} {{variant.priceVariant.retailPrice}}
+                        {{currency}} {{variant.retailPrice}}
                         {{variant.unit?'/ '+variant.unit:''}}
                       </span>
 
@@ -35,8 +35,8 @@ aria-label="Search" #mySearchInput placeholder="Search product code to retreive"
                         {{variant.productName}}
                       </span>
 
-                      <span class="details" *ngIf="variant.stock && variant.stock.canTrackingStock">
-                            <div class="oval"> </div> &nbsp;&nbsp; In stock({{variant.stock.currentStock}})
+                      <span class="details" *ngIf="variant && variant.canTrackingStock">
+                            <div class="oval"> </div> &nbsp;&nbsp; In stock({{variant.currentStock}})
                       </span>
 
                   </div>

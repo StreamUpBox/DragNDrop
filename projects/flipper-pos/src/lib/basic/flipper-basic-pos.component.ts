@@ -202,7 +202,7 @@ export class FlipperBasicPosComponent {
         item.quantity = lastQty
       }
       item.subTotal = item.price * item.quantity
-      this.removeItem(item)
+      this.updateQty(item)
     } else if (this.action === '+') {
       item.quantity = item.quantity + 1
       item.subTotal = item.price * item.quantity

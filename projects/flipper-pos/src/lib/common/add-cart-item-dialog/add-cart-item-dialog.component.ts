@@ -59,11 +59,14 @@ export class AddCartItemDialogComponent implements OnInit {
       this.dialogRef.close({
         price: this.form.value.price,
         quantity: this.form.value.quantity && this.form.value.quantity > 0 ? this.form.value.quantity : 1,
-        variantName: this.form.value.name ? this.form.value.name : 'No prduct name',
+        name: this.form.value.name ? this.form.value.name : 'No prduct name',
         productName: this.form.value.name ? this.form.value.name : '--',
         taxName: this.form.value.tax ? this.form.value.tax.name : 0,
-        taxId: this.form.value.tax ? this.form.value.tax.id : 0,
+        taxRate: this.form.value.tax ? this.form.value.tax.percentage : 0,
         unit: this.form.value.unit,
+        canTrackingStock: false,
+        currentStock: 0,
+        sku: '00',
       })
     }
   }

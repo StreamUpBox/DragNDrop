@@ -184,6 +184,7 @@ export class FlipperPosComponent implements OnInit {
       .toPromise()
       .then(orders => {
         if (orders.length > 0) {
+          console.log(orders)
           this.stockVariant = orders
         } else {
           this.stockVariant = []
@@ -198,15 +199,17 @@ export class FlipperPosComponent implements OnInit {
       this.stockVariant.forEach(variant => {
         const form = {
           id: variant.id,
-          retailPrice: variant.retailPrice,
+          variantId: variant.variantId,
+          price: variant.retailPrice,
           sku: variant.sku ? variant.sku : '00',
           name: variant.name ? variant.name : 'no item',
           productName: variant.productName ? variant.productName : 'no item',
-          taxName: null,
-          taxId: null,
-          unit: null,
+          taxName: variant.taxName,
+          taxRate: variant.taxPercentage,
+          unit: variant.unit,
           currentStock: variant.value,
           canTrackingStock: variant.canTrackingStock,
+          branchId: variant.branchId,
         }
         if (form.currentStock > 0) {
           // Todo: niba stock irimo koko this should be true if(form.canTrackingStock && form.currentStock > 0){
@@ -309,33 +312,31 @@ export class FlipperPosComponent implements OnInit {
   }
 
   async createStockHistory() {
-    const orderDetails = [] //this.getOrderDetails()
-
-    if (orderDetails.length) {
-      orderDetails.forEach(details => {
-        if (
-          details.stockId != null ||
-          details.stockId != undefined ||
-          (details.stock && details.stock.canTrackingStock)
-        ) {
+    const odetails = this.currentOrder.orderItems as any[]
+    if (odetails.length) {
+      odetails.forEach(async details => {
+        if (details.currentStock > 0) {
           const stockHistories: StockHistory = {
             id: this.database.uid(),
             orderId: details.orderId,
             variantId: details.variantId,
-            variantName: details.variantName,
-            stockId: details.stockId,
+            variantName: details.name,
+            stockId: details.id,
             reason: 'Sold',
             quantity: details.quantity,
             isDraft: false,
-            isPreviously: false,
-            syncedOnline: false,
             note: 'Customer sales',
             table: 'stockHistories',
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
             channels: [this.defaultBusiness$.userId],
           }
-          this.database.put(PouchConfig.Tables.stockHistories + '_' + stockHistories.id, stockHistories)
+          await this.http
+            .post<StockHistory>(flipperUrl + '/api/stock-histories', stockHistories)
+            .toPromise()
+            .then(stockHistory => {
+              console.log(stockHistory)
+            })
 
           this.updateStock(details)
         }
@@ -343,26 +344,25 @@ export class FlipperPosComponent implements OnInit {
     }
   }
 
-  updateStock(stockDetails: OrderDetails) {
-    let stockId = ''
-    if (stockDetails.stockId && (stockDetails.stockId !== null || stockDetails.stockId !== undefined)) {
-      stockId = stockDetails.stockId
-    } else if (stockDetails.stock && stockDetails.stock.id) {
-      stockId = stockDetails.stock.id
-    } else {
-      stockId = ''
-    }
-
-    const stock: Stock = this.stock.stocks.find(s => s.id == stockId)
-    if (stock) {
-      stock.currentStock = stock.currentStock - stockDetails.quantity
-
-      this.database.put(PouchConfig.Tables.stocks + '_' + stock.id, stock)
+  async updateStock(stockDetails: any) {
+    if (stockDetails.currentStock > 0) {
+      stockDetails.currentStock = stockDetails.currentStock - stockDetails.quantity
+      await this.http
+        .post<Stock>(flipperUrl + '/api/stock/' + stockDetails.id, stockDetails)
+        .toPromise()
+        .then(stockHistory => {
+          console.log(stockHistory)
+        })
     }
   }
 
   async saveOrderUpdated(event: Order) {
-    await this.database.put(PouchConfig.Tables.orders + '_' + event.id, event)
+    await this.http
+      .post<Order>(flipperUrl + '/api/order', event)
+      .toPromise()
+      .then(order => {
+        console.log(order)
+      })
     await this.hasDraftOrder()
   }
 }

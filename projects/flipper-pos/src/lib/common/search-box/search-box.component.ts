@@ -141,18 +141,8 @@ export class SearchBoxComponent implements OnInit, AfterViewInit {
   }
 
   addToCart(variant: any) {
-    const form = {
-      id: variant.id,
-      price: variant.retailPrice,
-      quantity: 1,
-      variantName: variant.name,
-      productName: variant.productName,
-      taxName: variant.taxName ? variant.taxName : 'no vat',
-      taxId: variant.taxId ? variant.taxId : 0,
-      unit: variant.unit,
-    }
-
-    this.addToCartEmit.emit(form)
+    variant.quantity = 1
+    this.addToCartEmit.emit(variant)
     this.clearSearchBox()
   }
   focusing() {

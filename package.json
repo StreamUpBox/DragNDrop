@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --live-reload",
+    "start": "ng serve --hmr",
     "build-component": "ng build flippercomponents --watch",
     "build-dashboard": "ng build flipperdashboard --watch",
     "build-vendors": "ng build flippervendors --watch",

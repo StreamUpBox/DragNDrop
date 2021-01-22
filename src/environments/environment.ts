@@ -1,7 +1,7 @@
 export const environment = {
   production: false,
   environment: 'dev',
-  url: 'http://localhost:8081/',
+  url: 'http://localhost:8082/',
   initialData: true,
 }
 

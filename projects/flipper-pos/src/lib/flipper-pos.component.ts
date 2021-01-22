@@ -168,7 +168,7 @@ export class FlipperPosComponent implements OnInit {
     }
   }
   public async draftOrder(branchId) {
-    //pass empty body to get a draft order.
+    //pass empty body to get a draft oder.
     await this.http
       .post(flipperUrl + '/api/order', {})
       .toPromise()
@@ -303,8 +303,7 @@ export class FlipperPosComponent implements OnInit {
       this.currentOrder.createdAt = new Date().toISOString()
       this.currentOrder.updatedAt = new Date().toISOString()
 
-      // TODO:collect cash, implement this call http put method to update
-      // await this.database.put(PouchConfig.Tables.orders + '_' + this.currentOrder.id, this.currentOrder)
+      await this.database.put(PouchConfig.Tables.orders + '_' + this.currentOrder.id, this.currentOrder)
 
       this.collectCashCompleted = { isCompleted: true, collectedOrder: this.currentOrder }
       this.currentOrder = null

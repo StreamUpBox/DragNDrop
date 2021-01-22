@@ -366,20 +366,18 @@ export class PouchDBService {
       }
     )
   }
-
-  //https://www.joshmorony.com/offline-syncing-in-ionic-2-with-pouchdb-couchdb/
   public sync(channels: Array<string>) {
     //NOTE: our main = bucket and is constant to all users. //do not use sessionId on pouchDB we don't use it on backend i.e on the server
-    return PouchDB.sync('main', 'http://yegobox.com:4985/main', {
-      password: 'singlworld',
-      user: 'admin',
-      push: true,
-      live: true,
-      retry: true,
-      continous: true,
-      // filter: "sync_gateway/bychannel",
-      // query_params: { "channels": ['43'] },
-    })
+    // return PouchDB.sync('main', 'url', {
+    //   password: 'singlworld',
+    //   user: 'admin',
+    //   push: true,
+    //   live: true,
+    //   retry: true,
+    //   continous: true,
+    //   filter: "sync_gateway/bychannel",
+    //   query_params: { "channels": ['43'] },
+    // })
   }
   public getChangeListener() {
     return this.listener

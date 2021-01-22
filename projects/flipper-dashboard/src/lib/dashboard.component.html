@@ -1,0 +1,6 @@
+
+
+<div  @insertDashboard *ngIf="defaultBusiness">
+    <flipper-dashboard [currency]="defaultBusiness.currency" [totalRevenue]="totalRevenue" [totalStore]="totalStore" [netProfit]="netProfit"
+    [grossProfit]="grossProfits" [lowStockItem]="lowStockItem" [topSoldItem]="topSoldItem"></flipper-dashboard>
+</div>

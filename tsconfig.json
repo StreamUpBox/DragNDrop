@@ -74,10 +74,10 @@
       "@enexus/flipper-font/*": [
         "dist/flipper-font/*"
       ],
-      "flipper-dashboard": [
+      "@enexus/flipper-dashboard": [
         "dist/flipper-dashboard"
       ],
-      "flipper-dashboard/*": [
+      "@enexus/flipper-dashboard/*": [
         "dist/flipper-dashboard/*"
       ],
       "flipper-button": [

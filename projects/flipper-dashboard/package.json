@@ -1,34 +1,17 @@
 {
   "name": "@enexus/flipper-dashboard",
-  "version": "0.0.6",
-  "peerDependencies": {
-    "@angular/common": "~10.0.11",
-    "@angular/core": "~10.0.11",
-    "@swimlane/ngx-charts": "^12.1.0"
-  },
-  "main": "bundles/flipper-dashboard.umd.js",
-  "module": "fesm5/flipper-dashboard.js",
-  "es2015": "fesm2015/flipper-dashboard.js",
-  "esm5": "esm5/flipper-dashboard.js",
-  "esm2015": "esm2015/flipper-dashboard.js",
-  "fesm5": "fesm5/flipper-dashboard.js",
-  "fesm2015": "fesm2015/flipper-dashboard.js",
-  "typings": "flipper-dashboard.d.ts",
-  "metadata": "flipper-dashboard.metadata.json",
-  "sideEffects": false,
-  "dependencies": {
-    "tslib": "^2.0.0"
-},
-  "description": "This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.9.",
-  "directories": {
-    "lib": "lib"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "DASHBOARD"
-  ],
-  "author": "Yegobox Team",
-  "license": "ISC"
-}
+    "version": "1.0.0",
+    "peerDependencies": {
+      "@angular/common": "~10.0.11",
+      "@angular/core": "~10.0.11"
+    },
+    "keywords": [
+      "Material",
+      "flexLayout"
+    ],
+    "author": "Yegobox Team",
+    "license": "ISC",
+    "dependencies": {
+      "tslib": "^2.0.0"
+    }
+  }

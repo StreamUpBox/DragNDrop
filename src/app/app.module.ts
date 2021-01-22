@@ -6,19 +6,24 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { VendorsModule } from '@enexus/flipper-vendors'
 import { FlipperComponentsModule, PouchDBService } from '@enexus/flipper-components'
 import { FlipperPosModule, FlipperPosComponent } from '@enexus/flipper-pos'
+import { DashboardComponent, FlipperDashboardModule } from '@enexus/flipper-dashboard'
 
 @NgModule({
   // declarations: [AppComponent],
-  imports: [BrowserModule, VendorsModule, FlipperComponentsModule, FlipperPosModule, BrowserAnimationsModule],
+  imports: [
+    FlipperDashboardModule,
+    BrowserModule,
+    VendorsModule,
+    FlipperComponentsModule,
+    FlipperPosModule,
+    BrowserAnimationsModule,
+  ],
   entryComponents: [],
   providers: [PouchDBService],
-  bootstrap: [FlipperPosComponent],
+  // bootstrap: [FlipperPosComponent],
+  bootstrap: [DashboardComponent],
 })
-export class AppModule {
-  constructor() {
-    //  overlayContainer.getContainerElement().classList.add('unicorn-dark-theme');
-  }
-}
+export class AppModule {}
 declare module '@angular/core' {
   interface ModuleWithProviders<T = any> {
     ngModule: Type<T>

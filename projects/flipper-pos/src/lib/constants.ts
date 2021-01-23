@@ -1,1 +1,1 @@
-export const flipperUrl = 'http://localhost:8081'
+export const flipperUrl = 'http://localhost:8082'

@@ -171,8 +171,7 @@ export class CalculatorComponent {
 
   public makeTotal() {
     if (this.currentOrder) {
-      const subTotal = this.totalPipe.transform<OrderDetails>(this.currentOrder.orderItems, 'subTotal')
-      if (subTotal <= 0) {
+      if (this.currentOrder.subTotal <= 0) {
         this.isCalculatorNumOpen = false
         this.calculatorNums.pop()
         return this.dialog
@@ -181,20 +180,19 @@ export class CalculatorComponent {
             this.isCalculatorNumOpen = false
             this.closeModelEmit.emit(true)
           })
+      } else {
+        this.currentOrder.saleTotal = this.currentOrder.subTotal + this.currentOrder.taxAmount
+        this.currentOrder.cashReceived = this.currentNumber
+
+        this.currentOrder.cashReceived = this.currentOrder.cashReceived
+          ? this.currentOrder.cashReceived
+          : this.currentOrder.saleTotal
+
+        this.currentOrder.customerChangeDue =
+          this.currentOrder.cashReceived > 0 ? this.currentOrder.cashReceived - this.currentOrder.saleTotal : 0.0
+
+        this.saveOrderUpdatedEmit.emit(this.currentOrder)
       }
-      this.currentOrder.taxAmount = this.totalPipe.transform<OrderDetails>(this.currentOrder.orderItems, 'taxAmount')
-
-      this.currentOrder.saleTotal = this.currentOrder.subTotal + this.currentOrder.taxAmount
-      this.currentOrder.cashReceived = this.currentNumber
-
-      this.currentOrder.cashReceived = this.currentOrder.cashReceived
-        ? this.currentOrder.cashReceived
-        : this.currentOrder.saleTotal
-
-      this.currentOrder.customerChangeDue =
-        this.currentOrder.cashReceived > 0 ? this.currentOrder.cashReceived - this.currentOrder.saleTotal : 0.0
-
-      this.saveOrderUpdatedEmit.emit(this.currentOrder)
     }
   }
 
@@ -239,7 +237,6 @@ export class CalculatorComponent {
 
     this.saveOrderUpdatedEmit.emit(this.currentOrder)
     this.collectCashEmit.emit(true)
-    this.currentOrder = null
     this.isCalculatorNumOpen = false
     this.calculatorNums = []
   }

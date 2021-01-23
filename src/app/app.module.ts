@@ -7,6 +7,8 @@ import { VendorsModule } from '@enexus/flipper-vendors'
 import { FlipperComponentsModule, PouchDBService } from '@enexus/flipper-components'
 import { FlipperPosModule, FlipperPosComponent } from '@enexus/flipper-pos'
 import { DashboardComponent, FlipperDashboardModule } from '@enexus/flipper-dashboard'
+import { HttpClientModule } from '@angular/common/http'
+import { CommonModule } from '@angular/common'
 
 @NgModule({
   // declarations: [AppComponent],
@@ -14,6 +16,8 @@ import { DashboardComponent, FlipperDashboardModule } from '@enexus/flipper-dash
     FlipperDashboardModule,
     BrowserModule,
     VendorsModule,
+    HttpClientModule,
+    CommonModule,
     FlipperComponentsModule,
     FlipperPosModule,
     BrowserAnimationsModule,

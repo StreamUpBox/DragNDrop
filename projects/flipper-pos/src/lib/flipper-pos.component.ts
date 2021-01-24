@@ -54,6 +54,14 @@ export class FlipperPosComponent implements OnInit {
     this.setStockVariant = value
   }
 
+  get taxes(): Taxes[] {
+    return this.setTaxes
+  }
+
+  set taxes(value: Taxes[]) {
+    this.setTaxes = value
+  }
+
   public branch: Branch | null
   public defaultBusiness$: Business = null
   public defaultBranch: Branch = null
@@ -80,16 +88,23 @@ export class FlipperPosComponent implements OnInit {
 
   private setCurrentOrder: Order
   private setStockVariant: any[]
+  private setTaxes: Taxes[]
 
   date = new Date().toISOString()
 
   async ngOnInit() {
+    await this.getTaxes()
     await this.currentBusiness()
     await this.currentBranches()
     await this.newOrder()
     await this.hasDraftOrder()
+
     await this.stockVariants()
-    this.updateOrder()
+    this.currentOrder.orderItems =
+      (await this.currentOrder) && this.currentOrder.orderItems && this.currentOrder.orderItems.length > 0
+        ? this.currentOrder.orderItems
+        : []
+    this.updateOrder([])
 
     this.currency = this.defaultBusiness$ ? this.defaultBusiness$.currency : 'RWF'
   }
@@ -103,6 +118,14 @@ export class FlipperPosComponent implements OnInit {
       })
   }
 
+  public async getTaxes() {
+    await this.http
+      .get<Taxes[]>(flipperUrl + '/api/taxes')
+      .toPromise()
+      .then(taxes => {
+        this.taxes = taxes
+      })
+  }
   async currentBranches() {
     await this.http
       .get<[Branch]>(flipperUrl + '/api/branches/' + this.defaultBusiness$.id)
@@ -132,7 +155,7 @@ export class FlipperPosComponent implements OnInit {
 
   public async newOrder() {
     if (!this.currentOrder) {
-      const formOrder: Order = {
+      const formOrder = {
         reference: 'SO' + this.generateCode(),
         orderNumber: 'SO' + this.generateCode(),
         branchId: this.defaultBranch.id,
@@ -140,8 +163,8 @@ export class FlipperPosComponent implements OnInit {
         orderType: ORDERTYPE.SALES,
         active: true,
         orderItems: [],
-        isDraft: true,
         subTotal: 0.0,
+        draft: true,
         cashReceived: 0.0,
         customerChangeDue: 0.0,
         table: 'orders',
@@ -154,26 +177,25 @@ export class FlipperPosComponent implements OnInit {
       await this.http
         .post(flipperUrl + '/api/order', formOrder)
         .toPromise()
-        .then()
-
-      this.hasDraftOrder()
+        .then(order => {
+          this.currentOrder = order as Order
+        })
     }
   }
 
   async hasDraftOrder() {
     await this.draftOrder(this.defaultBranch)
-    if (this.currentOrder) {
-      const orderDetails = [] //this.getOrderDetails()
-      this.currentOrder.orderItems = orderDetails && orderDetails.length > 0 ? orderDetails : []
-    }
   }
   public async draftOrder(branchId) {
-    //pass empty body to get a draft oder.
     await this.http
       .post(flipperUrl + '/api/order', {})
       .toPromise()
-      .then(res => {
+      .then(async res => {
         this.currentOrder = res as Order
+        this.currentOrder.orderItems =
+          (await this.currentOrder) && this.currentOrder.orderItems && this.currentOrder.orderItems.length > 0
+            ? this.currentOrder.orderItems
+            : []
       })
   }
 
@@ -183,7 +205,6 @@ export class FlipperPosComponent implements OnInit {
       .toPromise()
       .then(orders => {
         if (orders.length > 0) {
-          console.log(orders)
           this.stockVariant = orders
         } else {
           this.stockVariant = []
@@ -201,13 +222,14 @@ export class FlipperPosComponent implements OnInit {
           variantId: variant.variantId,
           price: variant.retailPrice,
           sku: variant.sku ? variant.sku : '00',
-          name: variant.name ? variant.name : 'no item',
+          variantName: variant.variantName ? variant.variantName : 'no item',
           productName: variant.productName ? variant.productName : 'no item',
           taxName: variant.taxName,
           taxRate: variant.taxPercentage,
           unit: variant.unit,
-          currentStock: variant.value,
+          currentStock: variant.currentStock,
           canTrackingStock: variant.canTrackingStock,
+          lowStock: variant.lowStock,
           branchId: variant.branchId,
         }
         if (form.currentStock > 0) {
@@ -221,19 +243,23 @@ export class FlipperPosComponent implements OnInit {
 
   public iWantToSearchVariant(event) {
     if (event && event != undefined && event != null) {
-      const results = this.loadVariants(event)
+      let results = this.loadVariants(event)
+      console.log(this.loadVariants(event))
       if (results.length > 0) {
         this.theVariantFiltered = this.filterByValue(results, event)
       }
     }
   }
 
-  filterByValue(arrayOfObject: Variant[], term: any) {
+  filterByValue(arrayOfObject: any[], term: any) {
     const query = term.toString().toLowerCase()
     return arrayOfObject.filter((v, i) => {
       if (
-        v.name.toString().toLowerCase().indexOf(query) >= 0 ||
-        v.sku?.toString().toLowerCase().includes(query) > 0 ||
+        v.variantName.toString().toLowerCase().indexOf(query) >= 0 ||
+        v.sku?.toString().toLowerCase().includes(query) >= 0 ||
+        v.retailPrice?.toString().toLowerCase().includes(query) >= 0 ||
+        v.unit?.toString().toLowerCase().includes(query) >= 0 ||
+        v.unit?.toString().toLowerCase().includes(query) >= 0 ||
         v.productName?.toString().toLowerCase().indexOf(query) >= 0
       ) {
         return true
@@ -262,35 +288,55 @@ export class FlipperPosComponent implements OnInit {
       this.currentOrder.orderItems = this.currentOrder.orderItems.filter(el => {
         return el.id != details.item.id
       })
+
       this.currentOrder.orderItems.push(details.item)
     }
+    const orderDetails: OrderDetails[] = this.currentOrder.orderItems
 
-    this.updateOrder()
+    this.updateOrder(orderDetails)
   }
 
-  public async updateOrder() {
-    const orderDetails = this.currentOrder.orderItems.filter(order => order.orderId == this.currentOrder.id)
-    const subtotal = parseFloat(this.totalPipe.transform<OrderDetails>(orderDetails, 'subTotal'))
-    const taxAmount = parseFloat(this.totalPipe.transform<OrderDetails>(orderDetails, 'taxAmount'))
-    this.currentOrder.subTotal = subtotal
+  public async updateOrder(orderDetail) {
+    let orderDetails = []
+    if (orderDetail.length == 0) {
+      orderDetails = this.currentOrder.orderItems.filter(order => order.orderId == this.currentOrder.id)
+    } else {
+      orderDetails = orderDetail
+    }
+    if (orderDetails.length > 0) {
+      const subtotal = parseFloat(this.totalPipe.transform<OrderDetails>(orderDetails, 'subTotal'))
+      const taxAmount = parseFloat(this.totalPipe.transform<OrderDetails>(orderDetails, 'taxAmount'))
 
-    this.currentOrder.taxAmount = taxAmount
-    this.currentOrder.saleTotal = subtotal + taxAmount
+      this.currentOrder.subTotal = subtotal
 
-    this.currentOrder.customerChangeDue =
-      this.currentOrder.cashReceived > 0
-        ? parseFloat(this.currentOrder.cashReceived) - this.currentOrder.saleTotal
-        : 0.0
-    this.currentOrder.customerChangeDue = parseFloat(this.currentOrder.customerChangeDue)
+      this.currentOrder.taxAmount = taxAmount
+      this.currentOrder.saleTotal = subtotal + taxAmount
 
-    this.currentOrder = this.currentOrder
+      this.currentOrder.customerChangeDue =
+        this.currentOrder.cashReceived > 0
+          ? parseFloat(this.currentOrder.cashReceived) - this.currentOrder.saleTotal
+          : 0.0
+      this.currentOrder.customerChangeDue = parseFloat(this.currentOrder.customerChangeDue)
+
+      this.currentOrder = this.currentOrder
+    }
   }
 
-  public async addToCart(event: any) {
+  public async addToCart(event: OrderDetails) {
     event.id = this.database.uid()
     event.orderId = this.currentOrder.id
-    this.updateOrder()
+
+    const taxRate = event.taxRate ? event.taxRate : 0
+    const subTotal = event.price * event.quantity
+
+    event.taxAmount = (subTotal * taxRate) / 100
+    event.subTotal = subTotal
+
     this.currentOrder.orderItems.push(event)
+    const orderDetails: OrderDetails[] = this.currentOrder.orderItems
+    if (orderDetails.length > 0) {
+      await this.updateOrder(orderDetails)
+    }
   }
 
   async didCollectCash(event) {
@@ -298,15 +344,21 @@ export class FlipperPosComponent implements OnInit {
     if (event === true) {
       await this.createStockHistory()
       this.currentOrder.isDraft = false
-      this.currentOrder.active = false
       this.currentOrder.status = STATUS.COMPLETE
       this.currentOrder.createdAt = new Date().toISOString()
       this.currentOrder.updatedAt = new Date().toISOString()
-
-      await this.database.put(PouchConfig.Tables.orders + '_' + this.currentOrder.id, this.currentOrder)
-
-      this.collectCashCompleted = { isCompleted: true, collectedOrder: this.currentOrder }
-      this.currentOrder = null
+      this.currentOrder.active = false
+      this.currentOrder['draft'] = false
+      this.currentOrder['orderItems']
+      await this.http
+        .put(flipperUrl + '/api/order/' + this.currentOrder.id, this.currentOrder)
+        .toPromise()
+        .then(async order => {
+          this.collectCashCompleted = await { isCompleted: true, collectedOrder: order }
+          this.currentOrder = null
+          await this.newOrder()
+          await this.hasDraftOrder()
+        })
     }
   }
 
@@ -319,7 +371,7 @@ export class FlipperPosComponent implements OnInit {
             id: this.database.uid(),
             orderId: details.orderId,
             variantId: details.variantId,
-            variantName: details.name,
+            variantName: details.variantName,
             stockId: details.id,
             reason: 'Sold',
             quantity: details.quantity,
@@ -333,35 +385,13 @@ export class FlipperPosComponent implements OnInit {
           await this.http
             .post<StockHistory>(flipperUrl + '/api/stock-histories', stockHistories)
             .toPromise()
-            .then(stockHistory => {
-              console.log(stockHistory)
-            })
-
-          this.updateStock(details)
+            .then()
         }
       })
     }
   }
 
-  async updateStock(stockDetails: any) {
-    if (stockDetails.currentStock > 0) {
-      stockDetails.currentStock = stockDetails.currentStock - stockDetails.quantity
-      await this.http
-        .post<Stock>(flipperUrl + '/api/stock/' + stockDetails.id, stockDetails)
-        .toPromise()
-        .then(stockHistory => {
-          console.log(stockHistory)
-        })
-    }
-  }
-
-  async saveOrderUpdated(event: Order) {
-    await this.http
-      .post<Order>(flipperUrl + '/api/order', event)
-      .toPromise()
-      .then(order => {
-        console.log(order)
-      })
-    await this.hasDraftOrder()
+  async saveOrderUpdated(event: any) {
+    await this.updateOrder([])
   }
 }

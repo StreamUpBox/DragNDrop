@@ -8,6 +8,7 @@ import {
   ORDERTYPE,
   Branch,
   Stock,
+  Product,
   OrderDetails,
   StockHistory,
   Business,
@@ -354,7 +355,7 @@ export class FlipperPosComponent implements OnInit {
         .put(flipperUrl + '/api/order/' + this.currentOrder.id, this.currentOrder)
         .toPromise()
         .then(async order => {
-          this.collectCashCompleted = await { isCompleted: true, collectedOrder: order }
+          this.collectCashCompleted =  { isCompleted: true, collectedOrder: order }
           this.currentOrder = null
           await this.newOrder()
           await this.hasDraftOrder()

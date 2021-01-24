@@ -10,7 +10,7 @@ import {
   AnyEvent,
 } from '@enexus/flipper-components'
 
-import { Subscription, async } from 'rxjs'
+import { Subscription } from 'rxjs'
 import { VariationService } from '../services/variation.service'
 import { StockService } from '../services/stock.service'
 import { trigger, state, style, transition, animate } from '@angular/animations'

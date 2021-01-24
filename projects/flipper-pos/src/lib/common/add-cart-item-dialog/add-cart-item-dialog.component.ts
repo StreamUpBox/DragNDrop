@@ -1,8 +1,8 @@
-import { Component, OnInit, HostListener } from '@angular/core'
+import { Component, OnInit, HostListener, Inject } from '@angular/core'
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { NotificationService, Taxes, SettingsService } from '@enexus/flipper-components'
-import { MatDialogRef } from '@angular/material/dialog'
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 
 @Component({
   selector: 'flipper-add-cart-item-dialog',
@@ -10,14 +10,14 @@ import { MatDialogRef } from '@angular/material/dialog'
   styleUrls: ['./add-cart-item-dialog.component.css'],
 })
 export class AddCartItemDialogComponent implements OnInit {
-  taxes$: Taxes[] = []
   units: any[] = []
 
   constructor(
     public dialogRef: MatDialogRef<AddCartItemDialogComponent>,
     private formBuilder: FormBuilder,
     protected notificationSvc: NotificationService,
-    private setting: SettingsService
+    private setting: SettingsService,
+    @Inject(MAT_DIALOG_DATA) public taxes$: Taxes[]
   ) {
     this.units = this.setting.units()
   }
@@ -59,7 +59,7 @@ export class AddCartItemDialogComponent implements OnInit {
       this.dialogRef.close({
         price: this.form.value.price,
         quantity: this.form.value.quantity && this.form.value.quantity > 0 ? this.form.value.quantity : 1,
-        name: this.form.value.name ? this.form.value.name : 'No prduct name',
+        variantName: this.form.value.name ? this.form.value.name : 'No prduct name',
         productName: this.form.value.name ? this.form.value.name : '--',
         taxName: this.form.value.tax ? this.form.value.tax.name : 0,
         taxRate: this.form.value.tax ? this.form.value.tax.percentage : 0,

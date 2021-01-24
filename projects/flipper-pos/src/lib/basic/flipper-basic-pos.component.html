@@ -42,14 +42,9 @@
             <mat-list-item (click)="canSetCartFocused(item)" [class.setCartFocused]="cartFocused==item">
               <!-- <img [src]="'./assets/icons/archive-3.svg'" style="width:48px"> -->
               <div mat-line>
-                <span
-                  *ngIf="item.variant; else noVariant">{{item.variantName=='Regular'?item.productName:item.variantName}}
+                <span>
+                  {{item.variantName=='Regular'?item.productName:item.variantName}} |  SKU:{{item.sku}}
                 </span>
-                <ng-template #noVariant>
-                  <span>
-                    {{item.variantName}}
-                  </span>
-                </ng-template>
 
               </div>
               <div mat-line>

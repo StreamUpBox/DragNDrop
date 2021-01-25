@@ -10,8 +10,7 @@
     "flexLayout"
   ],
   "author": "Yegobox Team",
-  "license": "ISC"
-,
+  "license": "ISC",
   "dependencies": {
     "tslib": "^2.0.0"
   }

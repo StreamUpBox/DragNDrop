@@ -14,6 +14,7 @@ import {
   MergeArryByIdPipe,
   ArrayRemoveItemPipe,
   OrderDetails,
+  Taxes,
 } from '@enexus/flipper-components'
 import { BehaviorSubject } from 'rxjs'
 import { DialogService, DialogSize } from '@enexus/flipper-dialog'
@@ -42,7 +43,7 @@ export class FlipperBasicPosComponent {
   private canfoundVariant: Variant[] = []
   private isCurrentOrder: Order = null
   private userClosedModel = false
-
+  private setTaxes: Taxes[] = []
   @Input() currency = 'RWF'
 
   @Input('foundVariant')
@@ -52,7 +53,14 @@ export class FlipperBasicPosComponent {
   get foundVariant(): Variant[] {
     return this.canfoundVariant
   }
-
+  //taxes
+  @Input('taxes')
+  set taxes(value: Taxes[]) {
+    this.setTaxes = value
+  }
+  get taxes(): Taxes[] {
+    return this.setTaxes
+  }
   @Input('currentOrder')
   set currentOrder(order: Order) {
     this.isCurrentOrder = order
@@ -156,7 +164,7 @@ export class FlipperBasicPosComponent {
   }
 
   addCartItem() {
-    return this.dialog.open(AddCartItemDialogComponent, DialogSize.SIZE_MD).subscribe(result => {
+    return this.dialog.open(AddCartItemDialogComponent, DialogSize.SIZE_MD, this.taxes).subscribe(result => {
       if (result !== 'close' || result.price > 0 || result.quantity > 0) {
         this.addToCart(result)
       }
@@ -173,17 +181,6 @@ export class FlipperBasicPosComponent {
 
   saveOrderUpdated(event?: Order) {
     const order = event ? event : this.currentOrder
-
-    order.subTotal = this.totalPipe.transform<OrderDetails>(order.orderItems, 'subTotal')
-    order.taxAmount = this.totalPipe.transform<OrderDetails>(order.orderItems, 'taxAmount')
-
-    order.saleTotal = order.subTotal + order.taxAmount
-
-    order.cashReceived = order.cashReceived ? order.cashReceived : order.saleTotal
-    order.customerChangeDue = order.cashReceived > 0 ? order.cashReceived - order.saleTotal : 0.0
-
-    // order.customerChangeDue = order.customerChangeDue
-
     this.saveOrderUpdatedEmit.emit(order)
   }
 
@@ -213,9 +210,6 @@ export class FlipperBasicPosComponent {
     this.cartFocused = item
   }
   collectCash(event) {
-    if (event === true) {
-      this.currentOrder = null
-    }
     this.didCollectCashEmit.emit(event)
   }
   closeModel(event) {

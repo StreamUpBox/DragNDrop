@@ -17,12 +17,11 @@ a {
   bottom: 0;
 }
 .fp-main-sidebar {
-  position: fixed;
-
+  /* position: fixed; */
   left: 0;
   bottom: 0;
   width: 69px;
-  height: calc(100vh - 30px);
+  height: calc(100vh - 00px);
   top: 30px;
   background-color: #130f1f;
   /* background-color: var(--purple-bg);  */
@@ -94,13 +93,11 @@ a {
 }
 .fp-secondary-sidebar {
   position: fixed;
-  height: calc(100vh - 30px);
-  top: 30px;
+  height: calc(100vh - 0px);
   bottom: 0;
-  left: 69.2px;
+  left: 65.2px;
   width: 210px;
   box-shadow: 0 1px 3px 0 rgba(63, 63, 68, 0.15), 0 0 0 1px rgba(63, 63, 68, 0.05);
-  /* background-color: var(--purple-2); */
   background-color: #211a36;
 }
 

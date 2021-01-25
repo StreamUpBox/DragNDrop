@@ -4,11 +4,12 @@ import { CommonModule } from '@angular/common'
 import { FlipperComponentsModule, PouchDBService } from '@enexus/flipper-components'
 import { VendorsModule } from '@enexus/flipper-vendors'
 import { RouterModule } from '@angular/router'
+import { MenuComponent } from './menu.component'
 
 @NgModule({
-  declarations: [FlipperMenuComponent],
+  declarations: [MenuComponent, FlipperMenuComponent],
   imports: [CommonModule, VendorsModule, FlipperComponentsModule, RouterModule],
-  exports: [FlipperMenuComponent],
+  exports: [FlipperMenuComponent, MenuComponent],
   providers: [PouchDBService],
 })
 export class FlipperMenuModule {}

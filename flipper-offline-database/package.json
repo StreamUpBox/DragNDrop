@@ -6,6 +6,12 @@
     "@angular/core": "~10.0.11",
     "alasql": "0.6.2"
   },
+  "lib": {
+    "entryFile": "src/public-api.ts",
+    "umdModuleIds": {
+      "flipperofflinedatabase": "flipperofflinedatabase"
+    }
+  },
   "keywords": [
     "CREATE",
     "SELECT",

@@ -12,6 +12,7 @@ import { Router } from '@angular/router'
     trigger('products', [transition(':enter', useAnimation(fadeInAnimation, { params: { duration: '1s' } }))]),
   ],
 })
+
 export class ProductsComponent implements OnInit {
   searching: string = null
   set applySearch(value: string) {

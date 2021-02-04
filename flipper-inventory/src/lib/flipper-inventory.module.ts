@@ -40,7 +40,7 @@ import { HttpClientModule } from '@angular/common/http'
     ViewStockHistoryComponent,
     PrintBarcodeLabelsDialogComponent,
   ],
-  imports: [VendorsModule, FlipperEventModule, FlipperComponentsModule, FlipperFileUploadModule, DialogModule],
+  imports: [CommonModule,VendorsModule, FlipperEventModule, FlipperComponentsModule, FlipperFileUploadModule, DialogModule],
   entryComponents: [
     VariantsDialogModelComponent,
     DisacrdDialogModelComponent,

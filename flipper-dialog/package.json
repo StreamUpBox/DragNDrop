@@ -12,6 +12,12 @@
   "directories": {
     "lib": "lib"
   },
+  "lib": {
+    "entryFile": "src/public-api.ts",
+    "umdModuleIds": {
+      "flipper-dialog": "flipper-dialog"
+    }
+  },
   "keywords": [
     "CONFIRM",
     "DELETE",

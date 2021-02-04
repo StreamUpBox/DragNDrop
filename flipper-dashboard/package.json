@@ -9,6 +9,12 @@
       "Material",
       "flexLayout"
     ],
+    "lib": {
+      "entryFile": "src/public-api.ts",
+      "umdModuleIds": {
+        "flipper-dashboard": "flipper-dashboard"
+      }
+    },
     "author": "Yegobox Team",
     "license": "ISC",
     "dependencies": {

@@ -10,7 +10,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 @Component({
   selector: 'flipper-create-product',
   templateUrl: './create-product.component.html',
-  styleUrls: ['./create-product.component.css'],
+  styleUrls: ['create.scss'],
   animations: [
     trigger('addProduct', [transition(':enter', useAnimation(fadeInAnimation, { params: { duration: '1s' } }))]),
   ],
@@ -130,7 +130,7 @@ export class CreateProductComponent implements OnInit {
   }
 
   viewImageUploaded(src) {
-    this.product.hasDraftProduct.picture = src
+    // this.product.hasDraftProduct.picture = src
     this.product.update()
   }
 
@@ -144,16 +144,17 @@ export class CreateProductComponent implements OnInit {
     }
   }
   focusingOut() {
-    if (this.isFocused === 'name') {
-      this.form.controls.name.setValue(this.product.hasDraftProduct.name)
-    } else if (this.isFocused === 'description') {
-      this.form.controls.description.setValue(this.product.hasDraftProduct.description)
-    }
+    console.log('focused out',this.product)
+    // if (this.isFocused === 'name') {
+    //   this.form.controls.name.setValue(this.product.hasDraftProduct.name)
+    // } else if (this.isFocused === 'description') {
+    //   this.form.controls.description.setValue(this.product.hasDraftProduct.description)
+    // }
   }
 
   deleteProduct() {
     this.product.hasDraft()
-    if (this.product.hasDraftProduct && this.product.hasDraftProduct.isCurrentUpdate) {
+    if (this.product.hasDraftProduct && this.product.hasDraftProduct.draft) { //there was isCurrentUpdate instanceof draft
       this.dialog.delete('Product', [`${this.product.hasDraftProduct.name}`]).subscribe(confirm => {
         this.product.discardProduct()
         this.goToProduct()
@@ -163,7 +164,7 @@ export class CreateProductComponent implements OnInit {
 
   public openDiscardDialog() {
     this.product.hasDraft()
-    if (this.product.hasDraftProduct && this.product.hasDraftProduct.isCurrentUpdate) {
+    if (this.product.hasDraftProduct && this.product.hasDraftProduct.draft) { //there was isCurrentUpdate instead of draft
       this.onSubmit('close')
     } else {
       return this.dialog.open(DisacrdDialogModelComponent, DialogSize.SIZE_MD).subscribe(result => {

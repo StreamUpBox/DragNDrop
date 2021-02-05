@@ -1,6 +1,6 @@
 {
   "name": "@enexus/flipper-inventory",
-  "version": "1.3.3",
+  "version": "1.4.3",
   "peerDependencies": {
     "@angular/common": "~11.0.4",
     "@angular/core": "~11.0.4"

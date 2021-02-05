@@ -1,42 +1,31 @@
-import { Variant } from './variant'
+export interface Product {
+  id:            string;
+  name:          string;
+  description:   string;
+  channels:      string[];
+  active:        boolean;
+  taxId:         string;
+  hasPicture:    boolean;
+  table:         string;
+  color:         string;
+  businessId:    string;
+  supplierId:    null;
+  categoryId:    string;
+  createdAt:     Date;
+  unit:          string;
+  allVariants:   AllVariant[];
+  draft:         boolean;
+  imageLocal:    boolean;
+  currentUpdate: boolean;
+}
 
-export class Product {
-  id: string
-  name: string
-  description?: string
-  picture?: string
-  // FIXME(ganza): each model or document should have channels[userId] to authenticate the data
-  branchId?: any
-  businessId?: any
-  supplierId?: any
-  isManufactured?: boolean
-  isBatchTracked?: boolean
-  isStandardProduct?: boolean
-  isProductWithVariants?: boolean
-  isCompositeProduct?: boolean
-  enableTrackingInventory?: boolean
-  categoryId?: any
-  brandId?: any
-  taxId?: any
-  active?: boolean
-  hasPicture?: boolean
-  isDraft?: boolean
-  isOnPos?: boolean
-  color?: string
-  syncedOnline?: boolean
-  isCurrentUpdate?: boolean
-  createdAt: string
-  updatedAt: string
-  table: string
-  docId?: string
-  channels: Array<string>
-
-  channel?: string
-  userId?: string
-
-  constructor(params: object = {}) {
-    for (const name in params) {
-      this[name] = params[name]
-    }
-  }
+export interface AllVariant {
+  id:          string;
+  name:        string;
+  sku:         string;
+  productId:   string;
+  unit:        string;
+  table:       string;
+  channels:    string[];
+  productName: null;
 }

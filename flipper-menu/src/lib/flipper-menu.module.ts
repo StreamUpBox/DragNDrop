@@ -6,6 +6,7 @@ import { VendorsModule } from '@enexus/flipper-vendors'
 import { RouterModule } from '@angular/router'
 import { MenuComponent } from './menu.component'
 
+
 @NgModule({
   declarations: [MenuComponent, FlipperMenuComponent],
   imports: [CommonModule, VendorsModule, FlipperComponentsModule, RouterModule],

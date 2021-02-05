@@ -4,17 +4,18 @@ import {
   Business,
   Branch,
   Taxes,
-  PouchDBService,
-  PouchConfig,
   Variant,
   Stock,
   User,
+  AllVariant,
+  CurrentBusinessEvent,
 } from '@enexus/flipper-components'
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms'
 import { VariationService } from './variation.service'
 import { BehaviorSubject } from 'rxjs'
 import { HttpClient } from '@angular/common/http'
 import { flipperUrl } from '../constants'
+import { FlipperEventBusService } from '@enexus/flipper-event'
 
 @Injectable({
   providedIn: 'root',
@@ -34,46 +35,52 @@ export class ProductService {
   defaultBranch$: Branch = null
   currentUser$: User = null
   defaultTaxe$: Taxes = null
-  allVariants: Variant[]
+  allVariants: AllVariant[]
   stocks: Stock[] = []
 
   constructor(
     private http: HttpClient,
     private variant: VariationService,
+    private eventBus: FlipperEventBusService,
     private formBuilder: FormBuilder,
-    private database: PouchDBService
   ) {
     this.productsSubject = new BehaviorSubject([])
   }
 
   async init() {
     await this.currentBusiness()
+    await this.loadAllProducts();
     await this.currentBranches()
     await this.currentTaxes()
     await this.hasDraft()
     await this.create()
   }
 
-  public currentBusiness() {
-    return this.database.currentBusiness().then(business => {
-      this.defaultBusiness$ = business
-    })
+  public async currentBusiness() {
+    await this.http
+      .get<Business>(flipperUrl + '/api/business')
+      .toPromise()
+      .then(business => {
+        this.defaultBusiness$ = business
+        this.eventBus.publish(new CurrentBusinessEvent(business))
+      })
   }
-  currentBranches() {
-    return this.database.listBusinessBranches().then(branches => {
-      this.branches$ = branches.filter(res => res.active == true)
-    })
+  async currentBranches() {
+    await this.http
+        .get<[Branch]>(flipperUrl + '/api/branches/' + this.defaultBusiness$.id)
+        .toPromise()
+        .then((branches: Branch[]) => {
+          this.branches$ = branches.filter(res => res.active == true)
+        })
   }
 
-  currentTaxes() {
-    return this.database.listBusinessTaxes().then(taxes => {
-      this.taxes$ = taxes
-    })
-  }
-  async allVariant(product: Product) {
-    return this.productVariations(product.id).then(res => {
-      this.allVariants = res as Variant[]
-    })
+  async currentTaxes() {
+    await this.http
+        .get<[Taxes]>(flipperUrl + '/api/taxes')
+        .toPromise()
+        .then((taxes: Taxes[]) => {
+          this.taxes$ = taxes
+        })
   }
 
   //stocks
@@ -81,60 +88,21 @@ export class ProductService {
     this.http.get<[Stock]>(flipperUrl + '/api/stocks-byProductId/' + productId).subscribe(stocks => {
       this.stocks = stocks
     })
-
-    // return this.database
-    //   .query(['table', 'productId'], {
-    //     table: { $eq: 'stocks' },
-    //     productId: { $eq: productId },
-    //   })
-    //   .then(res => {
-    //     if (res.docs && res.docs.length > 0) {
-    //       this.stocks = res.docs
-    //     } else {
-    //       this.stocks = null
-    //     }
-    //   })
   }
 
   productVariations(productId) {
     return this.http.get<[Variant]>(flipperUrl + '/api/variants/' + productId).toPromise()
-    // return this.database
-    //   .query(['table', 'productId'], {
-    //     table: { $eq: 'variants' },
-    //     productId: { $eq: productId },
-    //   })
-    //   .then(res => {
-    //     if (res.docs && res.docs.length > 0) {
-    //       return res.docs as Variant[]
-    //     } else {
-    //       return []
-    //     }
-    //   })
   }
-
-  public async loadAllProducts(businessId) {
-    await this.productsList(businessId)
+  public async loadAllProducts() {
+    await this.productsList()
   }
-  public async productsList(businessId) {
+  public async productsList() {
     await this.http
       .get<[Product]>(flipperUrl + '/api/products')
       .toPromise()
       .then(products => {
-        // console.log(this.users);
         this.products = products as Product[]
       })
-    // return await this.database
-    //   .query(['table', 'businessId'], {
-    //     table: { $eq: 'products' },
-    //     businessId: { $eq: businessId },
-    //   })
-    //   .then(res => {
-    //     if (res.docs && res.docs.length > 0) {
-    //       this.products = res.docs as Product[]
-    //     } else {
-    //       this.products = [] as Product[]
-    //     }
-    //   })
   }
 
   public host(id: string): Product | undefined {
@@ -147,7 +115,6 @@ export class ProductService {
       name: [hasDraftProduct ? hasDraftProduct.name : '', Validators.required],
       categoryId: hasDraftProduct ? hasDraftProduct.categoryId : 0,
       description: hasDraftProduct ? hasDraftProduct.description : '',
-      picture: hasDraftProduct ? hasDraftProduct.picture : '',
       taxId: hasDraftProduct ? hasDraftProduct.taxId : '',
       supplierId: hasDraftProduct ? hasDraftProduct.supplierId : 0,
       createdAt: new Date().toISOString(),
@@ -158,16 +125,17 @@ export class ProductService {
   get formControl() {
     return this.form.controls
   }
-
-  hasDraft() {
-    // TODO: migrate this code.
-    return this.database.hasDraftProduct(this.defaultBusiness$ ? this.defaultBusiness$.id : 0).then(draft => {
-      if (draft && draft.docs.length > 0) {
-        this.hasDraftProduct = draft.docs[0]
-        this.allVariant(this.hasDraftProduct)
-        this.getProductStocks({ productId: this.hasDraftProduct.id })
-      }
-    })
+  async hasDraft() {
+    await this.http
+      .get(flipperUrl + '/api/getDraftProduct')
+      .toPromise()
+      .then((draft: Product) => {
+        if (draft) {
+          this.hasDraftProduct = draft;
+          this.allVariants = draft.allVariants;
+          this.getProductStocks({ productId: this.hasDraftProduct.id })
+        }
+      })
   }
 
   async create() {
@@ -175,7 +143,7 @@ export class ProductService {
       const formProduct = {
         name: 'new item',
         businessId: this.defaultBusiness$ ? this.defaultBusiness$.id : 0,
-        isDraft: true,
+        draft: true,
         active: false,
         taxId: this.taxes$.find(tax => tax.isDefault == true) ? this.taxes$.find(tax => tax.isDefault == true).id : '0', // this.model.findByFirst<Taxes>(Tables.taxes, 'isDefault', true).id,
         description: '',
@@ -192,7 +160,6 @@ export class ProductService {
         userId: localStorage.getItem('userId'),
         channels: [localStorage.getItem('userId')],
       }
-
       // await this.database.put(formProduct.id, formProduct);
       await this.http
         .post(flipperUrl + '/api/product', formProduct)
@@ -214,22 +181,12 @@ export class ProductService {
     localStorage.setItem('userIsCreatingAnItem', `${bol}`)
   }
 
-  updateBranch(): void {
-    if (this.hasDraftProduct && this.branchList.value.length > 0) {
-      this.branchList.value.forEach(id => {
-        let key = this.database.uid()
-        this.database.put(key, {
-          id: key,
-          productId: this.hasDraftProduct.id,
-          branchId: id,
-        })
-      })
-    }
-  }
-
   async update() {
     if (this.hasDraftProduct) {
-      return await this.database.put(this.hasDraftProduct.id, this.hasDraftProduct)
+      await this.http
+        .put(flipperUrl + '/api/product/' + this.hasDraftProduct.id, this.hasDraftProduct)
+        .toPromise()
+        .then()
     }
   }
 
@@ -240,35 +197,19 @@ export class ProductService {
   }
 
   async discardProduct() {
-    // console.log('need discard');
     if (this.hasDraftProduct) {
-      await this.variant.deleteProductVariations(this.hasDraftProduct)
-
-      await this.database.remove(this.hasDraftProduct)
+      await this.http
+      .delete(flipperUrl + '/api/product/' + this.hasDraftProduct.id)
+      .toPromise()
+      .then()
     }
   }
 
-  updateOnlineDatabase() {
-    if (PouchConfig.canSync) {
-      this.database.sync([localStorage.getItem('userId')])
-    }
-    if (!this.hasDraftProduct.isDraft) {
-      this.database.put(this.hasDraftProduct.id, this.hasDraftProduct)
-
-      if (this.hasDraftProduct) {
-        //TODO: now update this function so it works!.
-        // this.variant.deleteProductVariations(this.hasDraftProduct);
-        // this.model.delete(Tables.products, '"' + this.hasDraftProduct.id + '"');
-      }
-    }
-  }
   async saveProduct() {
     if (this.hasDraftProduct) {
       this.hasDraftProduct.active = true
-      this.hasDraftProduct.isDraft = false
-      this.hasDraftProduct.isCurrentUpdate = false
+      this.hasDraftProduct.draft = false
       this.hasDraftProduct.color = '#000000'
-      this.hasDraftProduct.updatedAt = new Date().toISOString()
       this.update()
     }
   }

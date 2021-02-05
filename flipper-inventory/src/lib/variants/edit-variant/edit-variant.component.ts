@@ -7,7 +7,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 @Component({
   selector: 'flipper-edit-variant',
   templateUrl: './edit-variant.component.html',
-  styleUrls: ['../../create-product/create-product.component.css', './edit-variant.component.css'],
+  styleUrls: ['../../create-product/create.scss', './edit-variant.component.css'],
 })
 export class EditVariantComponent implements OnInit {
   @Input() variation: Variant

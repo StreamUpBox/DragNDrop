@@ -9,7 +9,7 @@ import { VariantsDialogModelComponent } from '../variants-dialog-model/variants-
 @Component({
   selector: 'flipper-added-variants',
   templateUrl: './added-variants.component.html',
-  styleUrls: ['../../create-product/create-product.component.css', './added-variants.component.css'],
+  styleUrls: ['../../create-product/create.scss', './added-variants.component.css'],
 })
 export class AddedVariantsComponent implements OnInit {
   item: Product
@@ -53,7 +53,7 @@ export class AddedVariantsComponent implements OnInit {
     private totalPipe: CalculateTotalClassPipe,
     public variant: VariationService,
     public stock: StockService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.variant.activeBusiness()
@@ -88,7 +88,7 @@ export class AddedVariantsComponent implements OnInit {
     currency = this.defaultBusiness.currency
     stock = stocks[0]
 
-    return await this.dialog
+    return this.dialog
       .open(VariantsDialogModelComponent, DialogSize.SIZE_MD, { variant, selectedIndex, stock, stocks, currency })
       .subscribe(result => {
         if (result) {
@@ -129,8 +129,7 @@ export class AddedVariantsComponent implements OnInit {
 
   async deleteAllVariantsDialog(product: Product) {
     const variants = []
-    await this.allVariant(product)
-
+    this.allVariant(product)
     this.variant.allVariants.forEach((v, i) => {
       variants.push(`${i + 1}. ${v.name}`)
     })

@@ -112,6 +112,7 @@ export class FlipperMenuComponent implements OnInit {
   }
 
   async ngOnInit() {
+
     this.menu = [
       {
         name: 'Analytics',

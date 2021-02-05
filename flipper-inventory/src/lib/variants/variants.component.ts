@@ -5,7 +5,7 @@ import { VariationService } from '../services/variation.service'
 @Component({
   selector: 'flipper-variants',
   templateUrl: './variants.component.html',
-  styleUrls: ['../create-product/create-product.component.css'],
+  styleUrls: ['../create-product/create.scss'],
 })
 export class VariantsComponent implements OnInit {
   products: Product

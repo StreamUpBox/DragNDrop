@@ -5,7 +5,6 @@ import {
   Stock,
   CalculateTotalClassPipe,
   Variant,
-  PouchConfig,
   PouchDBService,
   AnyEvent,
 } from '@enexus/flipper-components'
@@ -62,7 +61,6 @@ export class ListProductsComponent implements OnInit, OnDestroy {
     private eventBus: FlipperEventBusService,
     public product: ProductService
   ) {
-    this.database.connect(PouchConfig.bucket, localStorage.getItem('userId'))
     this.dataSource = new MatTableDataSource([])
 
     this.subscription = this.product.productsSubject.subscribe(
@@ -109,14 +107,13 @@ export class ListProductsComponent implements OnInit, OnDestroy {
     await this.variant.activeBusiness()
     // await this. variant.variations(); // it does not make sense to load variation with no productID
     await this.stock.allStocks()
-    if (this.variant.defaultBusiness) {
+    // if (this.variant.defaultBusiness) {
       await this.refresh()
-    }
+    // }
   }
   async refresh() {
     this.loading = true
-
-    await this.product.loadAllProducts(this.variant.defaultBusiness.id)
+    await this.product.loadAllProducts()
     this.loadAllProducts =  this.product.products
   }
 
@@ -137,12 +134,13 @@ export class ListProductsComponent implements OnInit, OnDestroy {
     let products = []
     if (hosts.length > 0) {
       hosts.forEach(product => {
-        console.log(product)
         product['allVariant'] = this.variant.allVariants.filter(res => res.productId == product.id)
         product['stocks'] = this.stock.stocks.filter(res => res.productId == product.id)
         products.push(product)
       })
     }
+
+    console.log('get product pushed',products)
 
     this.dataSource = new MatTableDataSource(products)
     this.dataSource.sort = this.sort
@@ -151,8 +149,8 @@ export class ListProductsComponent implements OnInit, OnDestroy {
   }
 
   async editProduct(product: Product) {
-    product.isDraft = true
-    product.isCurrentUpdate = true
+    product.draft = true
+    // product.isCurrentUpdate = true
     this.product.hasDraftProduct = product
     await this.product.update()
     await this.router.navigate(['/add/product'])
@@ -195,10 +193,12 @@ export class ListProductsComponent implements OnInit, OnDestroy {
       if (stocks.length > 1) {
         return stocks.length + ' Prices'
       } else {
-        return this.variant.defaultBusiness.currency + ' ' + (stocks && stocks.length > 0 ? stocks[0][type] : 0)
+        // return this.variant.defaultBusiness.currency + ' ' + (stocks && stocks.length > 0 ? stocks[0][type] : 0)
+        return 'RWF' + (stocks && stocks.length > 0 ? stocks[0][type] : 0)
       }
     } else {
-      return this.variant.defaultBusiness.currency + ' ' + 0
+      // return this.variant.defaultBusiness.currency + ' ' + 0
+      return  'RWF' + 0
     }
   }
 }

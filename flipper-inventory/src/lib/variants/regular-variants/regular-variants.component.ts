@@ -10,7 +10,7 @@ import { VariantsDialogModelComponent } from '../variants-dialog-model/variants-
 @Component({
   selector: 'flipper-regular-variants',
   templateUrl: './regular-variants.component.html',
-  styleUrls: ['../../create-product/create-product.component.css', './regular-variants.component.css'],
+  styleUrls: ['../../create-product/create.scss', './regular-variants.component.css'],
 })
 export class RegularVariantsComponent implements OnInit {
   isFocused = ''
@@ -101,7 +101,7 @@ export class RegularVariantsComponent implements OnInit {
 
     });
   }
- 
+
    request(action = null, variant = null) {
 
      if(variant!==null || variant!==undefined){

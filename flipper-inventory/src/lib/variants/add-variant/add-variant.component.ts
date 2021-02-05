@@ -9,7 +9,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms'
 @Component({
   selector: 'flipper-add-variant',
   templateUrl: './add-variant.component.html',
-  styleUrls: ['../../create-product/create-product.component.css', './add-variant.component.css'],
+  styleUrls: ['../../create-product/create.scss', './add-variant.component.css'],
 })
 export class AddVariantComponent implements OnInit {
   constructor(

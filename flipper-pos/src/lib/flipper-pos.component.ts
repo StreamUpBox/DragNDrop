@@ -7,8 +7,6 @@ import {
   STATUS,
   ORDERTYPE,
   Branch,
-  Stock,
-  Product,
   OrderDetails,
   StockHistory,
   Business,
@@ -102,7 +100,7 @@ export class FlipperPosComponent implements OnInit {
 
     await this.stockVariants()
     this.currentOrder.orderItems =
-      (await this.currentOrder) && this.currentOrder.orderItems && this.currentOrder.orderItems.length > 0
+      (this.currentOrder) && this.currentOrder.orderItems && this.currentOrder.orderItems.length > 0
         ? this.currentOrder.orderItems
         : []
     this.updateOrder([])
@@ -133,6 +131,7 @@ export class FlipperPosComponent implements OnInit {
       .toPromise()
       .then(branches => {
         for (let branch of branches) {
+
           if (branch.active) {
             this.defaultBranch = branch
           }
@@ -155,6 +154,7 @@ export class FlipperPosComponent implements OnInit {
   }
 
   public async newOrder() {
+    console.log("got option to create order")
     if (!this.currentOrder) {
       const formOrder = {
         reference: 'SO' + this.generateCode(),
@@ -174,7 +174,7 @@ export class FlipperPosComponent implements OnInit {
         updatedAt: this.date,
       }
 
-      // create a draft order to be used.
+      // create a draft order to be used. if it does not exist
       await this.http
         .post(flipperUrl + '/api/order', formOrder)
         .toPromise()
@@ -189,12 +189,12 @@ export class FlipperPosComponent implements OnInit {
   }
   public async draftOrder(branchId) {
     await this.http
-      .post(flipperUrl + '/api/order', {})
+      .get(flipperUrl + '/api/draft-order')
       .toPromise()
       .then(async res => {
         this.currentOrder = res as Order
         this.currentOrder.orderItems =
-          (await this.currentOrder) && this.currentOrder.orderItems && this.currentOrder.orderItems.length > 0
+          (this.currentOrder) && this.currentOrder.orderItems && this.currentOrder.orderItems.length > 0
             ? this.currentOrder.orderItems
             : []
       })
@@ -350,7 +350,7 @@ export class FlipperPosComponent implements OnInit {
       this.currentOrder.updatedAt = new Date().toISOString()
       this.currentOrder.active = false
       this.currentOrder['draft'] = false
-      this.currentOrder['orderItems']
+      // this.currentOrder['orderItems']
       await this.http
         .put(flipperUrl + '/api/order/' + this.currentOrder.id, this.currentOrder)
         .toPromise()

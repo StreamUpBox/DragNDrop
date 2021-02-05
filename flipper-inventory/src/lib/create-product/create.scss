@@ -3,6 +3,7 @@
   height: calc(100vh - 30px);
   margin-top: 30px;
   bottom: 0;
+
 }
 
 .toolbar {
@@ -136,12 +137,7 @@ tr {
   align-items: center;
   flex: 1 1 100%;
 }
-.table-cell-header:first-child,
-.table-cell:first-child,
-td:first-child,
-th:first-child {
-  /* padding-left: 16px; */
-}
+
 .editable-variation-table__header__cell {
   overflow: visible;
 }

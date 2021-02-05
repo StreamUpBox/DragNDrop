@@ -25,7 +25,7 @@ export class StockControl {
 @Component({
   selector: 'flipper-manage-stock',
   templateUrl: './manage-stock.component.html',
-  styleUrls: ['../create-product/create-product.component.css', './manage-stock.component.css'],
+  styleUrls: ['../create-product/create.scss', './manage-stock.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ManageStockComponent implements OnInit {

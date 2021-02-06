@@ -78,7 +78,7 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
     this.categories$ = DEFAULT_FLIPPER_DB_CONFIG.defaultCategory
 
     if (PouchConfig.canSync) {
-      this.database.sync([localStorage.getItem('userId')])
+      this.database.sync([localStorage.getItem('userIdNew')])
     }
 
     this.countries = this.setting.countries()
@@ -201,7 +201,7 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
 
     this.database.put(formTaxes2.id, formTaxes2)
 
-   
+
     this.database.put(formTaxes2.id, formTaxes2);
 
     const formTaxes1 =
@@ -220,8 +220,8 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
     };
     this.database.put(formTaxes1.id, formTaxes1);
 
-   
-    
+
+
     setTimeout(() => {
       this.notificationSvc.success('Create Business', 'Business ' + formBusinessData.name + ' Created successfully!');
       this.router.navigate(['/admin']);

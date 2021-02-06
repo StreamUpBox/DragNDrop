@@ -232,7 +232,7 @@ export class StockService {
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
           table: 'stocks',
-          channels: [localStorage.getItem('userId')],
+          channels: [localStorage.getItem('userIdNew')],
         })
       })
     }

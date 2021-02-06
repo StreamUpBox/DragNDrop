@@ -171,8 +171,8 @@ export class VariationService {
         isActive: true,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
-        channels: [localStorage.getItem('userId')],
-        userId: localStorage.getItem('userId'),
+        channels: [localStorage.getItem('userIdNew')],
+        userId: localStorage.getItem('userIdNew'),
         table: 'variants',
       }
 
@@ -307,7 +307,7 @@ export class VariationService {
               quantity: res.currentStock,
               note: res.reason,
               table: 'stockHistories',
-              channels: [localStorage.getItem('userId')],
+              channels: [localStorage.getItem('userIdNew')],
               createdAt: new Date().toISOString(),
               updatedAt: new Date().toISOString(),
             })
@@ -353,7 +353,7 @@ export class VariationService {
   public openPrintBarcodeLablesDialog(product, allVariants): any {
     const labels: Labels[] = []
     allVariants.forEach(v => {
-      labels.push({ name: v.name, sku: v.sku, channels: [localStorage.getItem('userId')] })
+      labels.push({ name: v.name, sku: v.sku, channels: [localStorage.getItem('userIdNew')] })
     })
     return this.dialog.open(PrintBarcodeLabelsDialogComponent, DialogSize.SIZE_LG, labels).subscribe()
   }

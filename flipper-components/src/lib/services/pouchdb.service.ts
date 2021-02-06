@@ -32,7 +32,7 @@ export class PouchDBService {
     PouchDB.plugin(require('pouchdb-find').default)
     this.connect('main')
     debugPouch(PouchDB)
-    this.sync([localStorage.getItem('userId')]) //we keep the current logged userId in local storage for quick access
+    this.sync([localStorage.getItem('userIdNew')]) //we keep the current logged userId in local storage for quick access
   }
 
   public activeUser(table = 'users') {
@@ -100,7 +100,7 @@ export class PouchDBService {
     // comment
     return this.database
       .createIndex({
-        index: { fields: ['table', 'active', 'userId'] },
+        index: { fields: ['table', 'active', 'userIdNew'] },
       })
       .then(() => {
         return this.database.find({
@@ -345,8 +345,8 @@ export class PouchDBService {
   public put(id: string, document: any) {
     document._id = id
     document.uid = this.uid()
-    document.channel = localStorage.getItem('userId')
-    document.channels = [localStorage.getItem('userId')]
+    document.channel = localStorage.getItem('userIdNew')
+    document.channels = [localStorage.getItem('userIdNew')]
 
     return this.get(id).then(
       (result: { _rev: any }) => {

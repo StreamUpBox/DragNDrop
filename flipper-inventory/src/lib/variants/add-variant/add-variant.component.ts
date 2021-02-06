@@ -75,8 +75,8 @@ export class AddVariantComponent implements OnInit {
       isActive: false,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-      channels: [localStorage.getItem('userId')],
-      userId: localStorage.getItem('userId'),
+      channels: [localStorage.getItem('userIdNew')],
+      userId: localStorage.getItem('userIdNew'),
       table: 'variants',
     }
 

@@ -75,10 +75,10 @@ export class ListProductsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.init()
 
-    // let async: any =   this.database.sync([localStorage.getItem('userId')]);
+    // let async: any =   this.database.sync([localStorage.getItem('userIdNew')]);
     // async
     // .on('change',  (info: any)  => {
-    //   console.log('chanel',localStorage.getItem('userId'));
+    //   console.log('chanel',localStorage.getItem('userIdNew'));
     //   console.log(info);
     //         this.init();
     // })

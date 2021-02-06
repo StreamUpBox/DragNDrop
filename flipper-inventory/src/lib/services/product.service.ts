@@ -157,8 +157,8 @@ export class ProductService {
         branchId: this.branches$.length > 0 ? this.branches$[0].id : '0',
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
-        userId: localStorage.getItem('userId'),
-        channels: [localStorage.getItem('userId')],
+        userId: localStorage.getItem('userIdNew'),
+        channels: [localStorage.getItem('userIdNew')],
       }
       // await this.database.put(formProduct.id, formProduct);
       await this.http

@@ -7,6 +7,7 @@ export class User {
   table?:                 string;
   name?:                  string;
   userId?:                string;
+  userIdNew?:             string;
   active?:                boolean;
   email?:                 string;
   createdAt?:             null;

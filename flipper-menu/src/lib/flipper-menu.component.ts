@@ -174,7 +174,7 @@ export class FlipperMenuComponent implements OnInit {
 
     if (this.activeUser.currentUser) {
       await this.database
-        .query(['table', 'userId'], {
+        .query(['table', 'userIdNew'], {
           table: { $eq: 'businesses' },
           userId: { $eq: this.activeUser.currentUser.id },
         })
@@ -213,7 +213,7 @@ export class FlipperMenuComponent implements OnInit {
     }
 
     if (PouchConfig.canSync) {
-      this.database.sync([localStorage.getItem('userId')])
+      this.database.sync([localStorage.getItem('userIdNew')])
     }
     // await this.database.getChangeListener().subscribe(data => {
 

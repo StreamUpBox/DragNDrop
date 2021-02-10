@@ -16,6 +16,8 @@ import { HttpClient } from '@angular/common/http'
 import { flipperUrl } from './constants'
 import { FlipperEventBusService } from '@enexus/flipper-event'
 
+import { APIService, Analytic } from '@enexus/api-services'
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -23,6 +25,7 @@ import { FlipperEventBusService } from '@enexus/flipper-event'
     trigger('insertDashboard', [transition(':enter', useAnimation(fadeInAnimation, { params: { duration: '1s' } }))]),
   ],
 })
+
 export class DashboardComponent implements OnInit {
   dashboardEntries: DashBoardEntries
 
@@ -30,62 +33,51 @@ export class DashboardComponent implements OnInit {
   public netProfit = 0.0
   public grossProfits = 0.0
   public totalRevenue = 0.0
-  private branch: Branch
   public topSoldItem = []
   public lowStockItem = []
   public defaultBusiness: Business = null
   public defaultBranch: Branch = null
   stocks: Stock[] = []
-  // public currency = this.model.active<Business>(Tables.business) ? this.model.active<Business>(Tables.business).currency : 'RWF';
+  public analytics: Analytic;
+  totalCustomers: number =0
+  newCustomers: number =0
+  averageSpendingPerVisit: number =0
+  averageVisitPerCustomer: number =0
+  returningCustomers: number =0
+  positiveFeedback: number =0
+  negativeFeedback: number =0
+
   constructor(
+    private api:APIService,
     private http: HttpClient,
     private totalPipe: CalculateTotalClassPipe,
     private eventBus: FlipperEventBusService,
-    // private currentUser: CurrentUser,
-    private radomNumberPipe: RoundNumberPipe,
-    // private query: ModelService,
     private database: PouchDBService
   ) {
-    // FIXME:
-    this.branch = null
-    this.totalStore = 200.0 //this.getStockValue();
-    this.netProfit = 230.0 //this.getNetProfit();
-    this.totalRevenue = 300.0 // this.getTotalRevenues();
-    this.grossProfits = 20.0 //this.getGrossProfit();
-    this.topSoldItem = [] // this.topSoldItems();
-    this.lowStockItem = [] // this.getLowStocks();
+    this.init()
   }
 
   async init() {
-    // await this.allStocks()
     this.currentBusiness()
+    this.analytics = await this.api.getAnalytics();
+    this.totalStore = this.analytics.storeValue
+    this.totalCustomers = this.analytics.totalCustomers;
+    this.newCustomers = this.analytics.newCustomers;
+    this.averageSpendingPerVisit = this.analytics.averageSpendingPerVisit;
+    this.averageVisitPerCustomer = this.analytics.averageVisitPerCustomer;
+    this.returningCustomers = this.analytics.returningCustomers;
+    this.positiveFeedback = this.analytics.positiveFeedback;
+    this.negativeFeedback = this.analytics.negativeFeedback;
+    this.netProfit = this.analytics.netProfit
+    this.totalRevenue = this.analytics.totalRevenue
+    this.grossProfits = this.analytics.grossProfit
+    this.topSoldItem = []
+    this.lowStockItem = []
   }
 
   ngOnInit() {
     this.init()
   }
-  async theStocks() {
-    // this.stocks = await this.allStocks()
-  }
-  allStocks() {
-    // if (this.currentUser.currentBranch) {
-    //   console.log('hhh')
-    //   return this.database
-    //     .query(['table'], {
-    //       table: { $eq: 'stocks' },
-    //       // branchId: { $eq: this.currentUser.currentBranch.id }
-    //     })
-    //     .then(res => {
-    //       console.log(res)
-    //       if (res.docs && res.docs.length > 0) {
-    //         return res.docs
-    //       } else {
-    //         return []
-    //       }
-    //     })
-    // }
-  }
-
   public async currentBusiness() {
     await this.http
       .get<Business>(flipperUrl + '/api/business')
@@ -93,12 +85,10 @@ export class DashboardComponent implements OnInit {
       .then(business => {
         this.eventBus.publish(new CurrentBusinessEvent(business))
         this.defaultBusiness = business
-        console.log('got a business here', this.defaultBusiness)
       })
   }
   async currentBranches() {
     if (this.defaultBusiness) {
-      console.log('imbeba')
       this.defaultBranch = await this.getBranch()
     }
   }
@@ -118,72 +108,6 @@ export class DashboardComponent implements OnInit {
       })
   }
 
-  topSoldItems() {
-    const topSolds = []
-    // if(this.topSoldsItem().length > 0) {
-    //   this.topSoldsItem().forEach((item: OrderDetails,i)=> {
-
-    //     if(item.quantity) {
-    //       const x= {
-    //         id: i+1,
-    //         name: item.variantName,
-    //         updatedAt: 'Updated 5m ago',
-    //         items: item.quantity,
-    //         total: item.subTotal
-    //       };
-    //       topSolds.push(x);
-    //     }
-
-    //   });
-    // }
-
-    return topSolds
-  }
-
-  getStockValue() {
-    return this.radomNumberPipe.transform(this.stockValue())
-  }
-  stockValue() {
-    const stocks: Stock[] = []
-    const results = [{ retailPrice: 0 }]
-
-    if (stocks.length > 0) {
-      stocks.forEach(result => {
-        results.push({ retailPrice: result.currentStock * result.retailPrice })
-      })
-    }
-
-    return this.totalPipe.transform(results, 'retailPrice')
-  }
-  grossProfit() {
-    const stocks = this.getSaleStocks()
-    return this.totalPipe.transform(stocks, 'grossProfit')
-  }
-
-  getGrossProfit() {
-    return this.radomNumberPipe.transform(this.grossProfit())
-  }
-
-  getNetProfit() {
-    const stocks = this.getSaleStocks()
-    return this.radomNumberPipe.transform(this.totalPipe.transform(stocks, 'netProfit'))
-  }
-
-  totalRevenues() {
-    // const sales: Order[] = this.sales()
-    // return this.totalPipe.transform(sales, 'saleTotal')
-  }
-  getTotalRevenues() {
-    // return this.radomNumberPipe.transform(this.totalRevenues())
-  }
-
-  sales() {
-    // TODO: completed order API
-    // return this.query.queries<Order>(
-    //   Tables.order,
-    //   ` branchId="${this.branch.id}" AND orderType='sales' AND status='complete'`
-    // )
-  }
 
   getLowStocks() {
     const lowStocks = []
@@ -205,36 +129,6 @@ export class DashboardComponent implements OnInit {
     // });
     // return lowStocks;
   }
-
-  getSaleStocks() {
-    let stocks = [{ netProfit: 0, grossProfit: 0 }]
-    // if (this.loadSales().length > 0) {
-    //     stocks=[];
-    //     this.loadSales().forEach(orderDetails => {
-    //       if (orderDetails && orderDetails.stockId) {
-
-    // stocks.push(this.loadOrderDetails(orderDetails));
-    //     }
-    //   });
-    // }
-    return stocks
-  }
-
-  loadSales() {
-    const orderItems: OrderDetails[] = []
-    // const details: OrderDetails[]= this.model.loadAll<OrderDetails>(Tables.orderDetails);
-    // this.sales().forEach(sale => {
-    //   if (sale) {
-    //     details.forEach(d=> {
-    //       if((!orderItems.find(dd=>dd.id===d.id)) && d.orderId===sale.id) {
-    //         orderItems.push(d);
-    //       }
-    //     });
-    //   }
-    // });
-    return orderItems
-  }
-
   loadOrderDetails(orderDetails: OrderDetails) {
     // const stock: Stock = this.model.find<Stock>(Tables.stocks, orderDetails.stockId);
     // if(stock){

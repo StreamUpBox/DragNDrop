@@ -1,6 +1,20 @@
-
-
 <div  @insertDashboard *ngIf="defaultBusiness">
-    <flipper-dashboard [currency]="defaultBusiness.currency" [totalRevenue]="totalRevenue" [totalStore]="totalStore" [netProfit]="netProfit"
-    [grossProfit]="grossProfits" [lowStockItem]="lowStockItem" [topSoldItem]="topSoldItem"></flipper-dashboard>
+    <flipper-dashboard
+    [currency]="defaultBusiness.currency"
+    [totalCustomers]="totalCustomers"
+    [newCustomers]="newCustomers"
+    [averageSpendingPerVisit]="averageSpendingPerVisit"
+    [returningCustomers]="returningCustomers"
+    [positiveFeedback]="positiveFeedback"
+    [analytics]="analytics"
+
+    [totalRevenue]="totalRevenue"
+    [totalStore]="totalStore"
+    [netProfit]="netProfit"
+    [grossProfit]="grossProfits"
+    [negativeFeedback]="negativeFeedback"
+    [lowStockItem]="lowStockItem"
+    [averageVisitPerCustomer]="averageVisitPerCustomer"
+    [topSoldItem]="topSoldItem">
+  </flipper-dashboard>
 </div>

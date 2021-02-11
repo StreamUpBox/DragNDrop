@@ -35,11 +35,12 @@ export class AddCartItemDialogComponent implements OnInit {
     }
   }
 
+
   ngOnInit() {
     this.form = this.formBuilder.group({
-      price: ['', Validators.required, Validators.min(0)],
+      price: [100, Validators.required],
       name: 'Custom Amount',
-      quantity: [1, Validators.min(0)],
+      quantity: [1, Validators.min(1)],
       tax: null,
       unit: '',
     })
@@ -49,26 +50,28 @@ export class AddCartItemDialogComponent implements OnInit {
     this.submitted = true
 
     // stop here if form is invalid
-    if (this.form.invalid) {
-      this.notificationSvc.error(
-        'Add Cart item',
-        'We need you to complete all of the required fields before we can continue'
-      )
-      return
-    } else {
-      this.dialogRef.close({
-        price: this.form.value.price,
-        quantity: this.form.value.quantity && this.form.value.quantity > 0 ? this.form.value.quantity : 1,
-        variantName: this.form.value.name ? this.form.value.name : 'No prduct name',
-        productName: this.form.value.name ? this.form.value.name : '--',
-        taxName: this.form.value.tax ? this.form.value.tax.name : 0,
-        taxRate: this.form.value.tax ? this.form.value.tax.percentage : 0,
-        unit: this.form.value.unit,
-        canTrackingStock: false,
-        currentStock: 0,
-        sku: '00',
-      })
-    }
+    console.log('we got it here then',this.form.value)
+    // if (this.form.invalid) {
+    //   this.notificationSvc.error(
+    //     'Add Cart item',
+    //     'We need you to complete all of the required fields before we can continue',
+    //     5000
+    //   )
+    //   return
+    // } else {
+    //   this.dialogRef.close({
+    //     price: this.form.value.price,
+    //     quantity: this.form.value.quantity && this.form.value.quantity > 0 ? this.form.value.quantity : 1,
+    //     variantName: this.form.value.name ? this.form.value.name : 'No prduct name',
+    //     productName: this.form.value.name ? this.form.value.name : '--',
+    //     taxName: this.form.value.tax ? this.form.value.tax.name : 0,
+    //     taxRate: this.form.value.tax ? this.form.value.tax.percentage : 0,
+    //     unit: this.form.value.unit,
+    //     canTrackingStock: false,
+    //     currentStock: 0,
+    //     sku: '00',
+    //   })
+    // }
   }
 
   focusing(value: any) {

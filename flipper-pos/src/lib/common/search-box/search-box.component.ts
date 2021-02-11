@@ -16,6 +16,7 @@ import { FormControl } from '@angular/forms'
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators'
 import { Variant } from '@enexus/flipper-components'
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete'
+import { APIService } from '@enexus/api-services'
 
 @Component({
   selector: 'flipper-search-box',
@@ -25,7 +26,7 @@ import { MatAutocompleteTrigger } from '@angular/material/autocomplete'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchBoxComponent implements OnInit, AfterViewInit {
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor(private cd: ChangeDetectorRef, private api: APIService) {}
 
   @Input('foundVariant')
   set foundVariant(value: Variant[]) {
@@ -91,6 +92,7 @@ export class SearchBoxComponent implements OnInit, AfterViewInit {
   }
   timer = null
   startSearching(event) {
+
     if (event.target.value === '' || event.target.value === null) {
       this.foundVariant = []
       this.clearSearchBox()

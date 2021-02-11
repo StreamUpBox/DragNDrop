@@ -1,6 +1,7 @@
 import { transition, trigger, useAnimation } from '@angular/animations'
 import { HttpClient } from '@angular/common/http'
 import { Component, OnInit } from '@angular/core'
+import { APIService } from '@enexus/api-services'
 import {
   CalculateTotalClassPipe,
   Order,
@@ -71,6 +72,7 @@ export class FlipperPosComponent implements OnInit {
   constructor(
     private database: PouchDBService,
     private stock: StockService,
+    private api: APIService,
     private http: HttpClient,
     public variant: VariationService,
     public product: ProductService,
@@ -213,39 +215,16 @@ export class FlipperPosComponent implements OnInit {
       })
   }
 
-  public loadVariants(param = null) {
-    let variantsArray: any[] = []
-
-    if (this.stockVariant.length > 0) {
-      this.stockVariant.forEach(variant => {
-        const form = {
-          id: variant.id,
-          variantId: variant.variantId,
-          price: variant.retailPrice,
-          sku: variant.sku ? variant.sku : '00',
-          variantName: variant.variantName ? variant.variantName : 'no item',
-          productName: variant.productName ? variant.productName : 'no item',
-          taxName: variant.taxName,
-          taxRate: variant.taxPercentage,
-          unit: variant.unit,
-          currentStock: variant.currentStock,
-          canTrackingStock: variant.canTrackingStock,
-          lowStock: variant.lowStock,
-          branchId: variant.branchId,
-        }
-        if (form.currentStock > 0) {
-          // Todo: niba stock irimo koko this should be true if(form.canTrackingStock && form.currentStock > 0){
-          variantsArray.push(form)
-        }
-      })
-    }
+  public async loadVariants(key = null) {
+    let variantsArray: any[] = await this.api.searchQuery(key);
     return variantsArray
   }
 
-  public iWantToSearchVariant(event) {
+  public async iWantToSearchVariant(event) {
+
     if (event && event != undefined && event != null) {
-      let results = this.loadVariants(event)
-      console.log(this.loadVariants(event))
+      let results = await this.loadVariants(event)
+
       if (results.length > 0) {
         this.theVariantFiltered = this.filterByValue(results, event)
       }
@@ -254,14 +233,13 @@ export class FlipperPosComponent implements OnInit {
 
   filterByValue(arrayOfObject: any[], term: any) {
     const query = term.toString().toLowerCase()
-    return arrayOfObject.filter((v, i) => {
+    return arrayOfObject.filter((v:Variant, i) => {
       if (
-        v.variantName.toString().toLowerCase().indexOf(query) >= 0 ||
-        v.sku?.toString().toLowerCase().includes(query) >= 0 ||
-        v.retailPrice?.toString().toLowerCase().includes(query) >= 0 ||
-        v.unit?.toString().toLowerCase().includes(query) >= 0 ||
-        v.unit?.toString().toLowerCase().includes(query) >= 0 ||
-        v.productName?.toString().toLowerCase().indexOf(query) >= 0
+        v.name.toString().toLowerCase().indexOf(query) == 0 ||
+        v.sku.toString().toLowerCase().includes(query)  ==true ||
+        v.unit.toString().toLowerCase().includes(query) ==true ||
+        v.unit.toString().toLowerCase().includes(query) ==true ||
+        v.productName.toString().toLowerCase().indexOf(query) == 0
       ) {
         return true
       } else {
@@ -278,10 +256,10 @@ export class FlipperPosComponent implements OnInit {
     }
 
     if (details.action === 'UPDATE') {
-      details.item.price = parseFloat(details.item.price)
+      details.item.retailPrice = parseFloat(details.item.retailPrice)
 
       const taxRate = details.item.taxRate ? details.item.taxRate : 0
-      const subTotal = details.item.price * details.item.quantity
+      const subTotal = details.item.retailPrice * details.item.quantity
 
       details.item.taxAmount = (subTotal * taxRate) / 100
       details.item.subTotal = subTotal
@@ -328,7 +306,7 @@ export class FlipperPosComponent implements OnInit {
     event.orderId = this.currentOrder.id
 
     const taxRate = event.taxRate ? event.taxRate : 0
-    const subTotal = event.price * event.quantity
+    const subTotal = event.retailPrice * event.quantity
 
     event.taxAmount = (subTotal * taxRate) / 100
     event.subTotal = subTotal
@@ -350,7 +328,6 @@ export class FlipperPosComponent implements OnInit {
       this.currentOrder.updatedAt = new Date().toISOString()
       this.currentOrder.active = false
       this.currentOrder['draft'] = false
-      // this.currentOrder['orderItems']
       await this.http
         .put(flipperUrl + '/api/order/' + this.currentOrder.id, this.currentOrder)
         .toPromise()
@@ -365,9 +342,8 @@ export class FlipperPosComponent implements OnInit {
 
   async createStockHistory() {
     const odetails = this.currentOrder.orderItems as any[]
-    if (odetails.length) {
+    if (odetails.length>0) {
       odetails.forEach(async details => {
-        if (details.currentStock > 0) {
           const stockHistories: StockHistory = {
             id: this.database.uid(),
             orderId: details.orderId,
@@ -387,7 +363,7 @@ export class FlipperPosComponent implements OnInit {
             .post<StockHistory>(flipperUrl + '/api/stock-histories', stockHistories)
             .toPromise()
             .then()
-        }
+
       })
     }
   }

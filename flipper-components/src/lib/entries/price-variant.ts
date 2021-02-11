@@ -8,7 +8,6 @@ export class PriceVariant {
   supplyPrice?: any
   wholeSalePrice?: any
   discount?: any
-  // FIXME(ganza): each model or document should have channels[userId] to authenticate the data
   markup?: any
   syncedOnline?: boolean
   createdAt: string

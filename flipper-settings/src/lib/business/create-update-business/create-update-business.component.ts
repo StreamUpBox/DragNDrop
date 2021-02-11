@@ -119,12 +119,12 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
 
   async getBusinessCategory(typeId: string) {
     this.searchCategoryByTypes$ = []
-    await this.categories$.forEach(cat => {
-      const catTypeId = cat.type_id
-      if (catTypeId === typeId) {
-        this.searchCategoryByTypes$.push(cat)
-      }
-    })
+    //  this.categories$.forEach(cat => {
+    //   const catTypeId = cat.type_id
+    //   if (catTypeId === typeId) {
+    //     this.searchCategoryByTypes$.push(cat)
+    //   }
+    // })
 
     this.ref.detectChanges()
   }
@@ -169,18 +169,18 @@ export class CreateUpdateBusinessComponent implements OnInit, AfterViewInit {
       )
     }
 
-    const formBranchData: Branch = {
+    const formBranchData: any = {
       id: this.database.uid(),
       name: this.registerForm.value.branchName,
       active: true,
-      mapLatitude: this.origin.latitude,
-      mapLongitude: this.origin.longitude,
+      // mapLatitude: this.origin.latitude,
+      // mapLongitude: this.origin.longitude,
       businessId: this.registerForm.value.id,
-      table: 'branches',
+      // table: 'branches',
       channels: [this.activeUser.currentUser ? this.activeUser.currentUser.id : 0],
-      docId: PouchConfig.Tables.branches,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
+      // docId: PouchConfig.Tables.branches,
+      // createdAt: new Date().toISOString(),
+      // updatedAt: new Date().toISOString(),
     }
 
     this.database.put(formBranchData.id, formBranchData)

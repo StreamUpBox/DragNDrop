@@ -7,6 +7,7 @@ import {
   Branch,
   CalculateTotalClassPipe,
   RoundNumberPipe,
+  Analytic,
   OrderDetails,
   PouchDBService,
   CurrentBusinessEvent,
@@ -16,7 +17,7 @@ import { HttpClient } from '@angular/common/http'
 import { flipperUrl } from './constants'
 import { FlipperEventBusService } from '@enexus/flipper-event'
 
-import { APIService, Analytic } from '@enexus/api-services'
+import { APIService, } from '@enexus/api-services'
 
 @Component({
   selector: 'app-dashboard',

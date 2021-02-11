@@ -7,7 +7,6 @@ export class MenuEntries {
   id?: string
   businesses: Business[]
   user: User
-  // FIXME(ganza): each model or document should have channels[userId] to authenticate the data
   branches: Branch[]
   menu: Menu[]
 

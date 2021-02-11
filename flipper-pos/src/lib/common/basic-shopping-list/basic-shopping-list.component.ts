@@ -43,7 +43,7 @@ export class BasicShoppingListComponent implements OnChanges {
     } else if (this.action === '+') {
       item.quantity = item.quantity + 1
     }
-    item.subTotal = item.price * item.quantity
+    item.subTotal = item.retailPrice * item.quantity
     this.updateQtyEmit.emit(item)
   }
 

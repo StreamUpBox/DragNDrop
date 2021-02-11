@@ -15,8 +15,13 @@ import { AddCartItemDialogComponent } from './common/add-cart-item-dialog/add-ca
 import { FlipperPosComponent } from './flipper-pos.component'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { BrowserModule } from '@angular/platform-browser'
-import { HttpClientModule } from '@angular/common/http'
-
+import { HttpClient, HttpClientModule } from '@angular/common/http'
+import { APIService } from '@enexus/api-services'
+import { TranslateModule } from '@ngx-translate/core'
+import { TranslateHttpLoader } from '@ngx-translate/http-loader'
+export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json')
+}
 @NgModule({
   declarations: [
     FlipperBasicPosComponent,
@@ -30,7 +35,6 @@ import { HttpClientModule } from '@angular/common/http'
     AddCartItemDialogComponent,
     FlipperPosComponent,
   ],
-
   imports: [
     CommonModule,
     HttpClientModule,
@@ -39,9 +43,10 @@ import { HttpClientModule } from '@angular/common/http'
     BrowserModule,
     VendorsModule,
     DialogModule,
+    TranslateModule,
   ],
   entryComponents: [UpdatePriceDialogComponent, AddCartItemDialogComponent],
-
+  providers: [APIService],
   exports: [
     FlipperBasicPosComponent,
     SearchBoxComponent,

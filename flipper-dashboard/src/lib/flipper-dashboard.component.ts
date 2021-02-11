@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core'
-import { DashBoardEntries } from '@enexus/flipper-components'
+import { DashBoardEntries,Analytic} from '@enexus/flipper-components'
 
-import { APIService, Analytic } from '@enexus/api-services'
+// import { APIService  } from '@enexus/api-services'
 
 @Component({
   selector: 'flipper-dashboard',

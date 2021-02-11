@@ -204,6 +204,7 @@ export class CalculatorComponent {
   }
 
   collectCash() {
+    console.log('collect order with',this.currentOrder)
     if (!this.currentOrder) {
       return this.dialog.message('Failure Message', 'No current order created!', 'Failure', 'SIZE_SM')
     }

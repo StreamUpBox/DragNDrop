@@ -16,7 +16,6 @@ export class NotificationListComponent implements OnInit, OnDestroy {
 
   private addNotification(notification: Notification) {
     this.notifications.push(notification)
-
     if (notification.timeout !== 0) {
       setTimeout(() => this.close(notification), notification.timeout)
     }

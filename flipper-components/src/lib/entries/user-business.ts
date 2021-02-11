@@ -3,7 +3,6 @@ export class UserBusiness {
   userId: string
   businessId: string
   role?: string
-  // FIXME(ganza): each model or document should have channels[userId] to authenticate the data
   permissions?: any
   table: string
   docId?: string

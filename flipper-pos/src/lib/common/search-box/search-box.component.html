@@ -5,7 +5,7 @@
   </svg>
 </div>
 
-<input type="search" 
+<input type="search"
 (focus)="focusing()" #autoCompleteInput [matAutocomplete]="auto"
 (keydown)="startSearching($event)"
 aria-label="Search" #mySearchInput placeholder="Search product code to retreive" class="search-box">
@@ -16,14 +16,14 @@ aria-label="Search" #mySearchInput placeholder="Search product code to retreive"
         <div *ngFor="let variant of foundVariant; let i = index;">
           <mat-option (click)="addToCart(variant)">
               <div class="icon-1">
-                <img [src]="'./assets/icons/search.svg'" class="icon-img">
+                <img alt="search_product" [src]="'./assets/icons/search.svg'" class="icon-img">
               </div>
 
               <div class="item">
                   <span class="item-title">
                     {{variant.sku}} / {{variant.name}}
                   </span>
-                  
+
                   <div class="item-sub-title">
 
                       <span class="details">
@@ -35,8 +35,9 @@ aria-label="Search" #mySearchInput placeholder="Search product code to retreive"
                         {{variant.productName}}
                       </span>
 
-                      <span class="details" *ngIf="variant && variant.canTrackingStock">
-                            <div class="oval"> </div> &nbsp;&nbsp; In stock({{variant.currentStock}})
+                      <span class="details" *ngIf="variant && variant.isActive">
+                        <!-- FIXME: work on getting variant stock -->
+                            <!-- <div class="oval"> </div> &nbsp;&nbsp; In stock({{variant.currentStock}}) -->
                       </span>
 
                   </div>

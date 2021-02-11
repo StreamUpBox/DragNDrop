@@ -6,11 +6,15 @@ import { FlipperComponentsModule } from '@enexus/flipper-components'
 import { CreateUpdateBusinessComponent } from './business/create-update-business/create-update-business.component'
 import { BusinessComponent } from './business/view/business.component'
 import { FlipperSettingsComponent } from './flipper-settings.component'
+// import { FlipperSettingsRoutingModule } from './flipper-setting-routing.module'
 
 @NgModule({
   imports: [CommonModule, VendorsModule, FlipperEventModule, FlipperComponentsModule],
-  declarations: [FlipperSettingsComponent, CreateUpdateBusinessComponent, BusinessComponent],
+  declarations: [FlipperSettingsComponent,
+    // FlipperSettingsRoutingModule,
+     CreateUpdateBusinessComponent, BusinessComponent],
 
   exports: [CreateUpdateBusinessComponent, BusinessComponent, FlipperSettingsComponent],
 })
 export class FlipperSettingsModule {}
+

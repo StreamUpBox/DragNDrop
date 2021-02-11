@@ -7,7 +7,6 @@ export class StockHistory {
   stockId?: any
   reason?: string
   quantity: any
-  // FIXME(ganza): each model or document should have channels[userId] to authenticate the data
   isDraft?: boolean
   isPreviously?: boolean
   syncedOnline?: boolean

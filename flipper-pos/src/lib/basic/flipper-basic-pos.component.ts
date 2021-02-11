@@ -152,11 +152,11 @@ export class FlipperBasicPosComponent {
     }
   }
   updatePrice(item: OrderDetails) {
-    return this.dialog.open(UpdatePriceDialogComponent, DialogSize.SIZE_SM, item.price).subscribe(result => {
+    return this.dialog.open(UpdatePriceDialogComponent, DialogSize.SIZE_SM, item.retailPrice).subscribe(result => {
       if (result !== 'close') {
         if (result.price && result.price > 0) {
-          item.price = result.price
-          item.subTotal = item.quantity * item.price
+          item.retailPrice = result.price
+          item.subTotal = item.quantity * item.retailPrice
           this.updateQty(item)
         }
       }
@@ -165,7 +165,7 @@ export class FlipperBasicPosComponent {
 
   addCartItem() {
     return this.dialog.open(AddCartItemDialogComponent, DialogSize.SIZE_MD, this.taxes).subscribe(result => {
-      if (result !== 'close' || result.price > 0 || result.quantity > 0) {
+      if (result !== 'close' || result.price > 0 || result.quantity > 0) { //just a clarification, close here does not refer to dialog close but our actual close button
         this.addToCart(result)
       }
     })
@@ -185,6 +185,7 @@ export class FlipperBasicPosComponent {
   }
 
   updateQuantity(item: OrderDetails, action = null) {
+    console.log('about increment',item);
     const lastQty = item.quantity
     this.action = action
     this.canSetCartFocused(item)
@@ -198,11 +199,11 @@ export class FlipperBasicPosComponent {
           })
         item.quantity = lastQty
       }
-      item.subTotal = item.price * item.quantity
+      item.subTotal = item.retailPrice * item.quantity
       this.updateQty(item)
     } else if (this.action === '+') {
       item.quantity = item.quantity + 1
-      item.subTotal = item.price * item.quantity
+      item.subTotal = item.retailPrice * item.quantity
       this.updateQty(item)
     }
   }

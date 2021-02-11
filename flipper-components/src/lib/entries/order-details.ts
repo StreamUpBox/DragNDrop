@@ -7,7 +7,7 @@ export class OrderDetails {
   unit?: string
   variantName?: string
   productName?: string
-  price?: any
+  retailPrice: any
   quantity: any
   subTotal?: any
   taxRate?: any

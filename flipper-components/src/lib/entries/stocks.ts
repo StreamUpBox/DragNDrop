@@ -7,7 +7,6 @@ export class Stock {
   unitId?: any
   lowStock?: any
   currentStock?: any
-  // FIXME(ganza): each model or document should have channels[userId] to authenticate the data
   supplyPrice?: any
   retailPrice?: any
   wholeSalePrice?: 0

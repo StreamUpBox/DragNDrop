@@ -15,7 +15,7 @@
           {{item.orderId}} / {{item.variantName}}
         </span>
         <div class="item-sub-title">
-          <span class="details">RWF {{item.price}}</span>
+          <span class="details">RWF {{item.retailPrice}}</span>
           <span class="details">Lotion</span>
           <span class="details">
             <div class="oval"></div> &nbsp;&nbsp; In stock({{item.quantity}})
@@ -24,6 +24,7 @@
 
       </div>
       <div class="remove-item">
+
 
         <img [src]="'./assets/icons/x.svg'" alt="search" class="delete-icon" (click)="removeItem(item)">
 

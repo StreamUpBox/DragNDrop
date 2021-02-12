@@ -6,7 +6,6 @@ import {
   Stock,
   Branch,
   CalculateTotalClassPipe,
-  RoundNumberPipe,
   Analytic,
   OrderDetails,
   PouchDBService,
@@ -62,7 +61,7 @@ export class DashboardComponent implements OnInit {
     this.currentBusiness()
     this.analytics = await this.api.getAnalytics();
     this.totalStore = this.analytics.storeValue
-    this.totalCustomers = this.analytics.totalCustomers;
+    this.totalCustomers = this.analytics?.totalCustomers;
     this.newCustomers = this.analytics.newCustomers;
     this.averageSpendingPerVisit = this.analytics.averageSpendingPerVisit;
     this.averageVisitPerCustomer = this.analytics.averageVisitPerCustomer;

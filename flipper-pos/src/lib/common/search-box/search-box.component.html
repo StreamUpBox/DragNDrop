@@ -21,7 +21,7 @@ aria-label="Search" #mySearchInput placeholder="Search product code to retreive"
 
               <div class="item">
                   <span class="item-title">
-                    {{variant.sku}} / {{variant.name}}
+                    {{variant.sku}} / {{variant.name.indexOf('Regular')==0?variant.productName:variant.name}}
                   </span>
 
                   <div class="item-sub-title">
@@ -32,12 +32,12 @@ aria-label="Search" #mySearchInput placeholder="Search product code to retreive"
                       </span>
 
                       <span class="details">
-                        {{variant.productName}}
+                        {{variant.name}}
                       </span>
 
-                      <span class="details" *ngIf="variant && variant.isActive">
-                        <!-- FIXME: work on getting variant stock -->
-                            <!-- <div class="oval"> </div> &nbsp;&nbsp; In stock({{variant.currentStock}}) -->
+                      <span class="details" *ngIf="variant && variant.canTrackingStock">
+                            <!-- TODO:remember to set canTrackingStock when adding a product -->
+                            <div class="oval"> </div> &nbsp;&nbsp; In stock({{variant.currentStock}})
                       </span>
 
                   </div>
@@ -51,7 +51,7 @@ aria-label="Search" #mySearchInput placeholder="Search product code to retreive"
         <mat-option>
               <div class="item">
                     <span class="item-title">
-                      Sorry! There is no item(s) found.
+                      {{'POS.NTGCRZW' | translate}}
                     </span>
               </div>
         </mat-option>

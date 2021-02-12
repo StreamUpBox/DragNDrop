@@ -37,7 +37,7 @@
       </div>
       <div class="col-1">
         <div class="btn-clear">
-          <button type="button" class="clear" (click)="clear()">CLEAR</button>
+          <button type="button" class="clear" (click)="clear()">{{'POS.CLEAR'| translate}}</button>
         </div>
 
       </div>
@@ -67,7 +67,7 @@
             </tr>
             <tr *ngIf="currentOrder.saleTotal" style="margin-top:1px; border-top: 2px #000 solid!important">
               <td>
-                <span class="amount-title1">TOTAL TO BE PAID</span>
+                <span class="amount-title1">{{'POS.TBPAID'|translate}}</span>
               </td>
               <td>
                 <span class="amount-number1">{{currency}} {{currentOrder.saleTotal | roundNumber}}</span>
@@ -76,7 +76,7 @@
             </tr>
             <tr *ngIf="currentOrder.customerChangeDue">
               <td>
-                <span class="amount-title1">CHANGE</span>
+                <span class="amount-title1">{{'POS.CHANGE'|translate}}</span>
               </td>
               <td>
                 <span class="amount-number1"
@@ -88,10 +88,11 @@
           </table>
         </div>
       </div>
+
       <div class="row" *ngIf="currentOrder">
         <div class="col">
           <button type="button" *ngIf="currentOrder" class="cash-btn" (click)="collectCash()">
-            <span class="cash-btn-Text">Collect Cash</span>
+            <span class="cash-btn-Text">{{'POS.CLCTCH' |translate}}</span>
           </button>
         </div>
       </div>

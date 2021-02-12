@@ -21,6 +21,7 @@ import {
 import { ProductService, StockService, VariationService } from '@enexus/flipper-inventory'
 import { flipperUrl } from './constants'
 
+
 @Component({
   selector: 'lib-flipper-pos',
   templateUrl: './flipper.pos.component.html',
@@ -302,13 +303,11 @@ export class FlipperPosComponent implements OnInit {
   }
 
   public async addToCart(event: OrderDetails) {
-    event.id = this.database.uid()
     event.orderId = this.currentOrder.id
-
     const taxRate = event.taxRate ? event.taxRate : 0
     const subTotal = event.retailPrice * event.quantity
 
-    event.taxAmount = (subTotal * taxRate) / 100
+    event.taxAmount = (subTotal * taxRate) / 100 // FIXME: this formula is not right
     event.subTotal = subTotal
 
     this.currentOrder.orderItems.push(event)
@@ -343,14 +342,18 @@ export class FlipperPosComponent implements OnInit {
   async createStockHistory() {
     const odetails = this.currentOrder.orderItems as any[]
     if (odetails.length>0) {
-      odetails.forEach(async details => {
+      odetails.forEach(async (details:Variant) => {
           const stockHistories: StockHistory = {
             id: this.database.uid(),
             orderId: details.orderId,
-            variantId: details.variantId,
-            variantName: details.variantName,
-            stockId: details.id,
+            variantId: details.id,
+            variantName: details.name,
+            stockId: details.stockId,
             reason: 'Sold',
+            cashReceived: this.currentOrder.cashReceived,
+            cashCollected: this.currentOrder.cashReceived,
+            saleTotal:this.currentOrder.saleTotal,
+            customerChangeDue:this.currency.customerChangeDue,
             quantity: details.quantity,
             isDraft: false,
             note: 'Customer sales',
@@ -359,6 +362,9 @@ export class FlipperPosComponent implements OnInit {
             updatedAt: new Date().toISOString(),
             channels: [this.defaultBusiness$.userId],
           }
+
+          console.log(stockHistories,odetails,this.currentOrder)
+          // debug see the object to be sent.
           await this.http
             .post<StockHistory>(flipperUrl + '/api/stock-histories', stockHistories)
             .toPromise()

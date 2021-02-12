@@ -180,10 +180,10 @@
 
               <table class="_table_sfd04n">
                 <tbody>
-                  <tr *ngFor="let analytic of analytics.topItemBySales let i = index;">
-                    <td>{{analytic.name}} </td>
+                  <tr *ngFor="let analytic of analytics?.topItemBySales let i = index;">
+                    <td>{{analytic?.name}} </td>
                     <td>
-                      <span class="_top--count_sfd04n">{{analytic.count}}</span>FRw {{analytic.totalAmount}}
+                      <span class="_top--count_sfd04n">{{analytic?.count}}</span>FRw {{analytic?.totalAmount}}
                     </td>
                   </tr>
 
@@ -200,7 +200,7 @@
           <div id="ember1314" class="ember-view"> <a href="#" id="ember1316"
               class="ember-view _row_n896ps">
               <div class="_title_n896ps">Total customers</div>
-              <div class="_value_n896ps">{{analytics.totalCustomers}}</div>
+              <div class="_value_n896ps">{{analytics?.totalCustomers}}</div>
               <svg aria-labelledby="ember1318__title" role="img" height="10" width="6" viewBox="0 0 6 10" id="ember1318"
                 class="ember-view _caret_2wawky" fill="none">
                 <title id="ember1318__title"></title>
@@ -214,7 +214,7 @@
 
             <a href="#" id="ember1320" class="ember-view _row_n896ps">
               <div class="_title_n896ps">New customers</div>
-              <div class="_value_n896ps">{{analytics.newCustomers}}</div>
+              <div class="_value_n896ps">{{analytics?.newCustomers}}</div>
               <svg aria-labelledby="ember1322__title" role="img" height="10" width="6" viewBox="0 0 6 10" id="ember1322"
                 class="ember-view _caret_2wawky" fill="none">
                 <title id="ember1322__title"></title>
@@ -228,7 +228,7 @@
 
             <a href="#" id="ember1324" class="ember-view _row_n896ps">
               <div class="_title_n896ps">Returning customers</div>
-              <div class="_value_n896ps">{{analytics.returningCustomers}}</div>
+              <div class="_value_n896ps">{{analytics?.returningCustomers}}</div>
               <svg aria-labelledby="ember1326__title" role="img" height="10" width="6" viewBox="0 0 6 10" id="ember1326"
                 class="ember-view _caret_2wawky" fill="none">
                 <title id="ember1326__title"></title>
@@ -242,7 +242,7 @@
 
             <a href="#" id="ember1328" class="ember-view _row_n896ps">
               <div class="_title_n896ps">Average spending per visit</div>
-              <div class="_value_n896ps">FRw {{analytics.averageSpendingPerVisit}}</div>
+              <div class="_value_n896ps">FRw {{analytics?.averageSpendingPerVisit}}</div>
               <svg aria-labelledby="ember1330__title" role="img" height="10" width="6" viewBox="0 0 6 10" id="ember1330"
                 class="ember-view _caret_2wawky" fill="none">
                 <title id="ember1330__title"></title>
@@ -256,7 +256,7 @@
 
             <a href="#" id="ember1332" class="ember-view _row_n896ps">
               <div class="_title_n896ps">Average visits per customer</div>
-              <div class="_value_n896ps">{{analytics.averageVisitPerCustomer}}</div>
+              <div class="_value_n896ps">{{analytics?.averageVisitPerCustomer}}</div>
               <svg aria-labelledby="ember1334__title" role="img" height="10" width="6" viewBox="0 0 6 10" id="ember1334"
                 class="ember-view _caret_2wawky" fill="none">
                 <title id="ember1334__title"></title>
@@ -270,7 +270,7 @@
 
             <a href="/dashboard/customers/feedback" id="ember1336" class="ember-view _row_n896ps">
               <div class="_title_n896ps">Positive feedback</div>
-              <div class="_value_n896ps">{{analytics.positiveFeedback}}</div>
+              <div class="_value_n896ps">{{analytics?.positiveFeedback}}</div>
               <svg aria-labelledby="ember1338__title" role="img" height="10" width="6" viewBox="0 0 6 10" id="ember1338"
                 class="ember-view _caret_2wawky" fill="none">
                 <title id="ember1338__title"></title>
@@ -284,7 +284,7 @@
 
             <a href="/dashboard/customers/feedback" id="ember1340" class="ember-view _row_n896ps">
               <div class="_title_n896ps">Negative feedback</div>
-              <div class="_value_n896ps">{{analytics.negativeFeedback}}</div>
+              <div class="_value_n896ps">{{analytics?.negativeFeedback}}</div>
               <svg aria-labelledby="ember1342__title" role="img" height="10" width="6" viewBox="0 0 6 10" id="ember1342"
                 class="ember-view _caret_2wawky" fill="none">
                 <title id="ember1342__title"></title>

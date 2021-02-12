@@ -14,6 +14,10 @@ export class StockHistory {
   createdAt: string
   updatedAt: string
   table: string
+  cashReceived:number
+  cashCollected: number
+  saleTotal: number
+  customerChangeDue: number
   docId?: string
   channels: Array<string>
 

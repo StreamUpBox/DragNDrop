@@ -10,6 +10,7 @@ import { BusEvent } from './bus-event'
 export class FlipperEventBusService {
   private events: Subject<BusEvent>
 
+
   constructor() {
     this.events = new Subject<BusEvent>()
   }

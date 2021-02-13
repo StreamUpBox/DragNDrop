@@ -185,7 +185,7 @@ export class FlipperBasicPosComponent {
   }
 
   updateQuantity(item: OrderDetails, action = null) {
-    console.log('about increment',item);
+    // console.log('about increment',item);
     const lastQty = item.quantity
     this.action = action
     this.canSetCartFocused(item)

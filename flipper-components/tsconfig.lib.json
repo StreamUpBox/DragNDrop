@@ -4,24 +4,19 @@
     "outDir": "../../out-tsc/lib",
     "declarationMap": true,
     "target": "es2015",
-    "moduleResolution": "node",
-
-    "typeRoots": [
-      "node_modules/@types"
-    ],
     "declaration": true,
     "inlineSources": true,
-    "types": ["node"],
+    "types": [],
     "lib": [
       "dom",
       "es2018"
     ]
+
   },
   "angularCompilerOptions": {
     "skipTemplateCodegen": true,
     "strictMetadataEmit": true,
-    "enableResourceInlining": true,
-    "enableIvy":false
+    "enableResourceInlining": true
   },
   "exclude": [
     "src/test.ts",

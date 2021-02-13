@@ -8,7 +8,7 @@ import { ShoppingListsComponent } from './common/shopping-lists/shopping-lists.c
 import { BasicShoppingListComponent } from './common/basic-shopping-list/basic-shopping-list.component'
 import { StandardShoppingListComponent } from './common/standard-shopping-list/standard-shopping-list.component'
 import { CalculatorComponent } from './common/calculator/calculator.component'
-// import { FlipperDialogModule } from '@enexus/flipper-dialog'
+import { FlipperDialogModule } from '@enexus/flipper-dialog'
 import { CommonModule } from '@angular/common'
 import { UpdatePriceDialogComponent } from './common/update-price-dialog/update-price-dialog.component'
 import { AddCartItemDialogComponent } from './common/add-cart-item-dialog/add-cart-item-dialog.component'
@@ -22,6 +22,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json')
 }
+
 @NgModule({
   declarations: [
     FlipperBasicPosComponent,
@@ -43,7 +44,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     BrowserAnimationsModule,
     BrowserModule,
     VendorsModule,
-    // FlipperDialogModule,
+    FlipperDialogModule,
     TranslateModule,
   ],
   entryComponents: [UpdatePriceDialogComponent, AddCartItemDialogComponent],

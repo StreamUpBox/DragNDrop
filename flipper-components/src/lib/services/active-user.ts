@@ -21,6 +21,7 @@ export class ActiveUser {
   public init() {
     this.user()
 
+    
     this.eventBus
       .of<UserLoggedEvent>(UserLoggedEvent.CHANNEL)
       .pipe(filter(e => e.user && (e.user.id !== null || e.user.id !== undefined)))

@@ -2,8 +2,8 @@
   "name": "@enexus/flipper-color",
   "version": "1.6.16",
   "peerDependencies": {
-    "@angular/common": "~10.0.2",
-    "@angular/core": "~10.0.2"
+    "@angular/common": "~10.0.11",
+    "@angular/core": "~10.0.11"
   },
   "lib": {
     "entryFile": "src/public-api.ts",

@@ -38,4 +38,4 @@ import { MessageDialogComponent } from './message-dialog/message-dialog.componen
   ],
   providers: [DialogService],
 })
-export class DialogModule {}
+export class FlipperDialogModule {}

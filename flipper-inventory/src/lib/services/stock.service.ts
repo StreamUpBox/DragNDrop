@@ -247,7 +247,7 @@ export class StockService {
     // return this.database.put(stock.id, stock)
   }
 
-  createHistory(stock: StockHistory): any {
+  createHistory(stock: any): any { //TODO: change it to StockHistory
     return this.database.put(stock.id, stock)
   }
   updateHistory(stock: StockHistory): any {

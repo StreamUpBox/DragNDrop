@@ -1,29 +1,17 @@
 {
   "name": "@enexus/flipper-dialog",
-  "version": "1.0.4",
-  "peerDependencies": {
-    "@angular/common": "~10.0.11",
-    "@angular/core": "~10.0.11"
-  },
-  "dependencies": {
-    "tslib": "^2.0.0"
-},
-  "description": "@enexus/flipper-dialog - User Should call  delete, confirm Method  and also user can create they own component dialog.",
-  "directories": {
-    "lib": "lib"
-  },
-  "lib": {
-    "entryFile": "src/public-api.ts",
-    "umdModuleIds": {
-      "flipper-dialog": "flipper-dialog"
+    "version": "1.6.0",
+    "peerDependencies": {
+      "@angular/common": "~11.0.3",
+      "@angular/core": "~11.0.3"
+    },
+    "keywords": [
+      "Material",
+      "flexLayout"
+    ],
+    "author": "Yegobox Team",
+    "license": "ISC",
+    "dependencies": {
+      "tslib": "^2.0.0"
     }
-  },
-  "keywords": [
-    "CONFIRM",
-    "DELETE",
-    "OPEN",
-    "DIALOG"
-  ],
-  "author": "Ganza respice",
-  "license": "ISC"
 }

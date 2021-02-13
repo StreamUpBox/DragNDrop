@@ -409,7 +409,7 @@ export class VariationService {
     if (this.allVariants.length > 0) {
       this.allVariants.forEach(variant => {
         this.stock.updateStockHistoryAction(variant.id)
-        variant.isActive = true
+        variant.canTrackingStock = true
         this.update(variant)
       })
     }

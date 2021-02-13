@@ -17,7 +17,7 @@ import { PrintBarcodeLabelsDialogComponent } from './print-barcode-labels-dialog
 import { VendorsModule } from '@enexus/flipper-vendors'
 import { FlipperEventModule } from '@enexus/flipper-event'
 import { FlipperComponentsModule } from '@enexus/flipper-components'
-import { DialogModule } from '@enexus/flipper-dialog'
+// import { FlipperDialogModule } from '@enexus/flipper-dialog'
 
 import { FlipperFileUploadModule } from '@enexus/flipper-file-upload'
 import { HttpClientModule } from '@angular/common/http'
@@ -40,7 +40,9 @@ import { HttpClientModule } from '@angular/common/http'
     ViewStockHistoryComponent,
     PrintBarcodeLabelsDialogComponent,
   ],
-  imports: [CommonModule,VendorsModule, FlipperEventModule, FlipperComponentsModule, FlipperFileUploadModule, DialogModule],
+  imports: [CommonModule,VendorsModule, FlipperEventModule, FlipperComponentsModule, FlipperFileUploadModule,
+    // FlipperDialogModule
+  ],
   entryComponents: [
     VariantsDialogModelComponent,
     DisacrdDialogModelComponent,

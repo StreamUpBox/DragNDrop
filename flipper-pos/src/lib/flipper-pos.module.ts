@@ -8,7 +8,7 @@ import { ShoppingListsComponent } from './common/shopping-lists/shopping-lists.c
 import { BasicShoppingListComponent } from './common/basic-shopping-list/basic-shopping-list.component'
 import { StandardShoppingListComponent } from './common/standard-shopping-list/standard-shopping-list.component'
 import { CalculatorComponent } from './common/calculator/calculator.component'
-import { DialogModule } from '@enexus/flipper-dialog'
+// import { FlipperDialogModule } from '@enexus/flipper-dialog'
 import { CommonModule } from '@angular/common'
 import { UpdatePriceDialogComponent } from './common/update-price-dialog/update-price-dialog.component'
 import { AddCartItemDialogComponent } from './common/add-cart-item-dialog/add-cart-item-dialog.component'
@@ -38,11 +38,12 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   imports: [
     CommonModule,
     HttpClientModule,
+
     FlipperComponentsModule,
     BrowserAnimationsModule,
     BrowserModule,
     VendorsModule,
-    DialogModule,
+    // FlipperDialogModule,
     TranslateModule,
   ],
   entryComponents: [UpdatePriceDialogComponent, AddCartItemDialogComponent],

@@ -9,7 +9,7 @@ import { SpinnerComponent } from './spinner/spinner.component'
 import { MessageComponent } from './message/message.component'
 import { ColorModule } from '@enexus/flipper-color'
 import { FlipperEventModule } from '@enexus/flipper-event'
-import { DialogModule } from '@enexus/flipper-dialog'
+// import { FlipperDialogModule } from '@enexus/flipper-dialog'
 import { RoundNumberPipe } from './pipe/round-number.pipe'
 import { CalculateTotalClassPipe } from './pipe/calculate-total-class.pipe'
 import { MatchHeightDirective } from './directive/match-height.directive'
@@ -29,7 +29,7 @@ import { HttpClientModule } from '@angular/common/http'
     VendorsModule,
     ColorModule,
     FlipperEventModule,
-    DialogModule,
+    // FlipperDialogModule,
     NgxBarcodeModule,
   ],
   declarations: [

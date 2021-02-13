@@ -59,24 +59,23 @@ export class AddVariantComponent implements OnInit {
       return
     }
 
-    // console.log('here ganza',this.variant.branches$);
-
-    const formData: Variant = {
+    const formData: any = { //TODO: use right type
       id: this.database.uid(),
       name: this.form.value.name,
       productName: this.data.product.name,
-      categoryName: '',
+      // categoryName: '',
       productId: this.data.product.id,
       supplyPrice: parseInt(this.form.value.supplyPrice, 10),
       retailPrice: parseInt(this.form.value.retailPrice, 10),
       unit: this.form.value.unit,
       sku: this.form.value.sku ? this.form.value.sku : this.variant.generateSKU(),
-      syncedOnline: false,
-      isActive: false,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
+      // syncedOnline: false,
+
+      canTrackingStock: false,
+      // createdAt: new Date().toISOString(),
+      // updatedAt: new Date().toISOString(),
       channels: [localStorage.getItem('userIdNew')],
-      userId: localStorage.getItem('userIdNew'),
+      // userId: localStorage.getItem('userIdNew'),
       table: 'variants',
     }
 

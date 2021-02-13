@@ -48,9 +48,10 @@ export class AddCartItemDialogComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true
-
     // stop here if form is invalid
-    console.log('we got it here then',this.form.value)
+    console.log('we got it here then changes',this.form.value)
+    //TODO: add a given product, this should handle creating default stock,regular product etc..
+    //TODO: on success then add the proeuct to the list of cart items as searched item
     // if (this.form.invalid) {
     //   this.notificationSvc.error(
     //     'Add Cart item',

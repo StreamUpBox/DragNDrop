@@ -1,6 +1,6 @@
 {
   "name": "@enexus/flipper-color",
-  "version": "1.7.12",
+  "version": "1.7.13",
   "scripts": {
     "patch": "npm run release -- --release-as patch",
     "release": "standard-version"

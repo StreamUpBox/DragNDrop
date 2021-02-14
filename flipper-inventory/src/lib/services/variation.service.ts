@@ -20,6 +20,7 @@ import { DialogSize } from '@enexus/flipper-dialog'
 import { HttpClient } from '@angular/common/http'
 import { flipperUrl } from '../constants'
 
+import * as Sentry from "@sentry/angular";
 @Injectable({
   providedIn: 'root',
 })
@@ -238,8 +239,9 @@ export class VariationService {
       .then(variants => {
         // this.allVariants = variants as Variant[]
         this.allVariants = variants as Variant[]
+      }).catch((error:any)=> {
+        Sentry.captureException(error);
       })
-
     // return this.database
     //   .query(['table'], {
     //     table: { $eq: 'variants' },

@@ -5,6 +5,7 @@ import { Variant,Analytic } from '@enexus/flipper-components';
 // meta-data that will tell the dependency-injection container how to locate the desired
 // class instance.
 //
+import * as Sentry from "@sentry/angular";
 import { flipperUrl } from './constants'
 var ApiToken = new InjectionToken<ApiInterface>("api");
 interface ApiInterface {
@@ -31,12 +32,14 @@ export class APIService implements ApiInterface {
       return this.searchResult = variants;
     });
   }
-  async getAnalytics(): Promise<Analytic> {
+  async getAnalytics(): Promise<Analytic|any> {
     return await this.http
     .get<Analytic>(flipperUrl + '/api/analytics')
     .toPromise()
     .then((analytic:Analytic) => {
       return analytic;
+    }).catch((error:any)=> {
+      Sentry.captureException(error);
     });
   }
 }

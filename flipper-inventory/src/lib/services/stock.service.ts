@@ -10,7 +10,7 @@ import {
   PouchConfig,
 } from '@enexus/flipper-components'
 import { flipperUrl } from '../constants'
-
+import * as Sentry from "@sentry/angular";
 @Injectable({
   providedIn: 'root',
 })
@@ -254,14 +254,15 @@ export class StockService {
     return this.database.put(stock.id, stock)
   }
 
-  async update(stock: Stock): Promise<Stock> {
+  async update(stock: Stock): Promise<Stock|any> {
     if (stock) {
-      // return this.database.put(stock.id, stock)
       return await this.http
         .put<Stock>(flipperUrl + '/api/stock/' + stock.id, stock)
         .toPromise()
         .then(updatatedStock => {
           return updatatedStock
+        }).catch((error:any)=> {
+          Sentry.captureException(error);
         })
     }
   }

@@ -17,7 +17,7 @@ import {
   Variant,
   fadeInAnimation,
 } from '@enexus/flipper-components'
-
+import * as Sentry from "@sentry/angular";
 import { ProductService, StockService, VariationService } from '@enexus/flipper-inventory'
 import { flipperUrl } from './constants'
 
@@ -117,6 +117,8 @@ export class FlipperPosComponent implements OnInit {
       .toPromise()
       .then(business => {
         this.defaultBusiness$ = business
+      }).catch((error:any)=> {
+        Sentry.captureException(error);
       })
   }
 
@@ -183,6 +185,8 @@ export class FlipperPosComponent implements OnInit {
         .toPromise()
         .then(order => {
           this.currentOrder = order as Order
+        }).catch((error:any)=> {
+          Sentry.captureException(error);
         })
     }
   }
@@ -200,6 +204,8 @@ export class FlipperPosComponent implements OnInit {
           (this.currentOrder) && this.currentOrder.orderItems && this.currentOrder.orderItems.length > 0
             ? this.currentOrder.orderItems
             : []
+      }).catch((error:any)=> {
+        Sentry.captureException(error);
       })
   }
 
@@ -213,6 +219,8 @@ export class FlipperPosComponent implements OnInit {
         } else {
           this.stockVariant = []
         }
+      }).catch((error:any)=> {
+        Sentry.captureException(error);
       })
   }
 
@@ -335,6 +343,8 @@ export class FlipperPosComponent implements OnInit {
           this.currentOrder = null
           await this.newOrder()
           await this.hasDraftOrder()
+        }).catch((error:any)=> {
+          Sentry.captureException(error);
         })
     }
   }
@@ -362,14 +372,12 @@ export class FlipperPosComponent implements OnInit {
             updatedAt: new Date().toISOString(),
             channels: [this.defaultBusiness$.userId],
           }
-
-          console.log(stockHistories,odetails,this.currentOrder)
-          // debug see the object to be sent.
           await this.http
             .post<StockHistory>(flipperUrl + '/api/stock-histories', stockHistories)
             .toPromise()
-            .then()
-
+            .then().catch((error:any)=> {
+              Sentry.captureException(error);
+            })
       })
     }
   }

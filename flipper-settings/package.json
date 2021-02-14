@@ -1,6 +1,10 @@
 {
   "name": "@enexus/flipper-settings",
   "version": "1.4.13",
+  "scripts": {
+    "patch": "npm run release -- --release-as patch",
+    "release": "standard-version"
+  },
   "peerDependencies": {
     "@angular/common": "~10.0.11",
     "@angular/core": "~10.0.11"

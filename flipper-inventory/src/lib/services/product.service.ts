@@ -16,7 +16,7 @@ import { BehaviorSubject } from 'rxjs'
 import { HttpClient } from '@angular/common/http'
 import { flipperUrl } from '../constants'
 import { FlipperEventBusService } from '@enexus/flipper-event'
-
+import * as Sentry from "@sentry/angular";
 @Injectable({
   providedIn: 'root',
 })
@@ -87,6 +87,8 @@ export class ProductService {
   getProductStocks({ productId }: any) {
     this.http.get<[Stock]>(flipperUrl + '/api/stocks-byProductId/' + productId).subscribe(stocks => {
       this.stocks = stocks
+    },(error)=>{
+
     })
   }
 
@@ -135,6 +137,8 @@ export class ProductService {
           this.allVariants = draft.allVariants;
           this.getProductStocks({ productId: this.hasDraftProduct.id })
         }
+      }).catch((error:any)=> {
+        Sentry.captureException(error);
       })
   }
 

@@ -7,7 +7,6 @@ import {
   StockHistory,
   Variant,
   PouchDBService,
-  PouchConfig,
 } from '@enexus/flipper-components'
 import { flipperUrl } from '../constants'
 import * as Sentry from "@sentry/angular";

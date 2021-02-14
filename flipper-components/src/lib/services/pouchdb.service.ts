@@ -261,7 +261,6 @@ export class PouchDBService {
   public connect(dbName: string, filter: string = null) {
     if (!this.isInstantiated) {
       this.database = new PouchDB('main')
-      console.log('did couchbase connected?')
       if (filter != null) {
         this.database.changes({
           filter: (doc: any) => {

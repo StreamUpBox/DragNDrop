@@ -1,6 +1,10 @@
 {
   "name": "@enexus/flipper-color",
-  "version": "1.7.0",
+  "version": "1.7.1",
+  "scripts": {
+    "patch": "npm run release -- --release-as patch",
+    "release": "standard-version"
+  },
   "peerDependencies": {
     "@angular/common": "~11.0.4",
     "@angular/core": "~11.0.4"

@@ -231,13 +231,15 @@ export class FlipperPosComponent implements OnInit {
   public async loadVariants(key = null) {
     let variantsArray: any[] = await this.api.searchQuery(key);
     this.eventBus.publish(new SearchedItemEvent(variantsArray))
-    return variantsArray //no need to return this anymore! but wait
+    return variantsArray //TODO:no need to return this anymore! but wait
   }
 
   public async iWantToSearchVariant(event) {
 
     if (event && event != undefined && event != null) {
-      await this.loadVariants(event)
+      // if(event !='default'){
+        await this.loadVariants(event) //TODO: if event == default then do not use loadVariants!
+      // }
       this.eventBus
         .of<SearchedItemEvent>(SearchedItemEvent.CHANNEL)
         .subscribe(res => {

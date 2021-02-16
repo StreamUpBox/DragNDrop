@@ -71,6 +71,7 @@ export class SearchBoxComponent implements OnInit, AfterViewInit {
 
   @Input() currency = 'RWF'
 
+
   @HostListener('document:keydown', ['$event'])
   onKeydownHandler(event: KeyboardEvent) {
     this.event = event

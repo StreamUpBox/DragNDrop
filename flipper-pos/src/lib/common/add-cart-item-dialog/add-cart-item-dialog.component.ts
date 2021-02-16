@@ -1,9 +1,15 @@
+// import { Variant } from './../../../../../flipper-components/src/lib/entries/variant';
 import { Component, OnInit, HostListener, Inject } from '@angular/core'
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { NotificationService, Taxes, SettingsService } from '@enexus/flipper-components'
+import { NotificationService, Taxes, SettingsService, Product, Variant } from '@enexus/flipper-components'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
-
+// import { SearchedItemEvent } from '@enexus/flipper-pos'
+import { FlipperEventBusService } from '@enexus/flipper-event'
+import { SearchedItemEvent } from '../../search-item-event'
+import { HttpClient } from '@angular/common/http'
+import { flipperUrl } from '../../constants'
+import * as Sentry from "@sentry/angular";
 @Component({
   selector: 'flipper-add-cart-item-dialog',
   templateUrl: './add-cart-item-dialog.component.html',
@@ -14,6 +20,8 @@ export class AddCartItemDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<AddCartItemDialogComponent>,
+    private eventBus: FlipperEventBusService,
+    private http: HttpClient,
     private formBuilder: FormBuilder,
     protected notificationSvc: NotificationService,
     private setting: SettingsService,
@@ -48,31 +56,42 @@ export class AddCartItemDialogComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true
-    // stop here if form is invalid
-    console.log('we got it here then changes',this.form.value)
-    //TODO: add a given product, this should handle creating default stock,regular product etc..
-    //TODO: on success then add the proeuct to the list of cart items as searched item
-    // if (this.form.invalid) {
-    //   this.notificationSvc.error(
-    //     'Add Cart item',
-    //     'We need you to complete all of the required fields before we can continue',
-    //     5000
-    //   )
-    //   return
-    // } else {
-    //   this.dialogRef.close({
-    //     price: this.form.value.price,
-    //     quantity: this.form.value.quantity && this.form.value.quantity > 0 ? this.form.value.quantity : 1,
-    //     variantName: this.form.value.name ? this.form.value.name : 'No prduct name',
-    //     productName: this.form.value.name ? this.form.value.name : '--',
-    //     taxName: this.form.value.tax ? this.form.value.tax.name : 0,
-    //     taxRate: this.form.value.tax ? this.form.value.tax.percentage : 0,
-    //     unit: this.form.value.unit,
-    //     canTrackingStock: false,
-    //     currentStock: 0,
-    //     sku: '00',
-    //   })
-    // }
+    this.http.post(flipperUrl + '/api/product', {
+      "name": "Custom Amount",
+      "description": "Custom Amount",
+      "active": true,
+      "hasPicture": false,
+      "isImageLocal": false,
+      "table": "products",
+      "isDraft": false,
+      "color": "CCCC",
+      "isCurrentUpdate": false,
+      "supplierId": "XXX",
+      "categoryId": "XXX",
+      "createdAt": new Date().toISOString(),
+      "unit": "item",
+      "variants": [
+        {
+          "name": "Regular",
+          "sku": "sku",
+          "unit": "kg",
+          "table": "variants"
+        }
+      ]
+    })
+      .toPromise()
+      .then((product: Product) => {
+        this.http.get<Variant[]>(flipperUrl + '/api/variants/' + product.id)
+          .toPromise()
+          .then((variants: Variant[]) => {
+            //emit this array of variant back to the searched item so it can be added to the list i.e cart
+            this.eventBus.publish(new SearchedItemEvent(variants))
+          }).catch((error: any) => {
+            Sentry.captureException(error);
+          })
+      }).catch((error: any) => {
+        Sentry.captureException(error);
+      })
   }
 
   focusing(value: any) {

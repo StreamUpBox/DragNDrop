@@ -32,6 +32,7 @@ export class APIService implements ApiInterface {
       return this.searchResult = variants;
     });
   }
+  
   async getAnalytics(): Promise<Analytic|any> {
     return await this.http
     .get<Analytic>(flipperUrl + '/api/analytics')

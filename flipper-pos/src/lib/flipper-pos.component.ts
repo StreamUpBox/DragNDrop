@@ -20,6 +20,8 @@ import {
 import * as Sentry from "@sentry/angular";
 import { ProductService, StockService, VariationService } from '@enexus/flipper-inventory'
 import { flipperUrl } from './constants'
+import { FlipperEventBusService } from '@enexus/flipper-event'
+import { SearchedItemEvent } from './search-item-event'
 
 
 @Component({
@@ -72,6 +74,7 @@ export class FlipperPosComponent implements OnInit {
   public currency = null
   constructor(
     private database: PouchDBService,
+    private eventBus: FlipperEventBusService,
     private stock: StockService,
     private api: APIService,
     private http: HttpClient,
@@ -81,7 +84,8 @@ export class FlipperPosComponent implements OnInit {
   ) {
     this.database.connect(PouchConfig.bucket, localStorage.getItem('channel'))
 
-    this.database.sync([PouchConfig.syncUrl])
+    // this.database.sync([PouchConfig.syncUrl])
+    this.iWantToSearchVariant('default'); //start with subscribing to the stream of item
   }
 
   public variants: Variant[] = []
@@ -117,7 +121,7 @@ export class FlipperPosComponent implements OnInit {
       .toPromise()
       .then(business => {
         this.defaultBusiness$ = business
-      }).catch((error:any)=> {
+      }).catch((error: any) => {
         Sentry.captureException(error);
       })
   }
@@ -185,7 +189,7 @@ export class FlipperPosComponent implements OnInit {
         .toPromise()
         .then(order => {
           this.currentOrder = order as Order
-        }).catch((error:any)=> {
+        }).catch((error: any) => {
           Sentry.captureException(error);
         })
     }
@@ -204,7 +208,7 @@ export class FlipperPosComponent implements OnInit {
           (this.currentOrder) && this.currentOrder.orderItems && this.currentOrder.orderItems.length > 0
             ? this.currentOrder.orderItems
             : []
-      }).catch((error:any)=> {
+      }).catch((error: any) => {
         Sentry.captureException(error);
       })
   }
@@ -219,35 +223,41 @@ export class FlipperPosComponent implements OnInit {
         } else {
           this.stockVariant = []
         }
-      }).catch((error:any)=> {
+      }).catch((error: any) => {
         Sentry.captureException(error);
       })
   }
 
   public async loadVariants(key = null) {
     let variantsArray: any[] = await this.api.searchQuery(key);
-    return variantsArray
+    this.eventBus.publish(new SearchedItemEvent(variantsArray))
+    return variantsArray //no need to return this anymore! but wait
   }
 
   public async iWantToSearchVariant(event) {
 
     if (event && event != undefined && event != null) {
-      let results = await this.loadVariants(event)
-
-      if (results.length > 0) {
-        this.theVariantFiltered = this.filterByValue(results, event)
-      }
+      await this.loadVariants(event)
+      this.eventBus
+        .of<SearchedItemEvent>(SearchedItemEvent.CHANNEL)
+        .subscribe(res => {
+          if(event =='default' && res.variants.length > 0){
+            this.theVariantFiltered = this.filterByValue(res.variants, res.variants[0].name)
+          }else if (res.variants.length > 0) {
+            this.theVariantFiltered = this.filterByValue(res.variants, event)
+          }
+        })
     }
   }
 
   filterByValue(arrayOfObject: any[], term: any) {
     const query = term.toString().toLowerCase()
-    return arrayOfObject.filter((v:Variant, i) => {
+    return arrayOfObject.filter((v: Variant, i) => {
       if (
         v.name.toString().toLowerCase().indexOf(query) == 0 ||
-        v.sku.toString().toLowerCase().includes(query)  ==true ||
-        v.unit.toString().toLowerCase().includes(query) ==true ||
-        v.unit.toString().toLowerCase().includes(query) ==true ||
+        v.sku.toString().toLowerCase().includes(query) == true ||
+        v.unit.toString().toLowerCase().includes(query) == true ||
+        v.unit.toString().toLowerCase().includes(query) == true ||
         v.productName.toString().toLowerCase().indexOf(query) == 0
       ) {
         return true
@@ -306,7 +316,7 @@ export class FlipperPosComponent implements OnInit {
           : 0.0
       this.currentOrder.customerChangeDue = parseFloat(this.currentOrder.customerChangeDue)
 
-      this.currentOrder = this.currentOrder
+      // this.currentOrder = this.currentOrder
     }
   }
 
@@ -339,11 +349,11 @@ export class FlipperPosComponent implements OnInit {
         .put(flipperUrl + '/api/order/' + this.currentOrder.id, this.currentOrder)
         .toPromise()
         .then(async order => {
-          this.collectCashCompleted =  { isCompleted: true, collectedOrder: order }
+          this.collectCashCompleted = { isCompleted: true, collectedOrder: order }
           this.currentOrder = null
           await this.newOrder()
           await this.hasDraftOrder()
-        }).catch((error:any)=> {
+        }).catch((error: any) => {
           Sentry.captureException(error);
         })
     }
@@ -351,33 +361,33 @@ export class FlipperPosComponent implements OnInit {
 
   async createStockHistory() {
     const odetails = this.currentOrder.orderItems as any[]
-    if (odetails.length>0) {
-      odetails.forEach(async (details:Variant) => {
-          const stockHistories: StockHistory = {
-            id: this.database.uid(),
-            orderId: details.orderId,
-            variantId: details.id,
-            variantName: details.name,
-            stockId: details.stockId,
-            reason: 'Sold',
-            cashReceived: this.currentOrder.cashReceived,
-            cashCollected: this.currentOrder.cashReceived,
-            saleTotal:this.currentOrder.saleTotal,
-            customerChangeDue:this.currency.customerChangeDue,
-            quantity: details.quantity,
-            isDraft: false,
-            note: 'Customer sales',
-            table: 'stockHistories',
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-            channels: [this.defaultBusiness$.userId],
-          }
-          await this.http
-            .post<StockHistory>(flipperUrl + '/api/stock-histories', stockHistories)
-            .toPromise()
-            .then().catch((error:any)=> {
-              Sentry.captureException(error);
-            })
+    if (odetails.length > 0) {
+      odetails.forEach(async (details: Variant) => {
+        const stockHistories: StockHistory = {
+          id: this.database.uid(),
+          orderId: details.orderId,
+          variantId: details.id,
+          variantName: details.name,
+          stockId: details.stockId,
+          reason: 'Sold',
+          cashReceived: this.currentOrder.cashReceived,
+          cashCollected: this.currentOrder.cashReceived,
+          saleTotal: this.currentOrder.saleTotal,
+          customerChangeDue: this.currency.customerChangeDue,
+          quantity: details.quantity,
+          isDraft: false,
+          note: 'Customer sales',
+          table: 'stockHistories',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+          channels: [this.defaultBusiness$.userId],
+        }
+        await this.http
+          .post<StockHistory>(flipperUrl + '/api/stock-histories', stockHistories)
+          .toPromise()
+          .then().catch((error: any) => {
+            Sentry.captureException(error);
+          })
       })
     }
   }

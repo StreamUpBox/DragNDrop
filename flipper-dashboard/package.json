@@ -1,13 +1,13 @@
 {
   "name": "@enexus/flipper-dashboard",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "scripts": {
     "patch": "npm run release -- --release-as patch",
     "release": "standard-version"
   },
   "peerDependencies": {
-    "@angular/common": "~10.0.11",
-    "@angular/core": "~10.0.11"
+    "@angular/common": "^11.0.9",
+    "@angular/core": "^11.0.9"
   },
   "keywords": [
     "Material",

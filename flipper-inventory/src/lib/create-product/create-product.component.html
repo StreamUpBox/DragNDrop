@@ -10,7 +10,7 @@
       </div>
       <div class="mt-2" fxFlex="30">
         <div style="float:right" >
-          <button *ngIf="product.hasDraftProduct && product.hasDraftProduct.isCurrentUpdate"
+          <button *ngIf="product.hasDraftProduct && product.hasDraftProduct.currentUpdate"
           (click)="deleteProduct()"
 
           class="mr-1 button-default button--destructive">
@@ -79,11 +79,12 @@
                           </td>
                           <td style="width: 60%;">
 
-                            <mat-select class="select" [formControl]="product.branchList" placeholder="Choose Location"
+                            <!-- FIXME: updateBranch does not exist -->
+                            <!-- <mat-select class="select" [formControl]="product.branchList" placeholder="Choose Location"
                              (selectionChange)="product.updateBranch()" (focus)="focusing('location')" (focusout)="focusingOut()"  multiple>
                               <mat-option *ngFor="let branch of product.branches$ ; let i = index;" [value]="branch.id">
                                 {{branch.name}}</mat-option>
-                            </mat-select>
+                            </mat-select> -->
 
                           </td>
                         </tr>
@@ -115,12 +116,13 @@
                       </table>
 
                     </td>
-                    <td style="width: 35%">
+                    <!-- FIXME:picture property does not exist on Product -->
+                    <!-- <td style="width: 35%">
                       <flipper-file-upload style="position: relative; left: 10px;" [baseImage]="product.hasDraftProduct && product.hasDraftProduct.picture?product.hasDraftProduct.picture:'assets/icons/add-image-placeholder.png'"
                         (imageUploaded)="viewImageUploaded($event)" baseImage="assets/icons/add-image-placeholder.png"
                         baseTitle="Add Image" baseWidth="150" baseHeight="150" [activeColor]="'orangered'"
                         [baseColor]="'lightgray'"></flipper-file-upload>
-                    </td>
+                    </td> -->
                   </tr>
                 </table>
               </div>

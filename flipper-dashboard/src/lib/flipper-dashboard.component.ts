@@ -1,41 +1,55 @@
-import { Component, Input } from '@angular/core'
-import { DashBoardEntries,Analytic} from '@enexus/flipper-components'
-
-// import { APIService  } from '@enexus/api-services'
-
+import { Component, Input, ViewEncapsulation } from '@angular/core'
+import { DashBoardEntries, Analytic } from '@enexus/flipper-components'
+import { ChartType, ChartOptions, Chart } from 'chart.js';
+import { MultiDataSet, Label } from 'ng2-charts';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 @Component({
   selector: 'flipper-dashboard',
   templateUrl: './flipper-dashboard.component.html',
-  styleUrls: ['./flipper-dashboard.component.css'],
+  styleUrls: ['./flipper-dashboard.component.css']
 })
 export class FlipperDashboardComponent {
   @Input() dashboardEntries: DashBoardEntries = {}
-  // charts option1
-  single: any[];
-  view: any[] = [0, 0];
-    // options
-  showLegend: boolean = false;
-  showLabels: boolean = false
-    // options
-    gradient: boolean = false;
 
-    isDoughnut: boolean = false;
+  constructor() {
+    Chart.plugins.unregister(ChartDataLabels);
+  }
+
+  options: ChartOptions = {
+    responsive: true,
+    maintainAspectRatio: true,
+    showLines: false,
+    spanGaps: false,
+    plugins: {
+      datalabels: {
+        display: false,
+      },
+    }
+  };
+
+  // Doughnut
+  public doughnutChartLabels: Label[] = [];
+  public doughnutChartData: MultiDataSet = [
+    [1, 3, 5]
+  ];
+  public doughnutChartType: ChartType = 'doughnut';
+
+
+
+  // events
+  public chartClicked({ event, active }: { event: MouseEvent, active: {}[] }): void {
+    console.log(event, active);
+  }
+
+  public chartHovered({ event, active }: { event: MouseEvent, active: {}[] }): void {
+    console.log(event, active);
+  }
 
   colorScheme = {
     domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
   };
-  constructor(){
-    let single = [ {
-      name: "Germany",
-      value: 8940000
-    },{
-      name: "RW",
-      value: 9000000
-    }];
-    this.single = single;
-    Object.assign(this, { single });
-  }
-  onSelect(event){}
+
+  onSelect(event) { }
 
   totalStores: any | null
   netProfits: any | null
@@ -98,50 +112,50 @@ export class FlipperDashboardComponent {
     this.analytics = value
   }
 
-  totalCustomers:number;
+  totalCustomers: number;
   @Input('totalCustomers')
   set setTotalCustomers(value: any) {
     this.totalCustomers = value;
   }
   // analytics: Analytic;
 
-  newCustomers:number;
+  newCustomers: number;
   @Input('newCustomers')
   set setnewCustomers(value: any) {
     this.newCustomers = value;
   }
 
-  averageSpeningPerVisit:number;
+  averageSpeningPerVisit: number;
   @Input('averageSpeningPerVisit')
   set seaverageSpeningPerVisit(value: any) {
     this.averageSpeningPerVisit = value;
   }
 
-  averageVisitPerCustomer:number;
+  averageVisitPerCustomer: number;
   @Input('averageVisitPerCustomer')
   set seaverageVisitPerCustomer(value: any) {
     this.averageVisitPerCustomer = value;
   }
 
-  returningCustomers:number;
+  returningCustomers: number;
   @Input('returningCustomers')
   set sereturningCustomers(value: any) {
     this.returningCustomers = value;
   }
 
-  positiveFeedback:number;
+  positiveFeedback: number;
   @Input('positiveFeedback')
   set setpositiveFeedback(value: any) {
     this.positiveFeedback = value;
   }
 
-  negativeFeedback:number;
+  negativeFeedback: number;
   @Input('negativeFeedback')
   set snegativeFeedback(value: any) {
     this.negativeFeedback = value;
   }
 
-  averageSpendingPerVisit:number;
+  averageSpendingPerVisit: number;
   @Input('averageSpendingPerVisit')
   set seaverageSpendingPerVisit(value: any) {
     this.averageSpendingPerVisit = value;
@@ -149,7 +163,5 @@ export class FlipperDashboardComponent {
   get lowStockItem(): any {
     return this.lowStockItems
   }
-  @Input() currency: string
-
-
+  @Input() currency: string;
 }

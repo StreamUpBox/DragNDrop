@@ -23,7 +23,7 @@ import { APIService, } from '@enexus/api-services'
   templateUrl: './dashboard.component.html',
   animations: [
     trigger('insertDashboard', [transition(':enter', useAnimation(fadeInAnimation, { params: { duration: '1s' } }))]),
-  ],
+  ]
 })
 
 export class DashboardComponent implements OnInit {

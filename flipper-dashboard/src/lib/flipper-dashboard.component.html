@@ -1,5 +1,6 @@
-<div class="mt-12 ml-12">
-  <div style="height: 100vh;overflow: auto;">
+<!-- https://thoughtbot.com/blog/positioning -->
+<div class="flex">
+  <div >
     <div>
       <div>
         <div class="row">
@@ -115,6 +116,7 @@
                     <td>FRw566.32</td>
                   </tr>
                   <tr>
+
                     <td class="_payment-types--table--swap"></td>
                     <td>Momo</td>
                     <td>FRw96.19</td>
@@ -126,7 +128,20 @@
                   </tr>
                 </tbody>
               </table>
-              <div class="_payment-types--chart">
+              <div>
+                <div style="margin-top:-16px;">
+                  <div style="display: block">
+                    <canvas baseChart
+                      [data]="doughnutChartData"
+                      [labels]="doughnutChartLabels"
+                      [options]="options"
+                      [chartType]="doughnutChartType">
+                    </canvas>
+                  </div>
+                </div>
+              </div>
+
+              <!-- <div class="_payment-types--chart">
                 <div id="ember563" class="donut-chart payment-view">
                   <svg class="donut-chart--svg" style="margin-left: -14px;margin-top: -12px;">
                     <g transform="translate(84, 84)">
@@ -157,7 +172,7 @@
                   </svg>
 
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
           <!-- top item by sales -->

@@ -1,6 +1,6 @@
 {
   "name": "@enexus/flipper-components",
-  "version": "1.9.15",
+  "version": "1.9.16",
   "scripts": {
     "patch": "npm run release -- --release-as patch",
     "release": "standard-version"

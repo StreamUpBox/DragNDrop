@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.8.22](https://github.com/yegobox/flipper-plugins/compare/v1.3.3...v1.8.22) (2021-02-19)
+
 ### [1.8.21](https://github.com/yegobox/flipper-plugins/compare/v1.3.2...v1.8.21) (2021-02-19)
 
 ### [1.8.20](https://github.com/yegobox/flipper-plugins/compare/v1.3.1...v1.8.20) (2021-02-19)

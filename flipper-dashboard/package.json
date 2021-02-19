@@ -1,6 +1,6 @@
 {
   "name": "@enexus/flipper-dashboard",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "scripts": {
     "patch": "npm run release -- --release-as patch",
     "release": "standard-version"

@@ -1,6 +1,6 @@
 {
   "name": "@enexus/flipper-pos",
-  "version": "1.6.7",
+  "version": "1.6.9",
   "scripts": {
     "patch": "npm run release -- --release-as patch",
     "release": "standard-version"

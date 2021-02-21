@@ -237,9 +237,8 @@ export class FlipperPosComponent implements OnInit {
   public async iWantToSearchVariant(event) {
 
     if (event && event != undefined && event != null) {
-      // if(event !='default'){
-        await this.loadVariants(event) //TODO: if event == default then do not use loadVariants!
-      // }
+        await this.loadVariants(event)
+
       this.eventBus
         .of<SearchedItemEvent>(SearchedItemEvent.CHANNEL)
         .subscribe(res => {
@@ -318,11 +317,11 @@ export class FlipperPosComponent implements OnInit {
           : 0.0
       this.currentOrder.customerChangeDue = parseFloat(this.currentOrder.customerChangeDue)
 
-      // this.currentOrder = this.currentOrder
     }
   }
 
   public async addToCart(event: OrderDetails) {
+
     event.orderId = this.currentOrder.id
     const taxRate = event.taxRate ? event.taxRate : 0
     const subTotal = event.retailPrice * event.quantity
@@ -347,6 +346,7 @@ export class FlipperPosComponent implements OnInit {
       this.currentOrder.updatedAt = new Date().toISOString()
       this.currentOrder.active = false
       this.currentOrder['draft'] = false
+      console.log('final',this.currentOrder)
       await this.http
         .put(flipperUrl + '/api/order/' + this.currentOrder.id, this.currentOrder)
         .toPromise()
@@ -370,6 +370,7 @@ export class FlipperPosComponent implements OnInit {
           orderId: details.orderId,
           variantId: details.id,
           variantName: details.name,
+          productName: details.productName,
           stockId: details.stockId,
           reason: 'Sold',
           cashReceived: this.currentOrder.cashReceived,
@@ -384,6 +385,7 @@ export class FlipperPosComponent implements OnInit {
           updatedAt: new Date().toISOString(),
           channels: [this.defaultBusiness$.userId],
         }
+        console.log("submitting stock histories",stockHistories)
         await this.http
           .post<StockHistory>(flipperUrl + '/api/stock-histories', stockHistories)
           .toPromise()

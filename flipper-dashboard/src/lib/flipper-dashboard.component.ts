@@ -2,7 +2,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core'
 import { DashBoardEntries, Analytic } from '@enexus/flipper-components'
 import { ChartType, ChartOptions, Chart } from 'chart.js';
 import { MultiDataSet, Label } from 'ng2-charts';
-import ChartDataLabels from 'chartjs-plugin-datalabels';
+// import ChartDataLabels from 'chartjs-plugin-datalabels';
 @Component({
   selector: 'flipper-dashboard',
   templateUrl: './flipper-dashboard.component.html',
@@ -12,7 +12,7 @@ export class FlipperDashboardComponent {
   @Input() dashboardEntries: DashBoardEntries = {}
 
   constructor() {
-    Chart.plugins.unregister(ChartDataLabels);
+    // Chart.plugins.unregister(ChartDataLabels);
   }
 
   options: ChartOptions = {

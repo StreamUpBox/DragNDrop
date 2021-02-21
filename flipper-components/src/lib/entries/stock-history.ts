@@ -1,10 +1,11 @@
 export class StockHistory {
   id: string
-  orderId?: string
+  orderId: string
   variantId?: string
-  variantName?: string
+  variantName: string
+  productName: string
   productId?: string
-  stockId?: any
+  stockId: any
   reason?: string
   quantity: any
   isDraft?: boolean
@@ -18,11 +19,7 @@ export class StockHistory {
   cashCollected: number
   saleTotal: number
   customerChangeDue: number
-  docId?: string
   channels: Array<string>
-
-  channel?: string
-
   constructor(params: object = {}) {
     for (const name in params) {
       this[name] = params[name]
